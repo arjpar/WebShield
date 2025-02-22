@@ -32,6 +32,6 @@
             <string>$(PRODUCT_MODULE_NAME).ContentBlockerRequestHandler</string>
         </dict>
         <key>NSHumanReadableDescription</key>
-        <string>Block annoying cookie and tracking consent notices while keeping your privacy.</string>
+        <string>Contains "Social" category filters' blocking rules. All blocking is handled by Safari, so the app never sees your browsing activity.</string>
     </dict>
 </plist>

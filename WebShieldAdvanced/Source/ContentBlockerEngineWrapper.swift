@@ -1,3 +1,4 @@
+// ContentBlockerEngineWrapper.swift
 import ContentBlockerEngine
 import Foundation
 import OSLog
@@ -8,6 +9,8 @@ actor ContentBlockerEngineWrapper {
     private let logger = Logger(subsystem: "dev.arjuna.WebShield", category: "Engine")
     private var engine: ContentBlockerEngine?
     private var lastModified: Date?
+    // Cached raw JSON string, so we don’t have to re-read the file.
+    private var cachedJSONString: String?
     static let shared = try? ContentBlockerEngineWrapper(appGroupID: "group.dev.arjuna.WebShield")
 
     init(appGroupID: String) throws {
@@ -25,8 +28,8 @@ actor ContentBlockerEngineWrapper {
     }
 
     func getBlockingData(for url: URL) async throws -> String {
-        //        try await reloadIfNeeded()
-        try await loadEngine()
+        try await reloadIfNeeded()
+        //        try await loadEngine()
         return try engine?.getData(url: url) ?? ""
     }
 
@@ -38,15 +41,23 @@ actor ContentBlockerEngineWrapper {
         let attrs = try FileManager.default.attributesOfItem(atPath: jsonURL.path)
         guard let modified = attrs[.modificationDate] as? Date else { return }
 
-        if lastModified != modified || engine == nil {
+        if cachedJSONString == nil || lastModified != modified || engine == nil {
             try await loadEngine()
             lastModified = modified
+        } else {
+            logger.info("Using cached JSON data")
         }
     }
 
     private func loadEngine() async throws {
-        let data = try Data(contentsOf: jsonURL)
-        engine = try ContentBlockerEngine(String(decoding: data, as: UTF8.self))
+        let data = try Data(contentsOf: jsonURL, options: .mappedIfSafe)
+        // If your JSON file is minified, this is still one complete object.
+        let jsonString = String(decoding: data, as: UTF8.self)
+
+        // Cache the string so subsequent calls don’t need to re-read the file.
+        cachedJSONString = jsonString
+
+        engine = try ContentBlockerEngine(jsonString)
     }
 
     private func validateFileExists() throws {
