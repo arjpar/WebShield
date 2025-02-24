@@ -96,7 +96,7 @@ This means:
 
 * We welcome contributions from anyone who is committed to the project's goals and respects the collaborative environment.
 * Our discussions and work will remain strictly related to project development. We do not take positions on issues outside this scope.
-* The project will not be used as a platform to advertise or promote causes unrelated to browser development or web standards.
+* The project will not be used as a platform to advertise or promote causes unrelated to ad blocker development.
 * To maintain a focused and productive environment, discussions on societal politics and other divisive topics are discouraged in project spaces.
 * We encourage everyone to share their personal views and opinions outside project spaces. However, please keep project spaces focused on project goals.
 
