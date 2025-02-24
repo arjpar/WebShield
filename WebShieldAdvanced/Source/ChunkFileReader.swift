@@ -1,6 +1,6 @@
 import Foundation
 
-actor ChunkFileReader {
+final class ChunkFileReader {
     private let fileURL: URL
     private let chunkSize: Int
     private let totalSize: UInt64
@@ -21,7 +21,7 @@ actor ChunkFileReader {
     }
 
     /// Reads the next chunk from the file as a UTF-8 String.
-    func nextChunk() async -> String? {
+    func nextChunk() -> String? {
         // If we've reached or exceeded the total file size, there's nothing more to read.
         guard currentOffset < totalSize else { return nil }
 
@@ -43,7 +43,7 @@ actor ChunkFileReader {
     }
 
     /// Resets the file reading to the beginning.
-    func rewind() async {
+    func rewind() {
         currentOffset = 0
         do {
             try fileHandle.seek(toOffset: 0)
@@ -54,8 +54,6 @@ actor ChunkFileReader {
 
     /// Returns the progress of file reading as a fraction between 0 and 1.
     var progress: Double {
-        get async {
-            return Double(currentOffset) / Double(totalSize)
-        }
+        return Double(currentOffset) / Double(totalSize)
     }
 }

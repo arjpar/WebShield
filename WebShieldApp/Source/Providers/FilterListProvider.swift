@@ -905,17 +905,6 @@ enum FilterListProvider {
             homepageUrl:
                 "https://github.com/AdguardTeam/AdguardFilters#adguard-filters"
         ),
-        FilterListData(
-            id: UUID().uuidString,
-            name: "d3Host List by d3ward",
-            downloadUrl:
-                "https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.adblock",
-            category: .experimental,
-            isSelected: false,
-            description:
-                "If you want to test WebShield with d3ward's site, enable this filter.",
-            homepageUrl: "https://d3ward.github.io/toolz/adblock"
-        ),
 
         FilterListData(
             id: UUID().uuidString,

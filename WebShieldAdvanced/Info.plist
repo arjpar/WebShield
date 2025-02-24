@@ -37,6 +37,6 @@
 		</dict>
 	</dict>
 	<key>NSHumanReadableDescription</key>
-	<string>Advanced wide-spectrum content blocking for WebShield. Script, css, scriptlet, and extended css injection. Blocks complex ads, trackers, miners, and more (including YouTube ads).</string>
+	<string>Advanced wide-spectrum content blocking for WebShield. Blocks complex ads, trackers, miners, and more (including YouTube ads).</string>
 </dict>
 </plist>

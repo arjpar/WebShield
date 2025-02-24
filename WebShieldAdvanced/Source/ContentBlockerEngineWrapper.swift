@@ -4,14 +4,13 @@ import Foundation
 import OSLog
 
 // MARK: - ContentBlockerEngineWrapper
-actor ContentBlockerEngineWrapper {
+final class ContentBlockerEngineWrapper {
     private let jsonURL: URL
     private let logger = Logger(subsystem: "dev.arjuna.WebShield", category: "Engine")
     private var engine: ContentBlockerEngine?
     private var lastModified: Date?
     // Cached raw JSON string, so we don’t have to re-read the file.
     private var cachedJSONString: String?
-    static let shared = try? ContentBlockerEngineWrapper(appGroupID: "group.dev.arjuna.WebShield")
 
     init(appGroupID: String) throws {
         guard let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupID)
@@ -27,8 +26,8 @@ actor ContentBlockerEngineWrapper {
         }
     }
 
-    func getBlockingData(for url: URL) async throws -> String {
-        try await reloadIfNeeded()
+    func getBlockingData(for url: URL) throws -> String {
+        try reloadIfNeeded()
         //        try await loadEngine()
         return try engine?.getData(url: url) ?? ""
     }
@@ -37,19 +36,19 @@ actor ContentBlockerEngineWrapper {
         try ChunkFileReader(fileURL: jsonURL)
     }
 
-    private func reloadIfNeeded() async throws {
+    private func reloadIfNeeded() throws {
         let attrs = try FileManager.default.attributesOfItem(atPath: jsonURL.path)
         guard let modified = attrs[.modificationDate] as? Date else { return }
 
         if cachedJSONString == nil || lastModified != modified || engine == nil {
-            try await loadEngine()
+            try loadEngine()
             lastModified = modified
         } else {
             logger.info("Using cached JSON data")
         }
     }
 
-    private func loadEngine() async throws {
+    private func loadEngine() throws {
         let data = try Data(contentsOf: jsonURL, options: .mappedIfSafe)
         // If your JSON file is minified, this is still one complete object.
         let jsonString = String(decoding: data, as: UTF8.self)

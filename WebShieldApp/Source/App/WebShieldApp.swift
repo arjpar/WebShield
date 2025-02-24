@@ -10,19 +10,6 @@ struct WebShieldApp: App {
 
     init() {
 
-        //        do {
-        //            container = try ModelContainer(
-        //                for: SchemaVersions.V2.models,
-        //                configurations: ModelConfiguration(
-        //                    schema: SchemaVersions.V2.self,
-        //                    migrationPlan: AppMigrationPlan.self,
-        //                    allowsSave: true
-        //                )
-        //            )
-        //        } catch {
-        //            fatalError("Failed to configure SwiftData: \(error)")
-        //        }
-
         let refreshErrorViewModel = RefreshErrorViewModel()
         _refreshErrorViewModel = StateObject(wrappedValue: refreshErrorViewModel)
         _contentBlockerState = StateObject(

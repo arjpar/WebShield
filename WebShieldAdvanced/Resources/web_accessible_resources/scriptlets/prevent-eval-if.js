@@ -104,6 +104,7 @@ var main = (() => {
       hit(source, payload);
       return void 0;
     }.bind(window);
+    window.eval.toString = nativeEval.toString.bind(nativeEval);
   }
   var preventEvalIfNames = [
     "prevent-eval-if",

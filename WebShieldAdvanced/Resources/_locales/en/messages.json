@@ -4,7 +4,7 @@
     "description": "The display name for the extension."
   },
   "extension_description": {
-    "message": "Advanced wide-spectrum content blocking for WebShield. Script, css, scriptlet, and extended css injection. Blocks complex ads, trackers, miners, and more (including YouTube ads).",
+    "message": "Advanced wide-spectrum content blocking for WebShield. Blocks complex ads, trackers, miners, and more.",
     "description": "Description of what the extension does."
   }
 }

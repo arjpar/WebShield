@@ -32,6 +32,6 @@
             <string>$(PRODUCT_MODULE_NAME).ContentBlockerRequestHandler</string>
         </dict>
         <key>NSHumanReadableDescription</key>
-        <string>Contains "Ads" category filters' blocking rules. Content blocking happens entirely within Safari, ensuring privacy.</string>
+        <string>Contains "Ads" category filters' blocking rules. All blocking is handled by Safari, so the app never sees your browsing activity.</string>
     </dict>
 </plist>

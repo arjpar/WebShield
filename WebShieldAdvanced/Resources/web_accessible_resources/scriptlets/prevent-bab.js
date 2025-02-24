@@ -125,6 +125,7 @@ var main = (() => {
       }
     };
     window.eval = evalWrapper.bind(window);
+    window.eval.toString = nativeEval.toString.bind(nativeEval);
   }
   var preventBabNames = [
     "prevent-bab"

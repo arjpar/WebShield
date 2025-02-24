@@ -8,7 +8,7 @@ class ImportViewState: ObservableObject {
     @Published var error: Error?
 
     func reset() {
-        urlStrings = [""]
+        urlStrings = [" "]
         isImporting = false
         showError = false
         error = nil
@@ -19,10 +19,6 @@ struct ImportView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
 
-    //    @State private var urlStrings: [String] = [""]
-    //    @State private var isImporting = false
-    //    @State private var showError = false
-    //    @State private var error: Error?
     @StateObject private var state = ImportViewState()
     @FocusState private var isTextFieldFocused: Bool
 
@@ -77,7 +73,7 @@ struct ImportView: View {
 
     private var addUrlButton: some View {
         Button {
-            state.urlStrings.append("")
+            state.urlStrings.append(" ")
         } label: {
             Label("Add URL", systemImage: "plus.circle.fill")
         }
@@ -171,7 +167,7 @@ struct ImportView: View {
             try modelContext.save()
 
             await MainActor.run {
-                state.urlStrings = [""]  // Reset URLs
+                state.urlStrings = [" "]  // Reset URLs
                 state.isImporting = false  // Re-enable inputs
                 dismiss()
             }
@@ -254,7 +250,7 @@ struct ImportView: View {
 
     private func resetUrlStrings() {
         DispatchQueue.main.async {
-            state.urlStrings = [""]
+            state.urlStrings = [" "]
         }
     }
 }

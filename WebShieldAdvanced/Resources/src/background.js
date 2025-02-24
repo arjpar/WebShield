@@ -9,31 +9,6 @@ const log = {
   warn: (msg, ...args) => console.warn(`${LOG_PREFIX} ${msg}`, ...args),
 };
 
-// Example: Send a message from the background script
-// function sendMessageToNativeApp() {
-//   const message = {
-//     action: "doSomething",
-//     data: "Hello from JavaScript!",
-//   };
-
-//   // Send the message to the native app extension
-//   browser.runtime.sendNativeMessage(
-//     "application.id", // This ID is ignored by Safari; it automatically routes to the containing app
-//     message,
-//     function (response) {
-//       if (browser.runtime.lastError) {
-//         console.error("Error:", browser.runtime.lastError.message);
-//         return;
-//       }
-//       console.log("Received response from native app:");
-//       console.log(response);
-//     },
-//   );
-// }
-
-// Call the function (e.g., on extension load or button click)
-// sendMessageToNativeApp();
-
 let scriptletRegistry = undefined;
 let loadRegistryPromise = undefined;
 const scriptletCache = new Map();
@@ -281,3 +256,26 @@ const cleanupAccumulator = (key) => {
     chunkAccumulators.delete(key);
   }
 };
+
+// async function sendMessageToNativeApp() {
+//   console.log(
+//     "[WebShield Advanced] (sendMessageToNativeApp) About to send native message",
+//   );
+//   try {
+//     const response = browser.runtime.sendNativeMessage("application.id", {
+//       message: "Hello from background page (JavaScript)!",
+//     });
+//     console.log(
+//       "[WebShield Advanced] (sendMessageToNativeApp) Received response from native app:",
+//       response,
+//     );
+//   } catch (error) {
+//     console.error(
+//       "[WebShield Advanced] (sendMessageToNativeApp) Error sending message:",
+//       error,
+//     );
+//   }
+//   console.log("[WebShield Advanced] (sendMessageToNativeApp) Exiting function");
+// }
+
+// sendMessageToNativeApp();

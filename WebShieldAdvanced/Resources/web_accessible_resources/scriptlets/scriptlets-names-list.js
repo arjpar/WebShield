@@ -3032,6 +3032,7 @@ ${new Error().stack}`,
       }
     };
     window.eval = evalWrapper.bind(window);
+    window.eval.toString = nativeEval.toString.bind(nativeEval);
   }
   var preventBabNames = [
     "prevent-bab"
@@ -3207,6 +3208,7 @@ ${s}`, true);
       hit(source, payload);
       return void 0;
     }.bind(window);
+    window.eval.toString = nativeEval.toString.bind(nativeEval);
   }
   var preventEvalIfNames = [
     "prevent-eval-if",
