@@ -32,7 +32,7 @@ struct HelpSheet: View {
                             icon: "heart.fill",
                             title: "Support Development",
                             content:
-                                "WebShield is and always will be free, with all core features available to everyone. As a self-funded student project, it stays independent from ad companies and their 'acceptable ads' programs. If you find value in keeping the web clean and private, consider supporting WebShield's development:",
+                                "WebShield is and always will be free, with all core features available to everyone. As a self-funded project I maintain out-of-pocket, it stays independent from ad companies and their 'acceptable ads' programs. However, this model isn't sustainable long-term. Without community support, I'll eventually face the difficult choice between ending development rather than selling out to ad companies or implementing a paywall. Any contribution helps maintain WebShield's mission of providing free, uncompromised content filtering for everyone. If you find value in keeping the web clean and private, consider supporting WebShield's development:",
                             links: [
                                 (
                                     text: "Ko-fi",
