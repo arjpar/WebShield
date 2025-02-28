@@ -95,9 +95,9 @@ If you need help or have any questions, you can reach out through:
 
 WebShield draws inspiration from privacy and performance-focused projects like uBlock Origin. This project wouldn't be possible without the dedication of filter list maintainers who work tirelessly to keep the web clean. I'm deeply grateful to stand on the shoulders of these projects and their contributors. Special thanks to AdGuard, whose tools — particularly SafariConverterLib and Scriptlets/ExtendedCSS — have been instrumental to WebShield's development. I'd also like to thank @0xCube for our ongoing collaboration and the valuable connection between our projects.
 
-## Donate
+## Financial Contributions and Support
 
-If you would like to donate to me to support this project here are a few links:
+If you would like to help support this project financially here are a few links:
 
 - Ko-Fi: [@imarjuna](https://ko-fi.com/imarjuna)
 - Buy Me a Coffee: [@imarjuna](https://buymeacoffee.com/imarjuna)
@@ -106,7 +106,7 @@ If you would like to donate to me to support this project here are a few links:
 
 WebShield is and will always remain free, with all core ad-blocking functionality available to everyone. We believe in keeping the web clean and accessible, without hiding essential features behind paywalls.
 
-As an independent, self-funded project, WebShield relies exclusively on funds out of my pocket and user donations to sustain its development. This funding model is intentional—it ensures our incentives align perfectly with our users' interests. By choosing this path over revenue from ads, tracking, or deals with ad companies, we maintain our independence and stay true to our privacy-first principles.
+As an independent, self-funded project, WebShield relies exclusively on funds out of my pocket and user contributed funds to sustain its development. This funding model is intentional—it ensures our incentives align perfectly with our users' interests. By choosing this path over revenue from ads, tracking, or deals with ad companies, we maintain our independence and stay true to our privacy-first principles.
 
 WebShield+ offers a tiered support system: the more you contribute, the greater your influence on WebShield's future development. Your level of support directly correlates with the weight your voice carries in shaping our roadmap and future features.
 
@@ -118,7 +118,7 @@ For a modest contribution (starting at $1 either monthly or as a one-time paymen
 - A special badge on Discord
 - The satisfaction of supporting a truly independent ad-blocker
 
-I develop WebShield as a full-time student, dedicating and paying with my free time and out of pocket funds to create the best possible ad-blocking experience for Safari users. While supporting the project is entirely optional, every donation directly funds our continued development and independence. This user-supported model allows us to maintain our unwavering focus on privacy and performance, free from the compromises that come with alternative funding sources.
+I develop WebShield as a full-time student, dedicating and paying with my free time and out of pocket funds to create the best possible ad-blocking experience for Safari users. While supporting the project is entirely optional, every financial contribution funds our continued development and independence. This user-supported model allows us to maintain our unwavering focus on privacy and performance, free from the compromises that come with alternative funding sources.
 
 Our commitment to providing a powerful, free ad-blocker for all Safari users remains unchanged. We believe in creating a product valuable enough that users choose to support it, rather than forcing their hand through paywalls or compromising with "acceptable ads."
 
@@ -126,10 +126,10 @@ Together, we can redefine ad-blocking for Safari, prioritizing user privacy, per
 
 ### About Donations & Financial Transparency
 
-* **Tax Considerations**: While we use the term "donations" for simplicity, please be aware that these contributions may be legally classified as income rather than charitable donations. Since WebShield+ offers specific benefits in exchange for financial support (early access, increased influence, etc.), these transactions may technically function as a support contract. But I'm not a lawyer.
+* **Tax Considerations**: While we may use the term "donations", "contributions", "support" for simplicity, please be aware that these financial contributions may be legally classified as income rather than charitable donations. Since WebShield+ offers specific benefits in exchange for financial support (early access, increased influence, etc.), these transactions may technically function as a support contract. But I'm not a lawyer.
 * **Non-Profit Status**: WebShield is not a registered non-profit organization, and contributions are not tax-deductible for donors.
 * **Distribution Notice**: WebShield is currently distributed through TestFlight. We continue explore long-term distribution options (meaning App Store or currently TestFlight, those are the only two options) that align with our values. We're committed to being transparent about our distribution methods and any changes to them.
-* **Hobby Project Status**: WebShield is a side project developed in my free time as a full-time student. While I'm dedicated to its continued development and improvement, the pace of updates may reflect its hobby status. All "donations" are sent to my personage under my name.
+* **Hobby Project Status**: WebShield is a side project developed in my free time as a full-time student. While I'm dedicated to its continued development and improvement, the pace of updates may reflect its hobby status. All financial "donations", "contributions", and "support" are sent to my personage under my name.
 * **Disclaimer**: This disclosure is for informational purposes only and does not constitute legal or tax advice.
 
 ---
