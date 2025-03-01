@@ -6,7 +6,7 @@ https://testflight.apple.com/join/1t5HfEGS
 >
 > - [Here](http://discord.com/invite/gQ4ygPKyur) is the Discord if you want to communicate through instant messaging and get real time updates on the project.
 > - [Here](https://github.com/WebShieldApp/WebShield/discussions/) are general announcements and discussions.
-> - You can [donate](#Donate) to me if you want to support the project and help it become sustainable. WebShield is 100% funded by its users; no "acceptable ads" and no third party deals ever.
+> - You can contribute financially (see below) to me if you want to support the project and help it become sustainable. WebShield is 100% funded by its users; no "acceptable ads" and no third party deals ever. Financial contribution is optional, and no features are behind a paywall, all features are accessible to all. If you do choose to contribute, your voice will cary greater weight in the development of the project (again, please see below).
 
 <p align="center">
 <img src="https://github.com/user-attachments/assets/65b0f456-1ab6-4ccd-8707-77e8f1cb0e10" width="250"/>
