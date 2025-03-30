@@ -2,6 +2,8 @@
 
 https://testflight.apple.com/join/1t5HfEGS
 
+# I am currently temporarily pausing WebShield development due to health reasons. More info [here](https://github.com/arjpar/WebShield/discussions/65)
+
 > [!TIP]
 >
 > - [Here](http://discord.com/invite/gQ4ygPKyur) is the Discord if you want to communicate through instant messaging and get real time updates on the project.
