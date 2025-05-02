@@ -10,8 +10,8 @@ https://testflight.apple.com/join/1t5HfEGS
 >    - WebShield is 100% funded by its users; no "acceptable ads" and no third party deals ever.
 >    - Financial contribution is optional, and no features are behind a paywall, all features are accessible to all.
 >    - If you do choose to contribute, whether financially or otherwise, your voice will cary greater weight in the development of the project.
->    - Gaining a greater voice in the project is called [WebShield+](https://github.com/arjpar/WebShield/wiki/WebShield-#webshield).
->       - There are other ways to join WebShield+ other than financial contributions! Please see the [documentation page on WebShield+](https://github.com/arjpar/WebShield/wiki/WebShield-#webshield).
+>    - Gaining a greater voice in the project is called [[WebShield+](https://github.com/arjpar/WebShield/wiki/WebShield-#webshield)](https://github.com/arjpar/WebShield/wiki/WebShield-Plus).
+>       - There are other ways to join WebShield+ other than financial contributions! Please see the [documentation page on WebShield+](https://github.com/arjpar/WebShield/wiki/WebShield-Plus).
 
 <p align="center">
 <img src="https://github.com/user-attachments/assets/65b0f456-1ab6-4ccd-8707-77e8f1cb0e10" width="250"/>
