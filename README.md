@@ -2,13 +2,11 @@
 
 https://testflight.apple.com/join/1t5HfEGS
 
-# I am currently temporarily pausing WebShield development due to health reasons. More info [here](https://github.com/arjpar/WebShield/discussions/65)
-
 > [!TIP]
 >
 > - [Here](http://discord.com/invite/gQ4ygPKyur) is the Discord if you want to communicate through instant messaging and get real time updates on the project.
 > - [Here](https://github.com/WebShieldApp/WebShield/discussions/) are general announcements and discussions.
-> - You can [contribute financially](https://github.com/arjpar/WebShield/tree/main?tab=readme-ov-file#financial-contributions-and-support) to me if you want to financially support the project and help it become sustainable.
+> - You can [contribute financially](https://github.com/arjpar/WebShield/tree/main?tab=readme-ov-file#financial-contributions-and-support) to me if you want to financially show your support for my work on the project.
 >    - WebShield is 100% funded by its users; no "acceptable ads" and no third party deals ever.
 >    - Financial contribution is optional, and no features are behind a paywall, all features are accessible to all.
 >    - If you do choose to contribute, whether financially or otherwise, your voice will cary greater weight in the development of the project.
@@ -103,7 +101,7 @@ WebShield draws inspiration from privacy and performance-focused projects like u
 
 ## Financial Contributions and Support
 
-If you would like to help support this project financially here are a few links:
+If you would like to help support me financially here are a few links:
 
 - Ko-Fi: [@imarjuna](https://ko-fi.com/imarjuna)
 - Buy Me a Coffee: [@imarjuna](https://buymeacoffee.com/imarjuna)
