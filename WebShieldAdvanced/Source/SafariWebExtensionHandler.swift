@@ -44,7 +44,7 @@ final class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
         }
 
         switch action {
-        case "getAdvancedBlockingData":
+        case "getRulesForHost":
             handleBlockingDataRequest(context, userInfo: userInfo)
         default:
             sendErrorResponse(on: context, message: "Unknown action")

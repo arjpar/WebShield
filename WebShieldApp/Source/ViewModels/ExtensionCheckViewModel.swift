@@ -21,9 +21,9 @@ final class ExtensionCheckViewModel: ObservableObject {
         showEnablePrompt = false
 
         // Check all content blockers
-        for category in FilterListCategory.allCases where category != .all {
+        for category in FilterListCategory.allCases where category != .all && category != .enabled {
             let isEnabled = await contentBlockerState.isContentBlockerEnabled(for: category)
-                        await WebShieldLogger.shared.log("Content Blocker for \(category.rawValue) is enabled: \(isEnabled)")
+            await WebShieldLogger.shared.log("Content Blocker for \(category.rawValue) is enabled: \(isEnabled)")
             if !isEnabled {
                 missingExtensions.append("WebShield \(category.rawValue)")
             }
@@ -31,7 +31,7 @@ final class ExtensionCheckViewModel: ObservableObject {
 
         // Check advanced extension
         let advancedEnabled = await advancedExtensionState.isAdvancedExtensionEnabled()
-                    await WebShieldLogger.shared.log("Advanced (Web)Extension is enabled: \(advancedEnabled)")
+        await WebShieldLogger.shared.log("Advanced (Web)Extension is enabled: \(advancedEnabled)")
         if !advancedEnabled {
             missingExtensions.append("WebShield Advanced")
         }

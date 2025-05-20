@@ -1,7 +1,9 @@
+// WebShieldApp/Source/Models/FilterListCategory.swift
 import SwiftUI
 
 // Add Codable conformance
 enum FilterListCategory: String, CaseIterable, Identifiable, Codable {
+    case enabled = "Enabled"
     case all = "All"
     case ads = "Ads"
     case privacy = "Privacy"
@@ -18,6 +20,7 @@ enum FilterListCategory: String, CaseIterable, Identifiable, Codable {
 
     var systemImage: String {
         switch self {
+        case .enabled: return "checkmark.circle.fill"
         case .all: return "square.grid.2x2"
         case .ads: return "megaphone"
         case .privacy: return "hand.raised"
@@ -31,5 +34,4 @@ enum FilterListCategory: String, CaseIterable, Identifiable, Codable {
         case .custom: return "slider.horizontal.3"
         }
     }
-
 }
