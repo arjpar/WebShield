@@ -195,6 +195,7 @@
 				Resources/src,
 				Source/ChunkFileReader.swift,
 				Source/ContentBlockerEngineWrapper.swift,
+				Source/NotificationManager.swift,
 				Source/SafariWebExtensionHandler.swift,
 			);
 			target = 006FC39B2D3095DD0091056F /* WebShieldAdvanced */;

@@ -4,29 +4,18 @@ import SafariServices
 final class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
     static let logger = Logger(subsystem: "dev.arjuna.WebShield.Advanced", category: "SafariWebExtensionHandler")
     let engine = try? ContentBlockerEngineWrapper(appGroupID: "group.dev.arjuna.WebShield")
-
-    //    func beginRequest(with context: NSExtensionContext) {
-    //        guard let item = context.inputItems.first as? NSExtensionItem,
-    //            let userInfo = item.userInfo as? [String: Any],
-    //            let message = userInfo[SFExtensionMessageKey]
-    //        else {
-    //            context.completeRequest(returningItems: nil, completionHandler: nil)
-    //            return
-    //        }
-    //
-    //        if let profileIdentifier = userInfo[SFExtensionProfileKey] as? UUID {
-    //            // Perform profile specific tasks.
-    //        } else {
-    //            // Perform normal browsing tasks.
-    //        }
-    //
-    //        // Prepare a response
-    //        let response = NSExtensionItem()
-    //        response.userInfo = [SFExtensionMessageKey: ["response": "Hello from Swift! You said: \(message)"]]
-    //
-    //        // Send the response back to JavaScript
-    //        context.completeRequest(returningItems: [response], completionHandler: nil)
-    //    }
+    private let notificationManager = NotificationManager()
+    
+    override init() {
+        super.init()
+        setupRulesUpdateHandler()
+    }
+    
+    private func setupRulesUpdateHandler() {
+        engine?.onRulesUpdated = { [weak self] rulesData in
+            self?.notificationManager.notifyRulesUpdate(rulesData)
+        }
+    }
 
     func beginRequest(with context: NSExtensionContext) {
         guard let message = context.inputItems.first as? NSExtensionItem,
@@ -46,8 +35,30 @@ final class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
         switch action {
         case "getRulesForHost":
             handleBlockingDataRequest(context, userInfo: userInfo)
+        case "getCurrentRules":
+            handleGetCurrentRules(context)
         default:
             sendErrorResponse(on: context, message: "Unknown action")
+        }
+    }
+
+    private func handleGetCurrentRules(_ context: NSExtensionContext) {
+        do {
+            guard let rulesData = try engine?.getCurrentRulesData() else {
+                sendErrorResponse(on: context, message: "Error getting current rules")
+                return
+            }
+            
+            let response = NSExtensionItem()
+            response.userInfo = [
+                SFExtensionMessageKey: [
+                    "rulesData": rulesData,
+                    "timestamp": Date().timeIntervalSince1970
+                ]
+            ]
+            complete(context: context, with: response)
+        } catch {
+            sendErrorResponse(on: context, message: "Error getting current rules: \(error)")
         }
     }
 
