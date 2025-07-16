@@ -5,7 +5,7 @@ import SwiftData
 final class DataManager: ObservableObject, Sendable {
     let container: ModelContainer
     private let filterListProcessor = FilterListProcessor()
-
+    
     init() {
         // Initialize ModelContainer once
         guard

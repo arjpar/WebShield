@@ -12,8 +12,4 @@ struct ProcessedConversionResult {
     let advancedBlockingCount: Int
     /// Number of errors encountered
     let errorsCount: Int
-    /// If the converter found the rules were over the size limit
-    let overLimit: Bool
-    /// A human-readable message about the conversion
-    let message: String?
 }

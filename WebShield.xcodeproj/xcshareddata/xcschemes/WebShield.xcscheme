@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1620"
+   LastUpgradeVersion = "2600"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -37,6 +37,17 @@
                BlueprintIdentifier = "000F2CBA2D2E533500871D5E"
                BuildableName = "AppUITests.xctest"
                BlueprintName = "AppUITests"
+               ReferencedContainer = "container:WebShield.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "00406D222E15C4A60054E001"
+               BuildableName = "WebShieldContentBlockerServiceTests.xctest"
+               BlueprintName = "WebShieldContentBlockerServiceTests"
                ReferencedContainer = "container:WebShield.xcodeproj">
             </BuildableReference>
          </TestableReference>

@@ -26,7 +26,8 @@ enum FilterListProvider {
             homepageUrl:
                 "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
             informationUrl:
-                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"),
+                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"
+        ),
         FilterListData(
             id: UUID().uuidString,
             name: "AdGuard – Mobile Ads",
@@ -50,7 +51,8 @@ enum FilterListProvider {
             isSelected: false,
             description:
                 "EasyList is the primary subscription that removes adverts from web pages in English. Already included in AdGuard Base filter.",
-            homepageUrl: "https://easylist.to/"),
+            homepageUrl: "https://easylist.to/"
+        ),
         FilterListData(
             id: UUID().uuidString,
             name: "AdGuard Tracking Protection",
@@ -63,7 +65,8 @@ enum FilterListProvider {
             homepageUrl:
                 "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
             informationUrl:
-                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"),
+                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"
+        ),
         FilterListData(
             id: UUID().uuidString,
             name: "EasyPrivacy",
@@ -73,7 +76,8 @@ enum FilterListProvider {
             isSelected: true,
             description:
                 "Privacy protection supplement for EasyList.",
-            homepageUrl: "https://easylist.to/"),
+            homepageUrl: "https://easylist.to/"
+        ),
         FilterListData(
             id: UUID().uuidString,
             name: "Online Malicious URL Blocklist",
@@ -84,7 +88,8 @@ enum FilterListProvider {
             description:
                 "Blocks domains that are known to be used to propagate malware and spyware.",
             homepageUrl:
-                "https://gitlab.com/malware-filter/urlhaus-filter#malicious-url-blocklist"),
+                "https://gitlab.com/malware-filter/urlhaus-filter#malicious-url-blocklist"
+        ),
         FilterListData(
             id: UUID().uuidString,
             name: "Phishing URL Blocklist",
@@ -95,7 +100,8 @@ enum FilterListProvider {
             description:
                 "Phishing URL blocklist for uBlock Origin (uBO), AdGuard, Vivaldi, Pi-hole, Hosts file, Dnsmasq, BIND, Unbound, Snort and Suricata.",
             homepageUrl:
-                "https://gitlab.com/malware-filter/phishing-filter#phishing-url-blocklist"),
+                "https://gitlab.com/malware-filter/phishing-filter#phishing-url-blocklist"
+        ),
         FilterListData(
             id: UUID().uuidString,
             name: "Peter Lowe’s Ad and tracking server list",
@@ -105,7 +111,31 @@ enum FilterListProvider {
             isSelected: false,
             description:
                 "Filter that blocks ads, trackers, and other nasty things.",
-            homepageUrl: "https://pgl.yoyo.org/adservers/"),
+            homepageUrl: "https://pgl.yoyo.org/adservers/"
+        ),
+        FilterListData(
+            id: UUID().uuidString,
+            name: "Hide YouTube Shorts",
+            downloadUrl:
+                "https://raw.githubusercontent.com/Harren06/ublock-yt-shorts/refs/heads/main/list.txt",
+            category: .annoyances,
+            isSelected: false,
+            description:
+                "Hide all traces of YouTube shorts videos on YouTube.",
+            homepageUrl: "https://github.com/Harren06/ublock-yt-shorts"
+        ),
+        FilterListData(
+            id: UUID().uuidString,
+            name: "Bypass Paywalls Clean filter",
+            downloadUrl:
+                "https://gitflic.ru/project/magnolia1234/bypass-paywalls-clean-filters/blob/raw?file=bpc-paywall-filter.txt",
+            category: .multipurpose,
+            isSelected: false,
+            description:
+                "Filters for news sites (supports less sites than the extension/add-on).",
+            homepageUrl:
+                "https://gitflic.ru/project/magnolia1234/bypass-paywalls-clean-filters"
+        ),
         FilterListData(
             id: UUID().uuidString,
             name: "AdGuard – Cookie Notices",
@@ -118,7 +148,8 @@ enum FilterListProvider {
             homepageUrl:
                 "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
             informationUrl:
-                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"),
+                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"
+        ),
         FilterListData(
             id: UUID().uuidString,
             name: "EasyList – Cookie Notices",
@@ -153,7 +184,8 @@ enum FilterListProvider {
             isSelected: false,
             description:
                 "Hides and blocks social content, social widgets, social scripts and social icons. Already included in Fanboy's Annoyances list.",
-            homepageUrl: "https://github.com/ryanbr/fanboy-adblock/issues"),
+            homepageUrl: "https://github.com/ryanbr/fanboy-adblock/issues"
+        ),
         FilterListData(
             id: UUID().uuidString,
             name: "Fanboy – Anti-Facebook",
@@ -205,7 +237,8 @@ enum FilterListProvider {
             homepageUrl:
                 "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
             informationUrl:
-                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"),
+                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"
+        ),
         FilterListData(
             id: UUID().uuidString,
             name: "AdGuard – Other Annoyances",
@@ -232,7 +265,8 @@ enum FilterListProvider {
             homepageUrl:
                 "https://github.com/AdguardTeam/AdguardFilters#adguard-filters",
             informationUrl:
-                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"),
+                "https://adguard.com/kb/general/ad-filtering/adguard-filters/"
+        ),
         FilterListData(
             id: UUID().uuidString,
             name: "Fanboy – Annoyances",
@@ -242,7 +276,8 @@ enum FilterListProvider {
             isSelected: false,
             description:
                 "Removes in-page pop-ups and other annoyances. Includes Fanboy's Social Blocking & EasyList Cookie Lists.",
-            homepageUrl: "https://github.com/ryanbr/fanboy-adblock/issues"),
+            homepageUrl: "https://github.com/ryanbr/fanboy-adblock/issues"
+        ),
 
         FilterListData(
             id: UUID().uuidString,
@@ -606,7 +641,8 @@ enum FilterListProvider {
         ),
         FilterListData(
             id: UUID().uuidString,
-            name: "🇵🇱pl: Official Polish filters for AdBlock, uBlock Origin & AdGuard",
+            name:
+                "🇵🇱pl: Official Polish filters for AdBlock, uBlock Origin & AdGuard",
             downloadUrl:
                 "\(partiallyFullUrl)/216_optimized.txt",
             category: .regional,
@@ -963,7 +999,8 @@ enum FilterListProvider {
         ),
         FilterListData(
             id: UUID().uuidString,
-            name: "AdGuard Tests - Extended CSS rules injection into iframe created with js",
+            name:
+                "AdGuard Tests - Extended CSS rules injection into iframe created with js",
             downloadUrl:
                 "https://testcases.agrd.dev/Filters/extended-css-rules/extended-css-iframejs-injection/extended-css-iframejs-injection.txt",
             category: .experimental,
@@ -1106,7 +1143,8 @@ enum FilterListProvider {
         ),
         FilterListData(
             id: UUID().uuidString,
-            name: "AdGuard Tests - JS and Scriptlet rules: Content Security Policy (CSP) tests",
+            name:
+                "AdGuard Tests - JS and Scriptlet rules: Content Security Policy (CSP) tests",
             downloadUrl:
                 "https://testcases.agrd.dev/Filters/content-security-policy/test-content-security-policy.txt",
             category: .experimental,

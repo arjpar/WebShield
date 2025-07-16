@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-    <g id="Shield" transform="matrix(0.613174,0,0,0.613174,-57.9449,-57.0251)">
-        <g id="Shield1" serif:id="Shield">
-            <path id="Shield2" serif:id="Shield" d="M512,175.168L318.905,271.363C278.039,289.17 254.819,319.752 251.701,364.887L250.31,549.12C257.706,674.915 348.821,769.921 512,838.423L512,928C312.682,842.423 173.858,706.742 175.546,552.039L175.546,327.038C177.497,275.668 204.008,240.25 250.31,217.686L512,93L512,175.168ZM512,175.168L512,93L773.69,217.686C819.992,240.25 846.503,275.668 848.454,327.038L848.454,552.039C850.142,706.742 711.318,842.423 512,928L512,838.423C675.179,769.921 766.294,674.915 773.69,549.12L772.299,364.887C769.181,319.752 745.961,289.17 705.095,271.363L512,175.168Z"/>
-        </g>
-    </g>
-</svg>

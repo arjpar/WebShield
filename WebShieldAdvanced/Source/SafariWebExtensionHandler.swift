@@ -1,168 +1,231 @@
-import OSLog
+//
+//  WebExtensionRequestHandler.swift
+//
+//  Created by Arjun on 2025-07-10.
+//
+
+internal import FilterEngine
 import SafariServices
+import os.log
 
-final class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
-    static let logger = Logger(subsystem: "dev.arjuna.WebShield.Advanced", category: "SafariWebExtensionHandler")
-    let engine = try? ContentBlockerEngineWrapper(appGroupID: "group.dev.arjuna.WebShield")
-    private let notificationManager = NotificationManager()
-    
-    override init() {
-        super.init()
-        setupRulesUpdateHandler()
-    }
-    
-    private func setupRulesUpdateHandler() {
-        engine?.onRulesUpdated = { [weak self] rulesData in
-            self?.notificationManager.notifyRulesUpdate(rulesData)
-        }
-    }
+/// WebExtensionRequestHandler processes requests from Safari Web Extensions and provides
+/// content blocking configuration for web pages.
+///
+/// This handler receives requests from the extension's background page, looks up the
+/// appropriate blocking rules for the requested URL, and returns the configuration
+/// back to the extension.
+final public class SafariWebExtensionHandler: NSObject,
+    NSExtensionRequestHandling
+{
+    /// Processes an extension request and provides content blocking configuration.
+    ///
+    /// This method extracts the URL from the request, looks up the appropriate blocking
+    /// rules using WebExtension, and returns the configuration back to the extension.
+    ///
+    /// - Parameters:
+    ///   - context: The extension context containing the request from the extension.
+    public func beginRequest(with context: NSExtensionContext) {
+        print("[WebShield] beginRequest called")
+        os_log(.info, "[WebShield] beginRequest called")
+        let request = context.inputItems.first as? NSExtensionItem
 
-    func beginRequest(with context: NSExtensionContext) {
-        guard let message = context.inputItems.first as? NSExtensionItem,
-            let userInfo = message.userInfo?[SFExtensionMessageKey] as? [String: Any]
-        else {
-            sendErrorResponse(on: context, message: "Invalid request")
+        var message = getMessage(from: request)
+        os_log(
+            .info,
+            "[WebShield] Extracted message: %{public}@",
+            String(describing: message)
+        )
+
+        if message == nil {
+            os_log(.error, "[WebShield] No message found in request")
+            context.completeRequest(returningItems: [])
             return
         }
 
-        SafariWebExtensionHandler.logger.info("Received native message: \(userInfo.description, privacy: .public)")
+        let nativeStart = Int64(Date().timeIntervalSince1970 * 1000)
 
-        guard let action = userInfo["action"] as? String else {
-            sendErrorResponse(on: context, message: "Missing action in request")
-            return
-        }
+        let payload = message?["payload"] as? [String: Any] ?? [:]
+        os_log(
+            .info,
+            "[WebShield] Payload: %{public}@",
+            String(describing: payload)
+        )
+        if let urlString = payload["url"] as? String {
+            if let url = URL(string: urlString) {
+                do {
+                    os_log(.info, "[WebShield] Creating WebExtension instance")
+                    let webExtension = try WebExtension.shared(
+                        groupID: "group.dev.arjuna.WebShield"
+                    )
 
-        switch action {
-        case "getRulesForHost":
-            handleBlockingDataRequest(context, userInfo: userInfo)
-        case "getCurrentRules":
-            handleGetCurrentRules(context)
-        default:
-            sendErrorResponse(on: context, message: "Unknown action")
-        }
-    }
+                    var topUrl: URL?
+                    if let topUrlString = payload["topUrl"] as? String {
+                        topUrl = URL(string: topUrlString)
+                    }
 
-    private func handleGetCurrentRules(_ context: NSExtensionContext) {
-        do {
-            guard let rulesData = try engine?.getCurrentRulesData() else {
-                sendErrorResponse(on: context, message: "Error getting current rules")
-                return
-            }
-            
-            let response = NSExtensionItem()
-            response.userInfo = [
-                SFExtensionMessageKey: [
-                    "rulesData": rulesData,
-                    "timestamp": Date().timeIntervalSince1970
-                ]
-            ]
-            complete(context: context, with: response)
-        } catch {
-            sendErrorResponse(on: context, message: "Error getting current rules: \(error)")
-        }
-    }
-
-    private func handleBlockingDataRequest(_ context: NSExtensionContext, userInfo: [String: Any]) {
-        guard let urlString = userInfo["url"] as? String,
-            let url = URL(string: urlString)
-        else {
-            sendErrorResponse(on: context, message: "Invalid URL")
-            return
-        }
-
-        do {
-            guard let data = try engine?.getBlockingData(for: url) else {
-                sendErrorResponse(on: context, message: "Error fetching blocking data")
-                return
-            }
-            if data.utf8.count > 32_768 {
-                sendChunkedResponse(context, url: urlString)
+                    os_log(
+                        .info,
+                        "[WebShield] Looking up configuration for url: %{public}@, topUrl: %{public}@",
+                        url.absoluteString,
+                        String(describing: topUrl)
+                    )
+                    if let configuration = webExtension.lookup(
+                        pageUrl: url,
+                        topUrl: topUrl
+                    ) {
+                        os_log(
+                            .info,
+                            "[WebShield] Lookup returned configuration: %{public}@",
+                            String(describing: configuration)
+                        )
+                        message?["payload"] = convertToPayload(configuration)
+                    } else {
+                        os_log(
+                            .error,
+                            "[WebShield] Lookup returned nil for url: %{public}@",
+                            url.absoluteString
+                        )
+                    }
+                } catch {
+                    os_log(
+                        .error,
+                        "[WebShield] Failed to get WebExtension instance: %{public}@",
+                        error.localizedDescription
+                    )
+                }
             } else {
-                sendSingleResponse(on: context, data: data, url: urlString)
+                os_log(
+                    .error,
+                    "[WebShield] Invalid url string: %{public}@",
+                    urlString
+                )
             }
-        } catch {
-            sendErrorResponse(on: context, message: "Error getting blocking data: \(error)")
+        } else {
+            os_log(
+                .error,
+                "[WebShield] No url in payload: %{public}@",
+                String(describing: payload)
+            )
+        }
+
+        if var trace = message?["trace"] as? [String: Int64] {
+            trace["nativeStart"] = nativeStart
+            trace["nativeEnd"] = Int64(Date().timeIntervalSince1970 * 1000)
+            message?["trace"] = trace  // Reassign the modified dictionary back
+        }
+
+        // Enable verbose logging in the content script.
+        // In the real app `verbose` flag should only be true for debugging purposes.
+        message?["verbose"] = true
+
+        if let safeMessage = message {
+            os_log(
+                .info,
+                "[WebShield] Sending response: %{public}@",
+                String(describing: safeMessage)
+            )
+            let response = createResponse(with: safeMessage)
+            context.completeRequest(
+                returningItems: [response],
+                completionHandler: nil
+            )
+        } else {
+            os_log(.error, "[WebShield] No safeMessage to send in response")
+            context.completeRequest(returningItems: [], completionHandler: nil)
         }
     }
 
-    private func sendChunkedResponse(_ context: NSExtensionContext, url: String) {
-        do {
-            guard let reader = try engine?.makeChunkedReader() else {
-                sendErrorResponse(on: context, message: "Error making chunked reader")
-                return
-            }
+    /// Converts a WebExtension.Configuration object to a dictionary payload.
+    ///
+    /// - Parameters:
+    ///   - configuration: The WebExtension.Configuration object to convert.
+    /// - Returns: A dictionary containing CSS, extended CSS, JS, and scriptlets
+    ///           that should be applied to the web page.
+    private func convertToPayload(
+        _ configuration: WebExtension.Configuration
+    ) -> [String: Any] {
+        var payload: [String: Any] = [:]
+        payload["css"] = configuration.css
+        payload["extendedCss"] = configuration.extendedCss
+        payload["js"] = configuration.js
 
-            let response = NSExtensionItem()
-            var message: [String: Any] = [
-                "url": url,
-                "chunked": true,
-                "more": true,
-            ]
-
-            if let chunk = reader.nextChunk() {
-                message["data"] = chunk
-                message["more"] = reader.progress < 1.0
-            }
-
-            response.userInfo = [SFExtensionMessageKey: message]
-            complete(context: context, with: response)
-
-        } catch {
-            sendErrorResponse(on: context, message: "Error in chunked response: \(error)")
+        var scriptlets: [[String: Any]] = []
+        for scriptlet in configuration.scriptlets {
+            var scriptletData: [String: Any] = [:]
+            scriptletData["name"] = scriptlet.name
+            scriptletData["args"] = scriptlet.args
+            scriptlets.append(scriptletData)
         }
+
+        payload["scriptlets"] = scriptlets
+
+        return payload
     }
 
-    private func sendSingleResponse(on context: NSExtensionContext, data: String, url: String) {
+    /// Creates an NSExtensionItem response with the provided JSON payload.
+    ///
+    /// - Parameters:
+    ///   - json: The JSON payload to include in the response.
+    /// - Returns: An NSExtensionItem containing the response message.
+    private func createResponse(with json: [String: Any?])
+        -> NSExtensionItem
+    {
         let response = NSExtensionItem()
-        response.userInfo = [
-            SFExtensionMessageKey: [
-                "url": url,
-                "data": data,
-                "chunked": false,
-            ]
-        ]
-        complete(context: context, with: response)
+        if #available(iOS 15.0, macOS 11.0, *) {
+            response.userInfo = [SFExtensionMessageKey: json]
+        } else {
+            response.userInfo = ["message": json]
+        }
+
+        return response
     }
 
-    private func sendErrorResponse(on context: NSExtensionContext, message: String) {
-        SafariWebExtensionHandler.logger.error("\(message)")
-        let response = NSExtensionItem()
-        response.userInfo = [SFExtensionMessageKey: ["error": message]]
-        complete(context: context, with: response)
-    }
+    /// Extracts the message from an extension request.
+    ///
+    /// This method handles different Safari versions by using the appropriate
+    /// keys for accessing the message and profile information.
+    ///
+    /// - Parameters:
+    ///   - request: The NSExtensionItem containing the request from the extension.
+    /// - Returns: The message dictionary or nil if no valid message was found.
+    private func getMessage(from request: NSExtensionItem?) -> [String:
+        Any?]?
+    {
+        if request == nil {
+            os_log(.error, "[WebShield] getMessage: request is nil")
+            return nil
+        }
 
-    private func complete(context: NSExtensionContext, with item: NSExtensionItem) {
-        context.completeRequest(returningItems: [item], completionHandler: nil)
+        let profile: UUID?
+        if #available(iOS 17.0, macOS 14.0, *) {
+            profile = request?.userInfo?[SFExtensionProfileKey] as? UUID
+        } else {
+            profile = request?.userInfo?["profile"] as? UUID
+        }
+
+        let message: Any?
+        if #available(iOS 15.0, macOS 11.0, *) {
+            message = request?.userInfo?[SFExtensionMessageKey]
+        } else {
+            message = request?.userInfo?["message"]
+        }
+
+        os_log(
+            .info,
+            "[WebShield] Received message from browser.runtime.sendNativeMessage: %{public}@ (profile: %{public}@)",
+            String(describing: message),
+            profile?.uuidString ?? "none"
+        )
+
+        if message is [String: Any?] {
+            return message as? [String: Any?]
+        }
+
+        os_log(
+            .error,
+            "[WebShield] getMessage: message is not a dictionary: %{public}@",
+            String(describing: message)
+        )
+        return nil
     }
 }
-
-//import OSLog
-//import SafariServices
-//
-//final class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
-//
-//    static let logger = Logger(subsystem: "dev.arjuna.WebShield.Advanced", category: "SafariWebExtensionHandler")
-//
-//    func beginRequest(with context: NSExtensionContext) {
-//        guard let item = context.inputItems.first as? NSExtensionItem,
-//            let userInfo = item.userInfo as? [String: Any],
-//            let message = userInfo[SFExtensionMessageKey]
-//        else {
-//            context.completeRequest(returningItems: nil, completionHandler: nil)
-//            return
-//        }
-//
-//        if let profileIdentifier = userInfo[SFExtensionProfileKey] as? UUID {
-//            // Perform profile specific tasks.
-//        } else {
-//            // Perform normal browsing tasks.
-//        }
-//
-//        // Prepare a response
-//        let response = NSExtensionItem()
-//        response.userInfo = [SFExtensionMessageKey: ["response": "Hello from Swift! You said: \(message)"]]
-//
-//        // Send the response back to JavaScript
-//        context.completeRequest(returningItems: [response], completionHandler: nil)
-//    }
-//}
