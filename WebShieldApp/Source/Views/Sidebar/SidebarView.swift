@@ -21,7 +21,7 @@ struct SidebarView: View {
                 // Original categories (excluding .enabled if placed above)
                 let categories: [FilterListCategory] = [
                     .all, .ads, .privacy, .security, .multipurpose, .cookies, .social, .annoyances, .regional,
-                    .experimental, .custom,
+                    .experimental, .custom
                 ]
                 ForEach(categories, id: \.self) { category in
                     NavigationLink(value: category) {

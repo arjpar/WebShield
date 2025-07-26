@@ -62,7 +62,7 @@ struct HelpSheet: View {
                                     text: "GitHub Discussions",
                                     url: URL(string: "https://github.com/arjpar/WebShield/discussions")!
                                 ),
-                                (text: "Discord Server", url: URL(string: "https://discord.gg/gQ4ygPKyur")!),
+                                (text: "Discord Server", url: URL(string: "https://discord.gg/gQ4ygPKyur")!)
                             ]
                         )
 
@@ -79,7 +79,7 @@ struct HelpSheet: View {
                                     text: "Bug Reports",
                                     url: URL(string: "https://github.com/arjpar/WebShield/issues")!
                                 ),
-                                (text: "FAQ", url: URL(string: "https://github.com/arjpar/WebShield/wiki/FAQ")!),
+                                (text: "FAQ", url: URL(string: "https://github.com/arjpar/WebShield/wiki/FAQ")!)
                             ]
                         )
 
@@ -134,14 +134,12 @@ struct HelpSheet: View {
         }
     }
 
-    private func helpSection(icon: String, title: String, content: String, link: (text: String, url: URL)) -> some View
-    {
+    private func helpSection(icon: String, title: String, content: String, link: (text: String, url: URL)) -> some View {
         helpSection(icon: icon, title: title, content: content, links: [link])
     }
 
     private func helpSection(icon: String, title: String, content: String, links: [(text: String, url: URL)])
-        -> some View
-    {
+        -> some View {
         VStack(alignment: .leading, spacing: 12) {
             Label(title, systemImage: icon)
                 .font(.headline)

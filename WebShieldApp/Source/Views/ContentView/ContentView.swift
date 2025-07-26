@@ -1,3 +1,4 @@
+internal import FilterEngine
 import Foundation
 import SwiftData
 import SwiftUI
@@ -257,7 +258,7 @@ struct ContentView: View {
 
                 // Reload all content blockers
                 for category in FilterListCategory.allCases
-                where category != .all {
+                where category != .all && category != .enabled {
                     try await contentBlockerState.reloadContentBlocker(
                         for: category
                     )
@@ -429,14 +430,33 @@ struct ContentView: View {
                 )
             }
 
-            // Overwrite advancedBlocking.json with empty array
+            // Overwrite advancedBlocking.txt with empty string
             let advancedBlockingURL = groupURL.appendingPathComponent(
-                "advancedBlocking.json"
+                "advancedBlocking.txt"
             )
-            try Data("[]".utf8).write(to: advancedBlockingURL, options: .atomic)
+            try "".write(
+                to: advancedBlockingURL,
+                atomically: true,
+                encoding: .utf8
+            )
             await WebShieldLogger.shared.log(
-                "Wrote empty advancedBlocking.json"
+                "Wrote empty advancedBlocking.txt"
             )
+
+            // Build the filter engine with no rules to ensure it's in a clean state
+            do {
+                let webExtension = try WebExtension.shared(
+                    groupID: Identifiers.groupID
+                )
+                _ = try webExtension.buildFilterEngine(rules: "")
+                await WebShieldLogger.shared.log(
+                    "✅ Built filter engine with no rules (clean state)"
+                )
+            } catch {
+                await WebShieldLogger.shared.log(
+                    "❌ Failed to build filter engine: \(error)"
+                )
+            }
 
         } catch {
             await WebShieldLogger.shared.log(

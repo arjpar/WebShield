@@ -1163,7 +1163,7 @@ enum FilterListProvider {
             description:
                 "Used for internal development for the validation and verification of WebShield's content blocking capabilities. Unless what you know what you're doing, or are told by developers to enable this list for testing, you need not enable it.",
             homepageUrl: "https://testcases.agrd.dev"
-        ),
+        )
 
     ]
 

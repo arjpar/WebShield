@@ -96,7 +96,7 @@ struct FilterListView: View {
         // Define the display order for actual categories
         let categoryOrder: [FilterListCategory] = [
             .ads, .privacy, .security, .multipurpose, .social,
-            .cookies, .annoyances, .regional, .experimental,  // Note: .enabled and .all are not typically grouped this way
+            .cookies, .annoyances, .regional, .experimental  // Note: .enabled and .all are not typically grouped this way
         ]
 
         var orderedSections = categoryOrder.compactMap { catOrder in

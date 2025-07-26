@@ -85,7 +85,7 @@ struct PulsatingCircleButton: View {
         } else {
             return .downloaded  // Default to green
         }
-        
+
         // TODO
         //        let hasPerformedRefresh = AppSettings.shared.hasPerformedInitialRefresh
         //        let lastRefreshedEnabledFilters = AppSettings.shared.lastRefreshedEnabledFilters

@@ -127,8 +127,7 @@ final class FilterListProcessor {
 
       for (result, _) in resultsForCategory {
         if let convertedString = result.converted,
-          let data = convertedString.data(using: .utf8)
-        {
+          let data = convertedString.data(using: .utf8) {
           do {
             if let array = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] {
               regularRules.append(contentsOf: array)
@@ -228,7 +227,7 @@ final class FilterListProcessor {
             ],
             "action": [
               "type": "ignore-previous-rules"
-            ],
+            ]
           ]
         ]
         finalData = try JSONSerialization.data(
@@ -265,7 +264,7 @@ final class FilterListProcessor {
         ],
         "action": [
           "type": "ignore-previous-rules"
-        ],
+        ]
       ]
     ]
     let data = try JSONSerialization.data(
@@ -339,8 +338,7 @@ final class FilterListProcessor {
 
   /// Converts filter rules using the ContentBlockerConverter.
   private func convertRules(filterRules: [FilterRule]) async
-    -> ProcessedConversionResult
-  {
+    -> ProcessedConversionResult {
     await WebShieldLogger.shared.log(
       "⚙️ Starting conversion of \(filterRules.count) rules"
     )
@@ -410,8 +408,7 @@ final class FilterListProcessor {
 
     do {
       if let jsonArray = try JSONSerialization.jsonObject(with: data)
-        as? [Any]
-      {
+        as? [Any] {
         return jsonArray.count
       }
     } catch {
@@ -564,8 +561,7 @@ final class FilterListProcessor {
   }
 
   private static func parseRulesStatic(rawText: String, defaultCategory: FilterListCategory)
-    -> [FilterRule]
-  {
+    -> [FilterRule] {
     var rules: [FilterRule] = []
     let lines = rawText.components(separatedBy: .newlines)
     for line in lines {
@@ -710,8 +706,7 @@ final class FilterListProcessor {
 
     for (result, _) in resultsForCategory {
       if let convertedString = result.converted,
-        let data = convertedString.data(using: .utf8)
-      {
+        let data = convertedString.data(using: .utf8) {
         do {
           if let array = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] {
             regularRules.append(contentsOf: array)
@@ -761,11 +756,17 @@ final class FilterListProcessor {
       "🚀 Advanced Rules: Saved to advancedBlocking.txt (\(allAdvancedRulesText.isEmpty ? "empty" : "with rules"))"
     )
 
-    // Build the filter engine after writing advanced rules
+    // Always build the filter engine, even when no rules are selected
+    // This ensures the engine is in a clean state when no filters are active
     do {
       let webExtension = try WebExtension.shared(groupID: groupIdentifier)
       _ = try webExtension.buildFilterEngine(rules: allAdvancedRulesText)
-      await WebShieldLogger.shared.log("✅ Built filter engine after saving advancedBlocking.txt")
+      
+      if allAdvancedRulesText.isEmpty {
+        await WebShieldLogger.shared.log("✅ Built filter engine with no rules (clean state)")
+      } else {
+        await WebShieldLogger.shared.log("✅ Built filter engine with \(allAdvancedRulesText.count) characters of rules")
+      }
     } catch {
       await WebShieldLogger.shared.log("❌ Failed to build filter engine: \(error)")
     }

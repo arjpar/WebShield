@@ -41,7 +41,7 @@ struct ImportView: View {
                 }
             }
             //            .disabled(state.isImporting)
-            .alert("Error", isPresented: $state.showError, presenting: state.error) { error in
+            .alert("Error", isPresented: $state.showError, presenting: state.error) { _ in
                 Button("OK") {}
             } message: { error in
                 Text(error.localizedDescription)

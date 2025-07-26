@@ -39,7 +39,7 @@ public actor WebShieldLogger {
     public func allLogs() -> [String] {
         logs
     }
-    
+
     public func clearLogs() {
         logs.removeAll()
         log("Logs cleared.") // Optionally, log the action itself

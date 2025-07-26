@@ -4,7 +4,8 @@ import SwiftUI
 @MainActor
 final class ContentBlockerState: ObservableObject {
   var refreshErrorViewModel: RefreshErrorViewModel
-
+  private let maxRetryAttempts = 5
+  
   init(refreshErrorViewModel: RefreshErrorViewModel) {
     self.refreshErrorViewModel = refreshErrorViewModel
   }
@@ -17,11 +18,37 @@ final class ContentBlockerState: ObservableObject {
 
     let identifier = "dev.arjuna.WebShield.DeclarativeBlockList-\(category.rawValue)"
     do {
+      try await reloadContentBlockerWithRetry(identifier: identifier, category: category, attemptCount: 1)
+    } catch {
+      await handleReloadError(error, for: category)
+    }
+  }
+  
+  // Helper method to reload content blocker with retry logic
+  private func reloadContentBlockerWithRetry(identifier: String, category: FilterListCategory, attemptCount: Int) async throws {
+    do {
       try await SFContentBlockerManager.reloadContentBlocker(withIdentifier: identifier)
       await WebShieldLogger.shared.log(
         "Content blocker reloaded successfully for category: \(category.rawValue)")
     } catch {
-      await handleReloadError(error, for: category)
+      if attemptCount < maxRetryAttempts {
+        await WebShieldLogger.shared.log(
+          "Reload attempt \(attemptCount) failed for \(category.rawValue). Retrying... (\(attemptCount)/\(maxRetryAttempts))")
+        
+        // Add a small delay before retrying (increasing with each attempt)
+        try? await Task.sleep(nanoseconds: UInt64(0.5 * Double(attemptCount) * 1_000_000_000))
+        
+        // Recursive call for next attempt
+        try await reloadContentBlockerWithRetry(
+          identifier: identifier, 
+          category: category, 
+          attemptCount: attemptCount + 1
+        )
+      } else {
+        await WebShieldLogger.shared.log(
+          "All \(maxRetryAttempts) reload attempts failed for \(category.rawValue)")
+        throw error
+      }
     }
   }
 

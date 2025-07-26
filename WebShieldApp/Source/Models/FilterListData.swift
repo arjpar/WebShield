@@ -9,7 +9,7 @@ struct FilterListData {
     let description: String
     let homepageUrl: String?
     let informationUrl: String?
-    
+
     init(
         id: String,
         name: String,

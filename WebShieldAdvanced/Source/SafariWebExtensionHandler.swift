@@ -15,8 +15,7 @@ import os.log
 /// appropriate blocking rules for the requested URL, and returns the configuration
 /// back to the extension.
 final public class SafariWebExtensionHandler: NSObject,
-    NSExtensionRequestHandling
-{
+    NSExtensionRequestHandling {
     /// Processes an extension request and provides content blocking configuration.
     ///
     /// This method extracts the URL from the request, looks up the appropriate blocking
@@ -168,8 +167,7 @@ final public class SafariWebExtensionHandler: NSObject,
     ///   - json: The JSON payload to include in the response.
     /// - Returns: An NSExtensionItem containing the response message.
     private func createResponse(with json: [String: Any?])
-        -> NSExtensionItem
-    {
+        -> NSExtensionItem {
         let response = NSExtensionItem()
         if #available(iOS 15.0, macOS 11.0, *) {
             response.userInfo = [SFExtensionMessageKey: json]
@@ -189,8 +187,7 @@ final public class SafariWebExtensionHandler: NSObject,
     ///   - request: The NSExtensionItem containing the request from the extension.
     /// - Returns: The message dictionary or nil if no valid message was found.
     private func getMessage(from request: NSExtensionItem?) -> [String:
-        Any?]?
-    {
+        Any?]? {
         if request == nil {
             os_log(.error, "[WebShield] getMessage: request is nil")
             return nil

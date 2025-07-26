@@ -2,10 +2,10 @@ import Foundation
 import SwiftData
 
 @MainActor
-final class DataManager: ObservableObject, Sendable {
+final class DataManager: ObservableObject {
     let container: ModelContainer
     private let filterListProcessor = FilterListProcessor()
-    
+
     init() {
         // Initialize ModelContainer once
         guard
@@ -154,8 +154,7 @@ final class DataManager: ObservableObject, Sendable {
                 // If a FilterList exists in the database but *not* in the provider,
                 // and it's *not* a custom list, delete it.  Custom lists are preserved.
                 if !FilterListProvider.filterListData.contains(where: { $0.id == filterList.id })
-                    && filterList.category != .custom
-                {
+                    && filterList.category != .custom {
                     context.delete(filterList)
                 }
             }
