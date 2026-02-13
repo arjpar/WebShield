@@ -26,20 +26,14 @@ function _toPrimitive(t, r) {
   return ("string" === r ? String : Number)(t);
 }
 /*
- * WebExtension v1.0.0 (build date: Sat, 12 Jul 2025 21:09:27 GMT)
- * (c) 2025 ameshkov
+ * WebExtension v1.0.4 (build date: Wed, 14 Jan 2026 14:09:53 GMT)
+ * (c) 2026 ameshkov
  * Released under the ISC license
  * https://github.com/ameshkov/safari-blocker
  */
 (function (browser) {
   "use strict";
 
-  /*
-   * SafariExtension v3.0.1 (build date: Thu, 10 Jul 2025 10:34:31 GMT)
-   * (c) 2025 Adguard Software Ltd.
-   * Released under the GPL-3.0 license
-   * https://github.com/AdguardTeam/SafariConverterLib/tree/master/Extension
-   */
   /**
    * @adguard/extended-css - v2.1.1 - Thu Dec 19 2024
    * https://github.com/AdguardTeam/ExtendedCss#homepage
@@ -416,7 +410,7 @@ function _toPrimitive(t, r) {
   const convertMatchesCss = (
     match,
     extendedPseudoClass,
-    regularPseudoElement
+    regularPseudoElement,
   ) => {
     // ':matches-css-before('  -->  ':matches-css(before, '
     // ':matches-css-after('   -->  ':matches-css(after, '
@@ -440,7 +434,7 @@ function _toPrimitive(t, r) {
 
     if (normalizedSelector.includes(INVALID_OLD_SYNTAX_MARKER)) {
       throw new Error(
-        `Invalid extended-css old syntax selector: '${selector}'`
+        `Invalid extended-css old syntax selector: '${selector}'`,
       );
     }
     return normalizedSelector;
@@ -728,7 +722,7 @@ function _toPrimitive(t, r) {
       !isRelativePseudoClassNode(astNode)
     ) {
       throw new Error(
-        "Only AbsolutePseudoClass or RelativePseudoClass ast node can have a name"
+        "Only AbsolutePseudoClass or RelativePseudoClass ast node can have a name",
       );
     }
     if (!astNode.name) {
@@ -755,13 +749,13 @@ function _toPrimitive(t, r) {
       !isAbsolutePseudoClassNode(astNode)
     ) {
       throw new Error(
-        "Only RegularSelector ot AbsolutePseudoClass ast node can have a value"
+        "Only RegularSelector ot AbsolutePseudoClass ast node can have a value",
       );
     }
     if (!astNode.value) {
       throw new Error(
         errorMessage ||
-          "Ast RegularSelector ot AbsolutePseudoClass node should have a value"
+          "Ast RegularSelector ot AbsolutePseudoClass node should have a value",
       );
     }
     return astNode.value;
@@ -844,7 +838,7 @@ function _toPrimitive(t, r) {
   const getPseudoClassNode = (extendedSelectorNode) => {
     return getNodeOnlyChild(
       extendedSelectorNode,
-      "Extended selector should be specified"
+      "Extended selector should be specified",
     );
   };
   /**
@@ -860,12 +854,12 @@ function _toPrimitive(t, r) {
   const getRelativeSelectorListNode = (pseudoClassNode) => {
     if (!isRelativePseudoClassNode(pseudoClassNode)) {
       throw new Error(
-        "Only RelativePseudoClass node can have relative SelectorList node as child"
+        "Only RelativePseudoClass node can have relative SelectorList node as child",
       );
     }
     return getNodeOnlyChild(
       pseudoClassNode,
-      `Missing arg for :${getNodeName(pseudoClassNode)}() pseudo-class`
+      `Missing arg for :${getNodeName(pseudoClassNode)}() pseudo-class`,
     );
   };
   const ATTRIBUTE_CASE_INSENSITIVE_FLAG = "i";
@@ -963,11 +957,11 @@ function _toPrimitive(t, r) {
 
   const isRegexpOpening = (context, prevTokenValue, bufferNodeValue) => {
     const lastExtendedPseudoClassName = getLast(
-      context.extendedPseudoNamesStack
+      context.extendedPseudoNamesStack,
     );
     if (!lastExtendedPseudoClassName) {
       throw new Error(
-        "Regexp pattern allowed only in arg of extended pseudo-class"
+        "Regexp pattern allowed only in arg of extended pseudo-class",
       );
     } // for regexp pattens the slash should not be escaped
     // const isRegexpPatternSlash = prevTokenValue !== BACKSLASH;
@@ -986,7 +980,7 @@ function _toPrimitive(t, r) {
         ? `in arg part: '${bufferNodeValue}'`
         : "arg";
       throw new Error(
-        `Invalid regexp pattern for :${lastExtendedPseudoClassName}() pseudo-class ${rawArgDesc}`
+        `Invalid regexp pattern for :${lastExtendedPseudoClassName}() pseudo-class ${rawArgDesc}`,
       );
     } // for other pseudo-classes regexp pattern can be either the whole arg or its part
 
@@ -1045,7 +1039,7 @@ function _toPrimitive(t, r) {
     ) {
       // eslint-disable-next-line max-len
       throw new Error(
-        `'[${context.attributeBuffer}]' is not a valid attribute due to '${firstAttrTokenValue}' at start of it`
+        `'[${context.attributeBuffer}]' is not a valid attribute due to '${firstAttrTokenValue}' at start of it`,
       );
     }
     const lastAttrToken = getLast(attrTokens);
@@ -1060,7 +1054,7 @@ function _toPrimitive(t, r) {
     if (lastAttrTokenValue === EQUAL_SIGN) {
       // e.g. '[style=]'
       throw new Error(
-        `'[${context.attributeBuffer}]' is not a valid attribute due to '${EQUAL_SIGN}'`
+        `'[${context.attributeBuffer}]' is not a valid attribute due to '${EQUAL_SIGN}'`,
       );
     }
     const equalSignIndex = attrTokens.findIndex((token) => {
@@ -1102,7 +1096,7 @@ function _toPrimitive(t, r) {
       // e.g. 'table[style*=border: 0px"]'
 
       throw new Error(
-        `'[${context.attributeBuffer}]' is not a valid attribute`
+        `'[${context.attributeBuffer}]' is not a valid attribute`,
       );
     } // otherwise if quotes for value are present
     // the last token before `]` can still be word-type token
@@ -1249,7 +1243,7 @@ function _toPrimitive(t, r) {
     } else {
       // eslint-disable-next-line max-len
       throw new Error(
-        `${bufferNode.type} node cannot be updated. Only RegularSelector and AbsolutePseudoClass are supported`
+        `${bufferNode.type} node cannot be updated. Only RegularSelector and AbsolutePseudoClass are supported`,
       );
     }
   };
@@ -1373,7 +1367,7 @@ function _toPrimitive(t, r) {
     const selectorNode = getBufferNode(context);
     if (!selectorNode) {
       throw new Error(
-        "No SelectorNode, impossible to continue selector parsing by ExtendedCss"
+        "No SelectorNode, impossible to continue selector parsing by ExtendedCss",
       );
     }
     const lastSelectorNodeChild = getLast(selectorNode.children);
@@ -1442,11 +1436,11 @@ function _toPrimitive(t, r) {
     selector,
     tokenValue,
     nextTokenValue,
-    nextToNextTokenValue
+    nextToNextTokenValue,
   ) => {
     if (!nextTokenValue) {
       throw new Error(
-        `Invalid colon ':' at the end of selector: '${selector}'`
+        `Invalid colon ':' at the end of selector: '${selector}'`,
       );
     }
     if (!isSupportedPseudoClass(nextTokenValue.toLowerCase())) {
@@ -1484,7 +1478,7 @@ function _toPrimitive(t, r) {
       ) {
         // eslint-disable-next-line max-len
         throw new Error(
-          `Usage of :${nextTokenValue}() pseudo-class is not allowed inside regular pseudo: '${getLast(context.standardPseudoNamesStack)}'`
+          `Usage of :${nextTokenValue}() pseudo-class is not allowed inside regular pseudo: '${getLast(context.standardPseudoNamesStack)}'`,
         );
       } else {
         // stop RegularSelector value collecting
@@ -1528,7 +1522,7 @@ function _toPrimitive(t, r) {
     const standardCssSelectors = selectorList.children.map((selectorNode) => {
       const selectorOnlyChild = getNodeOnlyChild(
         selectorNode,
-        "Ast Selector node should have RegularSelector node"
+        "Ast Selector node should have RegularSelector node",
       );
       return getNodeValue(selectorOnlyChild);
     });
@@ -1562,14 +1556,14 @@ function _toPrimitive(t, r) {
       return false;
     }
     const extendedPseudoClassNode = getPseudoClassNode(
-      currExtendedSelectorNode
+      currExtendedSelectorNode,
     );
     const pseudoName = getNodeName(extendedPseudoClassNode);
     if (isAbsolutePseudoClass(pseudoName)) {
       return false;
     }
     const relativeSelectorList = getRelativeSelectorListNode(
-      extendedPseudoClassNode
+      extendedPseudoClassNode,
     );
     const innerSelectorNodes = relativeSelectorList.children; // simple checking for standard selectors in arg of :not() or :is() pseudo-class
     // e.g. 'div > *:is(div, a, span)'
@@ -1580,14 +1574,14 @@ function _toPrimitive(t, r) {
           try {
             const selectorOnlyChild = getNodeOnlyChild(
               selectorNode,
-              "Selector node should have RegularSelector"
+              "Selector node should have RegularSelector",
             ); // it means that the only child is RegularSelector and it can be optimized
 
             return isRegularSelectorNode(selectorOnlyChild);
           } catch (e) {
             return false;
           }
-        }
+        },
       );
       if (areAllSelectorNodeChildrenRegular) {
         return true;
@@ -1618,16 +1612,16 @@ function _toPrimitive(t, r) {
 
   const getOptimizedExtendedSelector = (
     currExtendedSelectorNode,
-    prevRegularSelectorNode
+    prevRegularSelectorNode,
   ) => {
     if (!currExtendedSelectorNode) {
       return null;
     }
     const extendedPseudoClassNode = getPseudoClassNode(
-      currExtendedSelectorNode
+      currExtendedSelectorNode,
     );
     const relativeSelectorList = getRelativeSelectorListNode(
-      extendedPseudoClassNode
+      extendedPseudoClassNode,
     );
     const hasInnerExtendedSelector = hasExtendedSelector(relativeSelectorList);
     if (!hasInnerExtendedSelector) {
@@ -1646,7 +1640,7 @@ function _toPrimitive(t, r) {
       optimizeSelectorListNode(relativeSelectorList);
     const optimizedExtendedPseudoClassNode = updateNodeChildren(
       extendedPseudoClassNode,
-      [optimizedRelativeSelectorList]
+      [optimizedRelativeSelectorList],
     );
     return updateNodeChildren(currExtendedSelectorNode, [
       optimizedExtendedPseudoClassNode,
@@ -1683,7 +1677,7 @@ function _toPrimitive(t, r) {
       const currentChild = getItemByIndex(
         rawSelectorNodeChildren,
         currentIndex,
-        "currentChild should be specified"
+        "currentChild should be specified",
       ); // no need to optimize the very first child which is always RegularSelector node
 
       if (currentIndex === 0) {
@@ -1704,10 +1698,10 @@ function _toPrimitive(t, r) {
             // e.g. div > *:is(.banner:not(.block))
             optimizedExtendedSelector = getOptimizedExtendedSelector(
               optimizedExtendedSelector,
-              prevRegularChild
+              prevRegularChild,
             );
             isOptimizationNeeded = shouldOptimizeExtendedSelector(
-              optimizedExtendedSelector
+              optimizedExtendedSelector,
             );
           } // if it was simple :not() of :is() with standard selector arg
           // e.g. 'div:not([class][id])'
@@ -1721,7 +1715,7 @@ function _toPrimitive(t, r) {
             optimizedChildrenList.push(optimizedExtendedSelector); // if optimization is not needed
 
             const optimizedPseudoClass = getPseudoClassNode(
-              optimizedExtendedSelector
+              optimizedExtendedSelector,
             );
             const optimizedPseudoName = getNodeName(optimizedPseudoClass); // parent element checking is used to apply :is() and :not() pseudo-classes as extended.
             // as there is no parentNode for root element (html)
@@ -1775,7 +1769,7 @@ function _toPrimitive(t, r) {
   const optimizeSelectorListNode = (selectorListNode) => {
     return updateNodeChildren(
       selectorListNode,
-      selectorListNode.children.map((s) => optimizeSelectorNode(s))
+      selectorListNode.children.map((s) => optimizeSelectorNode(s)),
     );
   };
   /**
@@ -1898,7 +1892,7 @@ function _toPrimitive(t, r) {
               addAstNodeByType(
                 context,
                 NODE.ABSOLUTE_PSEUDO_CLASS,
-                lowerCaseTokenValue
+                lowerCaseTokenValue,
               );
             } else {
               // if it is not absolute pseudo-class, it must be relative one
@@ -1906,7 +1900,7 @@ function _toPrimitive(t, r) {
               addAstNodeByType(
                 context,
                 NODE.RELATIVE_PSEUDO_CLASS,
-                lowerCaseTokenValue
+                lowerCaseTokenValue,
               ); // for :not() and :is() pseudo-classes parsed ast should be optimized later
 
               if (isOptimizationPseudoClass(lowerCaseTokenValue)) {
@@ -1989,7 +1983,7 @@ function _toPrimitive(t, r) {
                   !nextTokenValue ||
                   doesRegularContinueAfterSpace(
                     nextTokenType,
-                    nextTokenValue
+                    nextTokenValue,
                   ) || // we also should collect space inside attribute value
                   // e.g. `[onclick^="window.open ('https://example.com/share?url="]`
                   // parser position             ↑
@@ -2105,7 +2099,7 @@ function _toPrimitive(t, r) {
                       isRegexpOpening(
                         context,
                         prevTokenValue,
-                        getNodeValue(bufferNode)
+                        getNodeValue(bufferNode),
                       )
                     ) {
                       context.isRegexpOpen = !context.isRegexpOpen;
@@ -2169,7 +2163,7 @@ function _toPrimitive(t, r) {
                   // e.g. 'div]'
                   // eslint-disable-next-line max-len
                   throw new Error(
-                    `'${selector}' is not a valid selector due to '${tokenValue}' after '${getNodeValue(bufferNode)}'`
+                    `'${selector}' is not a valid selector due to '${tokenValue}' after '${getNodeValue(bufferNode)}'`,
                   );
                 } // needed for proper parsing regular selectors after the attributes with comma
                 // e.g. 'div[data-comma="0,1"] > img'
@@ -2214,7 +2208,7 @@ function _toPrimitive(t, r) {
                   // e.g. ':nth-ancestor(3)'
                   // or   ':upward(span)'
                   throw new Error(
-                    `${NO_SELECTOR_ERROR_PREFIX} before :${nextTokenValue}() pseudo-class`
+                    `${NO_SELECTOR_ERROR_PREFIX} before :${nextTokenValue}() pseudo-class`,
                   );
                 } else {
                   // make it more obvious if selector starts with pseudo with no tag specified
@@ -2254,14 +2248,14 @@ function _toPrimitive(t, r) {
                   selector,
                   tokenValue,
                   nextTokenValue,
-                  nextToNextTokenValue
+                  nextToNextTokenValue,
                 );
               }
               if (isSelectorNode(bufferNode)) {
                 // e.g. 'div:contains(text):'
                 if (!nextTokenValue) {
                   throw new Error(
-                    `Invalid colon ':' at the end of selector: '${selector}'`
+                    `Invalid colon ':' at the end of selector: '${selector}'`,
                   );
                 } // after the extended pseudo closing parentheses
                 // parser position is on Selector node
@@ -2280,7 +2274,7 @@ function _toPrimitive(t, r) {
                   // as it is not about element selecting but actions with elements
                   // e.g. '#banner:upward(2):remove()'
                   throw new Error(
-                    `${REMOVE_ERROR_PREFIX.INVALID_REMOVE}: '${selector}'`
+                    `${REMOVE_ERROR_PREFIX.INVALID_REMOVE}: '${selector}'`,
                   );
                 } else {
                   // otherwise it is standard pseudo after extended pseudo-class in complex selector
@@ -2293,7 +2287,7 @@ function _toPrimitive(t, r) {
                     selector,
                     tokenValue,
                     nextTokenType,
-                    nextToNextTokenValue
+                    nextToNextTokenValue,
                   );
                 }
               }
@@ -2306,7 +2300,7 @@ function _toPrimitive(t, r) {
                   nextToNextTokenValue === BRACKET.PARENTHESES.LEFT
                 ) {
                   throw new Error(
-                    `:xpath() pseudo-class should be the last in selector: '${selector}'`
+                    `:xpath() pseudo-class should be the last in selector: '${selector}'`,
                   );
                 } // collecting arg for absolute pseudo-class
                 // e.g. 'div:matches-css(width:400px)'
@@ -2317,7 +2311,7 @@ function _toPrimitive(t, r) {
                 if (!nextTokenValue) {
                   // e.g. 'div:has(:'
                   throw new Error(
-                    `Invalid pseudo-class arg at the end of selector: '${selector}'`
+                    `Invalid pseudo-class arg at the end of selector: '${selector}'`,
                   );
                 } // make it more obvious if selector starts with pseudo with no tag specified
                 // parser position is on colon inside :has() arg
@@ -2470,14 +2464,14 @@ function _toPrimitive(t, r) {
                     // standard pseudo should be in standardPseudoNamesStack
                     // as related to standardPseudoBracketsStack
                     throw new Error(
-                      `Parsing error. Invalid selector: ${selector}`
+                      `Parsing error. Invalid selector: ${selector}`,
                     );
                   } // Disallow :has() after regular pseudo-elements
                   // https://bugs.chromium.org/p/chromium/issues/detail?id=669058#c54 [3]
 
                   if (
                     Object.values(REGULAR_PSEUDO_ELEMENTS).includes(
-                      lastStandardPseudo
+                      lastStandardPseudo,
                     ) && // check token which is next to closing parentheses and token after it
                     // parser position is on bracket after 'foo' now:
                     // e.g. '::part(foo):has(.a)'
@@ -2487,7 +2481,7 @@ function _toPrimitive(t, r) {
                   ) {
                     // eslint-disable-next-line max-len
                     throw new Error(
-                      `Usage of :${nextToNextTokenValue}() pseudo-class is not allowed after any regular pseudo-element: '${lastStandardPseudo}'`
+                      `Usage of :${nextToNextTokenValue}() pseudo-class is not allowed after any regular pseudo-element: '${lastStandardPseudo}'`,
                     );
                   }
                 } else {
@@ -2564,12 +2558,12 @@ function _toPrimitive(t, r) {
     ) {
       // eslint-disable-next-line max-len
       throw new Error(
-        `Unbalanced brackets for extended pseudo-class: '${getLast(context.extendedPseudoNamesStack)}'`
+        `Unbalanced brackets for extended pseudo-class: '${getLast(context.extendedPseudoNamesStack)}'`,
       );
     }
     if (context.isAttributeBracketsOpen) {
       throw new Error(
-        `Unbalanced attribute brackets in selector: '${selector}'`
+        `Unbalanced attribute brackets in selector: '${selector}'`,
       );
     }
     return context.shouldOptimize ? optimizeAst(context.ast) : context.ast;
@@ -2608,7 +2602,7 @@ function _toPrimitive(t, r) {
       this.getter =
         (_Object$getOwnPropert = Object.getOwnPropertyDescriptor(
           this.nativeNode.prototype,
-          "textContent"
+          "textContent",
         )) === null || _Object$getOwnPropert === void 0
           ? void 0
           : _Object$getOwnPropert.get;
@@ -3089,7 +3083,7 @@ function _toPrimitive(t, r) {
   const getComputedStylePropertyValue = (
     domElement,
     propertyName,
-    regularPseudoElement
+    regularPseudoElement,
   ) => {
     const style = window.getComputedStyle(domElement, regularPseudoElement);
     const propertyValue = style.getPropertyValue(propertyName);
@@ -3146,7 +3140,7 @@ function _toPrimitive(t, r) {
     }
     if (!styleMatchArg) {
       throw new Error(
-        `Required style property argument part is missing in :${pseudoName}() arg: '${rawArg}'`
+        `Required style property argument part is missing in :${pseudoName}() arg: '${rawArg}'`,
       );
     } // if regularPseudoElement is not `null`
 
@@ -3174,15 +3168,15 @@ function _toPrimitive(t, r) {
     const { pseudoName, pseudoArg, domElement } = argsData;
     const { regularPseudoElement, styleMatchArg } = parseStyleMatchArg(
       pseudoName,
-      pseudoArg
+      pseudoArg,
     );
     const { name: matchName, value: matchValue } = getPseudoArgData(
       styleMatchArg,
-      COLON
+      COLON,
     );
     if (!matchName || !matchValue) {
       throw new Error(
-        `Required property name or value is missing in :${pseudoName}() arg: '${styleMatchArg}'`
+        `Required property name or value is missing in :${pseudoName}() arg: '${styleMatchArg}'`,
       );
     }
     let valueRegexp;
@@ -3191,13 +3185,13 @@ function _toPrimitive(t, r) {
     } catch (e) {
       logger.error(getErrorMessage(e));
       throw new Error(
-        `Invalid argument of :${pseudoName}() pseudo-class: '${styleMatchArg}'`
+        `Invalid argument of :${pseudoName}() pseudo-class: '${styleMatchArg}'`,
       );
     }
     const value = getComputedStylePropertyValue(
       domElement,
       matchName,
-      regularPseudoElement
+      regularPseudoElement,
     );
     return valueRegexp && valueRegexp.test(value);
   };
@@ -3282,11 +3276,11 @@ function _toPrimitive(t, r) {
   const getRawMatchingData = (pseudoName, pseudoArg) => {
     const { name: rawName, value: rawValue } = getPseudoArgData(
       pseudoArg,
-      EQUAL_SIGN
+      EQUAL_SIGN,
     );
     if (!rawName) {
       throw new Error(
-        `Required attribute name is missing in :${pseudoName} arg: ${pseudoArg}`
+        `Required attribute name is missing in :${pseudoName} arg: ${pseudoArg}`,
       );
     }
     return {
@@ -3312,7 +3306,7 @@ function _toPrimitive(t, r) {
     }
     const { rawName: rawAttrName, rawValue: rawAttrValue } = getRawMatchingData(
       pseudoName,
-      pseudoArg
+      pseudoArg,
     );
     let attrNameMatch;
     try {
@@ -3382,7 +3376,7 @@ function _toPrimitive(t, r) {
       const chunk = getItemByIndex(
         chainChunks,
         i,
-        `Invalid pseudo-class arg: '${input}'`
+        `Invalid pseudo-class arg: '${input}'`,
       );
       if (
         chunk.startsWith(SLASH) &&
@@ -3421,7 +3415,7 @@ function _toPrimitive(t, r) {
       if (pattern.length === 0) {
         // e.g. '.prop.id' or 'nested..test'
         throw new Error(
-          `Empty pattern '${pattern}' is invalid in chain '${input}'`
+          `Empty pattern '${pattern}' is invalid in chain '${input}'`,
         );
       }
       let validPattern;
@@ -3430,7 +3424,7 @@ function _toPrimitive(t, r) {
       } catch (e) {
         logger.error(getErrorMessage(e));
         throw new Error(
-          `Invalid property pattern '${pattern}' in property chain '${input}'`
+          `Invalid property pattern '${pattern}' in property chain '${input}'`,
         );
       }
       return validPattern;
@@ -3488,7 +3482,7 @@ function _toPrimitive(t, r) {
         const item =
           (_Object$getOwnPropert = Object.getOwnPropertyDescriptor(
             base,
-            key
+            key,
           )) === null || _Object$getOwnPropert === void 0
             ? void 0
             : _Object$getOwnPropert.value;
@@ -3500,7 +3494,7 @@ function _toPrimitive(t, r) {
       const nextBase =
         (_Object$getOwnPropert2 = Object.getOwnPropertyDescriptor(
           base,
-          tempProp
+          tempProp,
         )) === null || _Object$getOwnPropert2 === void 0
           ? void 0
           : _Object$getOwnPropert2.value;
@@ -3528,7 +3522,7 @@ function _toPrimitive(t, r) {
 
     if (rawPropertyName.includes("\\/") || rawPropertyName.includes("\\.")) {
       throw new Error(
-        `Invalid :${pseudoName} name pattern: ${rawPropertyName}`
+        `Invalid :${pseudoName} name pattern: ${rawPropertyName}`,
       );
     }
     let propChainMatches;
@@ -3609,7 +3603,7 @@ function _toPrimitive(t, r) {
         regex = new RegExp(pseudoArgToMatch, flagsStr);
       } catch (e) {
         throw new Error(
-          `Invalid argument of :${pseudoName}() pseudo-class: ${pseudoArg}`
+          `Invalid argument of :${pseudoName}() pseudo-class: ${pseudoArg}`,
         );
       }
       isTextContentMatched = regex.test(textContent);
@@ -3634,7 +3628,7 @@ function _toPrimitive(t, r) {
     const deep = Number(rawArg);
     if (Number.isNaN(deep) || deep < 1 || deep >= 256) {
       throw new Error(
-        `Invalid argument of :${pseudoName} pseudo-class: '${rawArg}'`
+        `Invalid argument of :${pseudoName} pseudo-class: '${rawArg}'`,
       );
     }
     return deep;
@@ -3657,7 +3651,7 @@ function _toPrimitive(t, r) {
       ancestor = domElement.parentElement;
       if (!ancestor) {
         throw new Error(
-          `Out of DOM: Argument of :${pseudoName}() pseudo-class is too big — '${nth}'.`
+          `Out of DOM: Argument of :${pseudoName}() pseudo-class is too big — '${nth}'.`,
         );
       }
       domElement = ancestor;
@@ -3747,7 +3741,7 @@ function _toPrimitive(t, r) {
         errorMessage = getAbsolutePseudoError(
           "text content",
           pseudoName,
-          pseudoArg
+          pseudoArg,
         );
         break;
       case MATCHES_CSS_PSEUDO:
@@ -3771,7 +3765,7 @@ function _toPrimitive(t, r) {
         errorMessage = getAbsolutePseudoError(
           "attributes",
           pseudoName,
-          pseudoArg
+          pseudoArg,
         );
         break;
       case MATCHES_PROPERTY_PSEUDO_CLASS_MARKER:
@@ -3784,7 +3778,7 @@ function _toPrimitive(t, r) {
         errorMessage = getAbsolutePseudoError(
           "properties",
           pseudoName,
-          pseudoArg
+          pseudoArg,
         );
         break;
       default:
@@ -3835,12 +3829,12 @@ function _toPrimitive(t, r) {
             domElement,
             null,
             window.XPathResult.UNORDERED_NODE_ITERATOR_TYPE,
-            null
+            null,
           );
         } catch (e) {
           logger.error(getErrorMessage(e));
           throw new Error(
-            `Invalid argument of :xpath() pseudo-class: '${rawPseudoArg}'`
+            `Invalid argument of :xpath() pseudo-class: '${rawPseudoArg}'`,
           );
         }
         let node = xpathResult.iterateNext();
@@ -3866,7 +3860,7 @@ function _toPrimitive(t, r) {
     upward: (domElements, rawPseudoArg) => {
       if (!validateStandardSelector(rawPseudoArg)) {
         throw new Error(
-          `Invalid argument of :upward pseudo-class: '${rawPseudoArg}'`
+          `Invalid argument of :upward pseudo-class: '${rawPseudoArg}'`,
         );
       }
       const closestAncestors = domElements
@@ -3921,7 +3915,7 @@ function _toPrimitive(t, r) {
   const getFirstInnerRegularChild = (selectorNode, pseudoName) => {
     return getFirstRegularChild(
       selectorNode.children,
-      `RegularSelector is missing for :${pseudoName}() pseudo-class`
+      `RegularSelector is missing for :${pseudoName}() pseudo-class`,
     );
   }; // TODO: fix for <forgiving-relative-selector-list>
   // https://github.com/AdguardTeam/ExtendedCss/issues/154
@@ -3942,7 +3936,7 @@ function _toPrimitive(t, r) {
         // selectorList.children always starts with regular selector as any selector generally
         const relativeRegularSelector = getFirstInnerRegularChild(
           selectorNode,
-          pseudoName
+          pseudoName,
         );
         let specifiedSelector = "";
         let rootElement = null;
@@ -3984,7 +3978,7 @@ function _toPrimitive(t, r) {
         }
         if (!rootElement) {
           throw new Error(
-            `Selection by :${pseudoName}() pseudo-class is not possible`
+            `Selection by :${pseudoName}() pseudo-class is not possible`,
           );
         }
         let relativeElements;
@@ -3993,13 +3987,13 @@ function _toPrimitive(t, r) {
           relativeElements = getElementsForSelectorNode(
             selectorNode,
             rootElement,
-            specifiedSelector
+            specifiedSelector,
           );
         } catch (e) {
           logger.error(getErrorMessage(e)); // fail for invalid selector
 
           throw new Error(
-            `Invalid selector for :${pseudoName}() pseudo-class: '${regularSelector}'`
+            `Invalid selector for :${pseudoName}() pseudo-class: '${regularSelector}'`,
           );
         }
         return relativeElements.length > 0;
@@ -4021,7 +4015,7 @@ function _toPrimitive(t, r) {
         // selectorList.children always starts with regular selector
         const relativeRegularSelector = getFirstInnerRegularChild(
           selectorNode,
-          pseudoName
+          pseudoName,
         );
         /**
          * For checking the element by 'div:is(.banner)'
@@ -4030,7 +4024,7 @@ function _toPrimitive(t, r) {
 
         const rootElement = getParent(
           element,
-          `Selection by :${pseudoName}() pseudo-class is not possible`
+          `Selection by :${pseudoName}() pseudo-class is not possible`,
         );
         /**
          * So we calculate the element "description" by it's tagname and attributes for targeting
@@ -4045,7 +4039,7 @@ function _toPrimitive(t, r) {
           anyElements = getElementsForSelectorNode(
             selectorNode,
             rootElement,
-            specifiedSelector
+            specifiedSelector,
           );
         } catch (e) {
           // do not fail on invalid selectors for :is()
@@ -4073,7 +4067,7 @@ function _toPrimitive(t, r) {
         // selectorList.children always starts with regular selector
         const relativeRegularSelector = getFirstInnerRegularChild(
           selectorNode,
-          pseudoName
+          pseudoName,
         );
         /**
          * For checking the element by 'div:not([data="content"])
@@ -4082,7 +4076,7 @@ function _toPrimitive(t, r) {
 
         const rootElement = getParent(
           element,
-          `Selection by :${pseudoName}() pseudo-class is not possible`
+          `Selection by :${pseudoName}() pseudo-class is not possible`,
         );
         /**
          * So we calculate the element "description" by it's tagname and attributes for targeting
@@ -4097,14 +4091,14 @@ function _toPrimitive(t, r) {
           anyElements = getElementsForSelectorNode(
             selectorNode,
             rootElement,
-            specifiedSelector
+            specifiedSelector,
           );
         } catch (e) {
           // fail on invalid selectors for :not()
           logger.error(getErrorMessage(e)); // eslint-disable-next-line max-len
 
           throw new Error(
-            `Invalid selector for :${pseudoName}() pseudo-class: '${getNodeValue(relativeRegularSelector)}'`
+            `Invalid selector for :${pseudoName}() pseudo-class: '${getNodeValue(relativeRegularSelector)}'`,
           );
         } // TODO: figure out how to handle up-looking pseudo-classes inside :not()
         // (check readme - extended-css-not-limitations)
@@ -4127,7 +4121,7 @@ function _toPrimitive(t, r) {
   const getByRegularSelector = (
     regularSelectorNode,
     root,
-    specifiedSelector
+    specifiedSelector,
   ) => {
     const selectorText = specifiedSelector
       ? specifiedSelector
@@ -4137,7 +4131,7 @@ function _toPrimitive(t, r) {
       selectedElements = Array.from(root.querySelectorAll(selectorText));
     } catch (e) {
       throw new Error(
-        `Error: unable to select by '${selectorText}' — ${getErrorMessage(e)}`
+        `Error: unable to select by '${selectorText}' — ${getErrorMessage(e)}`,
       );
     }
     return selectedElements;
@@ -4161,14 +4155,14 @@ function _toPrimitive(t, r) {
       // absolute extended pseudo-classes should have an argument
       const absolutePseudoArg = getNodeValue(
         extendedPseudoClassNode,
-        `Missing arg for :${pseudoName}() pseudo-class`
+        `Missing arg for :${pseudoName}() pseudo-class`,
       );
       if (pseudoName === NTH_ANCESTOR_PSEUDO_CLASS_MARKER) {
         // :nth-ancestor()
         foundElements = findByAbsolutePseudoPseudo.nthAncestor(
           domElements,
           absolutePseudoArg,
-          pseudoName
+          pseudoName,
         );
       } else if (pseudoName === XPATH_PSEUDO_CLASS_MARKER) {
         // :xpath()
@@ -4176,12 +4170,12 @@ function _toPrimitive(t, r) {
           document.createExpression(absolutePseudoArg, null);
         } catch (e) {
           throw new Error(
-            `Invalid argument of :${pseudoName}() pseudo-class: '${absolutePseudoArg}'`
+            `Invalid argument of :${pseudoName}() pseudo-class: '${absolutePseudoArg}'`,
           );
         }
         foundElements = findByAbsolutePseudoPseudo.xpath(
           domElements,
-          absolutePseudoArg
+          absolutePseudoArg,
         );
       } else if (pseudoName === UPWARD_PSEUDO_CLASS_MARKER) {
         // :upward()
@@ -4189,13 +4183,13 @@ function _toPrimitive(t, r) {
           // so arg is selector, not a number
           foundElements = findByAbsolutePseudoPseudo.upward(
             domElements,
-            absolutePseudoArg
+            absolutePseudoArg,
           );
         } else {
           foundElements = findByAbsolutePseudoPseudo.nthAncestor(
             domElements,
             absolutePseudoArg,
-            pseudoName
+            pseudoName,
           );
         }
       } else {
@@ -4205,13 +4199,13 @@ function _toPrimitive(t, r) {
           return isMatchedByAbsolutePseudo(
             element,
             pseudoName,
-            absolutePseudoArg
+            absolutePseudoArg,
           );
         });
       }
     } else if (isRelativePseudoClass(pseudoName)) {
       const relativeSelectorList = getRelativeSelectorListNode(
-        extendedPseudoClassNode
+        extendedPseudoClassNode,
       );
       let relativePredicate;
       switch (pseudoName) {
@@ -4271,7 +4265,7 @@ function _toPrimitive(t, r) {
         return getByRegularSelector(
           regularSelectorNode,
           root,
-          specifiedSelector
+          specifiedSelector,
         );
       });
     } else if (
@@ -4292,7 +4286,7 @@ function _toPrimitive(t, r) {
         const selected = getByRegularSelector(
           regularSelectorNode,
           rootElement,
-          specifiedSelector
+          specifiedSelector,
         );
         return selected;
       });
@@ -4304,7 +4298,7 @@ function _toPrimitive(t, r) {
         return getByRegularSelector(
           regularSelectorNode,
           root,
-          specifiedSelector
+          specifiedSelector,
         );
       });
     } // foundElements should be flattened
@@ -4335,7 +4329,7 @@ function _toPrimitive(t, r) {
   const getElementsForSelectorNode = (
     selectorNode,
     root,
-    specifiedSelector
+    specifiedSelector,
   ) => {
     let selectedElements = [];
     let i = 0;
@@ -4343,25 +4337,25 @@ function _toPrimitive(t, r) {
       const selectorNodeChild = getItemByIndex(
         selectorNode.children,
         i,
-        "selectorNodeChild should be specified"
+        "selectorNodeChild should be specified",
       );
       if (i === 0) {
         // any selector always starts with regular selector
         selectedElements = getByRegularSelector(
           selectorNodeChild,
           root,
-          specifiedSelector
+          specifiedSelector,
         );
       } else if (isExtendedSelectorNode(selectorNodeChild)) {
         // filter previously selected elements by next selector nodes
         selectedElements = getByExtendedSelector(
           selectedElements,
-          selectorNodeChild
+          selectorNodeChild,
         );
       } else if (isRegularSelectorNode(selectorNodeChild)) {
         selectedElements = getByFollowingRegularSelector(
           selectedElements,
-          selectorNodeChild
+          selectorNodeChild,
         );
       }
       i += 1;
@@ -4510,20 +4504,20 @@ function _toPrimitive(t, r) {
     if (firstIndex === 0) {
       // e.g. ':remove()'
       throw new Error(
-        `${REMOVE_ERROR_PREFIX.NO_TARGET_SELECTOR}: '${rawSelector}'`
+        `${REMOVE_ERROR_PREFIX.NO_TARGET_SELECTOR}: '${rawSelector}'`,
       );
     } else if (firstIndex > 0) {
       if (firstIndex !== rawSelector.lastIndexOf(VALID_REMOVE_MARKER)) {
         // rule with more than one :remove() pseudo-class is invalid
         // e.g. '.block:remove() > .banner:remove()'
         throw new Error(
-          `${REMOVE_ERROR_PREFIX.MULTIPLE_USAGE}: '${rawSelector}'`
+          `${REMOVE_ERROR_PREFIX.MULTIPLE_USAGE}: '${rawSelector}'`,
         );
       } else if (firstIndex + VALID_REMOVE_MARKER.length < rawSelector.length) {
         // remove pseudo-class should be last in the rule
         // e.g. '.block:remove():upward(2)'
         throw new Error(
-          `${REMOVE_ERROR_PREFIX.INVALID_POSITION}: '${rawSelector}'`
+          `${REMOVE_ERROR_PREFIX.INVALID_POSITION}: '${rawSelector}'`,
         );
       } else {
         // valid :remove() pseudo-class position
@@ -4534,7 +4528,7 @@ function _toPrimitive(t, r) {
       // it is not valid if ':remove()' is absent in rule but just ':remove(' is present
       // e.g. 'div:remove(0)'
       throw new Error(
-        `${REMOVE_ERROR_PREFIX.INVALID_REMOVE}: '${rawSelector}'`
+        `${REMOVE_ERROR_PREFIX.INVALID_REMOVE}: '${rawSelector}'`,
       );
     } else {
       // there is no :remove() pseudo-class in rule
@@ -4695,7 +4689,7 @@ function _toPrimitive(t, r) {
     if (debugValue) {
       // get rid of 'debug' from styles
       styles = rawStyles.filter(
-        (s) => s.property !== DEBUG_PSEUDO_PROPERTY_KEY
+        (s) => s.property !== DEBUG_PSEUDO_PROPERTY_KEY,
       ); // and set it as separate property only if its value is valid
       // which is 'true' or 'global'
 
@@ -4718,7 +4712,7 @@ function _toPrimitive(t, r) {
        */
 
       const contentStyle = styles.find(
-        (s) => s.property === CONTENT_CSS_PROPERTY
+        (s) => s.property === CONTENT_CSS_PROPERTY,
       );
       if (contentStyle) {
         ruleData.style[CONTENT_CSS_PROPERTY] = contentStyle.value;
@@ -4756,7 +4750,7 @@ function _toPrimitive(t, r) {
           selector,
           ast,
           rawStyles,
-        })
+        }),
       );
     });
     return results;
@@ -4831,7 +4825,7 @@ function _toPrimitive(t, r) {
         if (context.bufferProperty.length > 0) {
           // e.g. 'padding top: 0;' - current tokenValue is 'top' which is not valid
           throw new Error(
-            `Invalid style property in style block: '${styleBlock}'`
+            `Invalid style property in style block: '${styleBlock}'`,
           );
         }
         context.bufferProperty += tokenValue;
@@ -4842,7 +4836,7 @@ function _toPrimitive(t, r) {
           if (context.bufferProperty.trim().length === 0) {
             // e.g. such style block: '{ : none; }'
             throw new Error(
-              `Missing style property before ':' in style block: '${styleBlock}'`
+              `Missing style property before ':' in style block: '${styleBlock}'`,
             );
           } // the property successfully collected
 
@@ -4854,13 +4848,13 @@ function _toPrimitive(t, r) {
           // if after the property there is anything other than ':' except whitespace, this is a parse error
           // https://www.w3.org/TR/css-syntax-3/#consume-declaration
           throw new Error(
-            `Invalid style declaration in style block: '${styleBlock}'`
+            `Invalid style declaration in style block: '${styleBlock}'`,
           );
         }
         break;
       default:
         throw new Error(
-          `Unsupported style property character: '${tokenValue}' in style block: '${styleBlock}'`
+          `Unsupported style property character: '${tokenValue}' in style block: '${styleBlock}'`,
         );
     }
   };
@@ -4890,7 +4884,7 @@ function _toPrimitive(t, r) {
           if (!isValueQuotesOpen(context)) {
             // eslint-disable-next-line max-len
             throw new Error(
-              `Invalid style value for property '${context.bufferProperty}' in style block: '${styleBlock}'`
+              `Invalid style value for property '${context.bufferProperty}' in style block: '${styleBlock}'`,
             );
           } // collect the colon inside quotes
           // e.g. 'content: "test:123"'
@@ -4934,7 +4928,7 @@ function _toPrimitive(t, r) {
           if (!isValueQuotesOpen(context)) {
             // eslint-disable-next-line max-len
             throw new Error(
-              `Invalid style value for property '${context.bufferProperty}' in style block: '${styleBlock}'`
+              `Invalid style value for property '${context.bufferProperty}' in style block: '${styleBlock}'`,
             );
           } // collect the backslash inside quotes
           // e.g. ' content: "\"" '
@@ -5002,7 +4996,7 @@ function _toPrimitive(t, r) {
 
     if (isValueQuotesOpen(context)) {
       throw new Error(
-        `Unbalanced style declaration quotes in style block: '${styleBlock}'`
+        `Unbalanced style declaration quotes in style block: '${styleBlock}'`,
       );
     } // collected property and value have not been saved to styles;
     // it is possible for style block with no semicolon at the end
@@ -5015,7 +5009,7 @@ function _toPrimitive(t, r) {
         //   '{ remove }'
         // eslint-disable-next-line max-len
         throw new Error(
-          `Missing style value for property '${context.bufferProperty}' in style block '${styleBlock}'`
+          `Missing style value for property '${context.bufferProperty}' in style block '${styleBlock}'`,
         );
       }
       collectStyle(context);
@@ -5089,7 +5083,7 @@ function _toPrimitive(t, r) {
       !cssRule.includes(BRACKET.CURLY.RIGHT)
     ) {
       throw new Error(
-        `${STYLE_ERROR_PREFIX.NO_STYLE} OR ${STYLE_ERROR_PREFIX.UNCLOSED_STYLE}`
+        `${STYLE_ERROR_PREFIX.NO_STYLE} OR ${STYLE_ERROR_PREFIX.UNCLOSED_STYLE}`,
       );
     }
     if (
@@ -5141,7 +5135,7 @@ function _toPrimitive(t, r) {
       const index = leftCurlyBracketIndexes[i];
       if (!index) {
         throw new Error(
-          `Impossible to continue, no '{' to process for rule: '${cssRule}'`
+          `Impossible to continue, no '{' to process for rule: '${cssRule}'`,
         );
       } // selector is before `{`, style block is after it
 
@@ -5256,7 +5250,7 @@ function _toPrimitive(t, r) {
       if (selector === removeSelectorData.selector) {
         // rule should have style or pseudo-class :remove()
         throw new Error(
-          `${STYLE_ERROR_PREFIX.NO_STYLE_OR_REMOVE}: '${context.cssToParse}'`
+          `${STYLE_ERROR_PREFIX.NO_STYLE_OR_REMOVE}: '${context.cssToParse}'`,
         );
       } // stop parsing as there is no style declaration and selector parsed fine
 
@@ -5303,7 +5297,7 @@ function _toPrimitive(t, r) {
     let match = REGEXP_DECLARATION_DIVIDER.exec(context.cssToParse);
     if (match === null) {
       throw new Error(
-        `${STYLE_ERROR_PREFIX.INVALID_STYLE}: '${context.cssToParse}'`
+        `${STYLE_ERROR_PREFIX.INVALID_STYLE}: '${context.cssToParse}'`,
       );
     }
     let matchPos = match.index;
@@ -5311,14 +5305,14 @@ function _toPrimitive(t, r) {
     if (matched === BRACKET.CURLY.RIGHT) {
       const declarationChunk = context.cssToParse.slice(
         context.nextIndex,
-        matchPos
+        matchPos,
       );
       if (declarationChunk.trim().length === 0) {
         // empty style declaration
         // e.g. 'div { }'
         if (styles.length === 0) {
           throw new Error(
-            `${STYLE_ERROR_PREFIX.NO_STYLE}: '${context.cssToParse}'`
+            `${STYLE_ERROR_PREFIX.NO_STYLE}: '${context.cssToParse}'`,
           );
         } // else valid style parsed before it
         // e.g. '{ display: none; }' -- position is after ';'
@@ -5327,7 +5321,7 @@ function _toPrimitive(t, r) {
         // trimmed declarationChunk is not a space, between ';' and '}',
         // e.g. 'visible }' in style '{ display: none; visible }' after part before ';' is parsed
         throw new Error(
-          `${STYLE_ERROR_PREFIX.INVALID_STYLE}: '${context.cssToParse}'`
+          `${STYLE_ERROR_PREFIX.INVALID_STYLE}: '${context.cssToParse}'`,
         );
       }
       return matchPos;
@@ -5339,7 +5333,7 @@ function _toPrimitive(t, r) {
       match = REGEXP_DECLARATION_END.exec(context.cssToParse);
       if (match === null) {
         throw new Error(
-          `${STYLE_ERROR_PREFIX.UNCLOSED_STYLE}: '${context.cssToParse}'`
+          `${STYLE_ERROR_PREFIX.UNCLOSED_STYLE}: '${context.cssToParse}'`,
         );
       }
       matchPos = match.index;
@@ -5350,13 +5344,13 @@ function _toPrimitive(t, r) {
         .trim();
       if (property.length === 0) {
         throw new Error(
-          `${STYLE_ERROR_PREFIX.NO_PROPERTY}: '${context.cssToParse}'`
+          `${STYLE_ERROR_PREFIX.NO_PROPERTY}: '${context.cssToParse}'`,
         );
       }
       const value = context.cssToParse.slice(colonIndex + 1, matchPos).trim();
       if (value.length === 0) {
         throw new Error(
-          `${STYLE_ERROR_PREFIX.NO_VALUE}: '${context.cssToParse}'`
+          `${STYLE_ERROR_PREFIX.NO_VALUE}: '${context.cssToParse}'`,
         );
       }
       styles.push({
@@ -5423,7 +5417,7 @@ function _toPrimitive(t, r) {
       stylesheet.includes(`${ASTERISK}${SLASH}`)
     ) {
       throw new Error(
-        `${STYLE_ERROR_PREFIX.NO_COMMENT} in stylesheet: '${stylesheet}'`
+        `${STYLE_ERROR_PREFIX.NO_COMMENT} in stylesheet: '${stylesheet}'`,
       );
     }
     const context = {
@@ -5452,7 +5446,7 @@ function _toPrimitive(t, r) {
 
         if (context.selectorBuffer.length === 0 && context.nextIndex === 0) {
           throw new Error(
-            `${STYLE_ERROR_PREFIX.NO_SELECTOR}: '${context.cssToParse}'`
+            `${STYLE_ERROR_PREFIX.NO_SELECTOR}: '${context.cssToParse}'`,
           );
         }
         if (context.nextIndex === -1) {
@@ -5464,7 +5458,7 @@ function _toPrimitive(t, r) {
           // until valid selector collected
           context.selectorBuffer += context.cssToParse.slice(
             0,
-            context.nextIndex
+            context.nextIndex,
           );
         }
         selectorData = parseSelectorPart(context, extCssDoc);
@@ -5580,7 +5574,7 @@ function _toPrimitive(t, r) {
         if (elapsedTime < ThrottleWrapper.THROTTLE_DELAY_MS) {
           this.timerId = window.setTimeout(
             this.executeCallback,
-            ThrottleWrapper.THROTTLE_DELAY_MS - elapsedTime
+            ThrottleWrapper.THROTTLE_DELAY_MS - elapsedTime,
           );
           return;
         }
@@ -5642,14 +5636,14 @@ function _toPrimitive(t, r) {
       });
       this.trackedEvents = isSafariBrowser
         ? SUPPORTED_EVENTS.filter(
-            (event) => !SAFARI_PROBLEMATIC_EVENTS.includes(event)
+            (event) => !SAFARI_PROBLEMATIC_EVENTS.includes(event),
           )
         : SUPPORTED_EVENTS;
       this.trackedEvents.forEach((eventName) => {
         document.documentElement.addEventListener(
           eventName,
           this.trackEvent,
-          true
+          true,
         );
       });
     }
@@ -5688,7 +5682,7 @@ function _toPrimitive(t, r) {
         document.documentElement.removeEventListener(
           eventName,
           this.trackEvent,
-          true
+          true,
         );
       });
     }
@@ -5780,7 +5774,7 @@ function _toPrimitive(t, r) {
 
     if (elementRemovalsCounter > MAX_STYLE_PROTECTION_COUNT) {
       logger.error(
-        `ExtendedCss: infinite loop protection for selector: '${elementSelector}'`
+        `ExtendedCss: infinite loop protection for selector: '${elementSelector}'`,
       );
       return;
     }
@@ -5876,13 +5870,13 @@ function _toPrimitive(t, r) {
     if (context.beforeStyleApplied) {
       if (!isIAffectedElement(rawAffectedElement)) {
         throw new Error(
-          "Returned IAffectedElement should have 'node' and 'rules' properties"
+          "Returned IAffectedElement should have 'node' and 'rules' properties",
         );
       }
       affectedElement = context.beforeStyleApplied(rawAffectedElement);
       if (!affectedElement) {
         throw new Error(
-          "Callback 'beforeStyleApplied' should return IAffectedElement"
+          "Callback 'beforeStyleApplied' should return IAffectedElement",
         );
       }
     } else {
@@ -5890,7 +5884,7 @@ function _toPrimitive(t, r) {
     }
     if (!isAffectedElement(affectedElement)) {
       throw new Error(
-        "Returned IAffectedElement should have 'node' and 'rules' properties"
+        "Returned IAffectedElement should have 'node' and 'rules' properties",
       );
     }
     const { node, rules } = affectedElement;
@@ -5911,7 +5905,7 @@ function _toPrimitive(t, r) {
       } else if (!debug) {
         // but rule should not have both style and debug properties
         throw new Error(
-          `No style declaration in rule for selector: '${selector}'`
+          `No style declaration in rule for selector: '${selector}'`,
         );
       }
     }
@@ -6035,7 +6029,7 @@ function _toPrimitive(t, r) {
       }
     });
     const protectionObserver = new ExtMutationObserver(
-      createProtectionCallback(styles)
+      createProtectionCallback(styles),
     );
     protectionObserver.observe(node, PROTECTION_OBSERVER_OPTIONS);
     return protectionObserver;
@@ -6070,7 +6064,7 @@ function _toPrimitive(t, r) {
       this.meanTiming = this.timingsSum / this.appliesCount;
       this.squaredSum += elapsedTimeMs * elapsedTimeMs;
       this.standardDeviation = Math.sqrt(
-        this.squaredSum / this.appliesCount - Math.pow(this.meanTiming, 2)
+        this.squaredSum / this.appliesCount - Math.pow(this.meanTiming, 2),
       );
     }
   }
@@ -6096,7 +6090,7 @@ function _toPrimitive(t, r) {
   const beautifyTimings = (rawTimings) => {
     return {
       appliesTimings: rawTimings.appliesTimings.map((t) =>
-        beautifyTimingNumber(t)
+        beautifyTimingNumber(t),
       ),
       appliesCount: beautifyTimingNumber(rawTimings.appliesCount),
       timingsSum: beautifyTimingNumber(rawTimings.timingsSum),
@@ -6123,7 +6117,7 @@ function _toPrimitive(t, r) {
 
         if (!style && !debug) {
           throw new Error(
-            `Rule should have style declaration for selector: '${selector}'`
+            `Rule should have style declaration for selector: '${selector}'`,
           );
         }
         const selectorData = {
@@ -6151,7 +6145,7 @@ function _toPrimitive(t, r) {
     logger.info(
       "[ExtendedCss] Timings in milliseconds for %o:\n%o",
       window.location.href,
-      timingsLogData
+      timingsLogData,
     );
   };
 
@@ -6267,7 +6261,7 @@ function _toPrimitive(t, r) {
         if (!affectedElement.protectionObserver) {
           affectedElement.protectionObserver = protectStyleAttribute(
             affectedElement.node,
-            affectedElement.rules
+            affectedElement.rules,
           );
         }
       }
@@ -6325,7 +6319,7 @@ function _toPrimitive(t, r) {
 
       if (!configuration.styleSheet && !configuration.cssRules) {
         throw new Error(
-          "ExtendedCss configuration should have 'styleSheet' or 'cssRules' defined."
+          "ExtendedCss configuration should have 'styleSheet' or 'cssRules' defined.",
         );
       } // 'styleSheet' and 'cssRules' are optional
       // and both can be provided at the same time
@@ -6335,18 +6329,18 @@ function _toPrimitive(t, r) {
         // stylesheet parsing can fail on some invalid selectors
         try {
           this.context.parsedRules.push(
-            ...parseStylesheet(configuration.styleSheet, extCssDocument)
+            ...parseStylesheet(configuration.styleSheet, extCssDocument),
           );
         } catch (e) {
           // eslint-disable-next-line max-len
           throw new Error(
-            `Pass the rules as configuration.cssRules since configuration.styleSheet cannot be parsed because of: '${getErrorMessage(e)}'`
+            `Pass the rules as configuration.cssRules since configuration.styleSheet cannot be parsed because of: '${getErrorMessage(e)}'`,
           );
         }
       }
       if (configuration.cssRules) {
         this.context.parsedRules.push(
-          ...parseRules(configuration.cssRules, extCssDocument)
+          ...parseRules(configuration.cssRules, extCssDocument),
         );
       } // true if set in configuration
       // or any rule in styleSheet has `debug: global`
@@ -6362,7 +6356,7 @@ function _toPrimitive(t, r) {
       ) {
         // eslint-disable-next-line max-len
         throw new Error(
-          `Invalid configuration. Type of 'beforeStyleApplied' should be a function, received: '${typeof this.context.beforeStyleApplied}'`
+          `Invalid configuration. Type of 'beforeStyleApplied' should be a function, received: '${typeof this.context.beforeStyleApplied}'`,
         );
       }
     }
@@ -6403,7 +6397,7 @@ function _toPrimitive(t, r) {
         document.addEventListener(
           "DOMContentLoaded",
           this.applyRulesCallbackListener,
-          false
+          false,
         );
       }
     }
@@ -6419,7 +6413,7 @@ function _toPrimitive(t, r) {
       document.removeEventListener(
         "DOMContentLoaded",
         this.applyRulesCallbackListener,
-        false
+        false,
       );
     }
     /**
@@ -6457,7 +6451,7 @@ function _toPrimitive(t, r) {
         const end = performance.now();
         if (!noTiming) {
           logger.info(
-            `[ExtendedCss] Elapsed: ${Math.round((end - start) * 1000)} μs.`
+            `[ExtendedCss] Elapsed: ${Math.round((end - start) * 1000)} μs.`,
           );
         }
       }
@@ -6517,32 +6511,20 @@ function _toPrimitive(t, r) {
       window.apstag = apstagWrapper;
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopFunc() {}
@@ -6650,7 +6632,7 @@ function _toPrimitive(t, r) {
       var __tcfapiWrapper = function __tcfapiWrapper(
         command,
         version,
-        callback
+        callback,
       ) {
         if (
           typeof callback !== "function" ||
@@ -6693,32 +6675,20 @@ function _toPrimitive(t, r) {
       }
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopFunc() {}
@@ -6780,32 +6750,20 @@ function _toPrimitive(t, r) {
       window.Fingerprint2 = Fingerprint2;
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
@@ -6858,32 +6816,20 @@ function _toPrimitive(t, r) {
       window.FingerprintJS = new FingerprintJS();
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopStr() {
@@ -6928,32 +6874,20 @@ function _toPrimitive(t, r) {
       window.GemiusPlayer = GemiusPlayer;
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopFunc() {}
@@ -7086,32 +7020,20 @@ function _toPrimitive(t, r) {
       }
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopFunc() {}
@@ -7286,54 +7208,31 @@ function _toPrimitive(t, r) {
       window._gat = gat;
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopFunc() {}
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -7590,7 +7489,7 @@ function _toPrimitive(t, r) {
       var AdsManagerLoadedEvent = function AdsManagerLoadedEvent(
         type,
         adsRequest,
-        userRequestContext
+        userRequestContext,
       ) {
         this.type = type;
         this.adsRequest = adsRequest;
@@ -7622,7 +7521,7 @@ function _toPrimitive(t, r) {
       };
       AdsLoader.prototype.requestAds = function (
         adsRequest,
-        userRequestContext
+        userRequestContext,
       ) {
         var _this = this;
         requestAnimationFrame(function () {
@@ -7631,7 +7530,7 @@ function _toPrimitive(t, r) {
           var event = new ima.AdsManagerLoadedEvent(
             ADS_MANAGER_LOADED,
             adsRequest,
-            userRequestContext
+            userRequestContext,
           );
           _this._dispatch(event);
         });
@@ -7641,7 +7540,7 @@ function _toPrimitive(t, r) {
           1205,
           "The browser prevented playback initiated without user interaction.",
           adsRequest,
-          userRequestContext
+          userRequestContext,
         );
         requestAnimationFrame(function () {
           _this._dispatch(new ima.AdErrorEvent(e));
@@ -7804,7 +7703,7 @@ function _toPrimitive(t, r) {
         vast,
         message,
         adsRequest,
-        userRequestContext
+        userRequestContext,
       ) {
         this.errorCode = code;
         this.message = message;
@@ -8023,54 +7922,31 @@ function _toPrimitive(t, r) {
       window.google.ima = ima;
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopFunc() {}
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -8154,7 +8030,7 @@ function _toPrimitive(t, r) {
           adElems[i].appendChild(aswiftIframe);
           var innerAswiftIframe = document.createElement("iframe");
           aswiftIframe.contentWindow.document.body.appendChild(
-            innerAswiftIframe
+            innerAswiftIframe,
           );
           var googleadsIframe = document.createElement("iframe");
           googleadsIframe.id = `${GOOGLE_ADS_IFRAME_MARKER}${i}`;
@@ -8162,7 +8038,7 @@ function _toPrimitive(t, r) {
           adElems[i].appendChild(googleadsIframe);
           var innerGoogleadsIframe = document.createElement("iframe");
           googleadsIframe.contentWindow.document.body.appendChild(
-            innerGoogleadsIframe
+            innerGoogleadsIframe,
           );
           executed = true;
         }
@@ -8171,32 +8047,20 @@ function _toPrimitive(t, r) {
         hit(source);
       }
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
@@ -8467,13 +8331,13 @@ function _toPrimitive(t, r) {
           },
           getTargetingKeys: function getTargetingKeys() {
             return Array.from(
-              new Set(Array.of(...gTargeting.keys(), ...targeting.keys()))
+              new Set(Array.of(...gTargeting.keys(), ...targeting.keys())),
             );
           },
           getTargetingMap: function getTargetingMap() {
             return Object.assign(
               Object.fromEntries(gTargeting.entries()),
-              Object.fromEntries(targeting.entries())
+              Object.fromEntries(targeting.entries()),
             );
           },
           set(k, v) {
@@ -8610,32 +8474,20 @@ function _toPrimitive(t, r) {
       }
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopFunc() {}
@@ -8696,32 +8548,20 @@ function _toPrimitive(t, r) {
       window.Piwik = matomoWrapper;
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopFunc() {}
@@ -8760,32 +8600,20 @@ function _toPrimitive(t, r) {
       };
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopFunc() {}
@@ -8841,32 +8669,20 @@ function _toPrimitive(t, r) {
       piTracker();
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopFunc() {}
@@ -8942,32 +8758,20 @@ function _toPrimitive(t, r) {
       window.pbjs = pbjsWrapper;
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopStr() {
@@ -9012,32 +8816,20 @@ function _toPrimitive(t, r) {
       };
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
@@ -9089,7 +8881,7 @@ function _toPrimitive(t, r) {
         try {
           var textContentGetter = Object.getOwnPropertyDescriptor(
             Node.prototype,
-            "textContent"
+            "textContent",
           ).get;
           content = textContentGetter.call(scriptEl);
         } catch (e) {}
@@ -9186,201 +8978,139 @@ function _toPrimitive(t, r) {
     function randomId() {
       return Math.random().toString(36).slice(2, 9);
     }
-    function setPropertyAccess(object, property, descriptor) {
-      var currentDescriptor = Object.getOwnPropertyDescriptor(object, property);
-      if (currentDescriptor && !currentDescriptor.configurable) {
-        return false;
-      }
-      Object.defineProperty(object, property, descriptor);
-      return true;
+    function setPropertyAccess(e, r, t) {
+      var c = Object.getOwnPropertyDescriptor(e, r);
+      return !(c && !c.configurable) && (Object.defineProperty(e, r, t), true);
     }
-    function getPropertyInChain(base, chain) {
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
+    function getPropertyInChain(e, r) {
+      var n = r.indexOf(".");
+      if (-1 === n)
         return {
-          base: base,
-          prop: chain,
+          base: e,
+          prop: r,
         };
-      }
-      var prop = chain.slice(0, pos);
-      if (base === null) {
+      var i = r.slice(0, n);
+      if (null === e)
         return {
-          base: base,
-          prop: prop,
-          chain: chain,
+          base: e,
+          prop: i,
+          chain: r,
         };
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (
-        (base instanceof Object || typeof base === "object") &&
-        isEmptyObject(base)
-      ) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase === null) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase !== undefined) {
-        return getPropertyInChain(nextBase, chain);
-      }
-      Object.defineProperty(base, prop, {
-        configurable: true,
-      });
-      return {
-        base: base,
-        prop: prop,
-        chain: chain,
-      };
+      var t = e[i];
+      return (
+        (r = r.slice(n + 1)),
+        ((e instanceof Object || "object" == typeof e) && isEmptyObject(e)) ||
+        null === t
+          ? {
+              base: e,
+              prop: i,
+              chain: r,
+            }
+          : void 0 !== t
+            ? getPropertyInChain(t, r)
+            : (Object.defineProperty(e, i, {
+                configurable: true,
+              }),
+              {
+                base: e,
+                prop: i,
+                chain: r,
+              })
+      );
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function createOnErrorHandler(rid) {
-      var nativeOnError = window.onerror;
-      return function onError(error) {
-        if (typeof error === "string" && error.includes(rid)) {
-          return true;
-        }
-        if (nativeOnError instanceof Function) {
+    function createOnErrorHandler(r) {
+      var n = window.onerror;
+      return function (e) {
+        if ("string" == typeof e && e.includes(r)) return true;
+        if (n instanceof Function) {
           for (
-            var _len = arguments.length,
-              args = new Array(_len > 1 ? _len - 1 : 0),
-              _key = 1;
-            _key < _len;
-            _key++
-          ) {
-            args[_key - 1] = arguments[_key];
-          }
-          return nativeOnError.apply(window, [error, ...args]);
+            var t = arguments.length, o = new Array(t > 1 ? t - 1 : 0), i = 1;
+            i < t;
+            i++
+          )
+            o[i - 1] = arguments[i];
+          return n.apply(window, [e, ...o]);
         }
         return false;
       };
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
     }
     function getDescriptorAddon() {
       return {
         isAbortingSuspended: false,
-        isolateCallback(cb) {
+        isolateCallback(r) {
           this.isAbortingSuspended = true;
           try {
             for (
-              var _len = arguments.length,
-                args = new Array(_len > 1 ? _len - 1 : 0),
-                _key = 1;
-              _key < _len;
-              _key++
-            ) {
-              args[_key - 1] = arguments[_key];
-            }
-            var result = cb(...args);
-            this.isAbortingSuspended = false;
-            return result;
-          } catch (_unused) {
-            var rid = randomId();
-            this.isAbortingSuspended = false;
-            throw new ReferenceError(rid);
+              var e = arguments.length, n = new Array(e > 1 ? e - 1 : 0), t = 1;
+              t < e;
+              t++
+            )
+              n[t - 1] = arguments[t];
+            var i = r(...n);
+            return (this.isAbortingSuspended = !1), i;
+          } catch (r) {
+            var s = randomId();
+            throw ((this.isAbortingSuspended = false), new ReferenceError(s));
           }
         },
       };
@@ -9451,112 +9181,80 @@ function _toPrimitive(t, r) {
     function randomId() {
       return Math.random().toString(36).slice(2, 9);
     }
-    function setPropertyAccess(object, property, descriptor) {
-      var currentDescriptor = Object.getOwnPropertyDescriptor(object, property);
-      if (currentDescriptor && !currentDescriptor.configurable) {
-        return false;
-      }
-      Object.defineProperty(object, property, descriptor);
-      return true;
+    function setPropertyAccess(e, r, t) {
+      var c = Object.getOwnPropertyDescriptor(e, r);
+      return !(c && !c.configurable) && (Object.defineProperty(e, r, t), true);
     }
-    function getPropertyInChain(base, chain) {
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
+    function getPropertyInChain(e, r) {
+      var n = r.indexOf(".");
+      if (-1 === n)
         return {
-          base: base,
-          prop: chain,
+          base: e,
+          prop: r,
         };
-      }
-      var prop = chain.slice(0, pos);
-      if (base === null) {
+      var i = r.slice(0, n);
+      if (null === e)
         return {
-          base: base,
-          prop: prop,
-          chain: chain,
+          base: e,
+          prop: i,
+          chain: r,
         };
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (
-        (base instanceof Object || typeof base === "object") &&
-        isEmptyObject(base)
-      ) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase === null) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase !== undefined) {
-        return getPropertyInChain(nextBase, chain);
-      }
-      Object.defineProperty(base, prop, {
-        configurable: true,
-      });
-      return {
-        base: base,
-        prop: prop,
-        chain: chain,
-      };
+      var t = e[i];
+      return (
+        (r = r.slice(n + 1)),
+        ((e instanceof Object || "object" == typeof e) && isEmptyObject(e)) ||
+        null === t
+          ? {
+              base: e,
+              prop: i,
+              chain: r,
+            }
+          : void 0 !== t
+            ? getPropertyInChain(t, r)
+            : (Object.defineProperty(e, i, {
+                configurable: true,
+              }),
+              {
+                base: e,
+                prop: i,
+                chain: r,
+              })
+      );
     }
-    function createOnErrorHandler(rid) {
-      var nativeOnError = window.onerror;
-      return function onError(error) {
-        if (typeof error === "string" && error.includes(rid)) {
-          return true;
-        }
-        if (nativeOnError instanceof Function) {
+    function createOnErrorHandler(r) {
+      var n = window.onerror;
+      return function (e) {
+        if ("string" == typeof e && e.includes(r)) return true;
+        if (n instanceof Function) {
           for (
-            var _len = arguments.length,
-              args = new Array(_len > 1 ? _len - 1 : 0),
-              _key = 1;
-            _key < _len;
-            _key++
-          ) {
-            args[_key - 1] = arguments[_key];
-          }
-          return nativeOnError.apply(window, [error, ...args]);
+            var t = arguments.length, o = new Array(t > 1 ? t - 1 : 0), i = 1;
+            i < t;
+            i++
+          )
+            o[i - 1] = arguments[i];
+          return n.apply(window, [e, ...o]);
         }
         return false;
       };
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -9623,112 +9321,80 @@ function _toPrimitive(t, r) {
     function randomId() {
       return Math.random().toString(36).slice(2, 9);
     }
-    function setPropertyAccess(object, property, descriptor) {
-      var currentDescriptor = Object.getOwnPropertyDescriptor(object, property);
-      if (currentDescriptor && !currentDescriptor.configurable) {
-        return false;
-      }
-      Object.defineProperty(object, property, descriptor);
-      return true;
+    function setPropertyAccess(e, r, t) {
+      var c = Object.getOwnPropertyDescriptor(e, r);
+      return !(c && !c.configurable) && (Object.defineProperty(e, r, t), true);
     }
-    function getPropertyInChain(base, chain) {
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
+    function getPropertyInChain(e, r) {
+      var n = r.indexOf(".");
+      if (-1 === n)
         return {
-          base: base,
-          prop: chain,
+          base: e,
+          prop: r,
         };
-      }
-      var prop = chain.slice(0, pos);
-      if (base === null) {
+      var i = r.slice(0, n);
+      if (null === e)
         return {
-          base: base,
-          prop: prop,
-          chain: chain,
+          base: e,
+          prop: i,
+          chain: r,
         };
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (
-        (base instanceof Object || typeof base === "object") &&
-        isEmptyObject(base)
-      ) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase === null) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase !== undefined) {
-        return getPropertyInChain(nextBase, chain);
-      }
-      Object.defineProperty(base, prop, {
-        configurable: true,
-      });
-      return {
-        base: base,
-        prop: prop,
-        chain: chain,
-      };
+      var t = e[i];
+      return (
+        (r = r.slice(n + 1)),
+        ((e instanceof Object || "object" == typeof e) && isEmptyObject(e)) ||
+        null === t
+          ? {
+              base: e,
+              prop: i,
+              chain: r,
+            }
+          : void 0 !== t
+            ? getPropertyInChain(t, r)
+            : (Object.defineProperty(e, i, {
+                configurable: true,
+              }),
+              {
+                base: e,
+                prop: i,
+                chain: r,
+              })
+      );
     }
-    function createOnErrorHandler(rid) {
-      var nativeOnError = window.onerror;
-      return function onError(error) {
-        if (typeof error === "string" && error.includes(rid)) {
-          return true;
-        }
-        if (nativeOnError instanceof Function) {
+    function createOnErrorHandler(r) {
+      var n = window.onerror;
+      return function (e) {
+        if ("string" == typeof e && e.includes(r)) return true;
+        if (n instanceof Function) {
           for (
-            var _len = arguments.length,
-              args = new Array(_len > 1 ? _len - 1 : 0),
-              _key = 1;
-            _key < _len;
-            _key++
-          ) {
-            args[_key - 1] = arguments[_key];
-          }
-          return nativeOnError.apply(window, [error, ...args]);
+            var t = arguments.length, o = new Array(t > 1 ? t - 1 : 0), i = 1;
+            i < t;
+            i++
+          )
+            o[i - 1] = arguments[i];
+          return n.apply(window, [e, ...o]);
         }
         return false;
       };
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -9828,392 +9494,276 @@ function _toPrimitive(t, r) {
     function randomId() {
       return Math.random().toString(36).slice(2, 9);
     }
-    function setPropertyAccess(object, property, descriptor) {
-      var currentDescriptor = Object.getOwnPropertyDescriptor(object, property);
-      if (currentDescriptor && !currentDescriptor.configurable) {
-        return false;
-      }
-      Object.defineProperty(object, property, descriptor);
-      return true;
+    function setPropertyAccess(e, r, t) {
+      var c = Object.getOwnPropertyDescriptor(e, r);
+      return !(c && !c.configurable) && (Object.defineProperty(e, r, t), true);
     }
-    function getPropertyInChain(base, chain) {
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
+    function getPropertyInChain(e, r) {
+      var n = r.indexOf(".");
+      if (-1 === n)
         return {
-          base: base,
-          prop: chain,
+          base: e,
+          prop: r,
         };
-      }
-      var prop = chain.slice(0, pos);
-      if (base === null) {
+      var i = r.slice(0, n);
+      if (null === e)
         return {
-          base: base,
-          prop: prop,
-          chain: chain,
+          base: e,
+          prop: i,
+          chain: r,
         };
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (
-        (base instanceof Object || typeof base === "object") &&
-        isEmptyObject(base)
-      ) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase === null) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase !== undefined) {
-        return getPropertyInChain(nextBase, chain);
-      }
-      Object.defineProperty(base, prop, {
-        configurable: true,
-      });
-      return {
-        base: base,
-        prop: prop,
-        chain: chain,
-      };
+      var t = e[i];
+      return (
+        (r = r.slice(n + 1)),
+        ((e instanceof Object || "object" == typeof e) && isEmptyObject(e)) ||
+        null === t
+          ? {
+              base: e,
+              prop: i,
+              chain: r,
+            }
+          : void 0 !== t
+            ? getPropertyInChain(t, r)
+            : (Object.defineProperty(e, i, {
+                configurable: true,
+              }),
+              {
+                base: e,
+                prop: i,
+                chain: r,
+              })
+      );
     }
-    function createOnErrorHandler(rid) {
-      var nativeOnError = window.onerror;
-      return function onError(error) {
-        if (typeof error === "string" && error.includes(rid)) {
-          return true;
-        }
-        if (nativeOnError instanceof Function) {
+    function createOnErrorHandler(r) {
+      var n = window.onerror;
+      return function (e) {
+        if ("string" == typeof e && e.includes(r)) return true;
+        if (n instanceof Function) {
           for (
-            var _len = arguments.length,
-              args = new Array(_len > 1 ? _len - 1 : 0),
-              _key = 1;
-            _key < _len;
-            _key++
-          ) {
-            args[_key - 1] = arguments[_key];
-          }
-          return nativeOnError.apply(window, [error, ...args]);
+            var t = arguments.length, o = new Array(t > 1 ? t - 1 : 0), i = 1;
+            i < t;
+            i++
+          )
+            o[i - 1] = arguments[i];
+          return n.apply(window, [e, ...o]);
         }
         return false;
       };
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function isValidStrPattern(input) {
-      var FORWARD_SLASH = "/";
-      var str = escapeRegExp(input);
-      if (
-        input[0] === FORWARD_SLASH &&
-        input[input.length - 1] === FORWARD_SLASH
-      ) {
-        str = input.slice(1, -1);
-      }
-      var isValid;
+    function isValidStrPattern(e) {
+      var t,
+        n = escapeRegExp(e);
+      "/" === e[0] && "/" === e[e.length - 1] && (n = e.slice(1, -1));
       try {
-        isValid = new RegExp(str);
-        isValid = true;
+        (t = new RegExp(n)), (t = !0);
       } catch (e) {
-        isValid = false;
+        t = false;
       }
-      return isValid;
+      return t;
     }
-    function escapeRegExp(str) {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    function escapeRegExp(e) {
+      return e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
-    function matchStackTrace(stackMatch, stackTrace) {
-      if (!stackMatch || stackMatch === "") {
-        return true;
-      }
-      var regExpValues = backupRegExpValues();
-      if (shouldAbortInlineOrInjectedScript(stackMatch, stackTrace)) {
-        if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-          restoreRegExpValues(regExpValues);
-        }
-        return true;
-      }
-      var stackRegexp = toRegExp(stackMatch);
-      var refinedStackTrace = stackTrace
-        .split("\n")
-        .slice(2)
-        .map(function (line) {
-          return line.trim();
-        })
-        .join("\n");
-      if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-        restoreRegExpValues(regExpValues);
-      }
-      return getNativeRegexpTest().call(stackRegexp, refinedStackTrace);
+    function matchStackTrace(e, t) {
+      if (!e || "" === e) return true;
+      var r = backupRegExpValues();
+      if (shouldAbortInlineOrInjectedScript(e, t))
+        return r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r), true;
+      var n = toRegExp(e),
+        a = t
+          .split("\n")
+          .slice(2)
+          .map(function (e) {
+            return e.trim();
+          })
+          .join("\n");
+      return (
+        r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r),
+        getNativeRegexpTest().call(n, a)
+      );
     }
     function getDescriptorAddon() {
       return {
         isAbortingSuspended: false,
-        isolateCallback(cb) {
+        isolateCallback(r) {
           this.isAbortingSuspended = true;
           try {
             for (
-              var _len = arguments.length,
-                args = new Array(_len > 1 ? _len - 1 : 0),
-                _key = 1;
-              _key < _len;
-              _key++
-            ) {
-              args[_key - 1] = arguments[_key];
-            }
-            var result = cb(...args);
-            this.isAbortingSuspended = false;
-            return result;
-          } catch (_unused) {
-            var rid = randomId();
-            this.isAbortingSuspended = false;
-            throw new ReferenceError(rid);
+              var e = arguments.length, n = new Array(e > 1 ? e - 1 : 0), t = 1;
+              t < e;
+              t++
+            )
+              n[t - 1] = arguments[t];
+            var i = r(...n);
+            return (this.isAbortingSuspended = !1), i;
+          } catch (r) {
+            var s = randomId();
+            throw ((this.isAbortingSuspended = false), new ReferenceError(s));
           }
         },
       };
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
     }
     function getNativeRegexpTest() {
-      var descriptor = Object.getOwnPropertyDescriptor(
-        RegExp.prototype,
-        "test"
-      );
-      var nativeRegexTest =
-        descriptor === null || descriptor === void 0
-          ? void 0
-          : descriptor.value;
-      if (descriptor && typeof descriptor.value === "function") {
-        return nativeRegexTest;
-      }
+      var t = Object.getOwnPropertyDescriptor(RegExp.prototype, "test"),
+        e = null == t ? void 0 : t.value;
+      if (t && "function" == typeof t.value) return e;
       throw new Error("RegExp.prototype.test is not a function");
     }
-    function shouldAbortInlineOrInjectedScript(stackMatch, stackTrace) {
-      var INLINE_SCRIPT_STRING = "inlineScript";
-      var INJECTED_SCRIPT_STRING = "injectedScript";
-      var INJECTED_SCRIPT_MARKER = "<anonymous>";
-      var isInlineScript = function isInlineScript(match) {
-        return match.includes(INLINE_SCRIPT_STRING);
-      };
-      var isInjectedScript = function isInjectedScript(match) {
-        return match.includes(INJECTED_SCRIPT_STRING);
-      };
-      if (!(isInlineScript(stackMatch) || isInjectedScript(stackMatch))) {
-        return false;
-      }
-      var documentURL = window.location.href;
-      var pos = documentURL.indexOf("#");
-      if (pos !== -1) {
-        documentURL = documentURL.slice(0, pos);
-      }
-      var stackSteps = stackTrace
+    function shouldAbortInlineOrInjectedScript(t, i) {
+      var r = "inlineScript",
+        n = "injectedScript",
+        isInlineScript = function isInlineScript(t) {
+          return t.includes(r);
+        },
+        isInjectedScript = function isInjectedScript(t) {
+          return t.includes(n);
+        };
+      if (!isInlineScript(t) && !isInjectedScript(t)) return false;
+      var e = window.location.href,
+        s = e.indexOf("#");
+      -1 !== s && (e = e.slice(0, s));
+      var c = i
         .split("\n")
         .slice(2)
-        .map(function (line) {
-          return line.trim();
-        });
-      var stackLines = stackSteps.map(function (line) {
-        var stack;
-        var getStackTraceValues = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(line);
-        if (getStackTraceValues) {
-          var _stackURL, _stackURL2;
-          var stackURL = getStackTraceValues[2];
-          var stackLine = getStackTraceValues[3];
-          var stackCol = getStackTraceValues[4];
-          if (
-            (_stackURL = stackURL) !== null &&
-            _stackURL !== void 0 &&
-            _stackURL.startsWith("(")
-          ) {
-            stackURL = stackURL.slice(1);
-          }
-          if (
-            (_stackURL2 = stackURL) !== null &&
-            _stackURL2 !== void 0 &&
-            _stackURL2.startsWith(INJECTED_SCRIPT_MARKER)
-          ) {
-            var _stackFunction;
-            stackURL = INJECTED_SCRIPT_STRING;
-            var stackFunction =
-              getStackTraceValues[1] !== undefined
-                ? getStackTraceValues[1].slice(0, -1)
-                : line.slice(0, getStackTraceValues.index).trim();
+        .map(function (t) {
+          return t.trim();
+        })
+        .map(function (t) {
+          var i,
+            s = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(t);
+          if (s) {
+            var c,
+              l,
+              a = s[2],
+              u = s[3],
+              o = s[4];
             if (
-              (_stackFunction = stackFunction) !== null &&
-              _stackFunction !== void 0 &&
-              _stackFunction.startsWith("at")
+              (null !== (c = a) &&
+                void 0 !== c &&
+                c.startsWith("(") &&
+                (a = a.slice(1)),
+              null !== (l = a) && void 0 !== l && l.startsWith("<anonymous>"))
             ) {
-              stackFunction = stackFunction.slice(2).trim();
-            }
-            stack =
-              `${stackFunction} ${stackURL}${stackLine}${stackCol}`.trim();
-          } else if (stackURL === documentURL) {
-            stack = `${INLINE_SCRIPT_STRING}${stackLine}${stackCol}`.trim();
-          } else {
-            stack = `${stackURL}${stackLine}${stackCol}`.trim();
-          }
-        } else {
-          stack = line;
-        }
-        return stack;
-      });
-      if (stackLines) {
-        for (var index = 0; index < stackLines.length; index += 1) {
+              var d;
+              a = n;
+              var f =
+                void 0 !== s[1]
+                  ? s[1].slice(0, -1)
+                  : t.slice(0, s.index).trim();
+              null !== (d = f) &&
+                void 0 !== d &&
+                d.startsWith("at") &&
+                (f = f.slice(2).trim()),
+                (i = `${f} ${a}${u}${o}`.trim());
+            } else i = a === e ? `${r}${u}${o}`.trim() : `${a}${u}${o}`.trim();
+          } else i = t;
+          return i;
+        });
+      if (c)
+        for (var l = 0; l < c.length; l += 1) {
           if (
-            isInlineScript(stackMatch) &&
-            stackLines[index].startsWith(INLINE_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
+            isInlineScript(t) &&
+            c[l].startsWith(r) &&
+            c[l].match(toRegExp(t))
+          )
             return true;
-          }
           if (
-            isInjectedScript(stackMatch) &&
-            stackLines[index].startsWith(INJECTED_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
+            isInjectedScript(t) &&
+            c[l].startsWith(n) &&
+            c[l].match(toRegExp(t))
+          )
             return true;
-          }
         }
-      }
       return false;
     }
     function backupRegExpValues() {
       try {
-        var arrayOfRegexpValues = [];
-        for (var index = 1; index < 10; index += 1) {
-          var value = `$${index}`;
-          if (!RegExp[value]) {
-            break;
-          }
-          arrayOfRegexpValues.push(RegExp[value]);
+        for (var r = [], e = 1; e < 10; e += 1) {
+          var a = `$${e}`;
+          if (!RegExp[a]) break;
+          r.push(RegExp[a]);
         }
-        return arrayOfRegexpValues;
-      } catch (error) {
+        return r;
+      } catch (r) {
         return [];
       }
     }
-    function restoreRegExpValues(array) {
-      if (!array.length) {
-        return;
-      }
-      try {
-        var stringPattern = "";
-        if (array.length === 1) {
-          stringPattern = `(${array[0]})`;
-        } else {
-          stringPattern = array.reduce(
-            function (accumulator, currentValue, currentIndex) {
-              if (currentIndex === 1) {
-                return `(${accumulator}),(${currentValue})`;
-              }
-              return `${accumulator},(${currentValue})`;
-            }
-          );
+    function restoreRegExpValues(e) {
+      if (e.length)
+        try {
+          var r = "";
+          r =
+            1 === e.length
+              ? `(${e[0]})`
+              : e.reduce(function (e, r, t) {
+                  return 1 === t ? `(${e}),(${r})` : `${e},(${r})`;
+                });
+          var t = new RegExp(r);
+          e.toString().replace(t, "");
+        } catch (e) {
+          var n = `Failed to restore RegExp values: ${e}`;
+          console.log(n);
         }
-        var regExpGroup = new RegExp(stringPattern);
-        array.toString().replace(regExpGroup, "");
-      } catch (error) {
-        var message = `Failed to restore RegExp values: ${error}`;
-        console.log(message);
-      }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -10269,142 +9819,86 @@ function _toPrimitive(t, r) {
       };
       window.setInterval = intervalWrapper;
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
-      }
-    }
-    function isValidCallback(callback) {
-      return callback instanceof Function || typeof callback === "string";
-    }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
+    function hit(e) {
+      if (e.verbose) {
         try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
-      var escaped = input
+    }
+    function isValidCallback(n) {
+      return n instanceof Function || "string" == typeof n;
+    }
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function getBoostMultiplier(boost) {
-      var DEFAULT_MULTIPLIER = 0.05;
-      var MIN_MULTIPLIER = 0.001;
-      var MAX_MULTIPLIER = 50;
-      var parsedBoost = parseFloat(boost);
-      var boostMultiplier =
-        nativeIsNaN(parsedBoost) || !nativeIsFinite(parsedBoost)
-          ? DEFAULT_MULTIPLIER
-          : parsedBoost;
-      if (boostMultiplier < MIN_MULTIPLIER) {
-        boostMultiplier = MIN_MULTIPLIER;
+    function getBoostMultiplier(t) {
+      var e = parseFloat(t),
+        i = nativeIsNaN(e) || !nativeIsFinite(e) ? 0.05 : e;
+      return i < 0.001 && (i = 0.001), i > 50 && (i = 50), i;
+    }
+    function isDelayMatched(a, e) {
+      return shouldMatchAnyDelay(a) || e === getMatchDelay(a);
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      if (boostMultiplier > MAX_MULTIPLIER) {
-        boostMultiplier = MAX_MULTIPLIER;
-      }
-      return boostMultiplier;
     }
-    function isDelayMatched(inputDelay, realDelay) {
-      return (
-        shouldMatchAnyDelay(inputDelay) ||
-        realDelay === getMatchDelay(inputDelay)
-      );
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
+    function nativeIsFinite(i) {
+      return (Number.isFinite || window.isFinite)(i);
     }
-    function nativeIsNaN(num) {
-      var native = Number.isNaN || window.isNaN;
-      return native(num);
+    function getMatchDelay(a) {
+      var e = parseInt(a, 10);
+      return nativeIsNaN(e) ? 1e3 : e;
     }
-    function nativeIsFinite(num) {
-      var native = Number.isFinite || window.isFinite;
-      return native(num);
-    }
-    function getMatchDelay(delay) {
-      var DEFAULT_DELAY = 1e3;
-      var parsedDelay = parseInt(delay, 10);
-      var delayMatch = nativeIsNaN(parsedDelay) ? DEFAULT_DELAY : parsedDelay;
-      return delayMatch;
-    }
-    function shouldMatchAnyDelay(delay) {
-      return delay === "*";
+    function shouldMatchAnyDelay(n) {
+      return "*" === n;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -10460,142 +9954,86 @@ function _toPrimitive(t, r) {
       };
       window.setTimeout = timeoutWrapper;
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
-      }
-    }
-    function isValidCallback(callback) {
-      return callback instanceof Function || typeof callback === "string";
-    }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
+    function hit(e) {
+      if (e.verbose) {
         try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
-      var escaped = input
+    }
+    function isValidCallback(n) {
+      return n instanceof Function || "string" == typeof n;
+    }
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function getBoostMultiplier(boost) {
-      var DEFAULT_MULTIPLIER = 0.05;
-      var MIN_MULTIPLIER = 0.001;
-      var MAX_MULTIPLIER = 50;
-      var parsedBoost = parseFloat(boost);
-      var boostMultiplier =
-        nativeIsNaN(parsedBoost) || !nativeIsFinite(parsedBoost)
-          ? DEFAULT_MULTIPLIER
-          : parsedBoost;
-      if (boostMultiplier < MIN_MULTIPLIER) {
-        boostMultiplier = MIN_MULTIPLIER;
+    function getBoostMultiplier(t) {
+      var e = parseFloat(t),
+        i = nativeIsNaN(e) || !nativeIsFinite(e) ? 0.05 : e;
+      return i < 0.001 && (i = 0.001), i > 50 && (i = 50), i;
+    }
+    function isDelayMatched(a, e) {
+      return shouldMatchAnyDelay(a) || e === getMatchDelay(a);
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      if (boostMultiplier > MAX_MULTIPLIER) {
-        boostMultiplier = MAX_MULTIPLIER;
-      }
-      return boostMultiplier;
     }
-    function isDelayMatched(inputDelay, realDelay) {
-      return (
-        shouldMatchAnyDelay(inputDelay) ||
-        realDelay === getMatchDelay(inputDelay)
-      );
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
+    function nativeIsFinite(i) {
+      return (Number.isFinite || window.isFinite)(i);
     }
-    function nativeIsNaN(num) {
-      var native = Number.isNaN || window.isNaN;
-      return native(num);
+    function getMatchDelay(a) {
+      var e = parseInt(a, 10);
+      return nativeIsNaN(e) ? 1e3 : e;
     }
-    function nativeIsFinite(num) {
-      var native = Number.isFinite || window.isFinite;
-      return native(num);
-    }
-    function getMatchDelay(delay) {
-      var DEFAULT_DELAY = 1e3;
-      var parsedDelay = parseInt(delay, 10);
-      var delayMatch = nativeIsNaN(parsedDelay) ? DEFAULT_DELAY : parsedDelay;
-      return delayMatch;
-    }
-    function shouldMatchAnyDelay(delay) {
-      return delay === "*";
+    function shouldMatchAnyDelay(n) {
+      return "*" === n;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -10650,103 +10088,69 @@ function _toPrimitive(t, r) {
       };
       base[prop] = new Proxy(base[prop], objectHandler);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function getPropertyInChain(base, chain) {
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
+    function getPropertyInChain(e, r) {
+      var n = r.indexOf(".");
+      if (-1 === n)
         return {
-          base: base,
-          prop: chain,
+          base: e,
+          prop: r,
         };
-      }
-      var prop = chain.slice(0, pos);
-      if (base === null) {
+      var i = r.slice(0, n);
+      if (null === e)
         return {
-          base: base,
-          prop: prop,
-          chain: chain,
+          base: e,
+          prop: i,
+          chain: r,
         };
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (
-        (base instanceof Object || typeof base === "object") &&
-        isEmptyObject(base)
-      ) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase === null) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase !== undefined) {
-        return getPropertyInChain(nextBase, chain);
-      }
-      Object.defineProperty(base, prop, {
-        configurable: true,
-      });
-      return {
-        base: base,
-        prop: prop,
-        chain: chain,
-      };
+      var t = e[i];
+      return (
+        (r = r.slice(n + 1)),
+        ((e instanceof Object || "object" == typeof e) && isEmptyObject(e)) ||
+        null === t
+          ? {
+              base: e,
+              prop: i,
+              chain: r,
+            }
+          : void 0 !== t
+            ? getPropertyInChain(t, r)
+            : (Object.defineProperty(e, i, {
+                configurable: true,
+              }),
+              {
+                base: e,
+                prop: i,
+                chain: r,
+              })
+      );
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -10795,7 +10199,7 @@ function _toPrimitive(t, r) {
         try {
           var textContentGetter = Object.getOwnPropertyDescriptor(
             Node.prototype,
-            "textContent"
+            "textContent",
           ).get;
           content = textContentGetter.call(scriptEl);
         } catch (e) {}
@@ -10854,178 +10258,121 @@ function _toPrimitive(t, r) {
     function randomId() {
       return Math.random().toString(36).slice(2, 9);
     }
-    function setPropertyAccess(object, property, descriptor) {
-      var currentDescriptor = Object.getOwnPropertyDescriptor(object, property);
-      if (currentDescriptor && !currentDescriptor.configurable) {
-        return false;
-      }
-      Object.defineProperty(object, property, descriptor);
-      return true;
+    function setPropertyAccess(e, r, t) {
+      var c = Object.getOwnPropertyDescriptor(e, r);
+      return !(c && !c.configurable) && (Object.defineProperty(e, r, t), true);
     }
-    function getPropertyInChain(base, chain) {
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
+    function getPropertyInChain(e, r) {
+      var n = r.indexOf(".");
+      if (-1 === n)
         return {
-          base: base,
-          prop: chain,
+          base: e,
+          prop: r,
         };
-      }
-      var prop = chain.slice(0, pos);
-      if (base === null) {
+      var i = r.slice(0, n);
+      if (null === e)
         return {
-          base: base,
-          prop: prop,
-          chain: chain,
+          base: e,
+          prop: i,
+          chain: r,
         };
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (
-        (base instanceof Object || typeof base === "object") &&
-        isEmptyObject(base)
-      ) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase === null) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase !== undefined) {
-        return getPropertyInChain(nextBase, chain);
-      }
-      Object.defineProperty(base, prop, {
-        configurable: true,
-      });
-      return {
-        base: base,
-        prop: prop,
-        chain: chain,
-      };
+      var t = e[i];
+      return (
+        (r = r.slice(n + 1)),
+        ((e instanceof Object || "object" == typeof e) && isEmptyObject(e)) ||
+        null === t
+          ? {
+              base: e,
+              prop: i,
+              chain: r,
+            }
+          : void 0 !== t
+            ? getPropertyInChain(t, r)
+            : (Object.defineProperty(e, i, {
+                configurable: true,
+              }),
+              {
+                base: e,
+                prop: i,
+                chain: r,
+              })
+      );
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function createOnErrorHandler(rid) {
-      var nativeOnError = window.onerror;
-      return function onError(error) {
-        if (typeof error === "string" && error.includes(rid)) {
-          return true;
-        }
-        if (nativeOnError instanceof Function) {
+    function createOnErrorHandler(r) {
+      var n = window.onerror;
+      return function (e) {
+        if ("string" == typeof e && e.includes(r)) return true;
+        if (n instanceof Function) {
           for (
-            var _len = arguments.length,
-              args = new Array(_len > 1 ? _len - 1 : 0),
-              _key = 1;
-            _key < _len;
-            _key++
-          ) {
-            args[_key - 1] = arguments[_key];
-          }
-          return nativeOnError.apply(window, [error, ...args]);
+            var t = arguments.length, o = new Array(t > 1 ? t - 1 : 0), i = 1;
+            i < t;
+            i++
+          )
+            o[i - 1] = arguments[i];
+          return n.apply(window, [e, ...o]);
         }
         return false;
       };
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -11093,113 +10440,81 @@ function _toPrimitive(t, r) {
     function randomId() {
       return Math.random().toString(36).slice(2, 9);
     }
-    function setPropertyAccess(object, property, descriptor) {
-      var currentDescriptor = Object.getOwnPropertyDescriptor(object, property);
-      if (currentDescriptor && !currentDescriptor.configurable) {
-        return false;
-      }
-      Object.defineProperty(object, property, descriptor);
-      return true;
+    function setPropertyAccess(e, r, t) {
+      var c = Object.getOwnPropertyDescriptor(e, r);
+      return !(c && !c.configurable) && (Object.defineProperty(e, r, t), true);
     }
-    function getPropertyInChain(base, chain) {
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
+    function getPropertyInChain(e, r) {
+      var n = r.indexOf(".");
+      if (-1 === n)
         return {
-          base: base,
-          prop: chain,
+          base: e,
+          prop: r,
         };
-      }
-      var prop = chain.slice(0, pos);
-      if (base === null) {
+      var i = r.slice(0, n);
+      if (null === e)
         return {
-          base: base,
-          prop: prop,
-          chain: chain,
+          base: e,
+          prop: i,
+          chain: r,
         };
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (
-        (base instanceof Object || typeof base === "object") &&
-        isEmptyObject(base)
-      ) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase === null) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase !== undefined) {
-        return getPropertyInChain(nextBase, chain);
-      }
-      Object.defineProperty(base, prop, {
-        configurable: true,
-      });
-      return {
-        base: base,
-        prop: prop,
-        chain: chain,
-      };
+      var t = e[i];
+      return (
+        (r = r.slice(n + 1)),
+        ((e instanceof Object || "object" == typeof e) && isEmptyObject(e)) ||
+        null === t
+          ? {
+              base: e,
+              prop: i,
+              chain: r,
+            }
+          : void 0 !== t
+            ? getPropertyInChain(t, r)
+            : (Object.defineProperty(e, i, {
+                configurable: true,
+              }),
+              {
+                base: e,
+                prop: i,
+                chain: r,
+              })
+      );
     }
-    function createOnErrorHandler(rid) {
-      var nativeOnError = window.onerror;
-      return function onError(error) {
-        if (typeof error === "string" && error.includes(rid)) {
-          return true;
-        }
-        if (nativeOnError instanceof Function) {
+    function createOnErrorHandler(r) {
+      var n = window.onerror;
+      return function (e) {
+        if ("string" == typeof e && e.includes(r)) return true;
+        if (n instanceof Function) {
           for (
-            var _len = arguments.length,
-              args = new Array(_len > 1 ? _len - 1 : 0),
-              _key = 1;
-            _key < _len;
-            _key++
-          ) {
-            args[_key - 1] = arguments[_key];
-          }
-          return nativeOnError.apply(window, [error, ...args]);
+            var t = arguments.length, o = new Array(t > 1 ? t - 1 : 0), i = 1;
+            i < t;
+            i++
+          )
+            o[i - 1] = arguments[i];
+          return n.apply(window, [e, ...o]);
         }
         return false;
       };
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopFunc() {}
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -11266,112 +10581,80 @@ function _toPrimitive(t, r) {
     function randomId() {
       return Math.random().toString(36).slice(2, 9);
     }
-    function setPropertyAccess(object, property, descriptor) {
-      var currentDescriptor = Object.getOwnPropertyDescriptor(object, property);
-      if (currentDescriptor && !currentDescriptor.configurable) {
-        return false;
-      }
-      Object.defineProperty(object, property, descriptor);
-      return true;
+    function setPropertyAccess(e, r, t) {
+      var c = Object.getOwnPropertyDescriptor(e, r);
+      return !(c && !c.configurable) && (Object.defineProperty(e, r, t), true);
     }
-    function getPropertyInChain(base, chain) {
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
+    function getPropertyInChain(e, r) {
+      var n = r.indexOf(".");
+      if (-1 === n)
         return {
-          base: base,
-          prop: chain,
+          base: e,
+          prop: r,
         };
-      }
-      var prop = chain.slice(0, pos);
-      if (base === null) {
+      var i = r.slice(0, n);
+      if (null === e)
         return {
-          base: base,
-          prop: prop,
-          chain: chain,
+          base: e,
+          prop: i,
+          chain: r,
         };
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (
-        (base instanceof Object || typeof base === "object") &&
-        isEmptyObject(base)
-      ) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase === null) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase !== undefined) {
-        return getPropertyInChain(nextBase, chain);
-      }
-      Object.defineProperty(base, prop, {
-        configurable: true,
-      });
-      return {
-        base: base,
-        prop: prop,
-        chain: chain,
-      };
+      var t = e[i];
+      return (
+        (r = r.slice(n + 1)),
+        ((e instanceof Object || "object" == typeof e) && isEmptyObject(e)) ||
+        null === t
+          ? {
+              base: e,
+              prop: i,
+              chain: r,
+            }
+          : void 0 !== t
+            ? getPropertyInChain(t, r)
+            : (Object.defineProperty(e, i, {
+                configurable: true,
+              }),
+              {
+                base: e,
+                prop: i,
+                chain: r,
+              })
+      );
     }
-    function createOnErrorHandler(rid) {
-      var nativeOnError = window.onerror;
-      return function onError(error) {
-        if (typeof error === "string" && error.includes(rid)) {
-          return true;
-        }
-        if (nativeOnError instanceof Function) {
+    function createOnErrorHandler(r) {
+      var n = window.onerror;
+      return function (e) {
+        if ("string" == typeof e && e.includes(r)) return true;
+        if (n instanceof Function) {
           for (
-            var _len = arguments.length,
-              args = new Array(_len > 1 ? _len - 1 : 0),
-              _key = 1;
-            _key < _len;
-            _key++
-          ) {
-            args[_key - 1] = arguments[_key];
-          }
-          return nativeOnError.apply(window, [error, ...args]);
+            var t = arguments.length, o = new Array(t > 1 ? t - 1 : 0), i = 1;
+            i < t;
+            i++
+          )
+            o[i - 1] = arguments[i];
+          return n.apply(window, [e, ...o]);
         }
         return false;
       };
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -11410,32 +10693,20 @@ function _toPrimitive(t, r) {
       }
       console.dir = dirWrapper;
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
@@ -11479,32 +10750,20 @@ function _toPrimitive(t, r) {
         }
       });
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
@@ -11549,7 +10808,7 @@ function _toPrimitive(t, r) {
             prunePaths,
             requiredPaths,
             stack,
-            nativeObjects
+            nativeObjects,
           );
         }
         return data;
@@ -11559,442 +10818,456 @@ function _toPrimitive(t, r) {
       };
       window.eval = new Proxy(window.eval, evalHandler);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
-      }
-    }
-    function matchStackTrace(stackMatch, stackTrace) {
-      if (!stackMatch || stackMatch === "") {
-        return true;
-      }
-      var regExpValues = backupRegExpValues();
-      if (shouldAbortInlineOrInjectedScript(stackMatch, stackTrace)) {
-        if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-          restoreRegExpValues(regExpValues);
-        }
-        return true;
-      }
-      var stackRegexp = toRegExp(stackMatch);
-      var refinedStackTrace = stackTrace
-        .split("\n")
-        .slice(2)
-        .map(function (line) {
-          return line.trim();
-        })
-        .join("\n");
-      if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-        restoreRegExpValues(regExpValues);
-      }
-      return getNativeRegexpTest().call(stackRegexp, refinedStackTrace);
-    }
-    function getWildcardPropertyInChain(base, chain) {
-      var lookThrough =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var output =
-        arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
-        if (chain === "*" || chain === "[]") {
-          for (var key in base) {
-            if (Object.prototype.hasOwnProperty.call(base, key)) {
-              output.push({
-                base: base,
-                prop: key,
-              });
-            }
-          }
-        } else {
-          output.push({
-            base: base,
-            prop: chain,
-          });
-        }
-        return output;
-      }
-      var prop = chain.slice(0, pos);
-      var shouldLookThrough =
-        (prop === "[]" && Array.isArray(base)) ||
-        (prop === "*" && base instanceof Object);
-      if (shouldLookThrough) {
-        var nextProp = chain.slice(pos + 1);
-        var baseKeys = Object.keys(base);
-        baseKeys.forEach(function (key) {
-          var item = base[key];
-          getWildcardPropertyInChain(item, nextProp, lookThrough, output);
-        });
-      }
-      if (Array.isArray(base)) {
-        base.forEach(function (key) {
-          var nextBase = key;
-          if (nextBase !== undefined) {
-            getWildcardPropertyInChain(nextBase, chain, lookThrough, output);
-          }
-        });
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (nextBase !== undefined) {
-        getWildcardPropertyInChain(nextBase, chain, lookThrough, output);
-      }
-      return output;
-    }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
-    }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
+    function hit(e) {
+      if (e.verbose) {
         try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
-      var escaped = input
+    }
+    function matchStackTrace(e, t) {
+      if (!e || "" === e) return true;
+      var r = backupRegExpValues();
+      if (shouldAbortInlineOrInjectedScript(e, t))
+        return r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r), true;
+      var n = toRegExp(e),
+        a = t
+          .split("\n")
+          .slice(2)
+          .map(function (e) {
+            return e.trim();
+          })
+          .join("\n");
+      return (
+        r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r),
+        getNativeRegexpTest().call(n, a)
+      );
+    }
+    function getWildcardPropertyInChain(r, e) {
+      var a = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        i = arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : [],
+        t = arguments.length > 4 ? arguments[4] : void 0,
+        o = e.indexOf(".");
+      if (-1 === o) {
+        if ("*" === e || "[]" === e) {
+          for (var n in r)
+            if (Object.prototype.hasOwnProperty.call(r, n))
+              if (void 0 !== t) {
+                var s = r[n];
+                "string" == typeof s && t instanceof RegExp
+                  ? t.test(s) &&
+                    i.push({
+                      base: r,
+                      prop: n,
+                    })
+                  : s === t &&
+                    i.push({
+                      base: r,
+                      prop: n,
+                    });
+              } else
+                i.push({
+                  base: r,
+                  prop: n,
+                });
+        } else if (void 0 !== t) {
+          var p = r[e];
+          "string" == typeof p && t instanceof RegExp
+            ? t.test(p) &&
+              i.push({
+                base: r,
+                prop: e,
+              })
+            : r[e] === t &&
+              i.push({
+                base: r,
+                prop: e,
+              });
+        } else
+          i.push({
+            base: r,
+            prop: e,
+          });
+        return i;
+      }
+      var c = e.slice(0, o);
+      if (
+        ("[]" === c && Array.isArray(r)) ||
+        ("*" === c && r instanceof Object) ||
+        ("[-]" === c && Array.isArray(r)) ||
+        ("{-}" === c && r instanceof Object)
+      ) {
+        var f = e.slice(o + 1),
+          y = Object.keys(r);
+        if ("{-}" === c || "[-]" === c) {
+          var h = Array.isArray(r) ? "array" : "object";
+          return (
+            (("{-}" !== c || "object" !== h) &&
+              ("[-]" !== c || "array" !== h)) ||
+              y.forEach(function (e) {
+                var a = r[e];
+                isKeyInObject(a, f, t) &&
+                  i.push({
+                    base: r,
+                    prop: e,
+                  });
+              }),
+            i
+          );
+        }
+        y.forEach(function (e) {
+          getWildcardPropertyInChain(r[e], f, a, i, t);
+        });
+      }
+      Array.isArray(r) &&
+        r.forEach(function (r) {
+          void 0 !== r && getWildcardPropertyInChain(r, e, a, i, t);
+        });
+      var d = r[c];
+      return (
+        (e = e.slice(o + 1)),
+        void 0 !== d && getWildcardPropertyInChain(d, e, a, i, t),
+        i
+      );
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
+      }
+    }
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function isPruningNeeded(
-      source,
-      root,
-      prunePaths,
-      requiredPaths,
-      stack,
-      nativeObjects
-    ) {
-      if (!root) {
-        return false;
-      }
-      var { nativeStringify: nativeStringify } = nativeObjects;
-      var shouldProcess;
-      if (prunePaths.length === 0 && requiredPaths.length > 0) {
-        var rootString = nativeStringify(root);
-        var matchRegex = toRegExp(requiredPaths.join(""));
-        var shouldLog = matchRegex.test(rootString);
-        if (shouldLog) {
-          logMessage(
-            source,
-            `${window.location.hostname}\n${nativeStringify(root, null, 2)}\nStack trace:\n${new Error().stack}`,
-            true
-          );
-          if (root && typeof root === "object") {
-            logMessage(source, root, true, false);
-          }
-          shouldProcess = false;
-          return shouldProcess;
-        }
-      }
-      if (stack && !matchStackTrace(stack, new Error().stack || "")) {
-        shouldProcess = false;
-        return shouldProcess;
-      }
-      var wildcardSymbols = [".*.", "*.", ".*", ".[].", "[].", ".[]"];
-      var _loop = function _loop() {
-          var requiredPath = requiredPaths[i];
-          var lastNestedPropName = requiredPath.split(".").pop();
-          var hasWildcard = wildcardSymbols.some(function (symbol) {
-            return requiredPath.includes(symbol);
-          });
-          var details = getWildcardPropertyInChain(
-            root,
-            requiredPath,
-            hasWildcard
-          );
-          if (!details.length) {
-            shouldProcess = false;
-            return {
-              v: shouldProcess,
-            };
-          }
-          shouldProcess = !hasWildcard;
-          for (var j = 0; j < details.length; j += 1) {
-            var hasRequiredProp =
-              typeof lastNestedPropName === "string" &&
-              details[j].base[lastNestedPropName] !== undefined;
-            if (hasWildcard) {
-              shouldProcess = hasRequiredProp || shouldProcess;
-            } else {
-              shouldProcess = hasRequiredProp && shouldProcess;
-            }
-          }
-        },
-        _ret;
-      for (var i = 0; i < requiredPaths.length; i += 1) {
-        _ret = _loop();
-        if (_ret) return _ret.v;
-      }
-      return shouldProcess;
-    }
-    function jsonPruner(
-      source,
-      root,
-      prunePaths,
-      requiredPaths,
-      stack,
-      nativeObjects
-    ) {
-      var { nativeStringify: nativeStringify } = nativeObjects;
-      if (prunePaths.length === 0 && requiredPaths.length === 0) {
-        logMessage(
-          source,
-          `${window.location.hostname}\n${nativeStringify(root, null, 2)}\nStack trace:\n${new Error().stack}`,
-          true
-        );
-        if (root && typeof root === "object") {
-          logMessage(source, root, true, false);
-        }
-        return root;
-      }
-      try {
-        if (
-          isPruningNeeded(
-            source,
-            root,
-            prunePaths,
-            requiredPaths,
-            stack,
-            nativeObjects
-          ) === false
-        ) {
-          return root;
-        }
-        prunePaths.forEach(function (path) {
-          var ownerObjArr = getWildcardPropertyInChain(root, path, true);
-          ownerObjArr.forEach(function (ownerObj) {
-            if (ownerObj !== undefined && ownerObj.base) {
-              delete ownerObj.base[ownerObj.prop];
-              hit(source);
-            }
-          });
+    function isPruningNeeded(n, t, r, e, a, i) {
+      if (!t) return false;
+      var o,
+        { nativeStringify: u } = i,
+        c = r.map(function (n) {
+          return n.path;
+        }),
+        f = e.map(function (n) {
+          return n.path;
         });
-      } catch (e) {
-        logMessage(source, e);
+      if (0 === c.length && f.length > 0) {
+        var g = u(t);
+        if (toRegExp(f.join("")).test(g))
+          return (
+            logMessage(
+              n,
+              `${window.location.hostname}\n${u(t, null, 2)}\nStack trace:\n${new Error().stack}`,
+              true,
+            ),
+            t && "object" == typeof t && logMessage(n, t, true, false),
+            (o = false)
+          );
       }
-      return root;
+      if (a && !matchStackTrace(a, new Error().stack || "")) return (o = false);
+      for (
+        var s,
+          l = [".*.", "*.", ".*", ".[].", "[].", ".[]"],
+          _loop = function _loop() {
+            var n = f[p],
+              r = n.split(".").pop(),
+              e = l.some(function (t) {
+                return n.includes(t);
+              }),
+              a = getWildcardPropertyInChain(t, n, e);
+            if (!a.length)
+              return {
+                v: (o = false),
+              };
+            o = !e;
+            for (var i = 0; i < a.length; i += 1) {
+              var u = "string" == typeof r && void 0 !== a[i].base[r];
+              o = e ? u || o : u && o;
+            }
+          },
+          p = 0;
+        p < f.length;
+        p += 1
+      )
+        if ((s = _loop())) return s.v;
+      return o;
     }
-    function getPrunePath(props) {
-      var validPropsString =
-        typeof props === "string" && props !== undefined && props !== "";
-      return validPropsString ? props.split(/ +/) : [];
+    function jsonPruner(e, r, n, a, t, i) {
+      var { nativeStringify: o } = i;
+      if (0 === n.length && 0 === a.length)
+        return (
+          logMessage(
+            e,
+            `${window.location.hostname}\n${o(r, null, 2)}\nStack trace:\n${new Error().stack}`,
+            true,
+          ),
+          r && "object" == typeof r && logMessage(e, r, true, false),
+          r
+        );
+      try {
+        if (!1 === isPruningNeeded(e, r, n, a, t, i)) return r;
+        n.forEach(function (n) {
+          for (
+            var a = n.path,
+              t = n.value,
+              i = getWildcardPropertyInChain(r, a, !0, [], t),
+              o = i.length - 1;
+            o >= 0;
+            o -= 1
+          ) {
+            var s = i[o];
+            if (void 0 !== s && s.base)
+              if ((hit(e), Array.isArray(s.base)))
+                try {
+                  var l = Number(s.prop);
+                  if (Number.isNaN(l)) continue;
+                  s.base.splice(l, 1);
+                } catch (e) {
+                  console.error("Error while deleting array element", e);
+                }
+              else delete s.base[s.prop];
+          }
+        });
+      } catch (r) {
+        logMessage(e, r);
+      }
+      return r;
+    }
+    function getPrunePath(t) {
+      var r = ".[=].";
+      if ("string" == typeof t && void 0 !== t && "" !== t) {
+        var e = (function (t) {
+          for (
+            var e = [], n = "", i = 0, a = false, s = false;
+            i < t.length;
+
+          ) {
+            var u = t[i];
+            if (a)
+              (n += u),
+                "\\" === u
+                  ? (s = !s)
+                  : ("/" !== u || s || (a = false), (s = false)),
+                (i += 1);
+            else {
+              if (
+                " " === u ||
+                "\n" === u ||
+                "\t" === u ||
+                "\r" === u ||
+                "\f" === u ||
+                "\v" === u
+              ) {
+                for (; i < t.length && /\s/.test(t[i]); ) i += 1;
+                "" !== n && (e.push(n), (n = ""));
+                continue;
+              }
+              if (t.startsWith(r, i)) {
+                if (((n += r), "/" === t[(i += 5)])) {
+                  (a = true), (s = false), (n += "/"), (i += 1);
+                  continue;
+                }
+                continue;
+              }
+              (n += u), (i += 1);
+            }
+          }
+          return "" !== n && e.push(n), e;
+        })(t);
+        return e.map(function (t) {
+          var e = t.split(r),
+            n = e[0],
+            i = e[1];
+          return void 0 !== i
+            ? ("true" === i
+                ? (i = true)
+                : "false" === i
+                  ? (i = false)
+                  : i.startsWith("/")
+                    ? (i = toRegExp(i))
+                    : "string" == typeof i &&
+                      /^\d+$/.test(i) &&
+                      (i = parseFloat(i)),
+              {
+                path: n,
+                value: i,
+              })
+            : {
+                path: n,
+              };
+        });
+      }
+      return [];
     }
     function getNativeRegexpTest() {
-      var descriptor = Object.getOwnPropertyDescriptor(
-        RegExp.prototype,
-        "test"
-      );
-      var nativeRegexTest =
-        descriptor === null || descriptor === void 0
-          ? void 0
-          : descriptor.value;
-      if (descriptor && typeof descriptor.value === "function") {
-        return nativeRegexTest;
-      }
+      var t = Object.getOwnPropertyDescriptor(RegExp.prototype, "test"),
+        e = null == t ? void 0 : t.value;
+      if (t && "function" == typeof t.value) return e;
       throw new Error("RegExp.prototype.test is not a function");
     }
-    function shouldAbortInlineOrInjectedScript(stackMatch, stackTrace) {
-      var INLINE_SCRIPT_STRING = "inlineScript";
-      var INJECTED_SCRIPT_STRING = "injectedScript";
-      var INJECTED_SCRIPT_MARKER = "<anonymous>";
-      var isInlineScript = function isInlineScript(match) {
-        return match.includes(INLINE_SCRIPT_STRING);
-      };
-      var isInjectedScript = function isInjectedScript(match) {
-        return match.includes(INJECTED_SCRIPT_STRING);
-      };
-      if (!(isInlineScript(stackMatch) || isInjectedScript(stackMatch))) {
-        return false;
-      }
-      var documentURL = window.location.href;
-      var pos = documentURL.indexOf("#");
-      if (pos !== -1) {
-        documentURL = documentURL.slice(0, pos);
-      }
-      var stackSteps = stackTrace
+    function shouldAbortInlineOrInjectedScript(t, i) {
+      var r = "inlineScript",
+        n = "injectedScript",
+        isInlineScript = function isInlineScript(t) {
+          return t.includes(r);
+        },
+        isInjectedScript = function isInjectedScript(t) {
+          return t.includes(n);
+        };
+      if (!isInlineScript(t) && !isInjectedScript(t)) return false;
+      var e = window.location.href,
+        s = e.indexOf("#");
+      -1 !== s && (e = e.slice(0, s));
+      var c = i
         .split("\n")
         .slice(2)
-        .map(function (line) {
-          return line.trim();
-        });
-      var stackLines = stackSteps.map(function (line) {
-        var stack;
-        var getStackTraceValues = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(line);
-        if (getStackTraceValues) {
-          var _stackURL, _stackURL2;
-          var stackURL = getStackTraceValues[2];
-          var stackLine = getStackTraceValues[3];
-          var stackCol = getStackTraceValues[4];
-          if (
-            (_stackURL = stackURL) !== null &&
-            _stackURL !== void 0 &&
-            _stackURL.startsWith("(")
-          ) {
-            stackURL = stackURL.slice(1);
-          }
-          if (
-            (_stackURL2 = stackURL) !== null &&
-            _stackURL2 !== void 0 &&
-            _stackURL2.startsWith(INJECTED_SCRIPT_MARKER)
-          ) {
-            var _stackFunction;
-            stackURL = INJECTED_SCRIPT_STRING;
-            var stackFunction =
-              getStackTraceValues[1] !== undefined
-                ? getStackTraceValues[1].slice(0, -1)
-                : line.slice(0, getStackTraceValues.index).trim();
+        .map(function (t) {
+          return t.trim();
+        })
+        .map(function (t) {
+          var i,
+            s = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(t);
+          if (s) {
+            var c,
+              l,
+              a = s[2],
+              u = s[3],
+              o = s[4];
             if (
-              (_stackFunction = stackFunction) !== null &&
-              _stackFunction !== void 0 &&
-              _stackFunction.startsWith("at")
+              (null !== (c = a) &&
+                void 0 !== c &&
+                c.startsWith("(") &&
+                (a = a.slice(1)),
+              null !== (l = a) && void 0 !== l && l.startsWith("<anonymous>"))
             ) {
-              stackFunction = stackFunction.slice(2).trim();
-            }
-            stack =
-              `${stackFunction} ${stackURL}${stackLine}${stackCol}`.trim();
-          } else if (stackURL === documentURL) {
-            stack = `${INLINE_SCRIPT_STRING}${stackLine}${stackCol}`.trim();
-          } else {
-            stack = `${stackURL}${stackLine}${stackCol}`.trim();
-          }
-        } else {
-          stack = line;
-        }
-        return stack;
-      });
-      if (stackLines) {
-        for (var index = 0; index < stackLines.length; index += 1) {
+              var d;
+              a = n;
+              var f =
+                void 0 !== s[1]
+                  ? s[1].slice(0, -1)
+                  : t.slice(0, s.index).trim();
+              null !== (d = f) &&
+                void 0 !== d &&
+                d.startsWith("at") &&
+                (f = f.slice(2).trim()),
+                (i = `${f} ${a}${u}${o}`.trim());
+            } else i = a === e ? `${r}${u}${o}`.trim() : `${a}${u}${o}`.trim();
+          } else i = t;
+          return i;
+        });
+      if (c)
+        for (var l = 0; l < c.length; l += 1) {
           if (
-            isInlineScript(stackMatch) &&
-            stackLines[index].startsWith(INLINE_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
+            isInlineScript(t) &&
+            c[l].startsWith(r) &&
+            c[l].match(toRegExp(t))
+          )
             return true;
-          }
           if (
-            isInjectedScript(stackMatch) &&
-            stackLines[index].startsWith(INJECTED_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
+            isInjectedScript(t) &&
+            c[l].startsWith(n) &&
+            c[l].match(toRegExp(t))
+          )
             return true;
-          }
         }
-      }
       return false;
     }
     function backupRegExpValues() {
       try {
-        var arrayOfRegexpValues = [];
-        for (var index = 1; index < 10; index += 1) {
-          var value = `$${index}`;
-          if (!RegExp[value]) {
-            break;
-          }
-          arrayOfRegexpValues.push(RegExp[value]);
+        for (var r = [], e = 1; e < 10; e += 1) {
+          var a = `$${e}`;
+          if (!RegExp[a]) break;
+          r.push(RegExp[a]);
         }
-        return arrayOfRegexpValues;
-      } catch (error) {
+        return r;
+      } catch (r) {
         return [];
       }
     }
-    function restoreRegExpValues(array) {
-      if (!array.length) {
-        return;
-      }
-      try {
-        var stringPattern = "";
-        if (array.length === 1) {
-          stringPattern = `(${array[0]})`;
-        } else {
-          stringPattern = array.reduce(
-            function (accumulator, currentValue, currentIndex) {
-              if (currentIndex === 1) {
-                return `(${accumulator}),(${currentValue})`;
-              }
-              return `${accumulator},(${currentValue})`;
-            }
-          );
+    function restoreRegExpValues(e) {
+      if (e.length)
+        try {
+          var r = "";
+          r =
+            1 === e.length
+              ? `(${e[0]})`
+              : e.reduce(function (e, r, t) {
+                  return 1 === t ? `(${e}),(${r})` : `${e},(${r})`;
+                });
+          var t = new RegExp(r);
+          e.toString().replace(t, "");
+        } catch (e) {
+          var n = `Failed to restore RegExp values: ${e}`;
+          console.log(n);
         }
-        var regExpGroup = new RegExp(stringPattern);
-        array.toString().replace(regExpGroup, "");
-      } catch (error) {
-        var message = `Failed to restore RegExp values: ${error}`;
-        console.log(message);
-      }
+    }
+    function isKeyInObject(t, r, e) {
+      var n = r.split("."),
+        _check2 = function _check(t, r) {
+          if (null == t) return false;
+          if (0 === r.length)
+            return (
+              void 0 === e ||
+              ("string" == typeof t && e instanceof RegExp
+                ? e.test(t)
+                : t === e)
+            );
+          var n = r[0],
+            i = r.slice(1);
+          if ("*" === n || "[]" === n) {
+            if (Array.isArray(t))
+              return t.some(function (t) {
+                return _check2(t, i);
+              });
+            if ("object" == typeof t && null !== t)
+              return Object.keys(t).some(function (r) {
+                return _check2(t[r], i);
+              });
+          }
+          return (
+            !!Object.prototype.hasOwnProperty.call(t, n) && _check2(t[n], i)
+          );
+        };
+      return _check2(t, n);
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -12053,7 +11326,7 @@ function _toPrimitive(t, r) {
             extCall,
             {
               once: true,
-            }
+            },
           );
         }, 5e3);
       };
@@ -12072,99 +11345,62 @@ function _toPrimitive(t, r) {
         }
       }
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -12209,7 +11445,7 @@ function _toPrimitive(t, r) {
           var isHidden = false;
           var { targets: targets, innerHosts: innerHosts } = pierceShadowDom(
             selector,
-            hostElements
+            hostElements,
           );
           targets.forEach(function (targetEl) {
             hideElement(targetEl);
@@ -12227,144 +11463,103 @@ function _toPrimitive(t, r) {
       hideHandler();
       observeDOMChanges(hideHandler, true);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function observeDOMChanges(callback) {
-      var observeAttrs =
-        arguments.length > 1 && arguments[1] !== undefined
-          ? arguments[1]
-          : false;
-      var attrsToObserve =
-        arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-      var THROTTLE_DELAY_MS = 20;
-      var observer = new MutationObserver(
-        throttle(callbackWrapper, THROTTLE_DELAY_MS)
-      );
-      var connect = function connect() {
-        if (attrsToObserve.length > 0) {
-          observer.observe(document.documentElement, {
-            childList: true,
-            subtree: true,
-            attributes: observeAttrs,
-            attributeFilter: attrsToObserve,
-          });
-        } else {
-          observer.observe(document.documentElement, {
-            childList: true,
-            subtree: true,
-            attributes: observeAttrs,
-          });
-        }
-      };
-      var disconnect = function disconnect() {
-        observer.disconnect();
-      };
-      function callbackWrapper() {
-        disconnect();
-        callback();
-        connect();
-      }
+    function observeDOMChanges(t) {
+      var e = arguments.length > 1 && void 0 !== arguments[1] && arguments[1],
+        n = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : [],
+        i = new MutationObserver(
+          throttle(function () {
+            disconnect(), t(), connect();
+          }, 20),
+        ),
+        connect = function connect() {
+          n.length > 0
+            ? i.observe(document.documentElement, {
+                childList: true,
+                subtree: true,
+                attributes: e,
+                attributeFilter: n,
+              })
+            : i.observe(document.documentElement, {
+                childList: true,
+                subtree: true,
+                attributes: e,
+              });
+        },
+        disconnect = function disconnect() {
+          i.disconnect();
+        };
       connect();
     }
-    function findHostElements(rootElement) {
-      var hosts = [];
-      if (rootElement) {
-        var domElems = rootElement.querySelectorAll("*");
-        domElems.forEach(function (el) {
-          if (el.shadowRoot) {
-            hosts.push(el);
-          }
+    function findHostElements(o) {
+      var n = [];
+      o &&
+        o.querySelectorAll("*").forEach(function (o) {
+          o.shadowRoot && n.push(o);
         });
-      }
-      return hosts;
+      return n;
     }
-    function pierceShadowDom(selector, hostElements) {
-      var targets = [];
-      var innerHostsAcc = [];
-      hostElements.forEach(function (host) {
-        var simpleElems = host.querySelectorAll(selector);
-        targets = targets.concat([].slice.call(simpleElems));
-        var shadowRootElem = host.shadowRoot;
-        var shadowChildren = shadowRootElem.querySelectorAll(selector);
-        targets = targets.concat([].slice.call(shadowChildren));
-        innerHostsAcc.push(findHostElements(shadowRootElem));
+    function pierceShadowDom(e, t) {
+      var c = [],
+        l = [];
+      t.forEach(function (t) {
+        var o = t.querySelectorAll(e);
+        c = c.concat([].slice.call(o));
+        var r = t.shadowRoot,
+          a = r.querySelectorAll(e);
+        (c = c.concat([].slice.call(a))), l.push(findHostElements(r));
       });
-      var innerHosts = flatten(innerHostsAcc);
+      var o = flatten(l);
       return {
-        targets: targets,
-        innerHosts: innerHosts,
+        targets: c,
+        innerHosts: o,
       };
     }
-    function flatten(input) {
-      var stack = [];
-      input.forEach(function (el) {
-        return stack.push(el);
+    function flatten(r) {
+      var n = [];
+      r.forEach(function (r) {
+        return n.push(r);
       });
-      var res = [];
-      while (stack.length) {
-        var next = stack.pop();
-        if (Array.isArray(next)) {
-          next.forEach(function (el) {
-            return stack.push(el);
-          });
-        } else {
-          res.push(next);
-        }
+      for (var t = []; n.length; ) {
+        var u = n.pop();
+        Array.isArray(u)
+          ? u.forEach(function (r) {
+              return n.push(r);
+            })
+          : t.push(u);
       }
-      return res.reverse();
+      return t.reverse();
     }
-    function throttle(cb, delay) {
-      var wait = false;
-      var savedArgs;
-      var _wrapper = function wrapper() {
-        for (
-          var _len = arguments.length, args = new Array(_len), _key = 0;
-          _key < _len;
-          _key++
-        ) {
-          args[_key] = arguments[_key];
-        }
-        if (wait) {
-          savedArgs = args;
-          return;
-        }
-        cb(...args);
-        wait = true;
-        setTimeout(function () {
-          wait = false;
-          if (savedArgs) {
-            _wrapper(...savedArgs);
-            savedArgs = null;
-          }
-        }, delay);
-      };
-      return _wrapper;
+    function throttle(n, t) {
+      var r,
+        e = false,
+        _wrapper2 = function _wrapper() {
+          for (var o = arguments.length, u = new Array(o), f = 0; f < o; f++)
+            u[f] = arguments[f];
+          e
+            ? (r = u)
+            : (n(...u),
+              (e = true),
+              setTimeout(function () {
+                (e = false), r && (_wrapper2(...r), (r = null));
+              }, t));
+        };
+      return _wrapper2;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -12429,7 +11624,7 @@ function _toPrimitive(t, r) {
           } catch (ex) {
             logMessage(
               source,
-              `Cannot retrieve the parameter '${attr.slice(1)}' from the URL '${anchor.href}`
+              `Cannot retrieve the parameter '${attr.slice(1)}' from the URL '${anchor.href}`,
             );
             return "";
           }
@@ -12454,12 +11649,12 @@ function _toPrimitive(t, r) {
         try {
           var { href: href, protocol: protocol } = new URL(
             text,
-            document.location.href
+            document.location.href,
           );
           if (protocol !== "http:" && protocol !== "https:") {
             logMessage(
               source,
-              `Protocol not allowed: "${protocol}", from URL: "${href}"`
+              `Protocol not allowed: "${protocol}", from URL: "${href}"`,
             );
             return null;
           }
@@ -12496,7 +11691,7 @@ function _toPrimitive(t, r) {
       };
       var decodeBase64SeveralTimes = function decodeBase64SeveralTimes(
         text,
-        times
+        times,
       ) {
         var result = text;
         for (var i = 0; i < times; i += 1) {
@@ -12536,7 +11731,7 @@ function _toPrimitive(t, r) {
           searchParamsArray.forEach(function (param) {
             decodedParam = decodeBase64SeveralTimes(
               param,
-              DECODE_ATTEMPTS_NUMBER
+              DECODE_ATTEMPTS_NUMBER,
             );
             if (decodedParam && decodedParam.length > 0) {
               validEncodedParam = decodedParam;
@@ -12587,7 +11782,7 @@ function _toPrimitive(t, r) {
       var decodeBase64URL = function decodeBase64URL(url) {
         var { search: search, hash: hash } = new URL(
           url,
-          document.location.href
+          document.location.href,
         );
         if (search.length > 0) {
           return decodeSearchString(search);
@@ -12634,7 +11829,7 @@ function _toPrimitive(t, r) {
                 default:
                   logMessage(
                     source,
-                    `Invalid transform option: "${transform}"`
+                    `Invalid transform option: "${transform}"`,
                   );
                   return;
               }
@@ -12649,7 +11844,7 @@ function _toPrimitive(t, r) {
             if (newValidHref !== oldHref) {
               logMessage(
                 source,
-                `Sanitized "${oldHref}" to "${newValidHref}".`
+                `Sanitized "${oldHref}" to "${newValidHref}".`,
               );
             }
           } catch (ex) {
@@ -12672,117 +11867,73 @@ function _toPrimitive(t, r) {
         run();
       }
     }
-    function observeDOMChanges(callback) {
-      var observeAttrs =
-        arguments.length > 1 && arguments[1] !== undefined
-          ? arguments[1]
-          : false;
-      var attrsToObserve =
-        arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-      var THROTTLE_DELAY_MS = 20;
-      var observer = new MutationObserver(
-        throttle(callbackWrapper, THROTTLE_DELAY_MS)
-      );
-      var connect = function connect() {
-        if (attrsToObserve.length > 0) {
-          observer.observe(document.documentElement, {
-            childList: true,
-            subtree: true,
-            attributes: observeAttrs,
-            attributeFilter: attrsToObserve,
-          });
-        } else {
-          observer.observe(document.documentElement, {
-            childList: true,
-            subtree: true,
-            attributes: observeAttrs,
-          });
-        }
-      };
-      var disconnect = function disconnect() {
-        observer.disconnect();
-      };
-      function callbackWrapper() {
-        disconnect();
-        callback();
-        connect();
-      }
+    function observeDOMChanges(t) {
+      var e = arguments.length > 1 && void 0 !== arguments[1] && arguments[1],
+        n = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : [],
+        i = new MutationObserver(
+          throttle(function () {
+            disconnect(), t(), connect();
+          }, 20),
+        ),
+        connect = function connect() {
+          n.length > 0
+            ? i.observe(document.documentElement, {
+                childList: true,
+                subtree: true,
+                attributes: e,
+                attributeFilter: n,
+              })
+            : i.observe(document.documentElement, {
+                childList: true,
+                subtree: true,
+                attributes: e,
+              });
+        },
+        disconnect = function disconnect() {
+          i.disconnect();
+        };
       connect();
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function throttle(cb, delay) {
-      var wait = false;
-      var savedArgs;
-      var _wrapper = function wrapper() {
-        for (
-          var _len = arguments.length, args = new Array(_len), _key = 0;
-          _key < _len;
-          _key++
-        ) {
-          args[_key] = arguments[_key];
-        }
-        if (wait) {
-          savedArgs = args;
-          return;
-        }
-        cb(...args);
-        wait = true;
-        setTimeout(function () {
-          wait = false;
-          if (savedArgs) {
-            _wrapper(...savedArgs);
-            savedArgs = null;
-          }
-        }, delay);
-      };
-      return _wrapper;
+    function throttle(n, t) {
+      var r,
+        e = false,
+        _wrapper3 = function _wrapper() {
+          for (var o = arguments.length, u = new Array(o), f = 0; f < o; f++)
+            u[f] = arguments[f];
+          e
+            ? (r = u)
+            : (n(...u),
+              (e = true),
+              setTimeout(function () {
+                (e = false), r && (_wrapper3(...r), (r = null));
+              }, t));
+        };
+      return _wrapper3;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -12814,6 +11965,10 @@ function _toPrimitive(t, r) {
     function injectCssInShadowDom(source, cssRule) {
       var hostSelector =
         arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+      var cssInjectionMethod =
+        arguments.length > 3 && arguments[3] !== undefined
+          ? arguments[3]
+          : "adoptedStyleSheets";
       if (
         !Element.prototype.attachShadow ||
         typeof Proxy === "undefined" ||
@@ -12821,11 +11976,33 @@ function _toPrimitive(t, r) {
       ) {
         return;
       }
+      if (
+        cssInjectionMethod !== "adoptedStyleSheets" &&
+        cssInjectionMethod !== "styleTag"
+      ) {
+        logMessage(source, `Unknown cssInjectionMethod: ${cssInjectionMethod}`);
+        return;
+      }
       if (cssRule.match(/(url|image-set)\(.*\)/i)) {
         logMessage(source, '"url()" function is not allowed for css rules');
         return;
       }
-      var callback = function callback(shadowRoot) {
+      var injectStyleTag = function injectStyleTag(shadowRoot) {
+        try {
+          var styleTag = document.createElement("style");
+          styleTag.innerText = cssRule;
+          shadowRoot.appendChild(styleTag);
+          hit(source);
+        } catch (error) {
+          logMessage(
+            source,
+            `Unable to inject style tag due to: \n'${error.message}'`,
+          );
+        }
+      };
+      var injectAdoptedStyleSheets = function injectAdoptedStyleSheets(
+        shadowRoot,
+      ) {
         try {
           var stylesheet = new CSSStyleSheet();
           try {
@@ -12833,7 +12010,7 @@ function _toPrimitive(t, r) {
           } catch (e) {
             logMessage(
               source,
-              `Unable to apply the rule '${cssRule}' due to: \n'${e.message}'`
+              `Unable to apply the rule '${cssRule}' due to: \n'${e.message}'`,
             );
             return;
           }
@@ -12841,77 +12018,59 @@ function _toPrimitive(t, r) {
             ...shadowRoot.adoptedStyleSheets,
             stylesheet,
           ];
-        } catch (_unused) {
-          var styleTag = document.createElement("style");
-          styleTag.innerText = cssRule;
-          shadowRoot.appendChild(styleTag);
+          hit(source);
+        } catch (error) {
+          logMessage(
+            source,
+            `Unable to inject adopted style sheet due to: \n'${error.message}'`,
+          );
+          injectStyleTag(shadowRoot);
         }
-        hit(source);
+      };
+      var callback = function callback(shadowRoot) {
+        if (cssInjectionMethod === "adoptedStyleSheets") {
+          injectAdoptedStyleSheets(shadowRoot);
+        } else if (cssInjectionMethod === "styleTag") {
+          injectStyleTag(shadowRoot);
+        }
       };
       hijackAttachShadow(window, hostSelector, callback);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function hijackAttachShadow(context, hostSelector, callback) {
-      var handlerWrapper = function handlerWrapper(target, thisArg, args) {
-        var shadowRoot = Reflect.apply(target, thisArg, args);
-        if (thisArg && thisArg.matches(hostSelector || "*")) {
-          callback(shadowRoot);
-        }
-        return shadowRoot;
+    function hijackAttachShadow(t, a, e) {
+      var o = {
+        apply: function apply(t, o, c) {
+          var h = Reflect.apply(t, o, c);
+          return o && o.matches(a || "*") && e(h), h;
+        },
       };
-      var attachShadowHandler = {
-        apply: handlerWrapper,
-      };
-      context.Element.prototype.attachShadow = new Proxy(
-        context.Element.prototype.attachShadow,
-        attachShadowHandler
+      t.Element.prototype.attachShadow = new Proxy(
+        t.Element.prototype.attachShadow,
+        o,
       );
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
@@ -12965,7 +12124,7 @@ function _toPrimitive(t, r) {
           prunePaths,
           requiredPaths,
           stack,
-          nativeObjects
+          nativeObjects,
         );
       };
       jsonParseWrapper.toString =
@@ -12981,7 +12140,7 @@ function _toPrimitive(t, r) {
             prunePaths,
             requiredPaths,
             stack,
-            nativeObjects
+            nativeObjects,
           );
         });
       };
@@ -12990,442 +12149,456 @@ function _toPrimitive(t, r) {
       }
       Response.prototype.json = responseJsonWrapper;
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
-      }
-    }
-    function matchStackTrace(stackMatch, stackTrace) {
-      if (!stackMatch || stackMatch === "") {
-        return true;
-      }
-      var regExpValues = backupRegExpValues();
-      if (shouldAbortInlineOrInjectedScript(stackMatch, stackTrace)) {
-        if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-          restoreRegExpValues(regExpValues);
-        }
-        return true;
-      }
-      var stackRegexp = toRegExp(stackMatch);
-      var refinedStackTrace = stackTrace
-        .split("\n")
-        .slice(2)
-        .map(function (line) {
-          return line.trim();
-        })
-        .join("\n");
-      if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-        restoreRegExpValues(regExpValues);
-      }
-      return getNativeRegexpTest().call(stackRegexp, refinedStackTrace);
-    }
-    function getWildcardPropertyInChain(base, chain) {
-      var lookThrough =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var output =
-        arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
-        if (chain === "*" || chain === "[]") {
-          for (var key in base) {
-            if (Object.prototype.hasOwnProperty.call(base, key)) {
-              output.push({
-                base: base,
-                prop: key,
-              });
-            }
-          }
-        } else {
-          output.push({
-            base: base,
-            prop: chain,
-          });
-        }
-        return output;
-      }
-      var prop = chain.slice(0, pos);
-      var shouldLookThrough =
-        (prop === "[]" && Array.isArray(base)) ||
-        (prop === "*" && base instanceof Object);
-      if (shouldLookThrough) {
-        var nextProp = chain.slice(pos + 1);
-        var baseKeys = Object.keys(base);
-        baseKeys.forEach(function (key) {
-          var item = base[key];
-          getWildcardPropertyInChain(item, nextProp, lookThrough, output);
-        });
-      }
-      if (Array.isArray(base)) {
-        base.forEach(function (key) {
-          var nextBase = key;
-          if (nextBase !== undefined) {
-            getWildcardPropertyInChain(nextBase, chain, lookThrough, output);
-          }
-        });
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (nextBase !== undefined) {
-        getWildcardPropertyInChain(nextBase, chain, lookThrough, output);
-      }
-      return output;
-    }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
-    }
-    function isPruningNeeded(
-      source,
-      root,
-      prunePaths,
-      requiredPaths,
-      stack,
-      nativeObjects
-    ) {
-      if (!root) {
-        return false;
-      }
-      var { nativeStringify: nativeStringify } = nativeObjects;
-      var shouldProcess;
-      if (prunePaths.length === 0 && requiredPaths.length > 0) {
-        var rootString = nativeStringify(root);
-        var matchRegex = toRegExp(requiredPaths.join(""));
-        var shouldLog = matchRegex.test(rootString);
-        if (shouldLog) {
-          logMessage(
-            source,
-            `${window.location.hostname}\n${nativeStringify(root, null, 2)}\nStack trace:\n${new Error().stack}`,
-            true
-          );
-          if (root && typeof root === "object") {
-            logMessage(source, root, true, false);
-          }
-          shouldProcess = false;
-          return shouldProcess;
-        }
-      }
-      if (stack && !matchStackTrace(stack, new Error().stack || "")) {
-        shouldProcess = false;
-        return shouldProcess;
-      }
-      var wildcardSymbols = [".*.", "*.", ".*", ".[].", "[].", ".[]"];
-      var _loop = function _loop() {
-          var requiredPath = requiredPaths[i];
-          var lastNestedPropName = requiredPath.split(".").pop();
-          var hasWildcard = wildcardSymbols.some(function (symbol) {
-            return requiredPath.includes(symbol);
-          });
-          var details = getWildcardPropertyInChain(
-            root,
-            requiredPath,
-            hasWildcard
-          );
-          if (!details.length) {
-            shouldProcess = false;
-            return {
-              v: shouldProcess,
-            };
-          }
-          shouldProcess = !hasWildcard;
-          for (var j = 0; j < details.length; j += 1) {
-            var hasRequiredProp =
-              typeof lastNestedPropName === "string" &&
-              details[j].base[lastNestedPropName] !== undefined;
-            if (hasWildcard) {
-              shouldProcess = hasRequiredProp || shouldProcess;
-            } else {
-              shouldProcess = hasRequiredProp && shouldProcess;
-            }
-          }
-        },
-        _ret;
-      for (var i = 0; i < requiredPaths.length; i += 1) {
-        _ret = _loop();
-        if (_ret) return _ret.v;
-      }
-      return shouldProcess;
-    }
-    function jsonPruner(
-      source,
-      root,
-      prunePaths,
-      requiredPaths,
-      stack,
-      nativeObjects
-    ) {
-      var { nativeStringify: nativeStringify } = nativeObjects;
-      if (prunePaths.length === 0 && requiredPaths.length === 0) {
-        logMessage(
-          source,
-          `${window.location.hostname}\n${nativeStringify(root, null, 2)}\nStack trace:\n${new Error().stack}`,
-          true
-        );
-        if (root && typeof root === "object") {
-          logMessage(source, root, true, false);
-        }
-        return root;
-      }
-      try {
-        if (
-          isPruningNeeded(
-            source,
-            root,
-            prunePaths,
-            requiredPaths,
-            stack,
-            nativeObjects
-          ) === false
-        ) {
-          return root;
-        }
-        prunePaths.forEach(function (path) {
-          var ownerObjArr = getWildcardPropertyInChain(root, path, true);
-          ownerObjArr.forEach(function (ownerObj) {
-            if (ownerObj !== undefined && ownerObj.base) {
-              delete ownerObj.base[ownerObj.prop];
-              hit(source);
-            }
-          });
-        });
-      } catch (e) {
-        logMessage(source, e);
-      }
-      return root;
-    }
-    function getPrunePath(props) {
-      var validPropsString =
-        typeof props === "string" && props !== undefined && props !== "";
-      return validPropsString ? props.split(/ +/) : [];
-    }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
+    function hit(e) {
+      if (e.verbose) {
         try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
-      var escaped = input
+    }
+    function matchStackTrace(e, t) {
+      if (!e || "" === e) return true;
+      var r = backupRegExpValues();
+      if (shouldAbortInlineOrInjectedScript(e, t))
+        return r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r), true;
+      var n = toRegExp(e),
+        a = t
+          .split("\n")
+          .slice(2)
+          .map(function (e) {
+            return e.trim();
+          })
+          .join("\n");
+      return (
+        r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r),
+        getNativeRegexpTest().call(n, a)
+      );
+    }
+    function getWildcardPropertyInChain(r, e) {
+      var a = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        i = arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : [],
+        t = arguments.length > 4 ? arguments[4] : void 0,
+        o = e.indexOf(".");
+      if (-1 === o) {
+        if ("*" === e || "[]" === e) {
+          for (var n in r)
+            if (Object.prototype.hasOwnProperty.call(r, n))
+              if (void 0 !== t) {
+                var s = r[n];
+                "string" == typeof s && t instanceof RegExp
+                  ? t.test(s) &&
+                    i.push({
+                      base: r,
+                      prop: n,
+                    })
+                  : s === t &&
+                    i.push({
+                      base: r,
+                      prop: n,
+                    });
+              } else
+                i.push({
+                  base: r,
+                  prop: n,
+                });
+        } else if (void 0 !== t) {
+          var p = r[e];
+          "string" == typeof p && t instanceof RegExp
+            ? t.test(p) &&
+              i.push({
+                base: r,
+                prop: e,
+              })
+            : r[e] === t &&
+              i.push({
+                base: r,
+                prop: e,
+              });
+        } else
+          i.push({
+            base: r,
+            prop: e,
+          });
+        return i;
+      }
+      var c = e.slice(0, o);
+      if (
+        ("[]" === c && Array.isArray(r)) ||
+        ("*" === c && r instanceof Object) ||
+        ("[-]" === c && Array.isArray(r)) ||
+        ("{-}" === c && r instanceof Object)
+      ) {
+        var f = e.slice(o + 1),
+          y = Object.keys(r);
+        if ("{-}" === c || "[-]" === c) {
+          var h = Array.isArray(r) ? "array" : "object";
+          return (
+            (("{-}" !== c || "object" !== h) &&
+              ("[-]" !== c || "array" !== h)) ||
+              y.forEach(function (e) {
+                var a = r[e];
+                isKeyInObject(a, f, t) &&
+                  i.push({
+                    base: r,
+                    prop: e,
+                  });
+              }),
+            i
+          );
+        }
+        y.forEach(function (e) {
+          getWildcardPropertyInChain(r[e], f, a, i, t);
+        });
+      }
+      Array.isArray(r) &&
+        r.forEach(function (r) {
+          void 0 !== r && getWildcardPropertyInChain(r, e, a, i, t);
+        });
+      var d = r[c];
+      return (
+        (e = e.slice(o + 1)),
+        void 0 !== d && getWildcardPropertyInChain(d, e, a, i, t),
+        i
+      );
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
+      }
+    }
+    function isPruningNeeded(n, t, r, e, a, i) {
+      if (!t) return false;
+      var o,
+        { nativeStringify: u } = i,
+        c = r.map(function (n) {
+          return n.path;
+        }),
+        f = e.map(function (n) {
+          return n.path;
+        });
+      if (0 === c.length && f.length > 0) {
+        var g = u(t);
+        if (toRegExp(f.join("")).test(g))
+          return (
+            logMessage(
+              n,
+              `${window.location.hostname}\n${u(t, null, 2)}\nStack trace:\n${new Error().stack}`,
+              true,
+            ),
+            t && "object" == typeof t && logMessage(n, t, true, false),
+            (o = false)
+          );
+      }
+      if (a && !matchStackTrace(a, new Error().stack || "")) return (o = false);
+      for (
+        var s,
+          l = [".*.", "*.", ".*", ".[].", "[].", ".[]"],
+          _loop = function _loop() {
+            var n = f[p],
+              r = n.split(".").pop(),
+              e = l.some(function (t) {
+                return n.includes(t);
+              }),
+              a = getWildcardPropertyInChain(t, n, e);
+            if (!a.length)
+              return {
+                v: (o = false),
+              };
+            o = !e;
+            for (var i = 0; i < a.length; i += 1) {
+              var u = "string" == typeof r && void 0 !== a[i].base[r];
+              o = e ? u || o : u && o;
+            }
+          },
+          p = 0;
+        p < f.length;
+        p += 1
+      )
+        if ((s = _loop())) return s.v;
+      return o;
+    }
+    function jsonPruner(e, r, n, a, t, i) {
+      var { nativeStringify: o } = i;
+      if (0 === n.length && 0 === a.length)
+        return (
+          logMessage(
+            e,
+            `${window.location.hostname}\n${o(r, null, 2)}\nStack trace:\n${new Error().stack}`,
+            true,
+          ),
+          r && "object" == typeof r && logMessage(e, r, true, false),
+          r
+        );
+      try {
+        if (!1 === isPruningNeeded(e, r, n, a, t, i)) return r;
+        n.forEach(function (n) {
+          for (
+            var a = n.path,
+              t = n.value,
+              i = getWildcardPropertyInChain(r, a, !0, [], t),
+              o = i.length - 1;
+            o >= 0;
+            o -= 1
+          ) {
+            var s = i[o];
+            if (void 0 !== s && s.base)
+              if ((hit(e), Array.isArray(s.base)))
+                try {
+                  var l = Number(s.prop);
+                  if (Number.isNaN(l)) continue;
+                  s.base.splice(l, 1);
+                } catch (e) {
+                  console.error("Error while deleting array element", e);
+                }
+              else delete s.base[s.prop];
+          }
+        });
+      } catch (r) {
+        logMessage(e, r);
+      }
+      return r;
+    }
+    function getPrunePath(t) {
+      var r = ".[=].";
+      if ("string" == typeof t && void 0 !== t && "" !== t) {
+        var e = (function (t) {
+          for (
+            var e = [], n = "", i = 0, a = false, s = false;
+            i < t.length;
+
+          ) {
+            var u = t[i];
+            if (a)
+              (n += u),
+                "\\" === u
+                  ? (s = !s)
+                  : ("/" !== u || s || (a = false), (s = false)),
+                (i += 1);
+            else {
+              if (
+                " " === u ||
+                "\n" === u ||
+                "\t" === u ||
+                "\r" === u ||
+                "\f" === u ||
+                "\v" === u
+              ) {
+                for (; i < t.length && /\s/.test(t[i]); ) i += 1;
+                "" !== n && (e.push(n), (n = ""));
+                continue;
+              }
+              if (t.startsWith(r, i)) {
+                if (((n += r), "/" === t[(i += 5)])) {
+                  (a = true), (s = false), (n += "/"), (i += 1);
+                  continue;
+                }
+                continue;
+              }
+              (n += u), (i += 1);
+            }
+          }
+          return "" !== n && e.push(n), e;
+        })(t);
+        return e.map(function (t) {
+          var e = t.split(r),
+            n = e[0],
+            i = e[1];
+          return void 0 !== i
+            ? ("true" === i
+                ? (i = true)
+                : "false" === i
+                  ? (i = false)
+                  : i.startsWith("/")
+                    ? (i = toRegExp(i))
+                    : "string" == typeof i &&
+                      /^\d+$/.test(i) &&
+                      (i = parseFloat(i)),
+              {
+                path: n,
+                value: i,
+              })
+            : {
+                path: n,
+              };
+        });
+      }
+      return [];
+    }
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
     function getNativeRegexpTest() {
-      var descriptor = Object.getOwnPropertyDescriptor(
-        RegExp.prototype,
-        "test"
-      );
-      var nativeRegexTest =
-        descriptor === null || descriptor === void 0
-          ? void 0
-          : descriptor.value;
-      if (descriptor && typeof descriptor.value === "function") {
-        return nativeRegexTest;
-      }
+      var t = Object.getOwnPropertyDescriptor(RegExp.prototype, "test"),
+        e = null == t ? void 0 : t.value;
+      if (t && "function" == typeof t.value) return e;
       throw new Error("RegExp.prototype.test is not a function");
     }
-    function shouldAbortInlineOrInjectedScript(stackMatch, stackTrace) {
-      var INLINE_SCRIPT_STRING = "inlineScript";
-      var INJECTED_SCRIPT_STRING = "injectedScript";
-      var INJECTED_SCRIPT_MARKER = "<anonymous>";
-      var isInlineScript = function isInlineScript(match) {
-        return match.includes(INLINE_SCRIPT_STRING);
-      };
-      var isInjectedScript = function isInjectedScript(match) {
-        return match.includes(INJECTED_SCRIPT_STRING);
-      };
-      if (!(isInlineScript(stackMatch) || isInjectedScript(stackMatch))) {
-        return false;
-      }
-      var documentURL = window.location.href;
-      var pos = documentURL.indexOf("#");
-      if (pos !== -1) {
-        documentURL = documentURL.slice(0, pos);
-      }
-      var stackSteps = stackTrace
+    function shouldAbortInlineOrInjectedScript(t, i) {
+      var r = "inlineScript",
+        n = "injectedScript",
+        isInlineScript = function isInlineScript(t) {
+          return t.includes(r);
+        },
+        isInjectedScript = function isInjectedScript(t) {
+          return t.includes(n);
+        };
+      if (!isInlineScript(t) && !isInjectedScript(t)) return false;
+      var e = window.location.href,
+        s = e.indexOf("#");
+      -1 !== s && (e = e.slice(0, s));
+      var c = i
         .split("\n")
         .slice(2)
-        .map(function (line) {
-          return line.trim();
-        });
-      var stackLines = stackSteps.map(function (line) {
-        var stack;
-        var getStackTraceValues = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(line);
-        if (getStackTraceValues) {
-          var _stackURL, _stackURL2;
-          var stackURL = getStackTraceValues[2];
-          var stackLine = getStackTraceValues[3];
-          var stackCol = getStackTraceValues[4];
-          if (
-            (_stackURL = stackURL) !== null &&
-            _stackURL !== void 0 &&
-            _stackURL.startsWith("(")
-          ) {
-            stackURL = stackURL.slice(1);
-          }
-          if (
-            (_stackURL2 = stackURL) !== null &&
-            _stackURL2 !== void 0 &&
-            _stackURL2.startsWith(INJECTED_SCRIPT_MARKER)
-          ) {
-            var _stackFunction;
-            stackURL = INJECTED_SCRIPT_STRING;
-            var stackFunction =
-              getStackTraceValues[1] !== undefined
-                ? getStackTraceValues[1].slice(0, -1)
-                : line.slice(0, getStackTraceValues.index).trim();
+        .map(function (t) {
+          return t.trim();
+        })
+        .map(function (t) {
+          var i,
+            s = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(t);
+          if (s) {
+            var c,
+              l,
+              a = s[2],
+              u = s[3],
+              o = s[4];
             if (
-              (_stackFunction = stackFunction) !== null &&
-              _stackFunction !== void 0 &&
-              _stackFunction.startsWith("at")
+              (null !== (c = a) &&
+                void 0 !== c &&
+                c.startsWith("(") &&
+                (a = a.slice(1)),
+              null !== (l = a) && void 0 !== l && l.startsWith("<anonymous>"))
             ) {
-              stackFunction = stackFunction.slice(2).trim();
-            }
-            stack =
-              `${stackFunction} ${stackURL}${stackLine}${stackCol}`.trim();
-          } else if (stackURL === documentURL) {
-            stack = `${INLINE_SCRIPT_STRING}${stackLine}${stackCol}`.trim();
-          } else {
-            stack = `${stackURL}${stackLine}${stackCol}`.trim();
-          }
-        } else {
-          stack = line;
-        }
-        return stack;
-      });
-      if (stackLines) {
-        for (var index = 0; index < stackLines.length; index += 1) {
+              var d;
+              a = n;
+              var f =
+                void 0 !== s[1]
+                  ? s[1].slice(0, -1)
+                  : t.slice(0, s.index).trim();
+              null !== (d = f) &&
+                void 0 !== d &&
+                d.startsWith("at") &&
+                (f = f.slice(2).trim()),
+                (i = `${f} ${a}${u}${o}`.trim());
+            } else i = a === e ? `${r}${u}${o}`.trim() : `${a}${u}${o}`.trim();
+          } else i = t;
+          return i;
+        });
+      if (c)
+        for (var l = 0; l < c.length; l += 1) {
           if (
-            isInlineScript(stackMatch) &&
-            stackLines[index].startsWith(INLINE_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
+            isInlineScript(t) &&
+            c[l].startsWith(r) &&
+            c[l].match(toRegExp(t))
+          )
             return true;
-          }
           if (
-            isInjectedScript(stackMatch) &&
-            stackLines[index].startsWith(INJECTED_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
+            isInjectedScript(t) &&
+            c[l].startsWith(n) &&
+            c[l].match(toRegExp(t))
+          )
             return true;
-          }
         }
-      }
       return false;
     }
     function backupRegExpValues() {
       try {
-        var arrayOfRegexpValues = [];
-        for (var index = 1; index < 10; index += 1) {
-          var value = `$${index}`;
-          if (!RegExp[value]) {
-            break;
-          }
-          arrayOfRegexpValues.push(RegExp[value]);
+        for (var r = [], e = 1; e < 10; e += 1) {
+          var a = `$${e}`;
+          if (!RegExp[a]) break;
+          r.push(RegExp[a]);
         }
-        return arrayOfRegexpValues;
-      } catch (error) {
+        return r;
+      } catch (r) {
         return [];
       }
     }
-    function restoreRegExpValues(array) {
-      if (!array.length) {
-        return;
-      }
-      try {
-        var stringPattern = "";
-        if (array.length === 1) {
-          stringPattern = `(${array[0]})`;
-        } else {
-          stringPattern = array.reduce(
-            function (accumulator, currentValue, currentIndex) {
-              if (currentIndex === 1) {
-                return `(${accumulator}),(${currentValue})`;
-              }
-              return `${accumulator},(${currentValue})`;
-            }
-          );
+    function restoreRegExpValues(e) {
+      if (e.length)
+        try {
+          var r = "";
+          r =
+            1 === e.length
+              ? `(${e[0]})`
+              : e.reduce(function (e, r, t) {
+                  return 1 === t ? `(${e}),(${r})` : `${e},(${r})`;
+                });
+          var t = new RegExp(r);
+          e.toString().replace(t, "");
+        } catch (e) {
+          var n = `Failed to restore RegExp values: ${e}`;
+          console.log(n);
         }
-        var regExpGroup = new RegExp(stringPattern);
-        array.toString().replace(regExpGroup, "");
-      } catch (error) {
-        var message = `Failed to restore RegExp values: ${error}`;
-        console.log(message);
-      }
+    }
+    function isKeyInObject(t, r, e) {
+      var n = r.split("."),
+        _check3 = function _check(t, r) {
+          if (null == t) return false;
+          if (0 === r.length)
+            return (
+              void 0 === e ||
+              ("string" == typeof t && e instanceof RegExp
+                ? e.test(t)
+                : t === e)
+            );
+          var n = r[0],
+            i = r.slice(1);
+          if ("*" === n || "[]" === n) {
+            if (Array.isArray(t))
+              return t.some(function (t) {
+                return _check3(t, i);
+              });
+            if ("object" == typeof t && null !== t)
+              return Object.keys(t).some(function (r) {
+                return _check3(t[r], i);
+              });
+          }
+          return (
+            !!Object.prototype.hasOwnProperty.call(t, n) && _check3(t[n], i)
+          );
+        };
+      return _check3(t, n);
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -13475,7 +12648,7 @@ function _toPrimitive(t, r) {
       var fetchHandlerWrapper = async function fetchHandlerWrapper(
         target,
         thisArg,
-        args
+        args,
       ) {
         var fetchData = getFetchData(args, nativeRequestClone);
         if (!matchRequestProps(source, propsToMatch, fetchData)) {
@@ -13489,7 +12662,7 @@ function _toPrimitive(t, r) {
         } catch (_unused) {
           logMessage(
             source,
-            `Could not make an original fetch request: ${fetchData.url}`
+            `Could not make an original fetch request: ${fetchData.url}`,
           );
           return Reflect.apply(target, thisArg, args);
         }
@@ -13512,11 +12685,11 @@ function _toPrimitive(t, r) {
             nativeRequestClone: nativeRequestClone,
             nativeResponseClone: nativeResponseClone,
             nativeFetch: nativeFetch,
-          }
+          },
         );
         var forgedResponse = forgeResponse(
           originalResponse,
-          nativeStringify(modifiedJson)
+          nativeStringify(modifiedJson),
         );
         hit(source);
         return forgedResponse;
@@ -13526,381 +12699,349 @@ function _toPrimitive(t, r) {
       };
       window.fetch = new Proxy(window.fetch, fetchHandler);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
-      }
-    }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
-    }
-    function getFetchData(args, nativeRequestClone) {
-      var fetchPropsObj = {};
-      var resource = args[0];
-      var fetchUrl;
-      var fetchInit;
-      if (resource instanceof Request) {
-        var realData = nativeRequestClone.call(resource);
-        var requestData = getRequestData(realData);
-        fetchUrl = requestData.url;
-        fetchInit = requestData;
-      } else {
-        fetchUrl = resource;
-        fetchInit = args[1];
-      }
-      fetchPropsObj.url = fetchUrl;
-      if (fetchInit instanceof Object) {
-        var props = Object.keys(fetchInit);
-        props.forEach(function (prop) {
-          fetchPropsObj[prop] = fetchInit[prop];
-        });
-      }
-      return fetchPropsObj;
-    }
-    function objectToString(obj) {
-      if (!obj || typeof obj !== "object") {
-        return String(obj);
-      }
-      if (isEmptyObject(obj)) {
-        return "{}";
-      }
-      return Object.entries(obj)
-        .map(function (pair) {
-          var key = pair[0];
-          var value = pair[1];
-          var recordValueStr = value;
-          if (value instanceof Object) {
-            recordValueStr = `{ ${objectToString(value)} }`;
-          }
-          return `${key}:"${recordValueStr}"`;
-        })
-        .join(" ");
-    }
-    function matchRequestProps(source, propsToMatch, requestData) {
-      if (propsToMatch === "" || propsToMatch === "*") {
-        return true;
-      }
-      var isMatched;
-      var parsedData = parseMatchProps(propsToMatch);
-      if (!isValidParsedData(parsedData)) {
-        logMessage(source, `Invalid parameter: ${propsToMatch}`);
-        isMatched = false;
-      } else {
-        var matchData = getMatchPropsData(parsedData);
-        var matchKeys = Object.keys(matchData);
-        isMatched = matchKeys.every(function (matchKey) {
-          var matchValue = matchData[matchKey];
-          var dataValue = requestData[matchKey];
-          return (
-            Object.prototype.hasOwnProperty.call(requestData, matchKey) &&
-            typeof dataValue === "string" &&
-            (matchValue === null || matchValue === void 0
-              ? void 0
-              : matchValue.test(dataValue))
-          );
-        });
-      }
-      return isMatched;
-    }
-    function jsonPruner(
-      source,
-      root,
-      prunePaths,
-      requiredPaths,
-      stack,
-      nativeObjects
-    ) {
-      var { nativeStringify: nativeStringify } = nativeObjects;
-      if (prunePaths.length === 0 && requiredPaths.length === 0) {
-        logMessage(
-          source,
-          `${window.location.hostname}\n${nativeStringify(root, null, 2)}\nStack trace:\n${new Error().stack}`,
-          true
-        );
-        if (root && typeof root === "object") {
-          logMessage(source, root, true, false);
-        }
-        return root;
-      }
-      try {
-        if (
-          isPruningNeeded(
-            source,
-            root,
-            prunePaths,
-            requiredPaths,
-            stack,
-            nativeObjects
-          ) === false
-        ) {
-          return root;
-        }
-        prunePaths.forEach(function (path) {
-          var ownerObjArr = getWildcardPropertyInChain(root, path, true);
-          ownerObjArr.forEach(function (ownerObj) {
-            if (ownerObj !== undefined && ownerObj.base) {
-              delete ownerObj.base[ownerObj.prop];
-              hit(source);
-            }
-          });
-        });
-      } catch (e) {
-        logMessage(source, e);
-      }
-      return root;
-    }
-    function getPrunePath(props) {
-      var validPropsString =
-        typeof props === "string" && props !== undefined && props !== "";
-      return validPropsString ? props.split(/ +/) : [];
-    }
-    function forgeResponse(response, textContent) {
-      var {
-        bodyUsed: bodyUsed,
-        headers: headers,
-        ok: ok,
-        redirected: redirected,
-        status: status,
-        statusText: statusText,
-        type: type,
-        url: url,
-      } = response;
-      var forgedResponse = new Response(textContent, {
-        status: status,
-        statusText: statusText,
-        headers: headers,
-      });
-      Object.defineProperties(forgedResponse, {
-        url: {
-          value: url,
-        },
-        type: {
-          value: type,
-        },
-        ok: {
-          value: ok,
-        },
-        bodyUsed: {
-          value: bodyUsed,
-        },
-        redirected: {
-          value: redirected,
-        },
-      });
-      return forgedResponse;
-    }
-    function isPruningNeeded(
-      source,
-      root,
-      prunePaths,
-      requiredPaths,
-      stack,
-      nativeObjects
-    ) {
-      if (!root) {
-        return false;
-      }
-      var { nativeStringify: nativeStringify } = nativeObjects;
-      var shouldProcess;
-      if (prunePaths.length === 0 && requiredPaths.length > 0) {
-        var rootString = nativeStringify(root);
-        var matchRegex = toRegExp(requiredPaths.join(""));
-        var shouldLog = matchRegex.test(rootString);
-        if (shouldLog) {
-          logMessage(
-            source,
-            `${window.location.hostname}\n${nativeStringify(root, null, 2)}\nStack trace:\n${new Error().stack}`,
-            true
-          );
-          if (root && typeof root === "object") {
-            logMessage(source, root, true, false);
-          }
-          shouldProcess = false;
-          return shouldProcess;
-        }
-      }
-      if (stack && !matchStackTrace(stack, new Error().stack || "")) {
-        shouldProcess = false;
-        return shouldProcess;
-      }
-      var wildcardSymbols = [".*.", "*.", ".*", ".[].", "[].", ".[]"];
-      var _loop = function _loop() {
-          var requiredPath = requiredPaths[i];
-          var lastNestedPropName = requiredPath.split(".").pop();
-          var hasWildcard = wildcardSymbols.some(function (symbol) {
-            return requiredPath.includes(symbol);
-          });
-          var details = getWildcardPropertyInChain(
-            root,
-            requiredPath,
-            hasWildcard
-          );
-          if (!details.length) {
-            shouldProcess = false;
-            return {
-              v: shouldProcess,
-            };
-          }
-          shouldProcess = !hasWildcard;
-          for (var j = 0; j < details.length; j += 1) {
-            var hasRequiredProp =
-              typeof lastNestedPropName === "string" &&
-              details[j].base[lastNestedPropName] !== undefined;
-            if (hasWildcard) {
-              shouldProcess = hasRequiredProp || shouldProcess;
-            } else {
-              shouldProcess = hasRequiredProp && shouldProcess;
-            }
-          }
-        },
-        _ret;
-      for (var i = 0; i < requiredPaths.length; i += 1) {
-        _ret = _loop();
-        if (_ret) return _ret.v;
-      }
-      return shouldProcess;
-    }
-    function matchStackTrace(stackMatch, stackTrace) {
-      if (!stackMatch || stackMatch === "") {
-        return true;
-      }
-      var regExpValues = backupRegExpValues();
-      if (shouldAbortInlineOrInjectedScript(stackMatch, stackTrace)) {
-        if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-          restoreRegExpValues(regExpValues);
-        }
-        return true;
-      }
-      var stackRegexp = toRegExp(stackMatch);
-      var refinedStackTrace = stackTrace
-        .split("\n")
-        .slice(2)
-        .map(function (line) {
-          return line.trim();
-        })
-        .join("\n");
-      if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-        restoreRegExpValues(regExpValues);
-      }
-      return getNativeRegexpTest().call(stackRegexp, refinedStackTrace);
-    }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
+    function hit(e) {
+      if (e.verbose) {
         try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
-      var escaped = input
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
+      }
+    }
+    function getFetchData(e, t) {
+      var a,
+        c,
+        n = {},
+        r = e[0];
+      if (r instanceof Request) {
+        var u = t.call(r),
+          f = getRequestData(u);
+        (a = f.url), (c = f);
+      } else (a = r), (c = e[1]);
+      ((n.url = a), c instanceof Object) &&
+        Object.keys(c).forEach(function (e) {
+          n[e] = c[e];
+        });
+      return n;
+    }
+    function objectToString(t) {
+      return t && "object" == typeof t
+        ? isEmptyObject(t)
+          ? "{}"
+          : Object.entries(t)
+              .map(function (t) {
+                var n = t[0],
+                  e = t[1],
+                  o = e;
+                return (
+                  e instanceof Object && (o = `{ ${objectToString(e)} }`),
+                  `${n}:"${o}"`
+                );
+              })
+              .join(" ")
+        : String(t);
+    }
+    function matchRequestProps(e, t, r) {
+      if ("" === t || "*" === t) return true;
+      var a,
+        s = parseMatchProps(t);
+      if (isValidParsedData(s)) {
+        var n = getMatchPropsData(s);
+        a = Object.keys(n).every(function (e) {
+          var t = n[e],
+            a = r[e];
+          return (
+            Object.prototype.hasOwnProperty.call(r, e) &&
+            "string" == typeof a &&
+            (null == t ? void 0 : t.test(a))
+          );
+        });
+      } else logMessage(e, `Invalid parameter: ${t}`), (a = false);
+      return a;
+    }
+    function jsonPruner(e, r, n, a, t, i) {
+      var { nativeStringify: o } = i;
+      if (0 === n.length && 0 === a.length)
+        return (
+          logMessage(
+            e,
+            `${window.location.hostname}\n${o(r, null, 2)}\nStack trace:\n${new Error().stack}`,
+            true,
+          ),
+          r && "object" == typeof r && logMessage(e, r, true, false),
+          r
+        );
+      try {
+        if (!1 === isPruningNeeded(e, r, n, a, t, i)) return r;
+        n.forEach(function (n) {
+          for (
+            var a = n.path,
+              t = n.value,
+              i = getWildcardPropertyInChain(r, a, !0, [], t),
+              o = i.length - 1;
+            o >= 0;
+            o -= 1
+          ) {
+            var s = i[o];
+            if (void 0 !== s && s.base)
+              if ((hit(e), Array.isArray(s.base)))
+                try {
+                  var l = Number(s.prop);
+                  if (Number.isNaN(l)) continue;
+                  s.base.splice(l, 1);
+                } catch (e) {
+                  console.error("Error while deleting array element", e);
+                }
+              else delete s.base[s.prop];
+          }
+        });
+      } catch (r) {
+        logMessage(e, r);
+      }
+      return r;
+    }
+    function getPrunePath(t) {
+      var r = ".[=].";
+      if ("string" == typeof t && void 0 !== t && "" !== t) {
+        var e = (function (t) {
+          for (
+            var e = [], n = "", i = 0, a = false, s = false;
+            i < t.length;
+
+          ) {
+            var u = t[i];
+            if (a)
+              (n += u),
+                "\\" === u
+                  ? (s = !s)
+                  : ("/" !== u || s || (a = false), (s = false)),
+                (i += 1);
+            else {
+              if (
+                " " === u ||
+                "\n" === u ||
+                "\t" === u ||
+                "\r" === u ||
+                "\f" === u ||
+                "\v" === u
+              ) {
+                for (; i < t.length && /\s/.test(t[i]); ) i += 1;
+                "" !== n && (e.push(n), (n = ""));
+                continue;
+              }
+              if (t.startsWith(r, i)) {
+                if (((n += r), "/" === t[(i += 5)])) {
+                  (a = true), (s = false), (n += "/"), (i += 1);
+                  continue;
+                }
+                continue;
+              }
+              (n += u), (i += 1);
+            }
+          }
+          return "" !== n && e.push(n), e;
+        })(t);
+        return e.map(function (t) {
+          var e = t.split(r),
+            n = e[0],
+            i = e[1];
+          return void 0 !== i
+            ? ("true" === i
+                ? (i = true)
+                : "false" === i
+                  ? (i = false)
+                  : i.startsWith("/")
+                    ? (i = toRegExp(i))
+                    : "string" == typeof i &&
+                      /^\d+$/.test(i) &&
+                      (i = parseFloat(i)),
+              {
+                path: n,
+                value: i,
+              })
+            : {
+                path: n,
+              };
+        });
+      }
+      return [];
+    }
+    function forgeResponse(e, t) {
+      var {
+          bodyUsed: s,
+          headers: r,
+          ok: u,
+          redirected: a,
+          status: d,
+          statusText: o,
+          type: l,
+          url: n,
+        } = e,
+        v = new Response(t, {
+          status: d,
+          statusText: o,
+          headers: r,
+        });
+      return (
+        Object.defineProperties(v, {
+          url: {
+            value: n,
+          },
+          type: {
+            value: l,
+          },
+          ok: {
+            value: u,
+          },
+          bodyUsed: {
+            value: s,
+          },
+          redirected: {
+            value: a,
+          },
+        }),
+        v
+      );
+    }
+    function isPruningNeeded(n, t, r, e, a, i) {
+      if (!t) return false;
+      var o,
+        { nativeStringify: u } = i,
+        c = r.map(function (n) {
+          return n.path;
+        }),
+        f = e.map(function (n) {
+          return n.path;
+        });
+      if (0 === c.length && f.length > 0) {
+        var g = u(t);
+        if (toRegExp(f.join("")).test(g))
+          return (
+            logMessage(
+              n,
+              `${window.location.hostname}\n${u(t, null, 2)}\nStack trace:\n${new Error().stack}`,
+              true,
+            ),
+            t && "object" == typeof t && logMessage(n, t, true, false),
+            (o = false)
+          );
+      }
+      if (a && !matchStackTrace(a, new Error().stack || "")) return (o = false);
+      for (
+        var s,
+          l = [".*.", "*.", ".*", ".[].", "[].", ".[]"],
+          _loop = function _loop() {
+            var n = f[p],
+              r = n.split(".").pop(),
+              e = l.some(function (t) {
+                return n.includes(t);
+              }),
+              a = getWildcardPropertyInChain(t, n, e);
+            if (!a.length)
+              return {
+                v: (o = false),
+              };
+            o = !e;
+            for (var i = 0; i < a.length; i += 1) {
+              var u = "string" == typeof r && void 0 !== a[i].base[r];
+              o = e ? u || o : u && o;
+            }
+          },
+          p = 0;
+        p < f.length;
+        p += 1
+      )
+        if ((s = _loop())) return s.v;
+      return o;
+    }
+    function matchStackTrace(e, t) {
+      if (!e || "" === e) return true;
+      var r = backupRegExpValues();
+      if (shouldAbortInlineOrInjectedScript(e, t))
+        return r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r), true;
+      var n = toRegExp(e),
+        a = t
+          .split("\n")
+          .slice(2)
+          .map(function (e) {
+            return e.trim();
+          })
+          .join("\n");
+      return (
+        r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r),
+        getNativeRegexpTest().call(n, a)
+      );
+    }
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function isValidStrPattern(input) {
-      var FORWARD_SLASH = "/";
-      var str = escapeRegExp(input);
-      if (
-        input[0] === FORWARD_SLASH &&
-        input[input.length - 1] === FORWARD_SLASH
-      ) {
-        str = input.slice(1, -1);
-      }
-      var isValid;
+    function isValidStrPattern(e) {
+      var t,
+        n = escapeRegExp(e);
+      "/" === e[0] && "/" === e[e.length - 1] && (n = e.slice(1, -1));
       try {
-        isValid = new RegExp(str);
-        isValid = true;
+        (t = new RegExp(n)), (t = !0);
       } catch (e) {
-        isValid = false;
+        t = false;
       }
-      return isValid;
+      return t;
     }
-    function escapeRegExp(str) {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    function escapeRegExp(e) {
+      return e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
     }
-    function getRequestData(request) {
-      var requestInitOptions = getRequestProps();
-      var entries = requestInitOptions.map(function (key) {
-        var value = request[key];
-        return [key, value];
+    function getRequestData(t) {
+      var e = getRequestProps().map(function (e) {
+        return [e, t[e]];
       });
-      return Object.fromEntries(entries);
+      return Object.fromEntries(e);
     }
     function getRequestProps() {
       return [
@@ -13919,234 +13060,255 @@ function _toPrimitive(t, r) {
         "mode",
       ];
     }
-    function parseMatchProps(propsToMatchStr) {
-      var PROPS_DIVIDER = " ";
-      var PAIRS_MARKER = ":";
-      var isRequestProp = function isRequestProp(prop) {
-        return getRequestProps().includes(prop);
-      };
-      var propsObj = {};
-      var props = propsToMatchStr.split(PROPS_DIVIDER);
-      props.forEach(function (prop) {
-        var dividerInd = prop.indexOf(PAIRS_MARKER);
-        var key = prop.slice(0, dividerInd);
-        if (isRequestProp(key)) {
-          var value = prop.slice(dividerInd + 1);
-          propsObj[key] = value;
-        } else {
-          propsObj.url = prop;
-        }
-      });
-      return propsObj;
+    function parseMatchProps(e) {
+      var r = {};
+      return (
+        e.split(" ").forEach(function (e) {
+          var n = e.indexOf(":"),
+            i = e.slice(0, n);
+          if (
+            (function (e) {
+              return getRequestProps().includes(e);
+            })(i)
+          ) {
+            var s = e.slice(n + 1);
+            r[i] = s;
+          } else r.url = e;
+        }),
+        r
+      );
     }
-    function isValidParsedData(data) {
-      return Object.values(data).every(function (value) {
-        return isValidStrPattern(value);
+    function isValidParsedData(t) {
+      return Object.values(t).every(function (t) {
+        return isValidStrPattern(t);
       });
     }
-    function getMatchPropsData(data) {
-      var matchData = {};
-      var dataKeys = Object.keys(data);
-      dataKeys.forEach(function (key) {
-        matchData[key] = toRegExp(data[key]);
-      });
-      return matchData;
+    function getMatchPropsData(t) {
+      var a = {};
+      return (
+        Object.keys(t).forEach(function (c) {
+          a[c] = toRegExp(t[c]);
+        }),
+        a
+      );
     }
-    function getWildcardPropertyInChain(base, chain) {
-      var lookThrough =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var output =
-        arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
-        if (chain === "*" || chain === "[]") {
-          for (var key in base) {
-            if (Object.prototype.hasOwnProperty.call(base, key)) {
-              output.push({
-                base: base,
-                prop: key,
+    function getWildcardPropertyInChain(r, e) {
+      var a = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        i = arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : [],
+        t = arguments.length > 4 ? arguments[4] : void 0,
+        o = e.indexOf(".");
+      if (-1 === o) {
+        if ("*" === e || "[]" === e) {
+          for (var n in r)
+            if (Object.prototype.hasOwnProperty.call(r, n))
+              if (void 0 !== t) {
+                var s = r[n];
+                "string" == typeof s && t instanceof RegExp
+                  ? t.test(s) &&
+                    i.push({
+                      base: r,
+                      prop: n,
+                    })
+                  : s === t &&
+                    i.push({
+                      base: r,
+                      prop: n,
+                    });
+              } else
+                i.push({
+                  base: r,
+                  prop: n,
+                });
+        } else if (void 0 !== t) {
+          var p = r[e];
+          "string" == typeof p && t instanceof RegExp
+            ? t.test(p) &&
+              i.push({
+                base: r,
+                prop: e,
+              })
+            : r[e] === t &&
+              i.push({
+                base: r,
+                prop: e,
               });
-            }
-          }
-        } else {
-          output.push({
-            base: base,
-            prop: chain,
+        } else
+          i.push({
+            base: r,
+            prop: e,
           });
+        return i;
+      }
+      var c = e.slice(0, o);
+      if (
+        ("[]" === c && Array.isArray(r)) ||
+        ("*" === c && r instanceof Object) ||
+        ("[-]" === c && Array.isArray(r)) ||
+        ("{-}" === c && r instanceof Object)
+      ) {
+        var f = e.slice(o + 1),
+          y = Object.keys(r);
+        if ("{-}" === c || "[-]" === c) {
+          var h = Array.isArray(r) ? "array" : "object";
+          return (
+            (("{-}" !== c || "object" !== h) &&
+              ("[-]" !== c || "array" !== h)) ||
+              y.forEach(function (e) {
+                var a = r[e];
+                isKeyInObject(a, f, t) &&
+                  i.push({
+                    base: r,
+                    prop: e,
+                  });
+              }),
+            i
+          );
         }
-        return output;
-      }
-      var prop = chain.slice(0, pos);
-      var shouldLookThrough =
-        (prop === "[]" && Array.isArray(base)) ||
-        (prop === "*" && base instanceof Object);
-      if (shouldLookThrough) {
-        var nextProp = chain.slice(pos + 1);
-        var baseKeys = Object.keys(base);
-        baseKeys.forEach(function (key) {
-          var item = base[key];
-          getWildcardPropertyInChain(item, nextProp, lookThrough, output);
+        y.forEach(function (e) {
+          getWildcardPropertyInChain(r[e], f, a, i, t);
         });
       }
-      if (Array.isArray(base)) {
-        base.forEach(function (key) {
-          var nextBase = key;
-          if (nextBase !== undefined) {
-            getWildcardPropertyInChain(nextBase, chain, lookThrough, output);
-          }
+      Array.isArray(r) &&
+        r.forEach(function (r) {
+          void 0 !== r && getWildcardPropertyInChain(r, e, a, i, t);
         });
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (nextBase !== undefined) {
-        getWildcardPropertyInChain(nextBase, chain, lookThrough, output);
-      }
-      return output;
+      var d = r[c];
+      return (
+        (e = e.slice(o + 1)),
+        void 0 !== d && getWildcardPropertyInChain(d, e, a, i, t),
+        i
+      );
     }
-    function shouldAbortInlineOrInjectedScript(stackMatch, stackTrace) {
-      var INLINE_SCRIPT_STRING = "inlineScript";
-      var INJECTED_SCRIPT_STRING = "injectedScript";
-      var INJECTED_SCRIPT_MARKER = "<anonymous>";
-      var isInlineScript = function isInlineScript(match) {
-        return match.includes(INLINE_SCRIPT_STRING);
-      };
-      var isInjectedScript = function isInjectedScript(match) {
-        return match.includes(INJECTED_SCRIPT_STRING);
-      };
-      if (!(isInlineScript(stackMatch) || isInjectedScript(stackMatch))) {
-        return false;
-      }
-      var documentURL = window.location.href;
-      var pos = documentURL.indexOf("#");
-      if (pos !== -1) {
-        documentURL = documentURL.slice(0, pos);
-      }
-      var stackSteps = stackTrace
+    function shouldAbortInlineOrInjectedScript(t, i) {
+      var r = "inlineScript",
+        n = "injectedScript",
+        isInlineScript = function isInlineScript(t) {
+          return t.includes(r);
+        },
+        isInjectedScript = function isInjectedScript(t) {
+          return t.includes(n);
+        };
+      if (!isInlineScript(t) && !isInjectedScript(t)) return false;
+      var e = window.location.href,
+        s = e.indexOf("#");
+      -1 !== s && (e = e.slice(0, s));
+      var c = i
         .split("\n")
         .slice(2)
-        .map(function (line) {
-          return line.trim();
-        });
-      var stackLines = stackSteps.map(function (line) {
-        var stack;
-        var getStackTraceValues = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(line);
-        if (getStackTraceValues) {
-          var _stackURL, _stackURL2;
-          var stackURL = getStackTraceValues[2];
-          var stackLine = getStackTraceValues[3];
-          var stackCol = getStackTraceValues[4];
-          if (
-            (_stackURL = stackURL) !== null &&
-            _stackURL !== void 0 &&
-            _stackURL.startsWith("(")
-          ) {
-            stackURL = stackURL.slice(1);
-          }
-          if (
-            (_stackURL2 = stackURL) !== null &&
-            _stackURL2 !== void 0 &&
-            _stackURL2.startsWith(INJECTED_SCRIPT_MARKER)
-          ) {
-            var _stackFunction;
-            stackURL = INJECTED_SCRIPT_STRING;
-            var stackFunction =
-              getStackTraceValues[1] !== undefined
-                ? getStackTraceValues[1].slice(0, -1)
-                : line.slice(0, getStackTraceValues.index).trim();
+        .map(function (t) {
+          return t.trim();
+        })
+        .map(function (t) {
+          var i,
+            s = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(t);
+          if (s) {
+            var c,
+              l,
+              a = s[2],
+              u = s[3],
+              o = s[4];
             if (
-              (_stackFunction = stackFunction) !== null &&
-              _stackFunction !== void 0 &&
-              _stackFunction.startsWith("at")
+              (null !== (c = a) &&
+                void 0 !== c &&
+                c.startsWith("(") &&
+                (a = a.slice(1)),
+              null !== (l = a) && void 0 !== l && l.startsWith("<anonymous>"))
             ) {
-              stackFunction = stackFunction.slice(2).trim();
-            }
-            stack =
-              `${stackFunction} ${stackURL}${stackLine}${stackCol}`.trim();
-          } else if (stackURL === documentURL) {
-            stack = `${INLINE_SCRIPT_STRING}${stackLine}${stackCol}`.trim();
-          } else {
-            stack = `${stackURL}${stackLine}${stackCol}`.trim();
-          }
-        } else {
-          stack = line;
-        }
-        return stack;
-      });
-      if (stackLines) {
-        for (var index = 0; index < stackLines.length; index += 1) {
+              var d;
+              a = n;
+              var f =
+                void 0 !== s[1]
+                  ? s[1].slice(0, -1)
+                  : t.slice(0, s.index).trim();
+              null !== (d = f) &&
+                void 0 !== d &&
+                d.startsWith("at") &&
+                (f = f.slice(2).trim()),
+                (i = `${f} ${a}${u}${o}`.trim());
+            } else i = a === e ? `${r}${u}${o}`.trim() : `${a}${u}${o}`.trim();
+          } else i = t;
+          return i;
+        });
+      if (c)
+        for (var l = 0; l < c.length; l += 1) {
           if (
-            isInlineScript(stackMatch) &&
-            stackLines[index].startsWith(INLINE_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
+            isInlineScript(t) &&
+            c[l].startsWith(r) &&
+            c[l].match(toRegExp(t))
+          )
             return true;
-          }
           if (
-            isInjectedScript(stackMatch) &&
-            stackLines[index].startsWith(INJECTED_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
+            isInjectedScript(t) &&
+            c[l].startsWith(n) &&
+            c[l].match(toRegExp(t))
+          )
             return true;
-          }
         }
-      }
       return false;
     }
     function getNativeRegexpTest() {
-      var descriptor = Object.getOwnPropertyDescriptor(
-        RegExp.prototype,
-        "test"
-      );
-      var nativeRegexTest =
-        descriptor === null || descriptor === void 0
-          ? void 0
-          : descriptor.value;
-      if (descriptor && typeof descriptor.value === "function") {
-        return nativeRegexTest;
-      }
+      var t = Object.getOwnPropertyDescriptor(RegExp.prototype, "test"),
+        e = null == t ? void 0 : t.value;
+      if (t && "function" == typeof t.value) return e;
       throw new Error("RegExp.prototype.test is not a function");
     }
     function backupRegExpValues() {
       try {
-        var arrayOfRegexpValues = [];
-        for (var index = 1; index < 10; index += 1) {
-          var value = `$${index}`;
-          if (!RegExp[value]) {
-            break;
-          }
-          arrayOfRegexpValues.push(RegExp[value]);
+        for (var r = [], e = 1; e < 10; e += 1) {
+          var a = `$${e}`;
+          if (!RegExp[a]) break;
+          r.push(RegExp[a]);
         }
-        return arrayOfRegexpValues;
-      } catch (error) {
+        return r;
+      } catch (r) {
         return [];
       }
     }
-    function restoreRegExpValues(array) {
-      if (!array.length) {
-        return;
-      }
-      try {
-        var stringPattern = "";
-        if (array.length === 1) {
-          stringPattern = `(${array[0]})`;
-        } else {
-          stringPattern = array.reduce(
-            function (accumulator, currentValue, currentIndex) {
-              if (currentIndex === 1) {
-                return `(${accumulator}),(${currentValue})`;
-              }
-              return `${accumulator},(${currentValue})`;
-            }
-          );
+    function restoreRegExpValues(e) {
+      if (e.length)
+        try {
+          var r = "";
+          r =
+            1 === e.length
+              ? `(${e[0]})`
+              : e.reduce(function (e, r, t) {
+                  return 1 === t ? `(${e}),(${r})` : `${e},(${r})`;
+                });
+          var t = new RegExp(r);
+          e.toString().replace(t, "");
+        } catch (e) {
+          var n = `Failed to restore RegExp values: ${e}`;
+          console.log(n);
         }
-        var regExpGroup = new RegExp(stringPattern);
-        array.toString().replace(regExpGroup, "");
-      } catch (error) {
-        var message = `Failed to restore RegExp values: ${error}`;
-        console.log(message);
-      }
+    }
+    function isKeyInObject(t, r, e) {
+      var n = r.split("."),
+        _check4 = function _check(t, r) {
+          if (null == t) return false;
+          if (0 === r.length)
+            return (
+              void 0 === e ||
+              ("string" == typeof t && e instanceof RegExp
+                ? e.test(t)
+                : t === e)
+            );
+          var n = r[0],
+            i = r.slice(1);
+          if ("*" === n || "[]" === n) {
+            if (Array.isArray(t))
+              return t.some(function (t) {
+                return _check4(t, i);
+              });
+            if ("object" == typeof t && null !== t)
+              return Object.keys(t).some(function (r) {
+                return _check4(t[r], i);
+              });
+          }
+          return (
+            !!Object.prototype.hasOwnProperty.call(t, n) && _check4(t[n], i)
+          );
+        };
+      return _check4(t, n);
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -14193,7 +13355,7 @@ function _toPrimitive(t, r) {
       var setRequestHeaderWrapper = function setRequestHeaderWrapper(
         setRequestHeader,
         thisArgument,
-        argsList
+        argsList,
       ) {
         thisArgument.collectedHeaders.push(argsList);
         return Reflect.apply(setRequestHeader, thisArgument, argsList);
@@ -14213,7 +13375,7 @@ function _toPrimitive(t, r) {
           thisArg.collectedHeaders = [];
           thisArg.setRequestHeader = new Proxy(
             thisArg.setRequestHeader,
-            setRequestHeaderHandler
+            setRequestHeaderHandler,
           );
         }
         return Reflect.apply(target, thisArg, args);
@@ -14252,7 +13414,7 @@ function _toPrimitive(t, r) {
                 logMessage(
                   source,
                   `${window.location.hostname}\n${nativeStringify(jsonContent, null, 2)}\nStack trace:\n${stackTrace}`,
-                  true
+                  true,
                 );
                 logMessage(source, jsonContent, true, false);
                 modifiedContent = content;
@@ -14265,7 +13427,7 @@ function _toPrimitive(t, r) {
                   (stack = ""),
                   {
                     nativeStringify: nativeStringify,
-                  }
+                  },
                 );
                 try {
                   var { responseType: responseType } = thisArg;
@@ -14276,7 +13438,7 @@ function _toPrimitive(t, r) {
                       break;
                     case "arraybuffer":
                       modifiedContent = new TextEncoder().encode(
-                        nativeStringify(modifiedContent)
+                        nativeStringify(modifiedContent),
                       ).buffer;
                       break;
                     case "blob":
@@ -14363,296 +13525,281 @@ function _toPrimitive(t, r) {
       };
       XMLHttpRequest.prototype.open = new Proxy(
         XMLHttpRequest.prototype.open,
-        openHandler
+        openHandler,
       );
       XMLHttpRequest.prototype.send = new Proxy(
         XMLHttpRequest.prototype.send,
-        sendHandler
+        sendHandler,
       );
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
-      }
-    }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
-    }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
+    function hit(e) {
+      if (e.verbose) {
         try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
-      var escaped = input
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
+      }
+    }
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function jsonPruner(
-      source,
-      root,
-      prunePaths,
-      requiredPaths,
-      stack,
-      nativeObjects
-    ) {
-      var { nativeStringify: nativeStringify } = nativeObjects;
-      if (prunePaths.length === 0 && requiredPaths.length === 0) {
-        logMessage(
-          source,
-          `${window.location.hostname}\n${nativeStringify(root, null, 2)}\nStack trace:\n${new Error().stack}`,
-          true
+    function jsonPruner(e, r, n, a, t, i) {
+      var { nativeStringify: o } = i;
+      if (0 === n.length && 0 === a.length)
+        return (
+          logMessage(
+            e,
+            `${window.location.hostname}\n${o(r, null, 2)}\nStack trace:\n${new Error().stack}`,
+            true,
+          ),
+          r && "object" == typeof r && logMessage(e, r, true, false),
+          r
         );
-        if (root && typeof root === "object") {
-          logMessage(source, root, true, false);
-        }
-        return root;
-      }
       try {
-        if (
-          isPruningNeeded(
-            source,
-            root,
-            prunePaths,
-            requiredPaths,
-            stack,
-            nativeObjects
-          ) === false
-        ) {
-          return root;
-        }
-        prunePaths.forEach(function (path) {
-          var ownerObjArr = getWildcardPropertyInChain(root, path, true);
-          ownerObjArr.forEach(function (ownerObj) {
-            if (ownerObj !== undefined && ownerObj.base) {
-              delete ownerObj.base[ownerObj.prop];
-              hit(source);
-            }
-          });
+        if (!1 === isPruningNeeded(e, r, n, a, t, i)) return r;
+        n.forEach(function (n) {
+          for (
+            var a = n.path,
+              t = n.value,
+              i = getWildcardPropertyInChain(r, a, !0, [], t),
+              o = i.length - 1;
+            o >= 0;
+            o -= 1
+          ) {
+            var s = i[o];
+            if (void 0 !== s && s.base)
+              if ((hit(e), Array.isArray(s.base)))
+                try {
+                  var l = Number(s.prop);
+                  if (Number.isNaN(l)) continue;
+                  s.base.splice(l, 1);
+                } catch (e) {
+                  console.error("Error while deleting array element", e);
+                }
+              else delete s.base[s.prop];
+          }
         });
-      } catch (e) {
-        logMessage(source, e);
+      } catch (r) {
+        logMessage(e, r);
       }
-      return root;
+      return r;
     }
-    function getPrunePath(props) {
-      var validPropsString =
-        typeof props === "string" && props !== undefined && props !== "";
-      return validPropsString ? props.split(/ +/) : [];
-    }
-    function matchRequestProps(source, propsToMatch, requestData) {
-      if (propsToMatch === "" || propsToMatch === "*") {
-        return true;
+    function getPrunePath(t) {
+      var r = ".[=].";
+      if ("string" == typeof t && void 0 !== t && "" !== t) {
+        var e = (function (t) {
+          for (
+            var e = [], n = "", i = 0, a = false, s = false;
+            i < t.length;
+
+          ) {
+            var u = t[i];
+            if (a)
+              (n += u),
+                "\\" === u
+                  ? (s = !s)
+                  : ("/" !== u || s || (a = false), (s = false)),
+                (i += 1);
+            else {
+              if (
+                " " === u ||
+                "\n" === u ||
+                "\t" === u ||
+                "\r" === u ||
+                "\f" === u ||
+                "\v" === u
+              ) {
+                for (; i < t.length && /\s/.test(t[i]); ) i += 1;
+                "" !== n && (e.push(n), (n = ""));
+                continue;
+              }
+              if (t.startsWith(r, i)) {
+                if (((n += r), "/" === t[(i += 5)])) {
+                  (a = true), (s = false), (n += "/"), (i += 1);
+                  continue;
+                }
+                continue;
+              }
+              (n += u), (i += 1);
+            }
+          }
+          return "" !== n && e.push(n), e;
+        })(t);
+        return e.map(function (t) {
+          var e = t.split(r),
+            n = e[0],
+            i = e[1];
+          return void 0 !== i
+            ? ("true" === i
+                ? (i = true)
+                : "false" === i
+                  ? (i = false)
+                  : i.startsWith("/")
+                    ? (i = toRegExp(i))
+                    : "string" == typeof i &&
+                      /^\d+$/.test(i) &&
+                      (i = parseFloat(i)),
+              {
+                path: n,
+                value: i,
+              })
+            : {
+                path: n,
+              };
+        });
       }
-      var isMatched;
-      var parsedData = parseMatchProps(propsToMatch);
-      if (!isValidParsedData(parsedData)) {
-        logMessage(source, `Invalid parameter: ${propsToMatch}`);
-        isMatched = false;
-      } else {
-        var matchData = getMatchPropsData(parsedData);
-        var matchKeys = Object.keys(matchData);
-        isMatched = matchKeys.every(function (matchKey) {
-          var matchValue = matchData[matchKey];
-          var dataValue = requestData[matchKey];
+      return [];
+    }
+    function matchRequestProps(e, t, r) {
+      if ("" === t || "*" === t) return true;
+      var a,
+        s = parseMatchProps(t);
+      if (isValidParsedData(s)) {
+        var n = getMatchPropsData(s);
+        a = Object.keys(n).every(function (e) {
+          var t = n[e],
+            a = r[e];
           return (
-            Object.prototype.hasOwnProperty.call(requestData, matchKey) &&
-            typeof dataValue === "string" &&
-            (matchValue === null || matchValue === void 0
-              ? void 0
-              : matchValue.test(dataValue))
+            Object.prototype.hasOwnProperty.call(r, e) &&
+            "string" == typeof a &&
+            (null == t ? void 0 : t.test(a))
           );
         });
-      }
-      return isMatched;
+      } else logMessage(e, `Invalid parameter: ${t}`), (a = false);
+      return a;
     }
-    function getXhrData(method, url, async, user, password) {
+    function getXhrData(r, t, a, e, n) {
       return {
-        method: method,
-        url: url,
-        async: async,
-        user: user,
-        password: password,
+        method: r,
+        url: t,
+        async: a,
+        user: e,
+        password: n,
       };
     }
-    function isPruningNeeded(
-      source,
-      root,
-      prunePaths,
-      requiredPaths,
-      stack,
-      nativeObjects
-    ) {
-      if (!root) {
-        return false;
-      }
-      var { nativeStringify: nativeStringify } = nativeObjects;
-      var shouldProcess;
-      if (prunePaths.length === 0 && requiredPaths.length > 0) {
-        var rootString = nativeStringify(root);
-        var matchRegex = toRegExp(requiredPaths.join(""));
-        var shouldLog = matchRegex.test(rootString);
-        if (shouldLog) {
-          logMessage(
-            source,
-            `${window.location.hostname}\n${nativeStringify(root, null, 2)}\nStack trace:\n${new Error().stack}`,
-            true
+    function isPruningNeeded(n, t, r, e, a, i) {
+      if (!t) return false;
+      var o,
+        { nativeStringify: u } = i,
+        c = r.map(function (n) {
+          return n.path;
+        }),
+        f = e.map(function (n) {
+          return n.path;
+        });
+      if (0 === c.length && f.length > 0) {
+        var g = u(t);
+        if (toRegExp(f.join("")).test(g))
+          return (
+            logMessage(
+              n,
+              `${window.location.hostname}\n${u(t, null, 2)}\nStack trace:\n${new Error().stack}`,
+              true,
+            ),
+            t && "object" == typeof t && logMessage(n, t, true, false),
+            (o = false)
           );
-          if (root && typeof root === "object") {
-            logMessage(source, root, true, false);
-          }
-          shouldProcess = false;
-          return shouldProcess;
-        }
       }
-      if (stack && !matchStackTrace(stack, new Error().stack || "")) {
-        shouldProcess = false;
-        return shouldProcess;
-      }
-      var wildcardSymbols = [".*.", "*.", ".*", ".[].", "[].", ".[]"];
-      var _loop = function _loop() {
-          var requiredPath = requiredPaths[i];
-          var lastNestedPropName = requiredPath.split(".").pop();
-          var hasWildcard = wildcardSymbols.some(function (symbol) {
-            return requiredPath.includes(symbol);
-          });
-          var details = getWildcardPropertyInChain(
-            root,
-            requiredPath,
-            hasWildcard
-          );
-          if (!details.length) {
-            shouldProcess = false;
-            return {
-              v: shouldProcess,
-            };
-          }
-          shouldProcess = !hasWildcard;
-          for (var j = 0; j < details.length; j += 1) {
-            var hasRequiredProp =
-              typeof lastNestedPropName === "string" &&
-              details[j].base[lastNestedPropName] !== undefined;
-            if (hasWildcard) {
-              shouldProcess = hasRequiredProp || shouldProcess;
-            } else {
-              shouldProcess = hasRequiredProp && shouldProcess;
+      if (a && !matchStackTrace(a, new Error().stack || "")) return (o = false);
+      for (
+        var s,
+          l = [".*.", "*.", ".*", ".[].", "[].", ".[]"],
+          _loop = function _loop() {
+            var n = f[p],
+              r = n.split(".").pop(),
+              e = l.some(function (t) {
+                return n.includes(t);
+              }),
+              a = getWildcardPropertyInChain(t, n, e);
+            if (!a.length)
+              return {
+                v: (o = false),
+              };
+            o = !e;
+            for (var i = 0; i < a.length; i += 1) {
+              var u = "string" == typeof r && void 0 !== a[i].base[r];
+              o = e ? u || o : u && o;
             }
-          }
-        },
-        _ret;
-      for (var i = 0; i < requiredPaths.length; i += 1) {
-        _ret = _loop();
-        if (_ret) return _ret.v;
-      }
-      return shouldProcess;
+          },
+          p = 0;
+        p < f.length;
+        p += 1
+      )
+        if ((s = _loop())) return s.v;
+      return o;
     }
-    function matchStackTrace(stackMatch, stackTrace) {
-      if (!stackMatch || stackMatch === "") {
-        return true;
-      }
-      var regExpValues = backupRegExpValues();
-      if (shouldAbortInlineOrInjectedScript(stackMatch, stackTrace)) {
-        if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-          restoreRegExpValues(regExpValues);
-        }
-        return true;
-      }
-      var stackRegexp = toRegExp(stackMatch);
-      var refinedStackTrace = stackTrace
-        .split("\n")
-        .slice(2)
-        .map(function (line) {
-          return line.trim();
-        })
-        .join("\n");
-      if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-        restoreRegExpValues(regExpValues);
-      }
-      return getNativeRegexpTest().call(stackRegexp, refinedStackTrace);
+    function matchStackTrace(e, t) {
+      if (!e || "" === e) return true;
+      var r = backupRegExpValues();
+      if (shouldAbortInlineOrInjectedScript(e, t))
+        return r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r), true;
+      var n = toRegExp(e),
+        a = t
+          .split("\n")
+          .slice(2)
+          .map(function (e) {
+            return e.trim();
+          })
+          .join("\n");
+      return (
+        r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r),
+        getNativeRegexpTest().call(n, a)
+      );
     }
-    function getMatchPropsData(data) {
-      var matchData = {};
-      var dataKeys = Object.keys(data);
-      dataKeys.forEach(function (key) {
-        matchData[key] = toRegExp(data[key]);
-      });
-      return matchData;
+    function getMatchPropsData(t) {
+      var a = {};
+      return (
+        Object.keys(t).forEach(function (c) {
+          a[c] = toRegExp(t[c]);
+        }),
+        a
+      );
     }
     function getRequestProps() {
       return [
@@ -14671,247 +13818,260 @@ function _toPrimitive(t, r) {
         "mode",
       ];
     }
-    function isValidParsedData(data) {
-      return Object.values(data).every(function (value) {
-        return isValidStrPattern(value);
+    function isValidParsedData(t) {
+      return Object.values(t).every(function (t) {
+        return isValidStrPattern(t);
       });
     }
-    function parseMatchProps(propsToMatchStr) {
-      var PROPS_DIVIDER = " ";
-      var PAIRS_MARKER = ":";
-      var isRequestProp = function isRequestProp(prop) {
-        return getRequestProps().includes(prop);
-      };
-      var propsObj = {};
-      var props = propsToMatchStr.split(PROPS_DIVIDER);
-      props.forEach(function (prop) {
-        var dividerInd = prop.indexOf(PAIRS_MARKER);
-        var key = prop.slice(0, dividerInd);
-        if (isRequestProp(key)) {
-          var value = prop.slice(dividerInd + 1);
-          propsObj[key] = value;
-        } else {
-          propsObj.url = prop;
-        }
-      });
-      return propsObj;
+    function parseMatchProps(e) {
+      var r = {};
+      return (
+        e.split(" ").forEach(function (e) {
+          var n = e.indexOf(":"),
+            i = e.slice(0, n);
+          if (
+            (function (e) {
+              return getRequestProps().includes(e);
+            })(i)
+          ) {
+            var s = e.slice(n + 1);
+            r[i] = s;
+          } else r.url = e;
+        }),
+        r
+      );
     }
-    function isValidStrPattern(input) {
-      var FORWARD_SLASH = "/";
-      var str = escapeRegExp(input);
-      if (
-        input[0] === FORWARD_SLASH &&
-        input[input.length - 1] === FORWARD_SLASH
-      ) {
-        str = input.slice(1, -1);
-      }
-      var isValid;
+    function isValidStrPattern(e) {
+      var t,
+        n = escapeRegExp(e);
+      "/" === e[0] && "/" === e[e.length - 1] && (n = e.slice(1, -1));
       try {
-        isValid = new RegExp(str);
-        isValid = true;
+        (t = new RegExp(n)), (t = !0);
       } catch (e) {
-        isValid = false;
+        t = false;
       }
-      return isValid;
+      return t;
     }
-    function escapeRegExp(str) {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    function escapeRegExp(e) {
+      return e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
-    function getWildcardPropertyInChain(base, chain) {
-      var lookThrough =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var output =
-        arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
-        if (chain === "*" || chain === "[]") {
-          for (var key in base) {
-            if (Object.prototype.hasOwnProperty.call(base, key)) {
-              output.push({
-                base: base,
-                prop: key,
+    function getWildcardPropertyInChain(r, e) {
+      var a = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        i = arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : [],
+        t = arguments.length > 4 ? arguments[4] : void 0,
+        o = e.indexOf(".");
+      if (-1 === o) {
+        if ("*" === e || "[]" === e) {
+          for (var n in r)
+            if (Object.prototype.hasOwnProperty.call(r, n))
+              if (void 0 !== t) {
+                var s = r[n];
+                "string" == typeof s && t instanceof RegExp
+                  ? t.test(s) &&
+                    i.push({
+                      base: r,
+                      prop: n,
+                    })
+                  : s === t &&
+                    i.push({
+                      base: r,
+                      prop: n,
+                    });
+              } else
+                i.push({
+                  base: r,
+                  prop: n,
+                });
+        } else if (void 0 !== t) {
+          var p = r[e];
+          "string" == typeof p && t instanceof RegExp
+            ? t.test(p) &&
+              i.push({
+                base: r,
+                prop: e,
+              })
+            : r[e] === t &&
+              i.push({
+                base: r,
+                prop: e,
               });
-            }
-          }
-        } else {
-          output.push({
-            base: base,
-            prop: chain,
+        } else
+          i.push({
+            base: r,
+            prop: e,
           });
+        return i;
+      }
+      var c = e.slice(0, o);
+      if (
+        ("[]" === c && Array.isArray(r)) ||
+        ("*" === c && r instanceof Object) ||
+        ("[-]" === c && Array.isArray(r)) ||
+        ("{-}" === c && r instanceof Object)
+      ) {
+        var f = e.slice(o + 1),
+          y = Object.keys(r);
+        if ("{-}" === c || "[-]" === c) {
+          var h = Array.isArray(r) ? "array" : "object";
+          return (
+            (("{-}" !== c || "object" !== h) &&
+              ("[-]" !== c || "array" !== h)) ||
+              y.forEach(function (e) {
+                var a = r[e];
+                isKeyInObject(a, f, t) &&
+                  i.push({
+                    base: r,
+                    prop: e,
+                  });
+              }),
+            i
+          );
         }
-        return output;
-      }
-      var prop = chain.slice(0, pos);
-      var shouldLookThrough =
-        (prop === "[]" && Array.isArray(base)) ||
-        (prop === "*" && base instanceof Object);
-      if (shouldLookThrough) {
-        var nextProp = chain.slice(pos + 1);
-        var baseKeys = Object.keys(base);
-        baseKeys.forEach(function (key) {
-          var item = base[key];
-          getWildcardPropertyInChain(item, nextProp, lookThrough, output);
+        y.forEach(function (e) {
+          getWildcardPropertyInChain(r[e], f, a, i, t);
         });
       }
-      if (Array.isArray(base)) {
-        base.forEach(function (key) {
-          var nextBase = key;
-          if (nextBase !== undefined) {
-            getWildcardPropertyInChain(nextBase, chain, lookThrough, output);
-          }
+      Array.isArray(r) &&
+        r.forEach(function (r) {
+          void 0 !== r && getWildcardPropertyInChain(r, e, a, i, t);
         });
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (nextBase !== undefined) {
-        getWildcardPropertyInChain(nextBase, chain, lookThrough, output);
-      }
-      return output;
+      var d = r[c];
+      return (
+        (e = e.slice(o + 1)),
+        void 0 !== d && getWildcardPropertyInChain(d, e, a, i, t),
+        i
+      );
     }
-    function shouldAbortInlineOrInjectedScript(stackMatch, stackTrace) {
-      var INLINE_SCRIPT_STRING = "inlineScript";
-      var INJECTED_SCRIPT_STRING = "injectedScript";
-      var INJECTED_SCRIPT_MARKER = "<anonymous>";
-      var isInlineScript = function isInlineScript(match) {
-        return match.includes(INLINE_SCRIPT_STRING);
-      };
-      var isInjectedScript = function isInjectedScript(match) {
-        return match.includes(INJECTED_SCRIPT_STRING);
-      };
-      if (!(isInlineScript(stackMatch) || isInjectedScript(stackMatch))) {
-        return false;
-      }
-      var documentURL = window.location.href;
-      var pos = documentURL.indexOf("#");
-      if (pos !== -1) {
-        documentURL = documentURL.slice(0, pos);
-      }
-      var stackSteps = stackTrace
+    function shouldAbortInlineOrInjectedScript(t, i) {
+      var r = "inlineScript",
+        n = "injectedScript",
+        isInlineScript = function isInlineScript(t) {
+          return t.includes(r);
+        },
+        isInjectedScript = function isInjectedScript(t) {
+          return t.includes(n);
+        };
+      if (!isInlineScript(t) && !isInjectedScript(t)) return false;
+      var e = window.location.href,
+        s = e.indexOf("#");
+      -1 !== s && (e = e.slice(0, s));
+      var c = i
         .split("\n")
         .slice(2)
-        .map(function (line) {
-          return line.trim();
-        });
-      var stackLines = stackSteps.map(function (line) {
-        var stack;
-        var getStackTraceValues = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(line);
-        if (getStackTraceValues) {
-          var _stackURL, _stackURL2;
-          var stackURL = getStackTraceValues[2];
-          var stackLine = getStackTraceValues[3];
-          var stackCol = getStackTraceValues[4];
-          if (
-            (_stackURL = stackURL) !== null &&
-            _stackURL !== void 0 &&
-            _stackURL.startsWith("(")
-          ) {
-            stackURL = stackURL.slice(1);
-          }
-          if (
-            (_stackURL2 = stackURL) !== null &&
-            _stackURL2 !== void 0 &&
-            _stackURL2.startsWith(INJECTED_SCRIPT_MARKER)
-          ) {
-            var _stackFunction;
-            stackURL = INJECTED_SCRIPT_STRING;
-            var stackFunction =
-              getStackTraceValues[1] !== undefined
-                ? getStackTraceValues[1].slice(0, -1)
-                : line.slice(0, getStackTraceValues.index).trim();
+        .map(function (t) {
+          return t.trim();
+        })
+        .map(function (t) {
+          var i,
+            s = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(t);
+          if (s) {
+            var c,
+              l,
+              a = s[2],
+              u = s[3],
+              o = s[4];
             if (
-              (_stackFunction = stackFunction) !== null &&
-              _stackFunction !== void 0 &&
-              _stackFunction.startsWith("at")
+              (null !== (c = a) &&
+                void 0 !== c &&
+                c.startsWith("(") &&
+                (a = a.slice(1)),
+              null !== (l = a) && void 0 !== l && l.startsWith("<anonymous>"))
             ) {
-              stackFunction = stackFunction.slice(2).trim();
-            }
-            stack =
-              `${stackFunction} ${stackURL}${stackLine}${stackCol}`.trim();
-          } else if (stackURL === documentURL) {
-            stack = `${INLINE_SCRIPT_STRING}${stackLine}${stackCol}`.trim();
-          } else {
-            stack = `${stackURL}${stackLine}${stackCol}`.trim();
-          }
-        } else {
-          stack = line;
-        }
-        return stack;
-      });
-      if (stackLines) {
-        for (var index = 0; index < stackLines.length; index += 1) {
+              var d;
+              a = n;
+              var f =
+                void 0 !== s[1]
+                  ? s[1].slice(0, -1)
+                  : t.slice(0, s.index).trim();
+              null !== (d = f) &&
+                void 0 !== d &&
+                d.startsWith("at") &&
+                (f = f.slice(2).trim()),
+                (i = `${f} ${a}${u}${o}`.trim());
+            } else i = a === e ? `${r}${u}${o}`.trim() : `${a}${u}${o}`.trim();
+          } else i = t;
+          return i;
+        });
+      if (c)
+        for (var l = 0; l < c.length; l += 1) {
           if (
-            isInlineScript(stackMatch) &&
-            stackLines[index].startsWith(INLINE_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
+            isInlineScript(t) &&
+            c[l].startsWith(r) &&
+            c[l].match(toRegExp(t))
+          )
             return true;
-          }
           if (
-            isInjectedScript(stackMatch) &&
-            stackLines[index].startsWith(INJECTED_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
+            isInjectedScript(t) &&
+            c[l].startsWith(n) &&
+            c[l].match(toRegExp(t))
+          )
             return true;
-          }
         }
-      }
       return false;
     }
     function getNativeRegexpTest() {
-      var descriptor = Object.getOwnPropertyDescriptor(
-        RegExp.prototype,
-        "test"
-      );
-      var nativeRegexTest =
-        descriptor === null || descriptor === void 0
-          ? void 0
-          : descriptor.value;
-      if (descriptor && typeof descriptor.value === "function") {
-        return nativeRegexTest;
-      }
+      var t = Object.getOwnPropertyDescriptor(RegExp.prototype, "test"),
+        e = null == t ? void 0 : t.value;
+      if (t && "function" == typeof t.value) return e;
       throw new Error("RegExp.prototype.test is not a function");
     }
     function backupRegExpValues() {
       try {
-        var arrayOfRegexpValues = [];
-        for (var index = 1; index < 10; index += 1) {
-          var value = `$${index}`;
-          if (!RegExp[value]) {
-            break;
-          }
-          arrayOfRegexpValues.push(RegExp[value]);
+        for (var r = [], e = 1; e < 10; e += 1) {
+          var a = `$${e}`;
+          if (!RegExp[a]) break;
+          r.push(RegExp[a]);
         }
-        return arrayOfRegexpValues;
-      } catch (error) {
+        return r;
+      } catch (r) {
         return [];
       }
     }
-    function restoreRegExpValues(array) {
-      if (!array.length) {
-        return;
-      }
-      try {
-        var stringPattern = "";
-        if (array.length === 1) {
-          stringPattern = `(${array[0]})`;
-        } else {
-          stringPattern = array.reduce(
-            function (accumulator, currentValue, currentIndex) {
-              if (currentIndex === 1) {
-                return `(${accumulator}),(${currentValue})`;
-              }
-              return `${accumulator},(${currentValue})`;
-            }
-          );
+    function restoreRegExpValues(e) {
+      if (e.length)
+        try {
+          var r = "";
+          r =
+            1 === e.length
+              ? `(${e[0]})`
+              : e.reduce(function (e, r, t) {
+                  return 1 === t ? `(${e}),(${r})` : `${e},(${r})`;
+                });
+          var t = new RegExp(r);
+          e.toString().replace(t, "");
+        } catch (e) {
+          var n = `Failed to restore RegExp values: ${e}`;
+          console.log(n);
         }
-        var regExpGroup = new RegExp(stringPattern);
-        array.toString().replace(regExpGroup, "");
-      } catch (error) {
-        var message = `Failed to restore RegExp values: ${error}`;
-        console.log(message);
-      }
+    }
+    function isKeyInObject(t, r, e) {
+      var n = r.split("."),
+        _check5 = function _check(t, r) {
+          if (null == t) return false;
+          if (0 === r.length)
+            return (
+              void 0 === e ||
+              ("string" == typeof t && e instanceof RegExp
+                ? e.test(t)
+                : t === e)
+            );
+          var n = r[0],
+            i = r.slice(1);
+          if ("*" === n || "[]" === n) {
+            if (Array.isArray(t))
+              return t.some(function (t) {
+                return _check5(t, i);
+              });
+            if ("object" == typeof t && null !== t)
+              return Object.keys(t).some(function (r) {
+                return _check5(t[r], i);
+              });
+          }
+          return (
+            !!Object.prototype.hasOwnProperty.call(t, n) && _check5(t[n], i)
+          );
+        };
+      return _check5(t, n);
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -14928,7 +14088,7 @@ function _toPrimitive(t, r) {
       console.log(e);
     }
   }
-  function log$1(source, args) {
+  function log$2(source, args) {
     var flag = "done";
     var uniqueIdentifier =
       source.uniqueId +
@@ -14983,12 +14143,33 @@ function _toPrimitive(t, r) {
       function addEventListenerWrapper(type, listener) {
         var _this$constructor;
         if (validateType(type) && validateListener(listener)) {
-          var message = `addEventListener("${type}", ${listenerToString(listener)})`;
-          logMessage(source, message, true);
+          var targetElement;
+          var targetElementInfo;
+          var listenerInfo = listenerToString(listener);
+          if (this) {
+            if (this instanceof Window) {
+              targetElementInfo = "window";
+            } else if (this instanceof Document) {
+              targetElementInfo = "document";
+            } else if (this instanceof Element) {
+              targetElement = this;
+              targetElementInfo = getElementAttributesWithValues(this);
+            }
+          }
+          if (targetElementInfo) {
+            var message = `addEventListener("${type}", ${listenerInfo})\nElement: ${targetElementInfo}`;
+            logMessage(source, message, true);
+            if (targetElement) {
+              console.log("log-addEventListener Element:", targetElement);
+            }
+          } else {
+            var _message = `addEventListener("${type}", ${listenerInfo})`;
+            logMessage(source, _message, true);
+          }
           hit(source);
         } else {
-          var _message = `Invalid event type or listener passed to addEventListener:\n        type: ${convertTypeToString(type)}\n        listener: ${convertTypeToString(listener)}`;
-          logMessage(source, _message, true);
+          var _message2 = `Invalid event type or listener passed to addEventListener:\n        type: ${convertTypeToString(type)}\n        listener: ${convertTypeToString(listener)}`;
+          logMessage(source, _message2, true);
         }
         var context = this;
         if (
@@ -15022,113 +14203,92 @@ function _toPrimitive(t, r) {
       Object.defineProperty(
         window.EventTarget.prototype,
         "addEventListener",
-        descriptor
+        descriptor,
       );
       Object.defineProperty(window, "addEventListener", descriptor);
       Object.defineProperty(document, "addEventListener", descriptor);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function validateType(type) {
-      return typeof type !== "undefined";
+    function validateType(e) {
+      return void 0 !== e;
     }
-    function validateListener(listener) {
+    function validateListener(n) {
       return (
-        typeof listener !== "undefined" &&
-        (typeof listener === "function" ||
-          (typeof listener === "object" &&
-            listener !== null &&
-            "handleEvent" in listener &&
-            typeof listener.handleEvent === "function"))
+        void 0 !== n &&
+        ("function" == typeof n ||
+          ("object" == typeof n &&
+            null !== n &&
+            "handleEvent" in n &&
+            "function" == typeof n.handleEvent))
       );
     }
-    function listenerToString(listener) {
-      return typeof listener === "function"
-        ? listener.toString()
-        : listener.handleEvent.toString();
+    function listenerToString(n) {
+      return "function" == typeof n ? n.toString() : n.handleEvent.toString();
     }
-    function convertTypeToString(value) {
-      var output;
-      if (typeof value === "undefined") {
-        output = "undefined";
-      } else if (typeof value === "object") {
-        if (value === null) {
-          output = "null";
-        } else {
-          output = objectToString(value);
-        }
-      } else {
-        output = String(value);
-      }
-      return output;
+    function convertTypeToString(n) {
+      return void 0 === n
+        ? "undefined"
+        : "object" == typeof n
+          ? null === n
+            ? "null"
+            : objectToString(n)
+          : String(n);
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function objectToString(obj) {
-      if (!obj || typeof obj !== "object") {
-        return String(obj);
-      }
-      if (isEmptyObject(obj)) {
-        return "{}";
-      }
-      return Object.entries(obj)
-        .map(function (pair) {
-          var key = pair[0];
-          var value = pair[1];
-          var recordValueStr = value;
-          if (value instanceof Object) {
-            recordValueStr = `{ ${objectToString(value)} }`;
-          }
-          return `${key}:"${recordValueStr}"`;
-        })
-        .join(" ");
+    function objectToString(t) {
+      return t && "object" == typeof t
+        ? isEmptyObject(t)
+          ? "{}"
+          : Object.entries(t)
+              .map(function (t) {
+                var n = t[0],
+                  e = t[1],
+                  o = e;
+                return (
+                  e instanceof Object && (o = `{ ${objectToString(e)} }`),
+                  `${n}:"${o}"`
+                );
+              })
+              .join(" ")
+        : String(t);
     }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
+    }
+    function getElementAttributesWithValues(e) {
+      if (!(e && e instanceof Element && e.attributes && e.nodeName)) return "";
+      for (
+        var t = e.attributes, n = e.nodeName.toLowerCase(), a = 0;
+        a < t.length;
+        a += 1
+      ) {
+        var r = t[a];
+        n += `[${r.name}="${r.value}"]`;
+      }
+      return n;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -15182,53 +14342,30 @@ function _toPrimitive(t, r) {
       FunctionWrapper.prototype.constructor = FunctionWrapper;
       window.Function = FunctionWrapper;
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -15332,151 +14469,102 @@ function _toPrimitive(t, r) {
       };
       _setChainPropAccess(window, property);
     }
-    function getPropertyInChain(base, chain) {
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
+    function getPropertyInChain(e, r) {
+      var n = r.indexOf(".");
+      if (-1 === n)
         return {
-          base: base,
-          prop: chain,
+          base: e,
+          prop: r,
         };
-      }
-      var prop = chain.slice(0, pos);
-      if (base === null) {
+      var i = r.slice(0, n);
+      if (null === e)
         return {
-          base: base,
-          prop: prop,
-          chain: chain,
+          base: e,
+          prop: i,
+          chain: r,
         };
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (
-        (base instanceof Object || typeof base === "object") &&
-        isEmptyObject(base)
-      ) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase === null) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase !== undefined) {
-        return getPropertyInChain(nextBase, chain);
-      }
-      Object.defineProperty(base, prop, {
-        configurable: true,
-      });
-      return {
-        base: base,
-        prop: prop,
-        chain: chain,
-      };
+      var t = e[i];
+      return (
+        (r = r.slice(n + 1)),
+        ((e instanceof Object || "object" == typeof e) && isEmptyObject(e)) ||
+        null === t
+          ? {
+              base: e,
+              prop: i,
+              chain: r,
+            }
+          : void 0 !== t
+            ? getPropertyInChain(t, r)
+            : (Object.defineProperty(e, i, {
+                configurable: true,
+              }),
+              {
+                base: e,
+                prop: i,
+                chain: r,
+              })
+      );
     }
-    function setPropertyAccess(object, property, descriptor) {
-      var currentDescriptor = Object.getOwnPropertyDescriptor(object, property);
-      if (currentDescriptor && !currentDescriptor.configurable) {
-        return false;
-      }
-      Object.defineProperty(object, property, descriptor);
-      return true;
+    function setPropertyAccess(e, r, t) {
+      var c = Object.getOwnPropertyDescriptor(e, r);
+      return !(c && !c.configurable) && (Object.defineProperty(e, r, t), true);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
     }
     function backupRegExpValues() {
       try {
-        var arrayOfRegexpValues = [];
-        for (var index = 1; index < 10; index += 1) {
-          var value = `$${index}`;
-          if (!RegExp[value]) {
-            break;
-          }
-          arrayOfRegexpValues.push(RegExp[value]);
+        for (var r = [], e = 1; e < 10; e += 1) {
+          var a = `$${e}`;
+          if (!RegExp[a]) break;
+          r.push(RegExp[a]);
         }
-        return arrayOfRegexpValues;
-      } catch (error) {
+        return r;
+      } catch (r) {
         return [];
       }
     }
-    function restoreRegExpValues(array) {
-      if (!array.length) {
-        return;
-      }
-      try {
-        var stringPattern = "";
-        if (array.length === 1) {
-          stringPattern = `(${array[0]})`;
-        } else {
-          stringPattern = array.reduce(
-            function (accumulator, currentValue, currentIndex) {
-              if (currentIndex === 1) {
-                return `(${accumulator}),(${currentValue})`;
-              }
-              return `${accumulator},(${currentValue})`;
-            }
-          );
+    function restoreRegExpValues(e) {
+      if (e.length)
+        try {
+          var r = "";
+          r =
+            1 === e.length
+              ? `(${e[0]})`
+              : e.reduce(function (e, r, t) {
+                  return 1 === t ? `(${e}),(${r})` : `${e},(${r})`;
+                });
+          var t = new RegExp(r);
+          e.toString().replace(t, "");
+        } catch (e) {
+          var n = `Failed to restore RegExp values: ${e}`;
+          console.log(n);
         }
-        var regExpGroup = new RegExp(stringPattern);
-        array.toString().replace(regExpGroup, "");
-      } catch (error) {
-        var message = `Failed to restore RegExp values: ${error}`;
-        console.log(message);
-      }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -15561,7 +14649,7 @@ function _toPrimitive(t, r) {
       };
       var _pruneExtinfFromVmapBlock = function pruneExtinfFromVmapBlock(
         lines,
-        i
+        i,
       ) {
         var array = lines.slice();
         var index = i;
@@ -15603,7 +14691,7 @@ function _toPrimitive(t, r) {
       var pruneSpliceoutBlock = function pruneSpliceoutBlock(
         line,
         index,
-        array
+        array,
       ) {
         if (!line.startsWith(AD_MARKER.CUE)) {
           return line;
@@ -15739,7 +14827,7 @@ function _toPrimitive(t, r) {
           var setRequestHeaderWrapper = function setRequestHeaderWrapper(
             target,
             thisArg,
-            args
+            args,
           ) {
             thisArg.collectedHeaders.push(args);
             return Reflect.apply(target, thisArg, args);
@@ -15749,7 +14837,7 @@ function _toPrimitive(t, r) {
           };
           thisArg.setRequestHeader = new Proxy(
             thisArg.setRequestHeader,
-            setRequestHeaderHandler
+            setRequestHeaderHandler,
           );
         }
         return Reflect.apply(target, thisArg, args);
@@ -15788,7 +14876,7 @@ function _toPrimitive(t, r) {
           } else {
             shouldPruneResponse = isPruningNeeded(
               response,
-              removeM3ULineRegexp
+              removeM3ULineRegexp,
             );
           }
           var responseContent = shouldPruneResponse
@@ -15856,11 +14944,11 @@ function _toPrimitive(t, r) {
       };
       XMLHttpRequest.prototype.open = new Proxy(
         XMLHttpRequest.prototype.open,
-        openHandler
+        openHandler,
       );
       XMLHttpRequest.prototype.send = new Proxy(
         XMLHttpRequest.prototype.send,
-        sendHandler
+        sendHandler,
       );
       var nativeFetch = window.fetch;
       var fetchWrapper = async function fetchWrapper(target, thisArg, args) {
@@ -15895,142 +14983,98 @@ function _toPrimitive(t, r) {
       };
       window.fetch = new Proxy(window.fetch, fetchHandler);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function getXhrData(method, url, async, user, password) {
+    function getXhrData(r, t, a, e, n) {
       return {
-        method: method,
-        url: url,
-        async: async,
-        user: user,
-        password: password,
+        method: r,
+        url: t,
+        async: a,
+        user: e,
+        password: n,
       };
     }
-    function matchRequestProps(source, propsToMatch, requestData) {
-      if (propsToMatch === "" || propsToMatch === "*") {
-        return true;
-      }
-      var isMatched;
-      var parsedData = parseMatchProps(propsToMatch);
-      if (!isValidParsedData(parsedData)) {
-        logMessage(source, `Invalid parameter: ${propsToMatch}`);
-        isMatched = false;
-      } else {
-        var matchData = getMatchPropsData(parsedData);
-        var matchKeys = Object.keys(matchData);
-        isMatched = matchKeys.every(function (matchKey) {
-          var matchValue = matchData[matchKey];
-          var dataValue = requestData[matchKey];
+    function matchRequestProps(e, t, r) {
+      if ("" === t || "*" === t) return true;
+      var a,
+        s = parseMatchProps(t);
+      if (isValidParsedData(s)) {
+        var n = getMatchPropsData(s);
+        a = Object.keys(n).every(function (e) {
+          var t = n[e],
+            a = r[e];
           return (
-            Object.prototype.hasOwnProperty.call(requestData, matchKey) &&
-            typeof dataValue === "string" &&
-            (matchValue === null || matchValue === void 0
-              ? void 0
-              : matchValue.test(dataValue))
+            Object.prototype.hasOwnProperty.call(r, e) &&
+            "string" == typeof a &&
+            (null == t ? void 0 : t.test(a))
           );
         });
-      }
-      return isMatched;
+      } else logMessage(e, `Invalid parameter: ${t}`), (a = false);
+      return a;
     }
-    function getMatchPropsData(data) {
-      var matchData = {};
-      var dataKeys = Object.keys(data);
-      dataKeys.forEach(function (key) {
-        matchData[key] = toRegExp(data[key]);
-      });
-      return matchData;
+    function getMatchPropsData(t) {
+      var a = {};
+      return (
+        Object.keys(t).forEach(function (c) {
+          a[c] = toRegExp(t[c]);
+        }),
+        a
+      );
     }
     function getRequestProps() {
       return [
@@ -16049,51 +15093,42 @@ function _toPrimitive(t, r) {
         "mode",
       ];
     }
-    function isValidParsedData(data) {
-      return Object.values(data).every(function (value) {
-        return isValidStrPattern(value);
+    function isValidParsedData(t) {
+      return Object.values(t).every(function (t) {
+        return isValidStrPattern(t);
       });
     }
-    function parseMatchProps(propsToMatchStr) {
-      var PROPS_DIVIDER = " ";
-      var PAIRS_MARKER = ":";
-      var isRequestProp = function isRequestProp(prop) {
-        return getRequestProps().includes(prop);
-      };
-      var propsObj = {};
-      var props = propsToMatchStr.split(PROPS_DIVIDER);
-      props.forEach(function (prop) {
-        var dividerInd = prop.indexOf(PAIRS_MARKER);
-        var key = prop.slice(0, dividerInd);
-        if (isRequestProp(key)) {
-          var value = prop.slice(dividerInd + 1);
-          propsObj[key] = value;
-        } else {
-          propsObj.url = prop;
-        }
-      });
-      return propsObj;
+    function parseMatchProps(e) {
+      var r = {};
+      return (
+        e.split(" ").forEach(function (e) {
+          var n = e.indexOf(":"),
+            i = e.slice(0, n);
+          if (
+            (function (e) {
+              return getRequestProps().includes(e);
+            })(i)
+          ) {
+            var s = e.slice(n + 1);
+            r[i] = s;
+          } else r.url = e;
+        }),
+        r
+      );
     }
-    function isValidStrPattern(input) {
-      var FORWARD_SLASH = "/";
-      var str = escapeRegExp(input);
-      if (
-        input[0] === FORWARD_SLASH &&
-        input[input.length - 1] === FORWARD_SLASH
-      ) {
-        str = input.slice(1, -1);
-      }
-      var isValid;
+    function isValidStrPattern(e) {
+      var t,
+        n = escapeRegExp(e);
+      "/" === e[0] && "/" === e[e.length - 1] && (n = e.slice(1, -1));
       try {
-        isValid = new RegExp(str);
-        isValid = true;
+        (t = new RegExp(n)), (t = !0);
       } catch (e) {
-        isValid = false;
+        t = false;
       }
-      return isValid;
+      return t;
     }
-    function escapeRegExp(str) {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    function escapeRegExp(e) {
+      return e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -16125,7 +15160,7 @@ function _toPrimitive(t, r) {
     function metrikaYandexTag(source) {
       var asyncCallbackFromOptions = function asyncCallbackFromOptions(
         id,
-        param
+        param,
       ) {
         var options =
           arguments.length > 2 && arguments[2] !== undefined
@@ -16206,32 +15241,20 @@ function _toPrimitive(t, r) {
       }
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopFunc() {}
@@ -16318,32 +15341,20 @@ function _toPrimitive(t, r) {
       }
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopFunc() {}
@@ -16407,32 +15418,20 @@ function _toPrimitive(t, r) {
       }
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopStr() {
@@ -16440,7 +15439,7 @@ function _toPrimitive(t, r) {
     }
     function noopFunc() {}
     function noopResolveVoid() {
-      return Promise.resolve(undefined);
+      return Promise.resolve(void 0);
     }
     function noopResolveNull() {
       return Promise.resolve(null);
@@ -16480,7 +15479,7 @@ function _toPrimitive(t, r) {
       if (
         !Object.prototype.hasOwnProperty.call(
           Document.prototype,
-          TOPICS_PROPERTY_NAME
+          TOPICS_PROPERTY_NAME,
         ) ||
         Document.prototype[TOPICS_PROPERTY_NAME] instanceof Function === false
       ) {
@@ -16491,84 +15490,71 @@ function _toPrimitive(t, r) {
       };
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopPromiseResolve() {
-      var responseBody =
-        arguments.length > 0 && arguments[0] !== undefined
-          ? arguments[0]
-          : "{}";
-      var responseUrl =
-        arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
-      var responseType =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : "basic";
-      if (typeof Response === "undefined") {
-        return;
-      }
-      var response = new Response(responseBody, {
-        status: 200,
-        statusText: "OK",
-      });
-      if (responseType === "opaque") {
-        Object.defineProperties(response, {
-          body: {
-            value: null,
+      var e =
+          arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : "{}",
+        t = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : "",
+        s =
+          arguments.length > 2 && void 0 !== arguments[2]
+            ? arguments[2]
+            : "basic";
+      if ("undefined" != typeof Response) {
+        var n = new Response(e, {
+          headers: {
+            "Content-Length": `${e.length}`,
           },
-          status: {
-            value: 0,
-          },
-          ok: {
-            value: false,
-          },
-          statusText: {
-            value: "",
-          },
-          url: {
-            value: "",
-          },
-          type: {
-            value: responseType,
-          },
+          status: 200,
+          statusText: "OK",
         });
-      } else {
-        Object.defineProperties(response, {
-          url: {
-            value: responseUrl,
-          },
-          type: {
-            value: responseType,
-          },
-        });
+        return (
+          "opaque" === s
+            ? Object.defineProperties(n, {
+                body: {
+                  value: null,
+                },
+                status: {
+                  value: 0,
+                },
+                ok: {
+                  value: false,
+                },
+                statusText: {
+                  value: "",
+                },
+                url: {
+                  value: "",
+                },
+                type: {
+                  value: s,
+                },
+              })
+            : Object.defineProperties(n, {
+                url: {
+                  value: t,
+                },
+                type: {
+                  value: s,
+                },
+              }),
+          Promise.resolve(n)
+        );
       }
-      return Promise.resolve(response);
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -16603,53 +15589,30 @@ function _toPrimitive(t, r) {
         logMessage(source, `AdGuard has prevented eval:\n${s}`, true);
       }.bind();
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -16710,76 +15673,45 @@ function _toPrimitive(t, r) {
         }.bind(null);
       }
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopFunc() {}
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function convertRtcConfigToString(config) {
-      var UNDEF_STR = "undefined";
-      var str = UNDEF_STR;
-      if (config === null) {
-        str = "null";
-      } else if (config instanceof Object) {
-        var SERVERS_PROP_NAME = "iceServers";
-        var URLS_PROP_NAME = "urls";
-        if (
-          Object.prototype.hasOwnProperty.call(config, SERVERS_PROP_NAME) &&
-          config[SERVERS_PROP_NAME] &&
-          Object.prototype.hasOwnProperty.call(
-            config[SERVERS_PROP_NAME][0],
-            URLS_PROP_NAME
-          ) &&
-          !!config[SERVERS_PROP_NAME][0][URLS_PROP_NAME]
-        ) {
-          str = config[SERVERS_PROP_NAME][0][URLS_PROP_NAME].toString();
-        }
+    function convertRtcConfigToString(e) {
+      var t = "undefined";
+      if (null === e) t = "null";
+      else if (e instanceof Object) {
+        var r = "iceServers",
+          n = "urls";
+        Object.prototype.hasOwnProperty.call(e, r) &&
+          e[r] &&
+          Object.prototype.hasOwnProperty.call(e[r][0], n) &&
+          e[r][0][n] &&
+          (t = e[r][0][n].toString());
       }
-      return str;
+      return t;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -16808,9 +15740,45 @@ function _toPrimitive(t, r) {
         return;
       }
     }
-    function preventAddEventListener(source, typeSearch, listenerSearch) {
+    function preventAddEventListener(
+      source,
+      typeSearch,
+      listenerSearch,
+      additionalArgName,
+      additionalArgValue,
+    ) {
       var typeSearchRegexp = toRegExp(typeSearch);
       var listenerSearchRegexp = toRegExp(listenerSearch);
+      var elementToMatch;
+      if (additionalArgName) {
+        if (additionalArgName !== "elements") {
+          logMessage(
+            source,
+            `Invalid "additionalArgName": ${additionalArgName}\nOnly "elements" is supported.`,
+          );
+          return;
+        }
+        if (!additionalArgValue) {
+          logMessage(source, '"additionalArgValue" is required.');
+          return;
+        }
+        elementToMatch = additionalArgValue;
+      }
+      var elementMatches = function elementMatches(element) {
+        if (elementToMatch === undefined) {
+          return true;
+        }
+        if (elementToMatch === "window") {
+          return element === window;
+        }
+        if (elementToMatch === "document") {
+          return element === document;
+        }
+        if (element && element.matches && element.matches(elementToMatch)) {
+          return true;
+        }
+        return false;
+      };
       var nativeAddEventListener =
         window.EventTarget.prototype.addEventListener;
       function addEventListenerWrapper(type, listener) {
@@ -16819,7 +15787,8 @@ function _toPrimitive(t, r) {
         if (validateType(type) && validateListener(listener)) {
           shouldPrevent =
             typeSearchRegexp.test(type.toString()) &&
-            listenerSearchRegexp.test(listenerToString(listener));
+            listenerSearchRegexp.test(listenerToString(listener)) &&
+            elementMatches(this);
         }
         if (shouldPrevent) {
           hit(source);
@@ -16857,102 +15826,83 @@ function _toPrimitive(t, r) {
       Object.defineProperty(
         window.EventTarget.prototype,
         "addEventListener",
-        descriptor
+        descriptor,
       );
       Object.defineProperty(window, "addEventListener", descriptor);
       Object.defineProperty(document, "addEventListener", descriptor);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function validateType(type) {
-      return typeof type !== "undefined";
+    function validateType(e) {
+      return void 0 !== e;
     }
-    function validateListener(listener) {
+    function validateListener(n) {
       return (
-        typeof listener !== "undefined" &&
-        (typeof listener === "function" ||
-          (typeof listener === "object" &&
-            listener !== null &&
-            "handleEvent" in listener &&
-            typeof listener.handleEvent === "function"))
+        void 0 !== n &&
+        ("function" == typeof n ||
+          ("object" == typeof n &&
+            null !== n &&
+            "handleEvent" in n &&
+            "function" == typeof n.handleEvent))
       );
     }
-    function listenerToString(listener) {
-      return typeof listener === "function"
-        ? listener.toString()
-        : listener.handleEvent.toString();
+    function listenerToString(n) {
+      return "function" == typeof n ? n.toString() : n.handleEvent.toString();
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
+      }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -17043,61 +15993,34 @@ function _toPrimitive(t, r) {
         logMessage(source, "Failed to set up prevent-adfly scriptlet");
       }
     }
-    function setPropertyAccess(object, property, descriptor) {
-      var currentDescriptor = Object.getOwnPropertyDescriptor(object, property);
-      if (currentDescriptor && !currentDescriptor.configurable) {
-        return false;
-      }
-      Object.defineProperty(object, property, descriptor);
-      return true;
+    function setPropertyAccess(e, r, t) {
+      var c = Object.getOwnPropertyDescriptor(e, r);
+      return !(c && !c.configurable) && (Object.defineProperty(e, r, t), true);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -17204,33 +16127,22 @@ function _toPrimitive(t, r) {
         }
       };
       window.eval = evalWrapper.bind(window);
+      window.eval.toString = nativeEval.toString.bind(nativeEval);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
@@ -17264,7 +16176,7 @@ function _toPrimitive(t, r) {
       var handlerWrapper = function handlerWrapper(
         target,
         thisArg,
-        argumentsList
+        argumentsList,
       ) {
         var type = argumentsList[0];
         var shouldPrevent = false;
@@ -17289,150 +16201,94 @@ function _toPrimitive(t, r) {
       };
       window.HTMLCanvasElement.prototype.getContext = new Proxy(
         window.HTMLCanvasElement.prototype.getContext,
-        canvasHandler
+        canvasHandler,
       );
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
-      }
-    }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
-    }
-    function parseMatchArg(match) {
-      var INVERT_MARKER = "!";
-      var isInvertedMatch = match
-        ? match === null || match === void 0
-          ? void 0
-          : match.startsWith(INVERT_MARKER)
-        : false;
-      var matchValue = isInvertedMatch ? match.slice(1) : match;
-      var matchRegexp = toRegExp(matchValue);
-      return {
-        isInvertedMatch: isInvertedMatch,
-        matchRegexp: matchRegexp,
-        matchValue: matchValue,
-      };
-    }
-    function isValidMatchStr(match) {
-      var INVERT_MARKER = "!";
-      var str = match;
-      if (
-        match !== null &&
-        match !== void 0 &&
-        match.startsWith(INVERT_MARKER)
-      ) {
-        str = match.slice(1);
-      }
-      return isValidStrPattern(str);
-    }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
+    function hit(e) {
+      if (e.verbose) {
         try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
-      var escaped = input
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
+      }
+    }
+    function parseMatchArg(t) {
+      var e = !!t && (null == t ? void 0 : t.startsWith("!")),
+        a = e ? t.slice(1) : t;
+      return {
+        isInvertedMatch: e,
+        matchRegexp: toRegExp(a),
+        matchValue: a,
+      };
+    }
+    function isValidMatchStr(t) {
+      var i = t;
+      return (
+        null != t && t.startsWith("!") && (i = t.slice(1)), isValidStrPattern(i)
+      );
+    }
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function escapeRegExp(str) {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    function escapeRegExp(e) {
+      return e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
-    function isValidStrPattern(input) {
-      var FORWARD_SLASH = "/";
-      var str = escapeRegExp(input);
-      if (
-        input[0] === FORWARD_SLASH &&
-        input[input.length - 1] === FORWARD_SLASH
-      ) {
-        str = input.slice(1, -1);
-      }
-      var isValid;
+    function isValidStrPattern(e) {
+      var t,
+        n = escapeRegExp(e);
+      "/" === e[0] && "/" === e[e.length - 1] && (n = e.slice(1, -1));
       try {
-        isValid = new RegExp(str);
-        isValid = true;
+        (t = new RegExp(n)), (t = !0);
       } catch (e) {
-        isValid = false;
+        t = false;
       }
-      return isValid;
+      return t;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -17483,17 +16339,7 @@ function _toPrimitive(t, r) {
       } else {
         return;
       }
-      var hasTrustedTypes =
-        window.trustedTypes &&
-        typeof window.trustedTypes.createPolicy === "function";
-      var policy;
-      if (hasTrustedTypes) {
-        policy = window.trustedTypes.createPolicy("AGPolicy", {
-          createScriptURL: function createScriptURL(arg) {
-            return arg;
-          },
-        });
-      }
+      var policy = getTrustedTypesApi(source);
       var SOURCE_PROPERTY_NAME = tagName === "link" ? "href" : "src";
       var ONERROR_PROPERTY_NAME = "onerror";
       var searchRegexp = toRegExp(match);
@@ -17503,7 +16349,7 @@ function _toPrimitive(t, r) {
       var setAttributeWrapper = function setAttributeWrapper(
         target,
         thisArg,
-        args
+        args,
       ) {
         if (!args[0] || !args[1]) {
           return Reflect.apply(target, thisArg, args);
@@ -17531,11 +16377,11 @@ function _toPrimitive(t, r) {
       };
       instance.prototype.setAttribute = new Proxy(
         Element.prototype.setAttribute,
-        setAttributeHandler
+        setAttributeHandler,
       );
       var origSrcDescriptor = safeGetDescriptor(
         instance.prototype,
-        SOURCE_PROPERTY_NAME
+        SOURCE_PROPERTY_NAME,
       );
       if (!origSrcDescriptor) {
         return;
@@ -17556,20 +16402,24 @@ function _toPrimitive(t, r) {
             origSrcDescriptor.set.call(this, urlValue);
             return true;
           }
-          if (policy && urlValue instanceof TrustedScriptURL) {
-            var trustedSrc = policy.createScriptURL(urlValue);
-            origSrcDescriptor.set.call(this, trustedSrc);
-            hit(source);
-            return;
+          var mockData = srcMockData[nodeName];
+          if (
+            typeof TrustedScriptURL !== "undefined" &&
+            policy !== null &&
+            policy !== void 0 &&
+            policy.isSupported &&
+            urlValue instanceof TrustedScriptURL
+          ) {
+            mockData = policy.createScriptURL(mockData);
           }
           setMatchedAttribute(this);
-          origSrcDescriptor.set.call(this, srcMockData[nodeName]);
+          origSrcDescriptor.set.call(this, mockData);
           hit(source);
         },
       });
       var origOnerrorDescriptor = safeGetDescriptor(
         HTMLElement.prototype,
-        ONERROR_PROPERTY_NAME
+        ONERROR_PROPERTY_NAME,
       );
       if (!origOnerrorDescriptor) {
         return;
@@ -17593,7 +16443,7 @@ function _toPrimitive(t, r) {
       var addEventListenerWrapper = function addEventListenerWrapper(
         target,
         thisArg,
-        args
+        args,
       ) {
         if (!args[0] || !args[1] || !thisArg) {
           return Reflect.apply(target, thisArg, args);
@@ -17613,7 +16463,7 @@ function _toPrimitive(t, r) {
       };
       EventTarget.prototype.addEventListener = new Proxy(
         EventTarget.prototype.addEventListener,
-        addEventListenerHandler
+        addEventListenerHandler,
       );
       var preventInlineOnerror = function preventInlineOnerror(tagName, src) {
         window.addEventListener(
@@ -17635,93 +16485,191 @@ function _toPrimitive(t, r) {
             }
             event.target.onerror = noopFunc;
           },
-          true
+          true,
         );
       };
       preventInlineOnerror(tagName, searchRegexp);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function safeGetDescriptor(obj, prop) {
-      var descriptor = Object.getOwnPropertyDescriptor(obj, prop);
-      if (descriptor && descriptor.configurable) {
-        return descriptor;
-      }
-      return null;
+    function safeGetDescriptor(r, e) {
+      var t = Object.getOwnPropertyDescriptor(r, e);
+      return t && t.configurable ? t : null;
     }
     function noopFunc() {}
+    function getTrustedTypesApi(t) {
+      var r,
+        e =
+          null == t || null === (r = t.api) || void 0 === r ? void 0 : r.policy;
+      if (e) return e;
+      var n = "AGPolicy",
+        i = window.trustedTypes,
+        u = !!i,
+        c = {
+          HTML: "TrustedHTML",
+          Script: "TrustedScript",
+          ScriptURL: "TrustedScriptURL",
+        };
+      if (!u)
+        return {
+          name: n,
+          isSupported: u,
+          TrustedType: c,
+          createHTML: function createHTML(t) {
+            return t;
+          },
+          createScript: function createScript(t) {
+            return t;
+          },
+          createScriptURL: function createScriptURL(t) {
+            return t;
+          },
+          create: function create(t, r) {
+            return r;
+          },
+          getAttributeType: function getAttributeType() {
+            return null;
+          },
+          convertAttributeToTrusted: function convertAttributeToTrusted(
+            t,
+            r,
+            e,
+          ) {
+            return e;
+          },
+          getPropertyType: function getPropertyType() {
+            return null;
+          },
+          convertPropertyToTrusted: function convertPropertyToTrusted(t, r, e) {
+            return e;
+          },
+          isHTML: function isHTML() {
+            return false;
+          },
+          isScript: function isScript() {
+            return false;
+          },
+          isScriptURL: function isScriptURL() {
+            return false;
+          },
+        };
+      var o = i.createPolicy(n, {
+          createHTML: function createHTML(t) {
+            return t;
+          },
+          createScript: function createScript(t) {
+            return t;
+          },
+          createScriptURL: function createScriptURL(t) {
+            return t;
+          },
+        }),
+        createHTML = function createHTML(t) {
+          return o.createHTML(t);
+        },
+        createScript = function createScript(t) {
+          return o.createScript(t);
+        },
+        createScriptURL = function createScriptURL(t) {
+          return o.createScriptURL(t);
+        },
+        create = function create(t, r) {
+          switch (t) {
+            case c.HTML:
+              return createHTML(r);
+            case c.Script:
+              return createScript(r);
+            case c.ScriptURL:
+              return createScriptURL(r);
+            default:
+              return r;
+          }
+        },
+        p = i.getAttributeType.bind(i),
+        T = i.getPropertyType.bind(i),
+        s = i.isHTML.bind(i),
+        a = i.isScript.bind(i),
+        f = i.isScriptURL.bind(i);
+      return {
+        name: n,
+        isSupported: u,
+        TrustedType: c,
+        createHTML: createHTML,
+        createScript: createScript,
+        createScriptURL: createScriptURL,
+        create: create,
+        getAttributeType: p,
+        convertAttributeToTrusted: function convertAttributeToTrusted(
+          t,
+          r,
+          e,
+          n,
+          i,
+        ) {
+          var u = p(t, r, n, i);
+          return u ? create(u, e) : e;
+        },
+        getPropertyType: T,
+        convertPropertyToTrusted: function convertPropertyToTrusted(
+          t,
+          r,
+          e,
+          n,
+        ) {
+          var i = T(t, r, n);
+          return i ? create(i, e) : e;
+        },
+        isHTML: s,
+        isScript: a,
+        isScriptURL: f,
+      };
+    }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
       preventElementSrcLoading.apply(this, updatedArgs);
@@ -17759,79 +16707,54 @@ function _toPrimitive(t, r) {
         hit(source);
         return undefined;
       }.bind(window);
+      window.eval.toString = nativeEval.toString.bind(nativeEval);
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
@@ -17927,32 +16850,20 @@ function _toPrimitive(t, r) {
         Object.defineProperty(window, "sniffAdBlock", getsetfab);
       }
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopFunc() {}
@@ -18007,13 +16918,18 @@ function _toPrimitive(t, r) {
         strResponseBody = "[]";
       } else if (responseBody === "emptyStr") {
         strResponseBody = "";
+      } else if (
+        responseBody === "true" ||
+        responseBody.match(/^length:\d+-\d+$/)
+      ) {
+        strResponseBody = generateRandomResponse(responseBody);
       } else {
         logMessage(source, `Invalid responseBody parameter: '${responseBody}'`);
         return;
       }
       var isResponseTypeSpecified = typeof responseType !== "undefined";
       var isResponseTypeSupported = function isResponseTypeSupported(
-        responseType
+        responseType,
       ) {
         var SUPPORTED_TYPES = ["basic", "cors", "opaque"];
         return SUPPORTED_TYPES.includes(responseType);
@@ -18040,7 +16956,7 @@ function _toPrimitive(t, r) {
       var handlerWrapper = async function handlerWrapper(
         target,
         thisArg,
-        args
+        args,
       ) {
         var shouldPrevent = false;
         var fetchData = getFetchData(args, nativeRequestClone);
@@ -18060,7 +16976,7 @@ function _toPrimitive(t, r) {
               return noopPromiseResolve(
                 strResponseBody,
                 fetchData.url,
-                finalResponseType
+                finalResponseType,
               );
             }
             return modifyResponse(origResponse, {
@@ -18071,7 +16987,7 @@ function _toPrimitive(t, r) {
             return noopPromiseResolve(
               strResponseBody,
               fetchData.url,
-              finalResponseType
+              finalResponseType,
             );
           }
         }
@@ -18082,281 +16998,218 @@ function _toPrimitive(t, r) {
       };
       fetch = new Proxy(fetch, fetchHandler);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function getFetchData(args, nativeRequestClone) {
-      var fetchPropsObj = {};
-      var resource = args[0];
-      var fetchUrl;
-      var fetchInit;
-      if (resource instanceof Request) {
-        var realData = nativeRequestClone.call(resource);
-        var requestData = getRequestData(realData);
-        fetchUrl = requestData.url;
-        fetchInit = requestData;
-      } else {
-        fetchUrl = resource;
-        fetchInit = args[1];
-      }
-      fetchPropsObj.url = fetchUrl;
-      if (fetchInit instanceof Object) {
-        var props = Object.keys(fetchInit);
-        props.forEach(function (prop) {
-          fetchPropsObj[prop] = fetchInit[prop];
+    function getFetchData(e, t) {
+      var a,
+        c,
+        n = {},
+        r = e[0];
+      if (r instanceof Request) {
+        var u = t.call(r),
+          f = getRequestData(u);
+        (a = f.url), (c = f);
+      } else (a = r), (c = e[1]);
+      ((n.url = a), c instanceof Object) &&
+        Object.keys(c).forEach(function (e) {
+          n[e] = c[e];
         });
-      }
-      return fetchPropsObj;
+      return n;
     }
-    function objectToString(obj) {
-      if (!obj || typeof obj !== "object") {
-        return String(obj);
-      }
-      if (isEmptyObject(obj)) {
-        return "{}";
-      }
-      return Object.entries(obj)
-        .map(function (pair) {
-          var key = pair[0];
-          var value = pair[1];
-          var recordValueStr = value;
-          if (value instanceof Object) {
-            recordValueStr = `{ ${objectToString(value)} }`;
-          }
-          return `${key}:"${recordValueStr}"`;
-        })
-        .join(" ");
+    function objectToString(t) {
+      return t && "object" == typeof t
+        ? isEmptyObject(t)
+          ? "{}"
+          : Object.entries(t)
+              .map(function (t) {
+                var n = t[0],
+                  e = t[1],
+                  o = e;
+                return (
+                  e instanceof Object && (o = `{ ${objectToString(e)} }`),
+                  `${n}:"${o}"`
+                );
+              })
+              .join(" ")
+        : String(t);
     }
-    function matchRequestProps(source, propsToMatch, requestData) {
-      if (propsToMatch === "" || propsToMatch === "*") {
-        return true;
-      }
-      var isMatched;
-      var parsedData = parseMatchProps(propsToMatch);
-      if (!isValidParsedData(parsedData)) {
-        logMessage(source, `Invalid parameter: ${propsToMatch}`);
-        isMatched = false;
-      } else {
-        var matchData = getMatchPropsData(parsedData);
-        var matchKeys = Object.keys(matchData);
-        isMatched = matchKeys.every(function (matchKey) {
-          var matchValue = matchData[matchKey];
-          var dataValue = requestData[matchKey];
+    function matchRequestProps(e, t, r) {
+      if ("" === t || "*" === t) return true;
+      var a,
+        s = parseMatchProps(t);
+      if (isValidParsedData(s)) {
+        var n = getMatchPropsData(s);
+        a = Object.keys(n).every(function (e) {
+          var t = n[e],
+            a = r[e];
           return (
-            Object.prototype.hasOwnProperty.call(requestData, matchKey) &&
-            typeof dataValue === "string" &&
-            (matchValue === null || matchValue === void 0
-              ? void 0
-              : matchValue.test(dataValue))
+            Object.prototype.hasOwnProperty.call(r, e) &&
+            "string" == typeof a &&
+            (null == t ? void 0 : t.test(a))
           );
         });
-      }
-      return isMatched;
+      } else logMessage(e, `Invalid parameter: ${t}`), (a = false);
+      return a;
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
     function noopPromiseResolve() {
-      var responseBody =
-        arguments.length > 0 && arguments[0] !== undefined
-          ? arguments[0]
-          : "{}";
-      var responseUrl =
-        arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
-      var responseType =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : "basic";
-      if (typeof Response === "undefined") {
-        return;
+      var e =
+          arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : "{}",
+        t = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : "",
+        s =
+          arguments.length > 2 && void 0 !== arguments[2]
+            ? arguments[2]
+            : "basic";
+      if ("undefined" != typeof Response) {
+        var n = new Response(e, {
+          headers: {
+            "Content-Length": `${e.length}`,
+          },
+          status: 200,
+          statusText: "OK",
+        });
+        return (
+          "opaque" === s
+            ? Object.defineProperties(n, {
+                body: {
+                  value: null,
+                },
+                status: {
+                  value: 0,
+                },
+                ok: {
+                  value: false,
+                },
+                statusText: {
+                  value: "",
+                },
+                url: {
+                  value: "",
+                },
+                type: {
+                  value: s,
+                },
+              })
+            : Object.defineProperties(n, {
+                url: {
+                  value: t,
+                },
+                type: {
+                  value: s,
+                },
+              }),
+          Promise.resolve(n)
+        );
       }
-      var response = new Response(responseBody, {
-        status: 200,
-        statusText: "OK",
+    }
+    function modifyResponse(e) {
+      var t,
+        s =
+          arguments.length > 1 && void 0 !== arguments[1]
+            ? arguments[1]
+            : {
+                body: "{}",
+              },
+        u = {};
+      null == e ||
+        null === (t = e.headers) ||
+        void 0 === t ||
+        t.forEach(function (e, t) {
+          u[t] = e;
+        });
+      var n = new Response(s.body, {
+        status: e.status,
+        statusText: e.statusText,
+        headers: u,
       });
-      if (responseType === "opaque") {
-        Object.defineProperties(response, {
-          body: {
-            value: null,
-          },
-          status: {
-            value: 0,
-          },
-          ok: {
-            value: false,
-          },
-          statusText: {
-            value: "",
-          },
+      return (
+        Object.defineProperties(n, {
           url: {
-            value: "",
+            value: e.url,
           },
           type: {
-            value: responseType,
+            value: s.type || e.type,
           },
-        });
-      } else {
-        Object.defineProperties(response, {
-          url: {
-            value: responseUrl,
-          },
-          type: {
-            value: responseType,
-          },
-        });
-      }
-      return Promise.resolve(response);
+        }),
+        n
+      );
     }
-    function modifyResponse(origResponse) {
-      var _origResponse$headers;
-      var replacement =
-        arguments.length > 1 && arguments[1] !== undefined
-          ? arguments[1]
-          : {
-              body: "{}",
-            };
-      var headers = {};
-      origResponse === null ||
-        origResponse === void 0 ||
-        (_origResponse$headers = origResponse.headers) === null ||
-        _origResponse$headers === void 0 ||
-        _origResponse$headers.forEach(function (value, key) {
-          headers[key] = value;
-        });
-      var modifiedResponse = new Response(replacement.body, {
-        status: origResponse.status,
-        statusText: origResponse.statusText,
-        headers: headers,
-      });
-      Object.defineProperties(modifiedResponse, {
-        url: {
-          value: origResponse.url,
-        },
-        type: {
-          value: replacement.type || origResponse.type,
-        },
-      });
-      return modifiedResponse;
-    }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function isValidStrPattern(input) {
-      var FORWARD_SLASH = "/";
-      var str = escapeRegExp(input);
-      if (
-        input[0] === FORWARD_SLASH &&
-        input[input.length - 1] === FORWARD_SLASH
-      ) {
-        str = input.slice(1, -1);
-      }
-      var isValid;
+    function isValidStrPattern(e) {
+      var t,
+        n = escapeRegExp(e);
+      "/" === e[0] && "/" === e[e.length - 1] && (n = e.slice(1, -1));
       try {
-        isValid = new RegExp(str);
-        isValid = true;
+        (t = new RegExp(n)), (t = !0);
       } catch (e) {
-        isValid = false;
+        t = false;
       }
-      return isValid;
+      return t;
     }
-    function escapeRegExp(str) {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    function escapeRegExp(e) {
+      return e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
     }
-    function getRequestData(request) {
-      var requestInitOptions = getRequestProps();
-      var entries = requestInitOptions.map(function (key) {
-        var value = request[key];
-        return [key, value];
+    function getRequestData(t) {
+      var e = getRequestProps().map(function (e) {
+        return [e, t[e]];
       });
-      return Object.fromEntries(entries);
+      return Object.fromEntries(e);
     }
     function getRequestProps() {
       return [
@@ -18375,38 +17228,82 @@ function _toPrimitive(t, r) {
         "mode",
       ];
     }
-    function parseMatchProps(propsToMatchStr) {
-      var PROPS_DIVIDER = " ";
-      var PAIRS_MARKER = ":";
-      var isRequestProp = function isRequestProp(prop) {
-        return getRequestProps().includes(prop);
-      };
-      var propsObj = {};
-      var props = propsToMatchStr.split(PROPS_DIVIDER);
-      props.forEach(function (prop) {
-        var dividerInd = prop.indexOf(PAIRS_MARKER);
-        var key = prop.slice(0, dividerInd);
-        if (isRequestProp(key)) {
-          var value = prop.slice(dividerInd + 1);
-          propsObj[key] = value;
-        } else {
-          propsObj.url = prop;
-        }
-      });
-      return propsObj;
+    function parseMatchProps(e) {
+      var r = {};
+      return (
+        e.split(" ").forEach(function (e) {
+          var n = e.indexOf(":"),
+            i = e.slice(0, n);
+          if (
+            (function (e) {
+              return getRequestProps().includes(e);
+            })(i)
+          ) {
+            var s = e.slice(n + 1);
+            r[i] = s;
+          } else r.url = e;
+        }),
+        r
+      );
     }
-    function isValidParsedData(data) {
-      return Object.values(data).every(function (value) {
-        return isValidStrPattern(value);
+    function isValidParsedData(t) {
+      return Object.values(t).every(function (t) {
+        return isValidStrPattern(t);
       });
     }
-    function getMatchPropsData(data) {
-      var matchData = {};
-      var dataKeys = Object.keys(data);
-      dataKeys.forEach(function (key) {
-        matchData[key] = toRegExp(data[key]);
-      });
-      return matchData;
+    function getMatchPropsData(t) {
+      var a = {};
+      return (
+        Object.keys(t).forEach(function (c) {
+          a[c] = toRegExp(t[c]);
+        }),
+        a
+      );
+    }
+    function generateRandomResponse(e) {
+      var t = e;
+      if ("true" === t) return (t = Math.random().toString(36).slice(-10));
+      t = t.replace("length:", "");
+      if (!/^\d+-\d+$/.test(t)) return null;
+      var n = getNumberFromString(t.split("-")[0]),
+        r = getNumberFromString(t.split("-")[1]);
+      if (!nativeIsFinite(n) || !nativeIsFinite(r)) return null;
+      if (n > r) {
+        var i = n;
+        (n = r), (r = i);
+      }
+      if (r > 5e5) return null;
+      var a = getRandomIntInclusive(n, r);
+      return (t = getRandomStrByLength(a));
+    }
+    function nativeIsFinite(i) {
+      return (Number.isFinite || window.isFinite)(i);
+    }
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
+    }
+    function getNumberFromString(n) {
+      var r = parseInt(n, 10);
+      return nativeIsNaN(r) ? null : r;
+    }
+    function getRandomIntInclusive(t, n) {
+      return (
+        (t = Math.ceil(t)),
+        (n = Math.floor(n)),
+        Math.floor(Math.random() * (n - t + 1) + t)
+      );
+    }
+    function getRandomStrByLength(r) {
+      for (
+        var t = "",
+          a =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+=~",
+          n = 0;
+        n < r;
+        n += 1
+      )
+        t += a.charAt(Math.floor(76 * Math.random()));
+      return t;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -18453,23 +17350,18 @@ function _toPrimitive(t, r) {
       window.onerror = createOnErrorHandler(rid).bind();
       hit(source);
     }
-    function createOnErrorHandler(rid) {
-      var nativeOnError = window.onerror;
-      return function onError(error) {
-        if (typeof error === "string" && error.includes(rid)) {
-          return true;
-        }
-        if (nativeOnError instanceof Function) {
+    function createOnErrorHandler(r) {
+      var n = window.onerror;
+      return function (e) {
+        if ("string" == typeof e && e.includes(r)) return true;
+        if (n instanceof Function) {
           for (
-            var _len = arguments.length,
-              args = new Array(_len > 1 ? _len - 1 : 0),
-              _key = 1;
-            _key < _len;
-            _key++
-          ) {
-            args[_key - 1] = arguments[_key];
-          }
-          return nativeOnError.apply(window, [error, ...args]);
+            var t = arguments.length, o = new Array(t > 1 ? t - 1 : 0), i = 1;
+            i < t;
+            i++
+          )
+            o[i - 1] = arguments[i];
+          return n.apply(window, [e, ...o]);
         }
         return false;
       };
@@ -18477,32 +17369,20 @@ function _toPrimitive(t, r) {
     function randomId() {
       return Math.random().toString(36).slice(2, 9);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
@@ -18537,12 +17417,12 @@ function _toPrimitive(t, r) {
         var metaNodes = [];
         try {
           metaNodes = document.querySelectorAll(
-            'meta[http-equiv="refresh" i][content]'
+            'meta[http-equiv="refresh" i][content]',
           );
         } catch (e) {
           try {
             metaNodes = document.querySelectorAll(
-              'meta[http-equiv="refresh"][content]'
+              'meta[http-equiv="refresh"][content]',
             );
           } catch (e) {
             logMessage(source, e);
@@ -18604,62 +17484,37 @@ function _toPrimitive(t, r) {
         stop();
       }
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function getNumberFromString(rawString) {
-      var parsedDelay = parseInt(rawString, 10);
-      var validDelay = nativeIsNaN(parsedDelay) ? null : parsedDelay;
-      return validDelay;
+    function getNumberFromString(n) {
+      var r = parseInt(n, 10);
+      return nativeIsNaN(r) ? null : r;
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function nativeIsNaN(num) {
-      var native = Number.isNaN || window.isNaN;
-      return native(num);
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -18700,7 +17555,7 @@ function _toPrimitive(t, r) {
           logMessage(
             source,
             `requestAnimationFrame(${String(callback)})`,
-            true
+            true,
           );
         } else if (isValidCallback(callback) && isValidStrPattern(match)) {
           shouldPrevent =
@@ -18723,139 +17578,89 @@ function _toPrimitive(t, r) {
       };
       window.requestAnimationFrame = rafWrapper;
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopFunc() {}
-    function parseMatchArg(match) {
-      var INVERT_MARKER = "!";
-      var isInvertedMatch = match
-        ? match === null || match === void 0
-          ? void 0
-          : match.startsWith(INVERT_MARKER)
-        : false;
-      var matchValue = isInvertedMatch ? match.slice(1) : match;
-      var matchRegexp = toRegExp(matchValue);
+    function parseMatchArg(t) {
+      var e = !!t && (null == t ? void 0 : t.startsWith("!")),
+        a = e ? t.slice(1) : t;
       return {
-        isInvertedMatch: isInvertedMatch,
-        matchRegexp: matchRegexp,
-        matchValue: matchValue,
+        isInvertedMatch: e,
+        matchRegexp: toRegExp(a),
+        matchValue: a,
       };
     }
-    function isValidStrPattern(input) {
-      var FORWARD_SLASH = "/";
-      var str = escapeRegExp(input);
-      if (
-        input[0] === FORWARD_SLASH &&
-        input[input.length - 1] === FORWARD_SLASH
-      ) {
-        str = input.slice(1, -1);
-      }
-      var isValid;
+    function isValidStrPattern(e) {
+      var t,
+        n = escapeRegExp(e);
+      "/" === e[0] && "/" === e[e.length - 1] && (n = e.slice(1, -1));
       try {
-        isValid = new RegExp(str);
-        isValid = true;
+        (t = new RegExp(n)), (t = !0);
       } catch (e) {
-        isValid = false;
+        t = false;
       }
-      return isValid;
+      return t;
     }
-    function isValidCallback(callback) {
-      return callback instanceof Function || typeof callback === "string";
+    function isValidCallback(n) {
+      return n instanceof Function || "string" == typeof n;
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function escapeRegExp(str) {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    function escapeRegExp(e) {
+      return e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -18897,7 +17702,7 @@ function _toPrimitive(t, r) {
           logMessage(
             source,
             `setInterval(${String(callback)}, ${delay})`,
-            true
+            true,
           );
         } else {
           shouldPrevent = isPreventionNeeded({
@@ -18918,228 +17723,134 @@ function _toPrimitive(t, r) {
       };
       window.setInterval = new Proxy(window.setInterval, setIntervalHandler);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopFunc() {}
-    function isPreventionNeeded(_ref) {
-      var {
-        callback: callback,
-        delay: delay,
-        matchCallback: matchCallback,
-        matchDelay: matchDelay,
-      } = _ref;
-      if (!isValidCallback(callback)) {
-        return false;
-      }
-      if (
-        !isValidMatchStr(matchCallback) ||
-        (matchDelay && !isValidMatchNumber(matchDelay))
-      ) {
-        return false;
-      }
-      var { isInvertedMatch: isInvertedMatch, matchRegexp: matchRegexp } =
-        parseMatchArg(matchCallback);
-      var {
-        isInvertedDelayMatch: isInvertedDelayMatch,
-        delayMatch: delayMatch,
-      } = parseDelayArg(matchDelay);
-      var parsedDelay = parseRawDelay(delay);
-      var shouldPrevent = false;
-      var callbackStr = String(callback);
-      if (delayMatch === null) {
-        shouldPrevent = matchRegexp.test(callbackStr) !== isInvertedMatch;
-      } else if (!matchCallback) {
-        shouldPrevent = (parsedDelay === delayMatch) !== isInvertedDelayMatch;
-      } else {
-        shouldPrevent =
-          matchRegexp.test(callbackStr) !== isInvertedMatch &&
-          (parsedDelay === delayMatch) !== isInvertedDelayMatch;
-      }
-      return shouldPrevent;
+    function isPreventionNeeded(a) {
+      var { callback: e, delay: t, matchCallback: r, matchDelay: l } = a;
+      if (!isValidCallback(e)) return false;
+      if (!isValidMatchStr(r) || (l && !isValidMatchNumber(l))) return false;
+      var { isInvertedMatch: c, matchRegexp: i } = parseMatchArg(r),
+        { isInvertedDelayMatch: n, delayMatch: s } = parseDelayArg(l),
+        d = parseRawDelay(t),
+        h = String(e);
+      return null === s
+        ? i.test(h) !== c
+        : r
+          ? i.test(h) !== c && (d === s) !== n
+          : (d === s) !== n;
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function nativeIsNaN(num) {
-      var native = Number.isNaN || window.isNaN;
-      return native(num);
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
     }
-    function parseMatchArg(match) {
-      var INVERT_MARKER = "!";
-      var isInvertedMatch = match
-        ? match === null || match === void 0
-          ? void 0
-          : match.startsWith(INVERT_MARKER)
-        : false;
-      var matchValue = isInvertedMatch ? match.slice(1) : match;
-      var matchRegexp = toRegExp(matchValue);
+    function parseMatchArg(t) {
+      var e = !!t && (null == t ? void 0 : t.startsWith("!")),
+        a = e ? t.slice(1) : t;
       return {
-        isInvertedMatch: isInvertedMatch,
-        matchRegexp: matchRegexp,
-        matchValue: matchValue,
+        isInvertedMatch: e,
+        matchRegexp: toRegExp(a),
+        matchValue: a,
       };
     }
-    function parseDelayArg(delay) {
-      var INVERT_MARKER = "!";
-      var isInvertedDelayMatch =
-        delay === null || delay === void 0
-          ? void 0
-          : delay.startsWith(INVERT_MARKER);
-      var delayValue = isInvertedDelayMatch ? delay.slice(1) : delay;
-      var parsedDelay = parseInt(delayValue, 10);
-      var delayMatch = nativeIsNaN(parsedDelay) ? null : parsedDelay;
+    function parseDelayArg(a) {
+      var e = null == a ? void 0 : a.startsWith("!"),
+        t = e ? a.slice(1) : a,
+        l = parseInt(t, 10);
       return {
-        isInvertedDelayMatch: isInvertedDelayMatch,
-        delayMatch: delayMatch,
+        isInvertedDelayMatch: e,
+        delayMatch: nativeIsNaN(l) ? null : l,
       };
     }
-    function isValidCallback(callback) {
-      return callback instanceof Function || typeof callback === "string";
+    function isValidCallback(n) {
+      return n instanceof Function || "string" == typeof n;
     }
-    function isValidMatchStr(match) {
-      var INVERT_MARKER = "!";
-      var str = match;
-      if (
-        match !== null &&
-        match !== void 0 &&
-        match.startsWith(INVERT_MARKER)
-      ) {
-        str = match.slice(1);
-      }
-      return isValidStrPattern(str);
+    function isValidMatchStr(t) {
+      var i = t;
+      return (
+        null != t && t.startsWith("!") && (i = t.slice(1)), isValidStrPattern(i)
+      );
     }
-    function isValidStrPattern(input) {
-      var FORWARD_SLASH = "/";
-      var str = escapeRegExp(input);
-      if (
-        input[0] === FORWARD_SLASH &&
-        input[input.length - 1] === FORWARD_SLASH
-      ) {
-        str = input.slice(1, -1);
-      }
-      var isValid;
+    function isValidStrPattern(e) {
+      var t,
+        n = escapeRegExp(e);
+      "/" === e[0] && "/" === e[e.length - 1] && (n = e.slice(1, -1));
       try {
-        isValid = new RegExp(str);
-        isValid = true;
+        (t = new RegExp(n)), (t = !0);
       } catch (e) {
-        isValid = false;
+        t = false;
       }
-      return isValid;
+      return t;
     }
-    function escapeRegExp(str) {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    function escapeRegExp(e) {
+      return e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
-    function nativeIsFinite(num) {
-      var native = Number.isFinite || window.isFinite;
-      return native(num);
+    function nativeIsFinite(i) {
+      return (Number.isFinite || window.isFinite)(i);
     }
-    function isValidMatchNumber(match) {
-      var INVERT_MARKER = "!";
-      var str = match;
-      if (
-        match !== null &&
-        match !== void 0 &&
-        match.startsWith(INVERT_MARKER)
-      ) {
-        str = match.slice(1);
-      }
-      var num = parseFloat(str);
-      return !nativeIsNaN(num) && nativeIsFinite(num);
+    function isValidMatchNumber(a) {
+      var t = a;
+      null != a && a.startsWith("!") && (t = a.slice(1));
+      var i = parseFloat(t);
+      return !nativeIsNaN(i) && nativeIsFinite(i);
     }
-    function parseRawDelay(delay) {
-      var parsedDelay = Math.floor(parseInt(delay, 10));
-      return typeof parsedDelay === "number" && !nativeIsNaN(parsedDelay)
-        ? parsedDelay
-        : delay;
+    function parseRawDelay(a) {
+      var e = Math.floor(parseInt(a, 10));
+      return "number" != typeof e || nativeIsNaN(e) ? a : e;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -19198,228 +17909,134 @@ function _toPrimitive(t, r) {
       };
       window.setTimeout = new Proxy(window.setTimeout, setTimeoutHandler);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     function noopFunc() {}
-    function isPreventionNeeded(_ref) {
-      var {
-        callback: callback,
-        delay: delay,
-        matchCallback: matchCallback,
-        matchDelay: matchDelay,
-      } = _ref;
-      if (!isValidCallback(callback)) {
-        return false;
-      }
-      if (
-        !isValidMatchStr(matchCallback) ||
-        (matchDelay && !isValidMatchNumber(matchDelay))
-      ) {
-        return false;
-      }
-      var { isInvertedMatch: isInvertedMatch, matchRegexp: matchRegexp } =
-        parseMatchArg(matchCallback);
-      var {
-        isInvertedDelayMatch: isInvertedDelayMatch,
-        delayMatch: delayMatch,
-      } = parseDelayArg(matchDelay);
-      var parsedDelay = parseRawDelay(delay);
-      var shouldPrevent = false;
-      var callbackStr = String(callback);
-      if (delayMatch === null) {
-        shouldPrevent = matchRegexp.test(callbackStr) !== isInvertedMatch;
-      } else if (!matchCallback) {
-        shouldPrevent = (parsedDelay === delayMatch) !== isInvertedDelayMatch;
-      } else {
-        shouldPrevent =
-          matchRegexp.test(callbackStr) !== isInvertedMatch &&
-          (parsedDelay === delayMatch) !== isInvertedDelayMatch;
-      }
-      return shouldPrevent;
+    function isPreventionNeeded(a) {
+      var { callback: e, delay: t, matchCallback: r, matchDelay: l } = a;
+      if (!isValidCallback(e)) return false;
+      if (!isValidMatchStr(r) || (l && !isValidMatchNumber(l))) return false;
+      var { isInvertedMatch: c, matchRegexp: i } = parseMatchArg(r),
+        { isInvertedDelayMatch: n, delayMatch: s } = parseDelayArg(l),
+        d = parseRawDelay(t),
+        h = String(e);
+      return null === s
+        ? i.test(h) !== c
+        : r
+          ? i.test(h) !== c && (d === s) !== n
+          : (d === s) !== n;
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function parseMatchArg(match) {
-      var INVERT_MARKER = "!";
-      var isInvertedMatch = match
-        ? match === null || match === void 0
-          ? void 0
-          : match.startsWith(INVERT_MARKER)
-        : false;
-      var matchValue = isInvertedMatch ? match.slice(1) : match;
-      var matchRegexp = toRegExp(matchValue);
+    function parseMatchArg(t) {
+      var e = !!t && (null == t ? void 0 : t.startsWith("!")),
+        a = e ? t.slice(1) : t;
       return {
-        isInvertedMatch: isInvertedMatch,
-        matchRegexp: matchRegexp,
-        matchValue: matchValue,
+        isInvertedMatch: e,
+        matchRegexp: toRegExp(a),
+        matchValue: a,
       };
     }
-    function parseDelayArg(delay) {
-      var INVERT_MARKER = "!";
-      var isInvertedDelayMatch =
-        delay === null || delay === void 0
-          ? void 0
-          : delay.startsWith(INVERT_MARKER);
-      var delayValue = isInvertedDelayMatch ? delay.slice(1) : delay;
-      var parsedDelay = parseInt(delayValue, 10);
-      var delayMatch = nativeIsNaN(parsedDelay) ? null : parsedDelay;
+    function parseDelayArg(a) {
+      var e = null == a ? void 0 : a.startsWith("!"),
+        t = e ? a.slice(1) : a,
+        l = parseInt(t, 10);
       return {
-        isInvertedDelayMatch: isInvertedDelayMatch,
-        delayMatch: delayMatch,
+        isInvertedDelayMatch: e,
+        delayMatch: nativeIsNaN(l) ? null : l,
       };
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function nativeIsNaN(num) {
-      var native = Number.isNaN || window.isNaN;
-      return native(num);
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
     }
-    function isValidCallback(callback) {
-      return callback instanceof Function || typeof callback === "string";
+    function isValidCallback(n) {
+      return n instanceof Function || "string" == typeof n;
     }
-    function isValidMatchStr(match) {
-      var INVERT_MARKER = "!";
-      var str = match;
-      if (
-        match !== null &&
-        match !== void 0 &&
-        match.startsWith(INVERT_MARKER)
-      ) {
-        str = match.slice(1);
-      }
-      return isValidStrPattern(str);
+    function isValidMatchStr(t) {
+      var i = t;
+      return (
+        null != t && t.startsWith("!") && (i = t.slice(1)), isValidStrPattern(i)
+      );
     }
-    function escapeRegExp(str) {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    function escapeRegExp(e) {
+      return e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
-    function isValidStrPattern(input) {
-      var FORWARD_SLASH = "/";
-      var str = escapeRegExp(input);
-      if (
-        input[0] === FORWARD_SLASH &&
-        input[input.length - 1] === FORWARD_SLASH
-      ) {
-        str = input.slice(1, -1);
-      }
-      var isValid;
+    function isValidStrPattern(e) {
+      var t,
+        n = escapeRegExp(e);
+      "/" === e[0] && "/" === e[e.length - 1] && (n = e.slice(1, -1));
       try {
-        isValid = new RegExp(str);
-        isValid = true;
+        (t = new RegExp(n)), (t = !0);
       } catch (e) {
-        isValid = false;
+        t = false;
       }
-      return isValid;
+      return t;
     }
-    function nativeIsFinite(num) {
-      var native = Number.isFinite || window.isFinite;
-      return native(num);
+    function nativeIsFinite(i) {
+      return (Number.isFinite || window.isFinite)(i);
     }
-    function isValidMatchNumber(match) {
-      var INVERT_MARKER = "!";
-      var str = match;
-      if (
-        match !== null &&
-        match !== void 0 &&
-        match.startsWith(INVERT_MARKER)
-      ) {
-        str = match.slice(1);
-      }
-      var num = parseFloat(str);
-      return !nativeIsNaN(num) && nativeIsFinite(num);
+    function isValidMatchNumber(a) {
+      var t = a;
+      null != a && a.startsWith("!") && (t = a.slice(1));
+      var i = parseFloat(t);
+      return !nativeIsNaN(i) && nativeIsFinite(i);
     }
-    function parseRawDelay(delay) {
-      var parsedDelay = Math.floor(parseInt(delay, 10));
-      return typeof parsedDelay === "number" && !nativeIsNaN(parsedDelay)
-        ? parsedDelay
-        : delay;
+    function parseRawDelay(a) {
+      var e = Math.floor(parseInt(a, 10));
+      return "number" != typeof e || nativeIsNaN(e) ? a : e;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -19545,233 +18162,156 @@ function _toPrimitive(t, r) {
       window.open = isNewSyntax ? newOpenWrapper : oldOpenWrapper;
       window.open.toString = nativeOpen.toString.bind(nativeOpen);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
-      }
-    }
-    function isValidStrPattern(input) {
-      var FORWARD_SLASH = "/";
-      var str = escapeRegExp(input);
-      if (
-        input[0] === FORWARD_SLASH &&
-        input[input.length - 1] === FORWARD_SLASH
-      ) {
-        str = input.slice(1, -1);
-      }
-      var isValid;
-      try {
-        isValid = new RegExp(str);
-        isValid = true;
-      } catch (e) {
-        isValid = false;
-      }
-      return isValid;
-    }
-    function escapeRegExp(str) {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    }
-    function isValidMatchStr(match) {
-      var INVERT_MARKER = "!";
-      var str = match;
-      if (
-        match !== null &&
-        match !== void 0 &&
-        match.startsWith(INVERT_MARKER)
-      ) {
-        str = match.slice(1);
-      }
-      return isValidStrPattern(str);
-    }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
+    function hit(e) {
+      if (e.verbose) {
         try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
-      var escaped = input
+    }
+    function isValidStrPattern(e) {
+      var t,
+        n = escapeRegExp(e);
+      "/" === e[0] && "/" === e[e.length - 1] && (n = e.slice(1, -1));
+      try {
+        (t = new RegExp(n)), (t = !0);
+      } catch (e) {
+        t = false;
+      }
+      return t;
+    }
+    function escapeRegExp(e) {
+      return e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+    function isValidMatchStr(t) {
+      var i = t;
+      return (
+        null != t && t.startsWith("!") && (i = t.slice(1)), isValidStrPattern(i)
+      );
+    }
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function nativeIsNaN(num) {
-      var native = Number.isNaN || window.isNaN;
-      return native(num);
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
     }
-    function parseMatchArg(match) {
-      var INVERT_MARKER = "!";
-      var isInvertedMatch = match
-        ? match === null || match === void 0
-          ? void 0
-          : match.startsWith(INVERT_MARKER)
-        : false;
-      var matchValue = isInvertedMatch ? match.slice(1) : match;
-      var matchRegexp = toRegExp(matchValue);
+    function parseMatchArg(t) {
+      var e = !!t && (null == t ? void 0 : t.startsWith("!")),
+        a = e ? t.slice(1) : t;
       return {
-        isInvertedMatch: isInvertedMatch,
-        matchRegexp: matchRegexp,
-        matchValue: matchValue,
+        isInvertedMatch: e,
+        matchRegexp: toRegExp(a),
+        matchValue: a,
       };
     }
-    function handleOldReplacement(replacement) {
-      var result;
-      if (!replacement) {
-        result = noopFunc;
-      } else if (replacement === "trueFunc") {
-        result = trueFunc;
-      } else if (replacement.includes("=")) {
-        var isProp = replacement.startsWith("{") && replacement.endsWith("}");
-        if (isProp) {
-          var propertyPart = replacement.slice(1, -1);
-          var propertyName = substringBefore(propertyPart, "=");
-          var propertyValue = substringAfter(propertyPart, "=");
-          if (propertyValue === "noopFunc") {
-            result = {};
-            result[propertyName] = noopFunc;
+    function handleOldReplacement(e) {
+      var n;
+      if (e) {
+        if ("trueFunc" === e) n = trueFunc;
+        else if (e.includes("=")) {
+          if (e.startsWith("{") && e.endsWith("}")) {
+            var t = e.slice(1, -1),
+              u = substringBefore(t, "=");
+            "noopFunc" === substringAfter(t, "=") && ((n = {})[u] = noopFunc);
           }
         }
-      }
-      return result;
+      } else n = noopFunc;
+      return n;
     }
-    function createDecoy(args) {
-      var UrlPropNameOf = (function (UrlPropNameOf) {
-        UrlPropNameOf["Object"] = "data";
-        UrlPropNameOf["Iframe"] = "src";
-        return UrlPropNameOf;
-      })({});
-      var { replacement: replacement, url: url, delay: delay } = args;
-      var tag;
-      if (replacement === "obj") {
-        tag = "object";
-      } else {
-        tag = "iframe";
-      }
-      var decoy = document.createElement(tag);
-      if (decoy instanceof HTMLObjectElement) {
-        decoy[UrlPropNameOf.Object] = url;
-      } else if (decoy instanceof HTMLIFrameElement) {
-        decoy[UrlPropNameOf.Iframe] = url;
-      }
-      decoy.style.setProperty("height", "1px", "important");
-      decoy.style.setProperty("position", "fixed", "important");
-      decoy.style.setProperty("top", "-1px", "important");
-      decoy.style.setProperty("width", "1px", "important");
-      document.body.appendChild(decoy);
-      setTimeout(function () {
-        return decoy.remove();
-      }, delay * 1e3);
-      return decoy;
+    function createDecoy(e) {
+      var t,
+        r = (function (e) {
+          return (e.Object = "data"), (e.Iframe = "src"), e;
+        })({}),
+        { replacement: n, url: o, delay: a } = e;
+      t = "obj" === n ? "object" : "iframe";
+      var i = document.createElement(t);
+      return (
+        i instanceof HTMLObjectElement
+          ? (i[r.Object] = o)
+          : i instanceof HTMLIFrameElement && (i[r.Iframe] = o),
+        i.style.setProperty("height", "1px", "important"),
+        i.style.setProperty("position", "fixed", "important"),
+        i.style.setProperty("top", "-1px", "important"),
+        i.style.setProperty("width", "1px", "important"),
+        document.body.appendChild(i),
+        setTimeout(function () {
+          return i.remove();
+        }, 1e3 * a),
+        i
+      );
     }
-    function getPreventGetter(nativeGetter) {
-      var preventGetter = function preventGetter(target, prop) {
-        if (prop && prop === "closed") {
-          return false;
-        }
-        if (typeof nativeGetter === "function") {
-          return noopFunc;
-        }
-        return prop && target[prop];
+    function getPreventGetter(n) {
+      return function (t, e) {
+        return (
+          (!e || "closed" !== e) &&
+          ("function" == typeof n ? noopFunc : e && t[e])
+        );
       };
-      return preventGetter;
     }
     function noopNull() {
       return null;
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
     function noopFunc() {}
     function trueFunc() {
       return true;
     }
-    function substringBefore(str, separator) {
-      if (!str || !separator) {
-        return str;
-      }
-      var index = str.indexOf(separator);
-      return index < 0 ? str : str.substring(0, index);
+    function substringBefore(r, n) {
+      if (!r || false) return r;
+      var e = r.indexOf(n);
+      return e < 0 ? r : r.substring(0, e);
     }
-    function substringAfter(str, separator) {
-      if (!str) {
-        return str;
-      }
-      var index = str.indexOf(separator);
-      return index < 0 ? "" : str.substring(index + separator.length);
+    function substringAfter(n, r) {
+      if (!n) return n;
+      var t = n.indexOf(r);
+      return t < 0 ? "" : n.substring(t + r.length);
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -19826,7 +18366,7 @@ function _toPrimitive(t, r) {
           var setRequestHeaderWrapper = function setRequestHeaderWrapper(
             target,
             thisArg,
-            args
+            args,
           ) {
             thisArg.collectedHeaders.push(args);
             return Reflect.apply(target, thisArg, args);
@@ -19836,7 +18376,7 @@ function _toPrimitive(t, r) {
           };
           thisArg.setRequestHeader = new Proxy(
             thisArg.setRequestHeader,
-            setRequestHeaderHandler
+            setRequestHeaderHandler,
           );
         }
         return Reflect.apply(target, thisArg, args);
@@ -19859,7 +18399,7 @@ function _toPrimitive(t, r) {
           } else {
             logMessage(
               source,
-              `Invalid randomize parameter: '${customResponseText}'`
+              `Invalid randomize parameter: '${customResponseText}'`,
             );
           }
         }
@@ -19952,7 +18492,7 @@ function _toPrimitive(t, r) {
       };
       var getAllHeadersWrapper = function getAllHeadersWrapper(
         target,
-        thisArg
+        thisArg,
       ) {
         if (!thisArg.shouldBePrevented) {
           return nativeGetAllResponseHeaders.call(thisArg);
@@ -19983,267 +18523,196 @@ function _toPrimitive(t, r) {
       };
       XMLHttpRequest.prototype.open = new Proxy(
         XMLHttpRequest.prototype.open,
-        openHandler
+        openHandler,
       );
       XMLHttpRequest.prototype.send = new Proxy(
         XMLHttpRequest.prototype.send,
-        sendHandler
+        sendHandler,
       );
       XMLHttpRequest.prototype.getResponseHeader = new Proxy(
         XMLHttpRequest.prototype.getResponseHeader,
-        getHeaderHandler
+        getHeaderHandler,
       );
       XMLHttpRequest.prototype.getAllResponseHeaders = new Proxy(
         XMLHttpRequest.prototype.getAllResponseHeaders,
-        getAllHeadersHandler
+        getAllHeadersHandler,
       );
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function objectToString(obj) {
-      if (!obj || typeof obj !== "object") {
-        return String(obj);
-      }
-      if (isEmptyObject(obj)) {
-        return "{}";
-      }
-      return Object.entries(obj)
-        .map(function (pair) {
-          var key = pair[0];
-          var value = pair[1];
-          var recordValueStr = value;
-          if (value instanceof Object) {
-            recordValueStr = `{ ${objectToString(value)} }`;
-          }
-          return `${key}:"${recordValueStr}"`;
-        })
-        .join(" ");
+    function objectToString(t) {
+      return t && "object" == typeof t
+        ? isEmptyObject(t)
+          ? "{}"
+          : Object.entries(t)
+              .map(function (t) {
+                var n = t[0],
+                  e = t[1],
+                  o = e;
+                return (
+                  e instanceof Object && (o = `{ ${objectToString(e)} }`),
+                  `${n}:"${o}"`
+                );
+              })
+              .join(" ")
+        : String(t);
     }
-    function generateRandomResponse(customResponseText) {
-      var customResponse = customResponseText;
-      if (customResponse === "true") {
-        customResponse = Math.random().toString(36).slice(-10);
-        return customResponse;
+    function generateRandomResponse(e) {
+      var t = e;
+      if ("true" === t) return (t = Math.random().toString(36).slice(-10));
+      t = t.replace("length:", "");
+      if (!/^\d+-\d+$/.test(t)) return null;
+      var n = getNumberFromString(t.split("-")[0]),
+        r = getNumberFromString(t.split("-")[1]);
+      if (!nativeIsFinite(n) || !nativeIsFinite(r)) return null;
+      if (n > r) {
+        var i = n;
+        (n = r), (r = i);
       }
-      customResponse = customResponse.replace("length:", "");
-      var rangeRegex = /^\d+-\d+$/;
-      if (!rangeRegex.test(customResponse)) {
-        return null;
-      }
-      var rangeMin = getNumberFromString(customResponse.split("-")[0]);
-      var rangeMax = getNumberFromString(customResponse.split("-")[1]);
-      if (!nativeIsFinite(rangeMin) || !nativeIsFinite(rangeMax)) {
-        return null;
-      }
-      if (rangeMin > rangeMax) {
-        var temp = rangeMin;
-        rangeMin = rangeMax;
-        rangeMax = temp;
-      }
-      var LENGTH_RANGE_LIMIT = 500 * 1e3;
-      if (rangeMax > LENGTH_RANGE_LIMIT) {
-        return null;
-      }
-      var length = getRandomIntInclusive(rangeMin, rangeMax);
-      customResponse = getRandomStrByLength(length);
-      return customResponse;
+      if (r > 5e5) return null;
+      var a = getRandomIntInclusive(n, r);
+      return (t = getRandomStrByLength(a));
     }
-    function matchRequestProps(source, propsToMatch, requestData) {
-      if (propsToMatch === "" || propsToMatch === "*") {
-        return true;
-      }
-      var isMatched;
-      var parsedData = parseMatchProps(propsToMatch);
-      if (!isValidParsedData(parsedData)) {
-        logMessage(source, `Invalid parameter: ${propsToMatch}`);
-        isMatched = false;
-      } else {
-        var matchData = getMatchPropsData(parsedData);
-        var matchKeys = Object.keys(matchData);
-        isMatched = matchKeys.every(function (matchKey) {
-          var matchValue = matchData[matchKey];
-          var dataValue = requestData[matchKey];
+    function matchRequestProps(e, t, r) {
+      if ("" === t || "*" === t) return true;
+      var a,
+        s = parseMatchProps(t);
+      if (isValidParsedData(s)) {
+        var n = getMatchPropsData(s);
+        a = Object.keys(n).every(function (e) {
+          var t = n[e],
+            a = r[e];
           return (
-            Object.prototype.hasOwnProperty.call(requestData, matchKey) &&
-            typeof dataValue === "string" &&
-            (matchValue === null || matchValue === void 0
-              ? void 0
-              : matchValue.test(dataValue))
+            Object.prototype.hasOwnProperty.call(r, e) &&
+            "string" == typeof a &&
+            (null == t ? void 0 : t.test(a))
           );
         });
-      }
-      return isMatched;
+      } else logMessage(e, `Invalid parameter: ${t}`), (a = false);
+      return a;
     }
-    function getXhrData(method, url, async, user, password) {
+    function getXhrData(r, t, a, e, n) {
       return {
-        method: method,
-        url: url,
-        async: async,
-        user: user,
-        password: password,
+        method: r,
+        url: t,
+        async: a,
+        user: e,
+        password: n,
       };
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function isValidStrPattern(input) {
-      var FORWARD_SLASH = "/";
-      var str = escapeRegExp(input);
-      if (
-        input[0] === FORWARD_SLASH &&
-        input[input.length - 1] === FORWARD_SLASH
-      ) {
-        str = input.slice(1, -1);
-      }
-      var isValid;
+    function isValidStrPattern(e) {
+      var t,
+        n = escapeRegExp(e);
+      "/" === e[0] && "/" === e[e.length - 1] && (n = e.slice(1, -1));
       try {
-        isValid = new RegExp(str);
-        isValid = true;
+        (t = new RegExp(n)), (t = !0);
       } catch (e) {
-        isValid = false;
+        t = false;
       }
-      return isValid;
+      return t;
     }
-    function escapeRegExp(str) {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    function escapeRegExp(e) {
+      return e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
     }
-    function getNumberFromString(rawString) {
-      var parsedDelay = parseInt(rawString, 10);
-      var validDelay = nativeIsNaN(parsedDelay) ? null : parsedDelay;
-      return validDelay;
+    function getNumberFromString(n) {
+      var r = parseInt(n, 10);
+      return nativeIsNaN(r) ? null : r;
     }
-    function nativeIsFinite(num) {
-      var native = Number.isFinite || window.isFinite;
-      return native(num);
+    function nativeIsFinite(i) {
+      return (Number.isFinite || window.isFinite)(i);
     }
-    function nativeIsNaN(num) {
-      var native = Number.isNaN || window.isNaN;
-      return native(num);
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
     }
-    function parseMatchProps(propsToMatchStr) {
-      var PROPS_DIVIDER = " ";
-      var PAIRS_MARKER = ":";
-      var isRequestProp = function isRequestProp(prop) {
-        return getRequestProps().includes(prop);
-      };
-      var propsObj = {};
-      var props = propsToMatchStr.split(PROPS_DIVIDER);
-      props.forEach(function (prop) {
-        var dividerInd = prop.indexOf(PAIRS_MARKER);
-        var key = prop.slice(0, dividerInd);
-        if (isRequestProp(key)) {
-          var value = prop.slice(dividerInd + 1);
-          propsObj[key] = value;
-        } else {
-          propsObj.url = prop;
-        }
-      });
-      return propsObj;
+    function parseMatchProps(e) {
+      var r = {};
+      return (
+        e.split(" ").forEach(function (e) {
+          var n = e.indexOf(":"),
+            i = e.slice(0, n);
+          if (
+            (function (e) {
+              return getRequestProps().includes(e);
+            })(i)
+          ) {
+            var s = e.slice(n + 1);
+            r[i] = s;
+          } else r.url = e;
+        }),
+        r
+      );
     }
-    function isValidParsedData(data) {
-      return Object.values(data).every(function (value) {
-        return isValidStrPattern(value);
+    function isValidParsedData(t) {
+      return Object.values(t).every(function (t) {
+        return isValidStrPattern(t);
       });
     }
-    function getMatchPropsData(data) {
-      var matchData = {};
-      var dataKeys = Object.keys(data);
-      dataKeys.forEach(function (key) {
-        matchData[key] = toRegExp(data[key]);
-      });
-      return matchData;
+    function getMatchPropsData(t) {
+      var a = {};
+      return (
+        Object.keys(t).forEach(function (c) {
+          a[c] = toRegExp(t[c]);
+        }),
+        a
+      );
     }
     function getRequestProps() {
       return [
@@ -20262,22 +18731,24 @@ function _toPrimitive(t, r) {
         "mode",
       ];
     }
-    function getRandomIntInclusive(min, max) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min + 1) + min);
+    function getRandomIntInclusive(t, n) {
+      return (
+        (t = Math.ceil(t)),
+        (n = Math.floor(n)),
+        Math.floor(Math.random() * (n - t + 1) + t)
+      );
     }
-    function getRandomStrByLength(length) {
-      var result = "";
-      var characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+=~";
-      var charactersLength = characters.length;
-      for (var i = 0; i < length; i += 1) {
-        result += characters.charAt(
-          Math.floor(Math.random() * charactersLength)
-        );
-      }
-      return result;
+    function getRandomStrByLength(r) {
+      for (
+        var t = "",
+          a =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+=~",
+          n = 0;
+        n < r;
+        n += 1
+      )
+        t += a.charAt(Math.floor(76 * Math.random()));
+      return t;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -20364,140 +18835,95 @@ function _toPrimitive(t, r) {
         observeDOMChanges(rmattr, true);
       }
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function observeDOMChanges(callback) {
-      var observeAttrs =
-        arguments.length > 1 && arguments[1] !== undefined
-          ? arguments[1]
-          : false;
-      var attrsToObserve =
-        arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-      var THROTTLE_DELAY_MS = 20;
-      var observer = new MutationObserver(
-        throttle(callbackWrapper, THROTTLE_DELAY_MS)
-      );
-      var connect = function connect() {
-        if (attrsToObserve.length > 0) {
-          observer.observe(document.documentElement, {
-            childList: true,
-            subtree: true,
-            attributes: observeAttrs,
-            attributeFilter: attrsToObserve,
-          });
-        } else {
-          observer.observe(document.documentElement, {
-            childList: true,
-            subtree: true,
-            attributes: observeAttrs,
-          });
-        }
-      };
-      var disconnect = function disconnect() {
-        observer.disconnect();
-      };
-      function callbackWrapper() {
-        disconnect();
-        callback();
-        connect();
-      }
+    function observeDOMChanges(t) {
+      var e = arguments.length > 1 && void 0 !== arguments[1] && arguments[1],
+        n = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : [],
+        i = new MutationObserver(
+          throttle(function () {
+            disconnect(), t(), connect();
+          }, 20),
+        ),
+        connect = function connect() {
+          n.length > 0
+            ? i.observe(document.documentElement, {
+                childList: true,
+                subtree: true,
+                attributes: e,
+                attributeFilter: n,
+              })
+            : i.observe(document.documentElement, {
+                childList: true,
+                subtree: true,
+                attributes: e,
+              });
+        },
+        disconnect = function disconnect() {
+          i.disconnect();
+        };
       connect();
     }
-    function parseFlags(flags) {
-      var FLAGS_DIVIDER = " ";
-      var ASAP_FLAG = "asap";
-      var COMPLETE_FLAG = "complete";
-      var STAY_FLAG = "stay";
-      var VALID_FLAGS = new Set([ASAP_FLAG, COMPLETE_FLAG, STAY_FLAG]);
-      var passedFlags = new Set(
-        flags
-          .trim()
-          .split(FLAGS_DIVIDER)
-          .filter(function (flag) {
-            return VALID_FLAGS.has(flag);
-          })
-      );
+    function parseFlags(t) {
+      var e = "asap",
+        n = "complete",
+        a = "stay",
+        r = new Set([e, n, a]),
+        s = new Set(
+          t
+            .trim()
+            .split(" ")
+            .filter(function (t) {
+              return r.has(t);
+            }),
+        );
       return {
-        ASAP: ASAP_FLAG,
-        COMPLETE: COMPLETE_FLAG,
-        STAY: STAY_FLAG,
-        hasFlag: function hasFlag(flag) {
-          return passedFlags.has(flag);
+        ASAP: e,
+        COMPLETE: n,
+        STAY: a,
+        hasFlag: function hasFlag(t) {
+          return s.has(t);
         },
       };
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function throttle(cb, delay) {
-      var wait = false;
-      var savedArgs;
-      var _wrapper = function wrapper() {
-        for (
-          var _len = arguments.length, args = new Array(_len), _key = 0;
-          _key < _len;
-          _key++
-        ) {
-          args[_key] = arguments[_key];
-        }
-        if (wait) {
-          savedArgs = args;
-          return;
-        }
-        cb(...args);
-        wait = true;
-        setTimeout(function () {
-          wait = false;
-          if (savedArgs) {
-            _wrapper(...savedArgs);
-            savedArgs = null;
-          }
-        }, delay);
-      };
-      return _wrapper;
+    function throttle(n, t) {
+      var r,
+        e = false,
+        _wrapper4 = function _wrapper() {
+          for (var o = arguments.length, u = new Array(o), f = 0; f < o; f++)
+            u[f] = arguments[f];
+          e
+            ? (r = u)
+            : (n(...u),
+              (e = true),
+              setTimeout(function () {
+                (e = false), r && (_wrapper4(...r), (r = null));
+              }, t));
+        };
+      return _wrapper4;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -20604,140 +19030,95 @@ function _toPrimitive(t, r) {
         observeDOMChanges(removeClassHandler, true, CLASS_ATTR_NAME);
       }
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function observeDOMChanges(callback) {
-      var observeAttrs =
-        arguments.length > 1 && arguments[1] !== undefined
-          ? arguments[1]
-          : false;
-      var attrsToObserve =
-        arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-      var THROTTLE_DELAY_MS = 20;
-      var observer = new MutationObserver(
-        throttle(callbackWrapper, THROTTLE_DELAY_MS)
-      );
-      var connect = function connect() {
-        if (attrsToObserve.length > 0) {
-          observer.observe(document.documentElement, {
-            childList: true,
-            subtree: true,
-            attributes: observeAttrs,
-            attributeFilter: attrsToObserve,
-          });
-        } else {
-          observer.observe(document.documentElement, {
-            childList: true,
-            subtree: true,
-            attributes: observeAttrs,
-          });
-        }
-      };
-      var disconnect = function disconnect() {
-        observer.disconnect();
-      };
-      function callbackWrapper() {
-        disconnect();
-        callback();
-        connect();
-      }
+    function observeDOMChanges(t) {
+      var e = arguments.length > 1 && void 0 !== arguments[1] && arguments[1],
+        n = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : [],
+        i = new MutationObserver(
+          throttle(function () {
+            disconnect(), t(), connect();
+          }, 20),
+        ),
+        connect = function connect() {
+          n.length > 0
+            ? i.observe(document.documentElement, {
+                childList: true,
+                subtree: true,
+                attributes: e,
+                attributeFilter: n,
+              })
+            : i.observe(document.documentElement, {
+                childList: true,
+                subtree: true,
+                attributes: e,
+              });
+        },
+        disconnect = function disconnect() {
+          i.disconnect();
+        };
       connect();
     }
-    function parseFlags(flags) {
-      var FLAGS_DIVIDER = " ";
-      var ASAP_FLAG = "asap";
-      var COMPLETE_FLAG = "complete";
-      var STAY_FLAG = "stay";
-      var VALID_FLAGS = new Set([ASAP_FLAG, COMPLETE_FLAG, STAY_FLAG]);
-      var passedFlags = new Set(
-        flags
-          .trim()
-          .split(FLAGS_DIVIDER)
-          .filter(function (flag) {
-            return VALID_FLAGS.has(flag);
-          })
-      );
+    function parseFlags(t) {
+      var e = "asap",
+        n = "complete",
+        a = "stay",
+        r = new Set([e, n, a]),
+        s = new Set(
+          t
+            .trim()
+            .split(" ")
+            .filter(function (t) {
+              return r.has(t);
+            }),
+        );
       return {
-        ASAP: ASAP_FLAG,
-        COMPLETE: COMPLETE_FLAG,
-        STAY: STAY_FLAG,
-        hasFlag: function hasFlag(flag) {
-          return passedFlags.has(flag);
+        ASAP: e,
+        COMPLETE: n,
+        STAY: a,
+        hasFlag: function hasFlag(t) {
+          return s.has(t);
         },
       };
     }
-    function throttle(cb, delay) {
-      var wait = false;
-      var savedArgs;
-      var _wrapper = function wrapper() {
-        for (
-          var _len = arguments.length, args = new Array(_len), _key = 0;
-          _key < _len;
-          _key++
-        ) {
-          args[_key] = arguments[_key];
-        }
-        if (wait) {
-          savedArgs = args;
-          return;
-        }
-        cb(...args);
-        wait = true;
-        setTimeout(function () {
-          wait = false;
-          if (savedArgs) {
-            _wrapper(...savedArgs);
-            savedArgs = null;
-          }
-        }, delay);
-      };
-      return _wrapper;
+    function throttle(n, t) {
+      var r,
+        e = false,
+        _wrapper5 = function _wrapper() {
+          for (var o = arguments.length, u = new Array(o), f = 0; f < o; f++)
+            u[f] = arguments[f];
+          e
+            ? (r = u)
+            : (n(...u),
+              (e = true),
+              setTimeout(function () {
+                (e = false), r && (_wrapper5(...r), (r = null));
+              }, t));
+        };
+      return _wrapper5;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -20770,7 +19151,7 @@ function _toPrimitive(t, r) {
       var matchRegexp = toRegExp(match);
       var removeCookieFromHost = function removeCookieFromHost(
         cookieName,
-        hostName
+        hostName,
       ) {
         var cookieSpec = `${cookieName}=`;
         var domain1 = `; domain=${hostName}`;
@@ -20807,78 +19188,52 @@ function _toPrimitive(t, r) {
       rmCookie();
       window.addEventListener("beforeunload", rmCookie);
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
@@ -20923,7 +19278,7 @@ function _toPrimitive(t, r) {
           var isRemoved = false;
           var { targets: targets, innerHosts: innerHosts } = pierceShadowDom(
             selector,
-            hostElements
+            hostElements,
           );
           targets.forEach(function (targetEl) {
             removeElement(targetEl);
@@ -20941,144 +19296,103 @@ function _toPrimitive(t, r) {
       removeHandler();
       observeDOMChanges(removeHandler, true);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function observeDOMChanges(callback) {
-      var observeAttrs =
-        arguments.length > 1 && arguments[1] !== undefined
-          ? arguments[1]
-          : false;
-      var attrsToObserve =
-        arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-      var THROTTLE_DELAY_MS = 20;
-      var observer = new MutationObserver(
-        throttle(callbackWrapper, THROTTLE_DELAY_MS)
-      );
-      var connect = function connect() {
-        if (attrsToObserve.length > 0) {
-          observer.observe(document.documentElement, {
-            childList: true,
-            subtree: true,
-            attributes: observeAttrs,
-            attributeFilter: attrsToObserve,
-          });
-        } else {
-          observer.observe(document.documentElement, {
-            childList: true,
-            subtree: true,
-            attributes: observeAttrs,
-          });
-        }
-      };
-      var disconnect = function disconnect() {
-        observer.disconnect();
-      };
-      function callbackWrapper() {
-        disconnect();
-        callback();
-        connect();
-      }
+    function observeDOMChanges(t) {
+      var e = arguments.length > 1 && void 0 !== arguments[1] && arguments[1],
+        n = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : [],
+        i = new MutationObserver(
+          throttle(function () {
+            disconnect(), t(), connect();
+          }, 20),
+        ),
+        connect = function connect() {
+          n.length > 0
+            ? i.observe(document.documentElement, {
+                childList: true,
+                subtree: true,
+                attributes: e,
+                attributeFilter: n,
+              })
+            : i.observe(document.documentElement, {
+                childList: true,
+                subtree: true,
+                attributes: e,
+              });
+        },
+        disconnect = function disconnect() {
+          i.disconnect();
+        };
       connect();
     }
-    function findHostElements(rootElement) {
-      var hosts = [];
-      if (rootElement) {
-        var domElems = rootElement.querySelectorAll("*");
-        domElems.forEach(function (el) {
-          if (el.shadowRoot) {
-            hosts.push(el);
-          }
+    function findHostElements(o) {
+      var n = [];
+      o &&
+        o.querySelectorAll("*").forEach(function (o) {
+          o.shadowRoot && n.push(o);
         });
-      }
-      return hosts;
+      return n;
     }
-    function pierceShadowDom(selector, hostElements) {
-      var targets = [];
-      var innerHostsAcc = [];
-      hostElements.forEach(function (host) {
-        var simpleElems = host.querySelectorAll(selector);
-        targets = targets.concat([].slice.call(simpleElems));
-        var shadowRootElem = host.shadowRoot;
-        var shadowChildren = shadowRootElem.querySelectorAll(selector);
-        targets = targets.concat([].slice.call(shadowChildren));
-        innerHostsAcc.push(findHostElements(shadowRootElem));
+    function pierceShadowDom(e, t) {
+      var c = [],
+        l = [];
+      t.forEach(function (t) {
+        var o = t.querySelectorAll(e);
+        c = c.concat([].slice.call(o));
+        var r = t.shadowRoot,
+          a = r.querySelectorAll(e);
+        (c = c.concat([].slice.call(a))), l.push(findHostElements(r));
       });
-      var innerHosts = flatten(innerHostsAcc);
+      var o = flatten(l);
       return {
-        targets: targets,
-        innerHosts: innerHosts,
+        targets: c,
+        innerHosts: o,
       };
     }
-    function flatten(input) {
-      var stack = [];
-      input.forEach(function (el) {
-        return stack.push(el);
+    function flatten(r) {
+      var n = [];
+      r.forEach(function (r) {
+        return n.push(r);
       });
-      var res = [];
-      while (stack.length) {
-        var next = stack.pop();
-        if (Array.isArray(next)) {
-          next.forEach(function (el) {
-            return stack.push(el);
-          });
-        } else {
-          res.push(next);
-        }
+      for (var t = []; n.length; ) {
+        var u = n.pop();
+        Array.isArray(u)
+          ? u.forEach(function (r) {
+              return n.push(r);
+            })
+          : t.push(u);
       }
-      return res.reverse();
+      return t.reverse();
     }
-    function throttle(cb, delay) {
-      var wait = false;
-      var savedArgs;
-      var _wrapper = function wrapper() {
-        for (
-          var _len = arguments.length, args = new Array(_len), _key = 0;
-          _key < _len;
-          _key++
-        ) {
-          args[_key] = arguments[_key];
-        }
-        if (wait) {
-          savedArgs = args;
-          return;
-        }
-        cb(...args);
-        wait = true;
-        setTimeout(function () {
-          wait = false;
-          if (savedArgs) {
-            _wrapper(...savedArgs);
-            savedArgs = null;
-          }
-        }, delay);
-      };
-      return _wrapper;
+    function throttle(n, t) {
+      var r,
+        e = false,
+        _wrapper6 = function _wrapper() {
+          for (var o = arguments.length, u = new Array(o), f = 0; f < o; f++)
+            u[f] = arguments[f];
+          e
+            ? (r = u)
+            : (n(...u),
+              (e = true),
+              setTimeout(function () {
+                (e = false), r && (_wrapper6(...r), (r = null));
+              }, t));
+        };
+      return _wrapper6;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -21118,7 +19432,7 @@ function _toPrimitive(t, r) {
           var shouldReplace = isTargetNode(
             node,
             nodeNameMatch,
-            textContentMatch
+            textContentMatch,
           );
           if (shouldReplace) {
             var ALL_TEXT_PATTERN = /^[^]*$/;
@@ -21135,220 +19449,273 @@ function _toPrimitive(t, r) {
           mutations,
           handleNodes,
           selector,
-          parentSelector
+          parentSelector,
         );
       });
     }
-    function observeDocumentWithTimeout(callback) {
-      var options =
-        arguments.length > 1 && arguments[1] !== undefined
-          ? arguments[1]
-          : {
-              subtree: true,
-              childList: true,
-            };
-      var timeout =
-        arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1e4;
-      var documentObserver = new MutationObserver(function (
-        mutations,
-        observer
-      ) {
-        observer.disconnect();
-        callback(mutations, observer);
-        observer.observe(document.documentElement, options);
-      });
-      documentObserver.observe(document.documentElement, options);
-      if (typeof timeout === "number") {
-        setTimeout(function () {
-          return documentObserver.disconnect();
-        }, timeout);
-      }
-    }
-    function handleExistingNodes(selector, handler, parentSelector) {
-      var processNodes = function processNodes(parent) {
-        if (selector === "#text") {
-          var textNodes = nodeListToArray(parent.childNodes).filter(
-            function (node) {
-              return node.nodeType === Node.TEXT_NODE;
-            }
-          );
-          handler(textNodes);
-        } else {
-          var _nodes = nodeListToArray(parent.querySelectorAll(selector));
-          handler(_nodes);
-        }
-      };
-      var parents = parentSelector
-        ? document.querySelectorAll(parentSelector)
-        : [document];
-      parents.forEach(function (parent) {
-        return processNodes(parent);
-      });
-    }
-    function handleMutations(mutations, handler, selector, parentSelector) {
-      var addedNodes = getAddedNodes(mutations);
-      if (selector && parentSelector) {
-        addedNodes.forEach(function () {
-          handleExistingNodes(selector, handler, parentSelector);
+    function observeDocumentWithTimeout(e) {
+      var t =
+          arguments.length > 1 && void 0 !== arguments[1]
+            ? arguments[1]
+            : {
+                subtree: true,
+                childList: true,
+              },
+        n =
+          arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : 1e4,
+        o = new MutationObserver(function (n, o) {
+          o.disconnect(), e(n, o), o.observe(document.documentElement, t);
         });
-      } else {
-        handler(addedNodes);
-      }
+      o.observe(document.documentElement, t),
+        "number" == typeof n &&
+          setTimeout(function () {
+            return o.disconnect();
+          }, n);
     }
-    function replaceNodeText(source, node, pattern, replacement) {
-      var { textContent: textContent } = node;
-      if (textContent) {
-        if (
-          node.nodeName === "SCRIPT" &&
-          window.trustedTypes &&
-          window.trustedTypes.createPolicy
-        ) {
-          var policy = window.trustedTypes.createPolicy("AGPolicy", {
-            createScript: function createScript(string) {
-              return string;
-            },
-          });
-          var modifiedText = textContent.replace(pattern, replacement);
-          var trustedReplacement = policy.createScript(modifiedText);
-          node.textContent = trustedReplacement;
-        } else {
-          node.textContent = textContent.replace(pattern, replacement);
-        }
-        hit(source);
-      }
-    }
-    function isTargetNode(node, nodeNameMatch, textContentMatch) {
-      var { nodeName: nodeName, textContent: textContent } = node;
-      var nodeNameLowerCase = nodeName.toLowerCase();
-      return (
-        textContent !== null &&
-        textContent !== "" &&
-        (nodeNameMatch instanceof RegExp
-          ? nodeNameMatch.test(nodeNameLowerCase)
-          : nodeNameMatch === nodeNameLowerCase) &&
-        (textContentMatch instanceof RegExp
-          ? textContentMatch.test(textContent)
-          : textContent.includes(textContentMatch))
-      );
-    }
-    function parseNodeTextParams(nodeName, textMatch) {
-      var pattern =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : null;
-      var REGEXP_START_MARKER = "/";
-      var isStringNameMatch = !(
-        nodeName.startsWith(REGEXP_START_MARKER) &&
-        nodeName.endsWith(REGEXP_START_MARKER)
-      );
-      var selector = isStringNameMatch ? nodeName : "*";
-      var nodeNameMatch = isStringNameMatch ? nodeName : toRegExp(nodeName);
-      var textContentMatch = !textMatch.startsWith(REGEXP_START_MARKER)
-        ? textMatch
-        : toRegExp(textMatch);
-      var patternMatch;
-      if (pattern) {
-        patternMatch = !pattern.startsWith(REGEXP_START_MARKER)
-          ? pattern
-          : toRegExp(pattern);
-      }
-      return {
-        selector: selector,
-        nodeNameMatch: nodeNameMatch,
-        textContentMatch: textContentMatch,
-        patternMatch: patternMatch,
-      };
-    }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
+    function handleExistingNodes(e, n, o) {
+      (o ? document.querySelectorAll(o) : [document]).forEach(function (o) {
+        return (function (o) {
+          if ("#text" === e) {
+            var r = nodeListToArray(o.childNodes).filter(function (e) {
+              return e.nodeType === Node.TEXT_NODE;
+            });
+            n(r);
           } else {
-            label += `#%#//scriptlet('${source.name}')`;
+            var t = nodeListToArray(o.querySelectorAll(e));
+            n(t);
           }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+        })(o);
+      });
+    }
+    function handleMutations(n, d, e, o) {
+      var t = getAddedNodes(n);
+      e && o
+        ? t.forEach(function () {
+            handleExistingNodes(e, d, o);
+          })
+        : d(t);
+    }
+    function replaceNodeText(e, t, n, r) {
+      var { textContent: a } = t;
+      if (a) {
+        var i = a.replace(n, r);
+        if ("SCRIPT" === t.nodeName) i = getTrustedTypesApi(e).createScript(i);
+        (t.textContent = i), hit(e);
       }
     }
-    function nodeListToArray(nodeList) {
-      var nodes = [];
-      for (var i = 0; i < nodeList.length; i += 1) {
-        nodes.push(nodeList[i]);
-      }
-      return nodes;
+    function isTargetNode(e, t, n) {
+      var { nodeName: o, textContent: s } = e,
+        a = o.toLowerCase();
+      return (
+        null !== s &&
+        "" !== s &&
+        (t instanceof RegExp ? t.test(a) : t === a) &&
+        (n instanceof RegExp ? n.test(s) : s.includes(n))
+      );
     }
-    function getAddedNodes(mutations) {
-      var nodes = [];
-      for (var i = 0; i < mutations.length; i += 1) {
-        var { addedNodes: addedNodes } = mutations[i];
-        for (var j = 0; j < addedNodes.length; j += 1) {
-          nodes.push(addedNodes[j]);
+    function parseNodeTextParams(t, e) {
+      var a,
+        n =
+          arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : null,
+        r = "/",
+        s = !(t.startsWith(r) && t.endsWith(r)),
+        o = s ? t : "*",
+        h = s ? t : toRegExp(t),
+        i = e.startsWith(r) ? toRegExp(e) : e;
+      return (
+        n && (a = n.startsWith(r) ? toRegExp(n) : n),
+        {
+          selector: o,
+          nodeNameMatch: h,
+          textContentMatch: i,
+          patternMatch: a,
         }
-      }
-      return nodes;
+      );
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
+    function hit(e) {
+      if (e.verbose) {
         try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
-      var escaped = input
+    }
+    function nodeListToArray(r) {
+      for (var n = [], o = 0; o < r.length; o += 1) n.push(r[o]);
+      return n;
+    }
+    function getAddedNodes(d) {
+      for (var e = [], r = 0; r < d.length; r += 1)
+        for (var { addedNodes: n } = d[r], o = 0; o < n.length; o += 1)
+          e.push(n[o]);
+      return e;
+    }
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
+    }
+    function getTrustedTypesApi(t) {
+      var r,
+        e =
+          null == t || null === (r = t.api) || void 0 === r ? void 0 : r.policy;
+      if (e) return e;
+      var n = "AGPolicy",
+        i = window.trustedTypes,
+        u = !!i,
+        c = {
+          HTML: "TrustedHTML",
+          Script: "TrustedScript",
+          ScriptURL: "TrustedScriptURL",
+        };
+      if (!u)
+        return {
+          name: n,
+          isSupported: u,
+          TrustedType: c,
+          createHTML: function createHTML(t) {
+            return t;
+          },
+          createScript: function createScript(t) {
+            return t;
+          },
+          createScriptURL: function createScriptURL(t) {
+            return t;
+          },
+          create: function create(t, r) {
+            return r;
+          },
+          getAttributeType: function getAttributeType() {
+            return null;
+          },
+          convertAttributeToTrusted: function convertAttributeToTrusted(
+            t,
+            r,
+            e,
+          ) {
+            return e;
+          },
+          getPropertyType: function getPropertyType() {
+            return null;
+          },
+          convertPropertyToTrusted: function convertPropertyToTrusted(t, r, e) {
+            return e;
+          },
+          isHTML: function isHTML() {
+            return false;
+          },
+          isScript: function isScript() {
+            return false;
+          },
+          isScriptURL: function isScriptURL() {
+            return false;
+          },
+        };
+      var o = i.createPolicy(n, {
+          createHTML: function createHTML(t) {
+            return t;
+          },
+          createScript: function createScript(t) {
+            return t;
+          },
+          createScriptURL: function createScriptURL(t) {
+            return t;
+          },
+        }),
+        createHTML = function createHTML(t) {
+          return o.createHTML(t);
+        },
+        createScript = function createScript(t) {
+          return o.createScript(t);
+        },
+        createScriptURL = function createScriptURL(t) {
+          return o.createScriptURL(t);
+        },
+        create = function create(t, r) {
+          switch (t) {
+            case c.HTML:
+              return createHTML(r);
+            case c.Script:
+              return createScript(r);
+            case c.ScriptURL:
+              return createScriptURL(r);
+            default:
+              return r;
+          }
+        },
+        p = i.getAttributeType.bind(i),
+        T = i.getPropertyType.bind(i),
+        s = i.isHTML.bind(i),
+        a = i.isScript.bind(i),
+        f = i.isScriptURL.bind(i);
+      return {
+        name: n,
+        isSupported: u,
+        TrustedType: c,
+        createHTML: createHTML,
+        createScript: createScript,
+        createScriptURL: createScriptURL,
+        create: create,
+        getAttributeType: p,
+        convertAttributeToTrusted: function convertAttributeToTrusted(
+          t,
+          r,
+          e,
+          n,
+          i,
+        ) {
+          var u = p(t, r, n, i);
+          return u ? create(u, e) : e;
+        },
+        getPropertyType: T,
+        convertPropertyToTrusted: function convertPropertyToTrusted(
+          t,
+          r,
+          e,
+          n,
+        ) {
+          var i = T(t, r, n);
+          return i ? create(i, e) : e;
+        },
+        isHTML: s,
+        isScript: a,
+        isScriptURL: f,
+      };
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -21394,7 +19761,7 @@ function _toPrimitive(t, r) {
       if (!shouldCopyValue && !isValidValue) {
         logMessage(
           source,
-          `Invalid attribute value provided: '${convertTypeToString(value)}'`
+          `Invalid attribute value provided: '${convertTypeToString(value)}'`,
         );
         return;
       }
@@ -21405,7 +19772,7 @@ function _toPrimitive(t, r) {
           if (valueToCopy === null) {
             logMessage(
               source,
-              `No element attribute found to copy value from: ${value}`
+              `No element attribute found to copy value from: ${value}`,
             );
           }
           elem.setAttribute(attr, valueToCopy);
@@ -21418,172 +19785,118 @@ function _toPrimitive(t, r) {
           selector,
           attr,
           value,
-          attributeHandler
+          attributeHandler,
         );
       }, true);
     }
-    function setAttributeBySelector(source, selector, attribute, value) {
-      var attributeSetter =
-        arguments.length > 4 && arguments[4] !== undefined
-          ? arguments[4]
-          : defaultAttributeSetter;
-      var elements;
+    function setAttributeBySelector(e, t, l, o) {
+      var r,
+        c =
+          arguments.length > 4 && void 0 !== arguments[4]
+            ? arguments[4]
+            : defaultAttributeSetter;
       try {
-        elements = document.querySelectorAll(selector);
-      } catch (_unused) {
-        logMessage(
-          source,
-          `Failed to find elements matching selector "${selector}"`
-        );
-        return;
-      }
-      if (!elements || elements.length === 0) {
-        return;
-      }
-      try {
-        elements.forEach(function (elem) {
-          return attributeSetter(elem, attribute, value);
-        });
-        hit(source);
-      } catch (_unused2) {
-        logMessage(
-          source,
-          `Failed to set [${attribute}="${value}"] to each of selected elements.`
+        r = document.querySelectorAll(t);
+      } catch (l) {
+        return void logMessage(
+          e,
+          `Failed to find elements matching selector "${t}"`,
         );
       }
-    }
-    function observeDOMChanges(callback) {
-      var observeAttrs =
-        arguments.length > 1 && arguments[1] !== undefined
-          ? arguments[1]
-          : false;
-      var attrsToObserve =
-        arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-      var THROTTLE_DELAY_MS = 20;
-      var observer = new MutationObserver(
-        throttle(callbackWrapper, THROTTLE_DELAY_MS)
-      );
-      var connect = function connect() {
-        if (attrsToObserve.length > 0) {
-          observer.observe(document.documentElement, {
-            childList: true,
-            subtree: true,
-            attributes: observeAttrs,
-            attributeFilter: attrsToObserve,
-          });
-        } else {
-          observer.observe(document.documentElement, {
-            childList: true,
-            subtree: true,
-            attributes: observeAttrs,
-          });
+      if (r && 0 !== r.length)
+        try {
+          r.forEach(function (e) {
+            return c(e, l, o);
+          }),
+            hit(e);
+        } catch (t) {
+          logMessage(
+            e,
+            `Failed to set [${l}="${o}"] to each of selected elements.`,
+          );
         }
-      };
-      var disconnect = function disconnect() {
-        observer.disconnect();
-      };
-      function callbackWrapper() {
-        disconnect();
-        callback();
-        connect();
-      }
+    }
+    function observeDOMChanges(t) {
+      var e = arguments.length > 1 && void 0 !== arguments[1] && arguments[1],
+        n = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : [],
+        i = new MutationObserver(
+          throttle(function () {
+            disconnect(), t(), connect();
+          }, 20),
+        ),
+        connect = function connect() {
+          n.length > 0
+            ? i.observe(document.documentElement, {
+                childList: true,
+                subtree: true,
+                attributes: e,
+                attributeFilter: n,
+              })
+            : i.observe(document.documentElement, {
+                childList: true,
+                subtree: true,
+                attributes: e,
+              });
+        },
+        disconnect = function disconnect() {
+          i.disconnect();
+        };
       connect();
     }
-    function nativeIsNaN(num) {
-      var native = Number.isNaN || window.isNaN;
-      return native(num);
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
     }
-    function convertTypeToString(value) {
-      var output;
-      if (typeof value === "undefined") {
-        output = "undefined";
-      } else if (typeof value === "object") {
-        if (value === null) {
-          output = "null";
-        } else {
-          output = objectToString(value);
-        }
-      } else {
-        output = String(value);
+    function convertTypeToString(n) {
+      return void 0 === n
+        ? "undefined"
+        : "object" == typeof n
+          ? null === n
+            ? "null"
+            : objectToString(n)
+          : String(n);
+    }
+    function defaultAttributeSetter(t, e, r) {
+      return t.setAttribute(e, r);
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      return output;
     }
-    function defaultAttributeSetter(elem, attribute, value) {
-      return elem.setAttribute(attribute, value);
+    function throttle(n, t) {
+      var r,
+        e = false,
+        _wrapper7 = function _wrapper() {
+          for (var o = arguments.length, u = new Array(o), f = 0; f < o; f++)
+            u[f] = arguments[f];
+          e
+            ? (r = u)
+            : (n(...u),
+              (e = true),
+              setTimeout(function () {
+                (e = false), r && (_wrapper7(...r), (r = null));
+              }, t));
+        };
+      return _wrapper7;
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
-    }
-    function throttle(cb, delay) {
-      var wait = false;
-      var savedArgs;
-      var _wrapper = function wrapper() {
-        for (
-          var _len = arguments.length, args = new Array(_len), _key = 0;
-          _key < _len;
-          _key++
-        ) {
-          args[_key] = arguments[_key];
-        }
-        if (wait) {
-          savedArgs = args;
-          return;
-        }
-        cb(...args);
-        wait = true;
-        setTimeout(function () {
-          wait = false;
-          if (savedArgs) {
-            _wrapper(...savedArgs);
-            savedArgs = null;
-          }
-        }, delay);
-      };
-      return _wrapper;
-    }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
@@ -21767,7 +20080,7 @@ function _toPrimitive(t, r) {
                       object,
                       currentProp,
                       index,
-                      array
+                      array,
                     ) {
                       var currentObj =
                         object === null || object === void 0
@@ -21859,58 +20172,34 @@ function _toPrimitive(t, r) {
       };
       _setChainPropAccess(window, property);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function getNumberFromString(rawString) {
-      var parsedDelay = parseInt(rawString, 10);
-      var validDelay = nativeIsNaN(parsedDelay) ? null : parsedDelay;
-      return validDelay;
+    function getNumberFromString(n) {
+      var r = parseInt(n, 10);
+      return nativeIsNaN(r) ? null : r;
     }
     function noopArray() {
       return [];
@@ -21935,322 +20224,248 @@ function _toPrimitive(t, r) {
       return Promise.reject();
     }
     function noopPromiseResolve() {
-      var responseBody =
-        arguments.length > 0 && arguments[0] !== undefined
-          ? arguments[0]
-          : "{}";
-      var responseUrl =
-        arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
-      var responseType =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : "basic";
-      if (typeof Response === "undefined") {
-        return;
-      }
-      var response = new Response(responseBody, {
-        status: 200,
-        statusText: "OK",
-      });
-      if (responseType === "opaque") {
-        Object.defineProperties(response, {
-          body: {
-            value: null,
+      var e =
+          arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : "{}",
+        t = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : "",
+        s =
+          arguments.length > 2 && void 0 !== arguments[2]
+            ? arguments[2]
+            : "basic";
+      if ("undefined" != typeof Response) {
+        var n = new Response(e, {
+          headers: {
+            "Content-Length": `${e.length}`,
           },
-          status: {
-            value: 0,
-          },
-          ok: {
-            value: false,
-          },
-          statusText: {
-            value: "",
-          },
-          url: {
-            value: "",
-          },
-          type: {
-            value: responseType,
-          },
+          status: 200,
+          statusText: "OK",
         });
-      } else {
-        Object.defineProperties(response, {
-          url: {
-            value: responseUrl,
-          },
-          type: {
-            value: responseType,
-          },
-        });
+        return (
+          "opaque" === s
+            ? Object.defineProperties(n, {
+                body: {
+                  value: null,
+                },
+                status: {
+                  value: 0,
+                },
+                ok: {
+                  value: false,
+                },
+                statusText: {
+                  value: "",
+                },
+                url: {
+                  value: "",
+                },
+                type: {
+                  value: s,
+                },
+              })
+            : Object.defineProperties(n, {
+                url: {
+                  value: t,
+                },
+                type: {
+                  value: s,
+                },
+              }),
+          Promise.resolve(n)
+        );
       }
-      return Promise.resolve(response);
     }
-    function getPropertyInChain(base, chain) {
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
+    function getPropertyInChain(e, r) {
+      var n = r.indexOf(".");
+      if (-1 === n)
         return {
-          base: base,
-          prop: chain,
+          base: e,
+          prop: r,
         };
-      }
-      var prop = chain.slice(0, pos);
-      if (base === null) {
+      var i = r.slice(0, n);
+      if (null === e)
         return {
-          base: base,
-          prop: prop,
-          chain: chain,
+          base: e,
+          prop: i,
+          chain: r,
         };
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (
-        (base instanceof Object || typeof base === "object") &&
-        isEmptyObject(base)
-      ) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase === null) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase !== undefined) {
-        return getPropertyInChain(nextBase, chain);
-      }
-      Object.defineProperty(base, prop, {
-        configurable: true,
-      });
-      return {
-        base: base,
-        prop: prop,
-        chain: chain,
-      };
-    }
-    function matchStackTrace(stackMatch, stackTrace) {
-      if (!stackMatch || stackMatch === "") {
-        return true;
-      }
-      var regExpValues = backupRegExpValues();
-      if (shouldAbortInlineOrInjectedScript(stackMatch, stackTrace)) {
-        if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-          restoreRegExpValues(regExpValues);
-        }
-        return true;
-      }
-      var stackRegexp = toRegExp(stackMatch);
-      var refinedStackTrace = stackTrace
-        .split("\n")
-        .slice(2)
-        .map(function (line) {
-          return line.trim();
-        })
-        .join("\n");
-      if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-        restoreRegExpValues(regExpValues);
-      }
-      return getNativeRegexpTest().call(stackRegexp, refinedStackTrace);
-    }
-    function nativeIsNaN(num) {
-      var native = Number.isNaN || window.isNaN;
-      return native(num);
-    }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
-    }
-    function shouldAbortInlineOrInjectedScript(stackMatch, stackTrace) {
-      var INLINE_SCRIPT_STRING = "inlineScript";
-      var INJECTED_SCRIPT_STRING = "injectedScript";
-      var INJECTED_SCRIPT_MARKER = "<anonymous>";
-      var isInlineScript = function isInlineScript(match) {
-        return match.includes(INLINE_SCRIPT_STRING);
-      };
-      var isInjectedScript = function isInjectedScript(match) {
-        return match.includes(INJECTED_SCRIPT_STRING);
-      };
-      if (!(isInlineScript(stackMatch) || isInjectedScript(stackMatch))) {
-        return false;
-      }
-      var documentURL = window.location.href;
-      var pos = documentURL.indexOf("#");
-      if (pos !== -1) {
-        documentURL = documentURL.slice(0, pos);
-      }
-      var stackSteps = stackTrace
-        .split("\n")
-        .slice(2)
-        .map(function (line) {
-          return line.trim();
-        });
-      var stackLines = stackSteps.map(function (line) {
-        var stack;
-        var getStackTraceValues = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(line);
-        if (getStackTraceValues) {
-          var _stackURL, _stackURL2;
-          var stackURL = getStackTraceValues[2];
-          var stackLine = getStackTraceValues[3];
-          var stackCol = getStackTraceValues[4];
-          if (
-            (_stackURL = stackURL) !== null &&
-            _stackURL !== void 0 &&
-            _stackURL.startsWith("(")
-          ) {
-            stackURL = stackURL.slice(1);
-          }
-          if (
-            (_stackURL2 = stackURL) !== null &&
-            _stackURL2 !== void 0 &&
-            _stackURL2.startsWith(INJECTED_SCRIPT_MARKER)
-          ) {
-            var _stackFunction;
-            stackURL = INJECTED_SCRIPT_STRING;
-            var stackFunction =
-              getStackTraceValues[1] !== undefined
-                ? getStackTraceValues[1].slice(0, -1)
-                : line.slice(0, getStackTraceValues.index).trim();
-            if (
-              (_stackFunction = stackFunction) !== null &&
-              _stackFunction !== void 0 &&
-              _stackFunction.startsWith("at")
-            ) {
-              stackFunction = stackFunction.slice(2).trim();
+      var t = e[i];
+      return (
+        (r = r.slice(n + 1)),
+        ((e instanceof Object || "object" == typeof e) && isEmptyObject(e)) ||
+        null === t
+          ? {
+              base: e,
+              prop: i,
+              chain: r,
             }
-            stack =
-              `${stackFunction} ${stackURL}${stackLine}${stackCol}`.trim();
-          } else if (stackURL === documentURL) {
-            stack = `${INLINE_SCRIPT_STRING}${stackLine}${stackCol}`.trim();
-          } else {
-            stack = `${stackURL}${stackLine}${stackCol}`.trim();
-          }
-        } else {
-          stack = line;
-        }
-        return stack;
-      });
-      if (stackLines) {
-        for (var index = 0; index < stackLines.length; index += 1) {
+          : void 0 !== t
+            ? getPropertyInChain(t, r)
+            : (Object.defineProperty(e, i, {
+                configurable: true,
+              }),
+              {
+                base: e,
+                prop: i,
+                chain: r,
+              })
+      );
+    }
+    function matchStackTrace(e, t) {
+      if (!e || "" === e) return true;
+      var r = backupRegExpValues();
+      if (shouldAbortInlineOrInjectedScript(e, t))
+        return r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r), true;
+      var n = toRegExp(e),
+        a = t
+          .split("\n")
+          .slice(2)
+          .map(function (e) {
+            return e.trim();
+          })
+          .join("\n");
+      return (
+        r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r),
+        getNativeRegexpTest().call(n, a)
+      );
+    }
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
+    }
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
+    }
+    function shouldAbortInlineOrInjectedScript(t, i) {
+      var r = "inlineScript",
+        n = "injectedScript",
+        isInlineScript = function isInlineScript(t) {
+          return t.includes(r);
+        },
+        isInjectedScript = function isInjectedScript(t) {
+          return t.includes(n);
+        };
+      if (!isInlineScript(t) && !isInjectedScript(t)) return false;
+      var e = window.location.href,
+        s = e.indexOf("#");
+      -1 !== s && (e = e.slice(0, s));
+      var c = i
+        .split("\n")
+        .slice(2)
+        .map(function (t) {
+          return t.trim();
+        })
+        .map(function (t) {
+          var i,
+            s = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(t);
+          if (s) {
+            var c,
+              l,
+              a = s[2],
+              u = s[3],
+              o = s[4];
+            if (
+              (null !== (c = a) &&
+                void 0 !== c &&
+                c.startsWith("(") &&
+                (a = a.slice(1)),
+              null !== (l = a) && void 0 !== l && l.startsWith("<anonymous>"))
+            ) {
+              var d;
+              a = n;
+              var f =
+                void 0 !== s[1]
+                  ? s[1].slice(0, -1)
+                  : t.slice(0, s.index).trim();
+              null !== (d = f) &&
+                void 0 !== d &&
+                d.startsWith("at") &&
+                (f = f.slice(2).trim()),
+                (i = `${f} ${a}${u}${o}`.trim());
+            } else i = a === e ? `${r}${u}${o}`.trim() : `${a}${u}${o}`.trim();
+          } else i = t;
+          return i;
+        });
+      if (c)
+        for (var l = 0; l < c.length; l += 1) {
           if (
-            isInlineScript(stackMatch) &&
-            stackLines[index].startsWith(INLINE_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
+            isInlineScript(t) &&
+            c[l].startsWith(r) &&
+            c[l].match(toRegExp(t))
+          )
             return true;
-          }
           if (
-            isInjectedScript(stackMatch) &&
-            stackLines[index].startsWith(INJECTED_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
+            isInjectedScript(t) &&
+            c[l].startsWith(n) &&
+            c[l].match(toRegExp(t))
+          )
             return true;
-          }
         }
-      }
       return false;
     }
     function getNativeRegexpTest() {
-      var descriptor = Object.getOwnPropertyDescriptor(
-        RegExp.prototype,
-        "test"
-      );
-      var nativeRegexTest =
-        descriptor === null || descriptor === void 0
-          ? void 0
-          : descriptor.value;
-      if (descriptor && typeof descriptor.value === "function") {
-        return nativeRegexTest;
-      }
+      var t = Object.getOwnPropertyDescriptor(RegExp.prototype, "test"),
+        e = null == t ? void 0 : t.value;
+      if (t && "function" == typeof t.value) return e;
       throw new Error("RegExp.prototype.test is not a function");
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
     function backupRegExpValues() {
       try {
-        var arrayOfRegexpValues = [];
-        for (var index = 1; index < 10; index += 1) {
-          var value = `$${index}`;
-          if (!RegExp[value]) {
-            break;
-          }
-          arrayOfRegexpValues.push(RegExp[value]);
+        for (var r = [], e = 1; e < 10; e += 1) {
+          var a = `$${e}`;
+          if (!RegExp[a]) break;
+          r.push(RegExp[a]);
         }
-        return arrayOfRegexpValues;
-      } catch (error) {
+        return r;
+      } catch (r) {
         return [];
       }
     }
-    function restoreRegExpValues(array) {
-      if (!array.length) {
-        return;
-      }
-      try {
-        var stringPattern = "";
-        if (array.length === 1) {
-          stringPattern = `(${array[0]})`;
-        } else {
-          stringPattern = array.reduce(
-            function (accumulator, currentValue, currentIndex) {
-              if (currentIndex === 1) {
-                return `(${accumulator}),(${currentValue})`;
-              }
-              return `${accumulator},(${currentValue})`;
-            }
-          );
+    function restoreRegExpValues(e) {
+      if (e.length)
+        try {
+          var r = "";
+          r =
+            1 === e.length
+              ? `(${e[0]})`
+              : e.reduce(function (e, r, t) {
+                  return 1 === t ? `(${e}),(${r})` : `${e},(${r})`;
+                });
+          var t = new RegExp(r);
+          e.toString().replace(t, "");
+        } catch (e) {
+          var n = `Failed to restore RegExp values: ${e}`;
+          console.log(n);
         }
-        var regExpGroup = new RegExp(stringPattern);
-        array.toString().replace(regExpGroup, "");
-      } catch (error) {
-        var message = `Failed to restore RegExp values: ${error}`;
-        console.log(message);
-      }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -22297,7 +20512,7 @@ function _toPrimitive(t, r) {
         logMessage(source, `Cookie domain not matched by origin: '${domain}'`);
         return;
       }
-      var cookieToSet = serializeCookie(name, validValue, path, domain);
+      var cookieToSet = serializeCookie(name, validValue, path, domain, false);
       if (!cookieToSet) {
         logMessage(source, "Invalid cookie name or value");
         return;
@@ -22305,161 +20520,113 @@ function _toPrimitive(t, r) {
       hit(source);
       document.cookie = cookieToSet;
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function nativeIsNaN(num) {
-      var native = Number.isNaN || window.isNaN;
-      return native(num);
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
     }
-    function getLimitedCookieValue(value) {
-      if (!value) {
-        return null;
-      }
-      var allowedCookieValues = new Set([
-        "true",
-        "t",
-        "false",
-        "f",
-        "yes",
-        "y",
-        "no",
-        "n",
-        "ok",
-        "on",
-        "off",
-        "accept",
-        "accepted",
-        "notaccepted",
-        "reject",
-        "rejected",
-        "allow",
-        "allowed",
-        "disallow",
-        "deny",
-        "enable",
-        "enabled",
-        "disable",
-        "disabled",
-        "necessary",
-        "required",
-        "hide",
-        "hidden",
-        "essential",
-        "nonessential",
-        "checked",
-        "unchecked",
-        "forbidden",
-        "forever",
-      ]);
-      var validValue;
-      if (allowedCookieValues.has(value.toLowerCase())) {
-        validValue = value;
-      } else if (/^\d+$/.test(value)) {
-        validValue = parseFloat(value);
-        if (nativeIsNaN(validValue)) {
-          return null;
-        }
-        if (Math.abs(validValue) < 0 || Math.abs(validValue) > 32767) {
-          return null;
-        }
-      } else {
-        return null;
-      }
-      return validValue;
-    }
-    function serializeCookie(name, rawValue, rawPath) {
-      var domainValue =
-        arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
-      var shouldEncodeValue =
-        arguments.length > 4 && arguments[4] !== undefined
-          ? arguments[4]
-          : true;
-      var HOST_PREFIX = "__Host-";
-      var SECURE_PREFIX = "__Secure-";
-      var COOKIE_BREAKER = ";";
+    function getLimitedCookieValue(e) {
+      if (!e) return null;
+      var n;
       if (
-        (!shouldEncodeValue && `${rawValue}`.includes(COOKIE_BREAKER)) ||
-        name.includes(COOKIE_BREAKER)
-      ) {
-        return null;
+        new Set([
+          "true",
+          "t",
+          "false",
+          "f",
+          "yes",
+          "y",
+          "no",
+          "n",
+          "ok",
+          "on",
+          "off",
+          "accept",
+          "accepted",
+          "notaccepted",
+          "reject",
+          "rejected",
+          "allow",
+          "allowed",
+          "disallow",
+          "deny",
+          "enable",
+          "enabled",
+          "disable",
+          "disabled",
+          "necessary",
+          "required",
+          "hide",
+          "hidden",
+          "essential",
+          "nonessential",
+          "checked",
+          "unchecked",
+          "forbidden",
+          "forever",
+        ]).has(e.toLowerCase())
+      )
+        n = e;
+      else if ("emptyArr" === e) n = "[]";
+      else if ("emptyObj" === e) n = "{}";
+      else {
+        if (!/^\d+$/.test(e)) return null;
+        if (((n = parseFloat(e)), nativeIsNaN(n))) return null;
+        if (Math.abs(n) < 0 || Math.abs(n) > 32767) return null;
       }
-      var value = shouldEncodeValue ? encodeURIComponent(rawValue) : rawValue;
-      var resultCookie = `${name}=${value}`;
-      if (name.startsWith(HOST_PREFIX)) {
-        resultCookie += "; path=/; secure";
-        if (domainValue) {
-          console.debug(
-            `Domain value: "${domainValue}" has been ignored, because is not allowed for __Host- prefixed cookies`
-          );
-        }
-        return resultCookie;
-      }
-      var path = getCookiePath(rawPath);
-      if (path) {
-        resultCookie += `; ${path}`;
-      }
-      if (name.startsWith(SECURE_PREFIX)) {
-        resultCookie += "; secure";
-      }
-      if (domainValue) {
-        resultCookie += `; domain=${domainValue}`;
-      }
-      return resultCookie;
+      return n;
     }
-    function isValidCookiePath(rawPath) {
-      return rawPath === "/" || rawPath === "none";
+    function serializeCookie(e, o, i) {
+      var n =
+          arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : "",
+        t = !(arguments.length > 4 && void 0 !== arguments[4]) || arguments[4];
+      if ((!t && `${o}`.includes(";")) || e.includes(";")) return null;
+      var r = `${e}=${t ? encodeURIComponent(o) : o}`;
+      if (e.startsWith("__Host-"))
+        return (
+          (r += "; path=/; secure"),
+          n &&
+            console.debug(
+              `Domain value: "${n}" has been ignored, because is not allowed for __Host- prefixed cookies`,
+            ),
+          r
+        );
+      var s = getCookiePath(i);
+      return (
+        s && (r += `; ${s}`),
+        e.startsWith("__Secure-") && (r += "; secure"),
+        n && (r += `; domain=${n}`),
+        r
+      );
     }
-    function getCookiePath(rawPath) {
-      if (rawPath === "/") {
-        return "path=/";
-      }
-      return "";
+    function isValidCookiePath(n) {
+      return "/" === n || "none" === n;
+    }
+    function getCookiePath(t) {
+      return "/" === t ? "path=/" : "";
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -22509,7 +20676,7 @@ function _toPrimitive(t, r) {
         logMessage(source, `Cookie domain not matched by origin: '${domain}'`);
         return;
       }
-      var cookieToSet = serializeCookie(name, validValue, path, domain);
+      var cookieToSet = serializeCookie(name, validValue, path, domain, false);
       if (!cookieToSet) {
         logMessage(source, "Invalid cookie name or value");
         return;
@@ -22520,172 +20687,127 @@ function _toPrimitive(t, r) {
         window.location.reload();
       }
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function nativeIsNaN(num) {
-      var native = Number.isNaN || window.isNaN;
-      return native(num);
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
     }
-    function isCookieSetWithValue(cookieString, name, value) {
-      return cookieString.split(";").some(function (cookieStr) {
-        var pos = cookieStr.indexOf("=");
-        if (pos === -1) {
-          return false;
+    function isCookieSetWithValue(e, t, r) {
+      return e.split(";").some(function (e) {
+        var n = e.indexOf("=");
+        if (-1 === n) return false;
+        var i = e.slice(0, n).trim(),
+          a = e.slice(n + 1).trim();
+        if (new Set(["$now$", "$currentDate$", "$currentISODate$"]).has(r)) {
+          var u = Date.now(),
+            s = /^\d+$/.test(a) ? parseInt(a, 10) : new Date(a).getTime();
+          return t === i && s > u - 864e5;
         }
-        var cookieName = cookieStr.slice(0, pos).trim();
-        var cookieValue = cookieStr.slice(pos + 1).trim();
-        return name === cookieName && value === cookieValue;
+        return t === i && r === a;
       });
     }
-    function getLimitedCookieValue(value) {
-      if (!value) {
-        return null;
-      }
-      var allowedCookieValues = new Set([
-        "true",
-        "t",
-        "false",
-        "f",
-        "yes",
-        "y",
-        "no",
-        "n",
-        "ok",
-        "on",
-        "off",
-        "accept",
-        "accepted",
-        "notaccepted",
-        "reject",
-        "rejected",
-        "allow",
-        "allowed",
-        "disallow",
-        "deny",
-        "enable",
-        "enabled",
-        "disable",
-        "disabled",
-        "necessary",
-        "required",
-        "hide",
-        "hidden",
-        "essential",
-        "nonessential",
-        "checked",
-        "unchecked",
-        "forbidden",
-        "forever",
-      ]);
-      var validValue;
-      if (allowedCookieValues.has(value.toLowerCase())) {
-        validValue = value;
-      } else if (/^\d+$/.test(value)) {
-        validValue = parseFloat(value);
-        if (nativeIsNaN(validValue)) {
-          return null;
-        }
-        if (Math.abs(validValue) < 0 || Math.abs(validValue) > 32767) {
-          return null;
-        }
-      } else {
-        return null;
-      }
-      return validValue;
-    }
-    function serializeCookie(name, rawValue, rawPath) {
-      var domainValue =
-        arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
-      var shouldEncodeValue =
-        arguments.length > 4 && arguments[4] !== undefined
-          ? arguments[4]
-          : true;
-      var HOST_PREFIX = "__Host-";
-      var SECURE_PREFIX = "__Secure-";
-      var COOKIE_BREAKER = ";";
+    function getLimitedCookieValue(e) {
+      if (!e) return null;
+      var n;
       if (
-        (!shouldEncodeValue && `${rawValue}`.includes(COOKIE_BREAKER)) ||
-        name.includes(COOKIE_BREAKER)
-      ) {
-        return null;
+        new Set([
+          "true",
+          "t",
+          "false",
+          "f",
+          "yes",
+          "y",
+          "no",
+          "n",
+          "ok",
+          "on",
+          "off",
+          "accept",
+          "accepted",
+          "notaccepted",
+          "reject",
+          "rejected",
+          "allow",
+          "allowed",
+          "disallow",
+          "deny",
+          "enable",
+          "enabled",
+          "disable",
+          "disabled",
+          "necessary",
+          "required",
+          "hide",
+          "hidden",
+          "essential",
+          "nonessential",
+          "checked",
+          "unchecked",
+          "forbidden",
+          "forever",
+        ]).has(e.toLowerCase())
+      )
+        n = e;
+      else if ("emptyArr" === e) n = "[]";
+      else if ("emptyObj" === e) n = "{}";
+      else {
+        if (!/^\d+$/.test(e)) return null;
+        if (((n = parseFloat(e)), nativeIsNaN(n))) return null;
+        if (Math.abs(n) < 0 || Math.abs(n) > 32767) return null;
       }
-      var value = shouldEncodeValue ? encodeURIComponent(rawValue) : rawValue;
-      var resultCookie = `${name}=${value}`;
-      if (name.startsWith(HOST_PREFIX)) {
-        resultCookie += "; path=/; secure";
-        if (domainValue) {
-          console.debug(
-            `Domain value: "${domainValue}" has been ignored, because is not allowed for __Host- prefixed cookies`
-          );
-        }
-        return resultCookie;
-      }
-      var path = getCookiePath(rawPath);
-      if (path) {
-        resultCookie += `; ${path}`;
-      }
-      if (name.startsWith(SECURE_PREFIX)) {
-        resultCookie += "; secure";
-      }
-      if (domainValue) {
-        resultCookie += `; domain=${domainValue}`;
-      }
-      return resultCookie;
+      return n;
     }
-    function isValidCookiePath(rawPath) {
-      return rawPath === "/" || rawPath === "none";
+    function serializeCookie(e, o, i) {
+      var n =
+          arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : "",
+        t = !(arguments.length > 4 && void 0 !== arguments[4]) || arguments[4];
+      if ((!t && `${o}`.includes(";")) || e.includes(";")) return null;
+      var r = `${e}=${t ? encodeURIComponent(o) : o}`;
+      if (e.startsWith("__Host-"))
+        return (
+          (r += "; path=/; secure"),
+          n &&
+            console.debug(
+              `Domain value: "${n}" has been ignored, because is not allowed for __Host- prefixed cookies`,
+            ),
+          r
+        );
+      var s = getCookiePath(i);
+      return (
+        s && (r += `; ${s}`),
+        e.startsWith("__Secure-") && (r += "; secure"),
+        n && (r += `; domain=${n}`),
+        r
+      );
     }
-    function getCookiePath(rawPath) {
-      if (rawPath === "/") {
-        return "path=/";
-      }
-      return "";
+    function isValidCookiePath(n) {
+      return "/" === n || "none" === n;
+    }
+    function getCookiePath(t) {
+      return "/" === t ? "path=/" : "";
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -22734,199 +20856,141 @@ function _toPrimitive(t, r) {
       }
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
-      }
-    }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
-    }
-    function nativeIsNaN(num) {
-      var native = Number.isNaN || window.isNaN;
-      return native(num);
-    }
-    function setStorageItem(source, storage, key, value) {
-      try {
-        storage.setItem(key, value);
-      } catch (e) {
-        var message = `Unable to set storage item due to: ${e.message}`;
-        logMessage(source, message);
-      }
-    }
-    function removeStorageItem(source, storage, key) {
-      try {
-        if (
-          key.startsWith("/") &&
-          (key.endsWith("/") || key.endsWith("/i")) &&
-          isValidStrPattern(key)
-        ) {
-          var regExpKey = toRegExp(key);
-          var storageKeys = Object.keys(storage);
-          storageKeys.forEach(function (storageKey) {
-            if (regExpKey.test(storageKey)) {
-              storage.removeItem(storageKey);
-            }
-          });
-        } else {
-          storage.removeItem(key);
-        }
-      } catch (e) {
-        var message = `Unable to remove storage item due to: ${e.message}`;
-        logMessage(source, message);
-      }
-    }
-    function getLimitedStorageItemValue(value) {
-      if (typeof value !== "string") {
-        throw new Error("Invalid value");
-      }
-      var allowedStorageValues = new Set([
-        "undefined",
-        "false",
-        "true",
-        "null",
-        "",
-        "yes",
-        "no",
-        "on",
-        "off",
-        "accept",
-        "accepted",
-        "reject",
-        "rejected",
-        "allowed",
-        "denied",
-        "forbidden",
-        "forever",
-      ]);
-      var validValue;
-      if (allowedStorageValues.has(value.toLowerCase())) {
-        validValue = value;
-      } else if (value === "emptyArr") {
-        validValue = "[]";
-      } else if (value === "emptyObj") {
-        validValue = "{}";
-      } else if (/^\d+$/.test(value)) {
-        validValue = parseFloat(value);
-        if (nativeIsNaN(validValue)) {
-          throw new Error("Invalid value");
-        }
-        if (Math.abs(validValue) > 32767) {
-          throw new Error("Invalid value");
-        }
-      } else if (value === "$remove$") {
-        validValue = "$remove$";
-      } else {
-        throw new Error("Invalid value");
-      }
-      return validValue;
-    }
-    function isValidStrPattern(input) {
-      var FORWARD_SLASH = "/";
-      var str = escapeRegExp(input);
-      if (
-        input[0] === FORWARD_SLASH &&
-        input[input.length - 1] === FORWARD_SLASH
-      ) {
-        str = input.slice(1, -1);
-      }
-      var isValid;
-      try {
-        isValid = new RegExp(str);
-        isValid = true;
-      } catch (e) {
-        isValid = false;
-      }
-      return isValid;
-    }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
+    function hit(e) {
+      if (e.verbose) {
         try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
-      var escaped = input
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
+      }
+    }
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
+    }
+    function setStorageItem(e, t, s, a) {
+      try {
+        t.setItem(s, a);
+      } catch (t) {
+        var o = `Unable to set storage item due to: ${t.message}`;
+        logMessage(e, o);
+      }
+    }
+    function removeStorageItem(e, t, o) {
+      try {
+        if (
+          o.startsWith("/") &&
+          (o.endsWith("/") || o.endsWith("/i")) &&
+          isValidStrPattern(o)
+        ) {
+          var r = toRegExp(o);
+          Object.keys(t).forEach(function (e) {
+            r.test(e) && t.removeItem(e);
+          });
+        } else t.removeItem(o);
+      } catch (t) {
+        var s = `Unable to remove storage item due to: ${t.message}`;
+        logMessage(e, s);
+      }
+    }
+    function getLimitedStorageItemValue(e) {
+      if ("string" != typeof e) throw new Error("Invalid value");
+      var r;
+      if (
+        new Set([
+          "undefined",
+          "false",
+          "true",
+          "null",
+          "",
+          "yes",
+          "no",
+          "on",
+          "off",
+          "accept",
+          "accepted",
+          "reject",
+          "rejected",
+          "allowed",
+          "denied",
+          "forbidden",
+          "forever",
+        ]).has(e.toLowerCase())
+      )
+        r = e;
+      else if ("emptyArr" === e) r = "[]";
+      else if ("emptyObj" === e) r = "{}";
+      else if (/^\d+$/.test(e)) {
+        if (((r = parseFloat(e)), nativeIsNaN(r)))
+          throw new Error("Invalid value");
+        if (Math.abs(r) > 32767) throw new Error("Invalid value");
+      } else {
+        if ("$remove$" !== e) throw new Error("Invalid value");
+        r = "$remove$";
+      }
+      return r;
+    }
+    function isValidStrPattern(e) {
+      var t,
+        n = escapeRegExp(e);
+      "/" === e[0] && "/" === e[e.length - 1] && (n = e.slice(1, -1));
+      try {
+        (t = new RegExp(n)), (t = !0);
+      } catch (e) {
+        t = false;
+      }
+      return t;
+    }
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function escapeRegExp(str) {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    function escapeRegExp(e) {
+      return e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -22973,32 +21037,20 @@ function _toPrimitive(t, r) {
         },
       });
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
@@ -23048,199 +21100,141 @@ function _toPrimitive(t, r) {
       }
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
-      }
-    }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
-    }
-    function nativeIsNaN(num) {
-      var native = Number.isNaN || window.isNaN;
-      return native(num);
-    }
-    function setStorageItem(source, storage, key, value) {
-      try {
-        storage.setItem(key, value);
-      } catch (e) {
-        var message = `Unable to set storage item due to: ${e.message}`;
-        logMessage(source, message);
-      }
-    }
-    function removeStorageItem(source, storage, key) {
-      try {
-        if (
-          key.startsWith("/") &&
-          (key.endsWith("/") || key.endsWith("/i")) &&
-          isValidStrPattern(key)
-        ) {
-          var regExpKey = toRegExp(key);
-          var storageKeys = Object.keys(storage);
-          storageKeys.forEach(function (storageKey) {
-            if (regExpKey.test(storageKey)) {
-              storage.removeItem(storageKey);
-            }
-          });
-        } else {
-          storage.removeItem(key);
-        }
-      } catch (e) {
-        var message = `Unable to remove storage item due to: ${e.message}`;
-        logMessage(source, message);
-      }
-    }
-    function getLimitedStorageItemValue(value) {
-      if (typeof value !== "string") {
-        throw new Error("Invalid value");
-      }
-      var allowedStorageValues = new Set([
-        "undefined",
-        "false",
-        "true",
-        "null",
-        "",
-        "yes",
-        "no",
-        "on",
-        "off",
-        "accept",
-        "accepted",
-        "reject",
-        "rejected",
-        "allowed",
-        "denied",
-        "forbidden",
-        "forever",
-      ]);
-      var validValue;
-      if (allowedStorageValues.has(value.toLowerCase())) {
-        validValue = value;
-      } else if (value === "emptyArr") {
-        validValue = "[]";
-      } else if (value === "emptyObj") {
-        validValue = "{}";
-      } else if (/^\d+$/.test(value)) {
-        validValue = parseFloat(value);
-        if (nativeIsNaN(validValue)) {
-          throw new Error("Invalid value");
-        }
-        if (Math.abs(validValue) > 32767) {
-          throw new Error("Invalid value");
-        }
-      } else if (value === "$remove$") {
-        validValue = "$remove$";
-      } else {
-        throw new Error("Invalid value");
-      }
-      return validValue;
-    }
-    function isValidStrPattern(input) {
-      var FORWARD_SLASH = "/";
-      var str = escapeRegExp(input);
-      if (
-        input[0] === FORWARD_SLASH &&
-        input[input.length - 1] === FORWARD_SLASH
-      ) {
-        str = input.slice(1, -1);
-      }
-      var isValid;
-      try {
-        isValid = new RegExp(str);
-        isValid = true;
-      } catch (e) {
-        isValid = false;
-      }
-      return isValid;
-    }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
+    function hit(e) {
+      if (e.verbose) {
         try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
-      var escaped = input
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
+      }
+    }
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
+    }
+    function setStorageItem(e, t, s, a) {
+      try {
+        t.setItem(s, a);
+      } catch (t) {
+        var o = `Unable to set storage item due to: ${t.message}`;
+        logMessage(e, o);
+      }
+    }
+    function removeStorageItem(e, t, o) {
+      try {
+        if (
+          o.startsWith("/") &&
+          (o.endsWith("/") || o.endsWith("/i")) &&
+          isValidStrPattern(o)
+        ) {
+          var r = toRegExp(o);
+          Object.keys(t).forEach(function (e) {
+            r.test(e) && t.removeItem(e);
+          });
+        } else t.removeItem(o);
+      } catch (t) {
+        var s = `Unable to remove storage item due to: ${t.message}`;
+        logMessage(e, s);
+      }
+    }
+    function getLimitedStorageItemValue(e) {
+      if ("string" != typeof e) throw new Error("Invalid value");
+      var r;
+      if (
+        new Set([
+          "undefined",
+          "false",
+          "true",
+          "null",
+          "",
+          "yes",
+          "no",
+          "on",
+          "off",
+          "accept",
+          "accepted",
+          "reject",
+          "rejected",
+          "allowed",
+          "denied",
+          "forbidden",
+          "forever",
+        ]).has(e.toLowerCase())
+      )
+        r = e;
+      else if ("emptyArr" === e) r = "[]";
+      else if ("emptyObj" === e) r = "{}";
+      else if (/^\d+$/.test(e)) {
+        if (((r = parseFloat(e)), nativeIsNaN(r)))
+          throw new Error("Invalid value");
+        if (Math.abs(r) > 32767) throw new Error("Invalid value");
+      } else {
+        if ("$remove$" !== e) throw new Error("Invalid value");
+        r = "$remove$";
+      }
+      return r;
+    }
+    function isValidStrPattern(e) {
+      var t,
+        n = escapeRegExp(e);
+      "/" === e[0] && "/" === e[e.length - 1] && (n = e.slice(1, -1));
+      try {
+        (t = new RegExp(n)), (t = !0);
+      } catch (e) {
+        t = false;
+      }
+      return t;
+    }
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function escapeRegExp(str) {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    function escapeRegExp(e) {
+      return e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -23300,13 +21294,13 @@ function _toPrimitive(t, r) {
           }
           propToValueMap.set(
             convertToCamelCase(arrayOfProperties[i]),
-            arrayOfProperties[i + 1]
+            arrayOfProperties[i + 1],
           );
         }
       } else if (cssPropertyName && cssPropertyValue && !shouldDebug) {
         propToValueMap.set(
           convertToCamelCase(cssPropertyName),
-          cssPropertyValue
+          cssPropertyValue,
         );
       }
       var spoofStyle = function spoofStyle(cssProperty, realCssValue) {
@@ -23329,7 +21323,7 @@ function _toPrimitive(t, r) {
       var getComputedStyleWrapper = function getComputedStyleWrapper(
         target,
         thisArg,
-        args
+        args,
       ) {
         if (shouldDebug) {
           debugger;
@@ -23378,12 +21372,12 @@ function _toPrimitive(t, r) {
       };
       window.getComputedStyle = new Proxy(
         window.getComputedStyle,
-        getComputedStyleHandler
+        getComputedStyleHandler,
       );
       var getBoundingClientRectWrapper = function getBoundingClientRectWrapper(
         target,
         thisArg,
-        args
+        args,
       ) {
         if (shouldDebug) {
           debugger;
@@ -23392,24 +21386,8 @@ function _toPrimitive(t, r) {
         if (!thisArg.matches(selectors)) {
           return rect;
         }
-        var {
-          top: top,
-          bottom: bottom,
-          height: height,
-          width: width,
-          left: left,
-          right: right,
-        } = rect;
-        var newDOMRect = new window.DOMRect(
-          rect.x,
-          rect.y,
-          top,
-          bottom,
-          width,
-          height,
-          left,
-          right
-        );
+        var { x: x, y: y, height: height, width: width } = rect;
+        var newDOMRect = new window.DOMRect(x, y, width, height);
         if (propToValueMap.has("top")) {
           setRectValue(newDOMRect, "top", propToValueMap.get("top"));
         }
@@ -23437,35 +21415,23 @@ function _toPrimitive(t, r) {
       };
       window.Element.prototype.getBoundingClientRect = new Proxy(
         window.Element.prototype.getBoundingClientRect,
-        getBoundingClientRectHandler
+        getBoundingClientRectHandler,
       );
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
@@ -23528,7 +21494,7 @@ function _toPrimitive(t, r) {
         var attachShadowWrapper = function attachShadowWrapper(
           target,
           thisArg,
-          argumentsList
+          argumentsList,
         ) {
           var _argumentsList$;
           var mode =
@@ -23546,7 +21512,7 @@ function _toPrimitive(t, r) {
         };
         window.Element.prototype.attachShadow = new Proxy(
           window.Element.prototype.attachShadow,
-          attachShadowHandler
+          attachShadowHandler,
         );
       }
       var parsedDelay;
@@ -23586,7 +21552,7 @@ function _toPrimitive(t, r) {
             isInvertedMatchLocalStorage = _isInvertedMatch;
             var localStorageMatch = _matchValue.replace(
               LOCAL_STORAGE_MATCH_MARKER,
-              ""
+              "",
             );
             localStorageMatches.push(localStorageMatch);
           }
@@ -23599,7 +21565,7 @@ function _toPrimitive(t, r) {
       }
       if (cookieMatches.length > 0) {
         var parsedCookieMatches = parseCookieString(
-          cookieMatches.join(COOKIE_STRING_DELIMITER)
+          cookieMatches.join(COOKIE_STRING_DELIMITER),
         );
         var parsedCookies = parseCookieString(document.cookie);
         var cookieKeys = Object.keys(parsedCookies);
@@ -23626,7 +21592,7 @@ function _toPrimitive(t, r) {
               }
               return valueMatch.test(parsedCookieValue);
             });
-          }
+          },
         );
         var shouldRun = cookiesMatched !== isInvertedMatchCookie;
         if (!shouldRun) {
@@ -23657,7 +21623,7 @@ function _toPrimitive(t, r) {
         };
       };
       var elementsSequence = Array(selectorsSequence.length).fill(
-        createElementObj(null)
+        createElementObj(null),
       );
       var findAndClickElement = function findAndClickElement(elementObj) {
         try {
@@ -23668,7 +21634,7 @@ function _toPrimitive(t, r) {
           if (!element) {
             logMessage(
               source,
-              `Could not find element: '${elementObj.selectorText}'`
+              `Could not find element: '${elementObj.selectorText}'`,
             );
             return;
           }
@@ -23677,7 +21643,7 @@ function _toPrimitive(t, r) {
         } catch (error) {
           logMessage(
             source,
-            `Could not click element: '${elementObj.selectorText}'`
+            `Could not click element: '${elementObj.selectorText}'`,
           );
         }
       };
@@ -23696,14 +21662,14 @@ function _toPrimitive(t, r) {
           if (Number.isNaN(passedReload)) {
             logMessage(
               source,
-              `Passed reload delay value '${passedReload}' is invalid`
+              `Passed reload delay value '${passedReload}' is invalid`,
             );
             return;
           }
           if (passedReload > OBSERVER_TIMEOUT_MS) {
             logMessage(
               source,
-              `Passed reload delay value '${passedReload}' is bigger than maximum ${OBSERVER_TIMEOUT_MS} ms`
+              `Passed reload delay value '${passedReload}' is bigger than maximum ${OBSERVER_TIMEOUT_MS} ms`,
             );
             return;
           }
@@ -23759,7 +21725,7 @@ function _toPrimitive(t, r) {
           var element = queryShadowSelector(
             selector,
             document.documentElement,
-            textMatchRegexp
+            textMatchRegexp,
           );
           if (!element) {
             return;
@@ -23779,7 +21745,7 @@ function _toPrimitive(t, r) {
         var allSelectorsFulfilled = selectorsSequence.every(
           function (selector) {
             return selector === null;
-          }
+          },
         );
         if (allSelectorsFulfilled) {
           observer.disconnect();
@@ -23787,7 +21753,7 @@ function _toPrimitive(t, r) {
       };
       var initializeMutationObserver = function initializeMutationObserver() {
         var observer = new MutationObserver(
-          throttle(findElements, THROTTLE_DELAY_MS)
+          throttle(findElements, THROTTLE_DELAY_MS),
         );
         observer.observe(document.documentElement, {
           attributes: true,
@@ -23806,7 +21772,7 @@ function _toPrimitive(t, r) {
           var element = queryShadowSelector(
             selector,
             document.documentElement,
-            textMatchRegexp
+            textMatchRegexp,
           );
           return !!element;
         });
@@ -23824,206 +21790,128 @@ function _toPrimitive(t, r) {
         }, parsedDelay);
       }
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function parseCookieString(cookieString) {
-      var COOKIE_DELIMITER = "=";
-      var COOKIE_PAIRS_DELIMITER = ";";
-      var cookieChunks = cookieString.split(COOKIE_PAIRS_DELIMITER);
-      var cookieData = {};
-      cookieChunks.forEach(function (singleCookie) {
-        var cookieKey;
-        var cookieValue = "";
-        var delimiterIndex = singleCookie.indexOf(COOKIE_DELIMITER);
-        if (delimiterIndex === -1) {
-          cookieKey = singleCookie.trim();
-        } else {
-          cookieKey = singleCookie.slice(0, delimiterIndex).trim();
-          cookieValue = singleCookie.slice(delimiterIndex + 1);
-        }
-        cookieData[cookieKey] = cookieValue || null;
-      });
-      return cookieData;
-    }
-    function throttle(cb, delay) {
-      var wait = false;
-      var savedArgs;
-      var _wrapper = function wrapper() {
-        for (
-          var _len = arguments.length, args = new Array(_len), _key = 0;
-          _key < _len;
-          _key++
-        ) {
-          args[_key] = arguments[_key];
-        }
-        if (wait) {
-          savedArgs = args;
-          return;
-        }
-        cb(...args);
-        wait = true;
-        setTimeout(function () {
-          wait = false;
-          if (savedArgs) {
-            _wrapper(...savedArgs);
-            savedArgs = null;
-          }
-        }, delay);
-      };
-      return _wrapper;
-    }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
-    }
-    function parseMatchArg(match) {
-      var INVERT_MARKER = "!";
-      var isInvertedMatch = match
-        ? match === null || match === void 0
-          ? void 0
-          : match.startsWith(INVERT_MARKER)
-        : false;
-      var matchValue = isInvertedMatch ? match.slice(1) : match;
-      var matchRegexp = toRegExp(matchValue);
-      return {
-        isInvertedMatch: isInvertedMatch,
-        matchRegexp: matchRegexp,
-        matchValue: matchValue,
-      };
-    }
-    function queryShadowSelector(selector) {
-      var context =
-        arguments.length > 1 && arguments[1] !== undefined
-          ? arguments[1]
-          : document.documentElement;
-      var textContent =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : null;
-      var SHADOW_COMBINATOR = " >>> ";
-      var pos = selector.indexOf(SHADOW_COMBINATOR);
-      if (pos === -1) {
-        if (textContent) {
-          return findElementWithText(context, selector, textContent);
-        }
-        return context.querySelector(selector);
-      }
-      var shadowHostSelector = selector.slice(0, pos).trim();
-      var elem = context.querySelector(shadowHostSelector);
-      if (!elem || !elem.shadowRoot) {
-        return null;
-      }
-      var shadowRootSelector = selector
-        .slice(pos + SHADOW_COMBINATOR.length)
-        .trim();
-      return queryShadowSelector(
-        shadowRootSelector,
-        elem.shadowRoot,
-        textContent
+    function parseCookieString(i) {
+      var r = i.split(";"),
+        n = {};
+      return (
+        r.forEach(function (i) {
+          var r,
+            t = "",
+            e = i.indexOf("=");
+          -1 === e
+            ? (r = i.trim())
+            : ((r = i.slice(0, e).trim()), (t = i.slice(e + 1))),
+            (n[r] = t || null);
+        }),
+        n
       );
     }
-    function doesElementContainText(element, matchRegexp) {
-      var { textContent: textContent } = element;
-      if (!textContent) {
-        return false;
-      }
-      return matchRegexp.test(textContent);
+    function throttle(n, t) {
+      var r,
+        e = false,
+        _wrapper8 = function _wrapper() {
+          for (var o = arguments.length, u = new Array(o), f = 0; f < o; f++)
+            u[f] = arguments[f];
+          e
+            ? (r = u)
+            : (n(...u),
+              (e = true),
+              setTimeout(function () {
+                (e = false), r && (_wrapper8(...r), (r = null));
+              }, t));
+        };
+      return _wrapper8;
     }
-    function findElementWithText(rootElement, selector, matchRegexp) {
-      var elements = rootElement.querySelectorAll(selector);
-      for (var i = 0; i < elements.length; i += 1) {
-        if (doesElementContainText(elements[i], matchRegexp)) {
-          return elements[i];
-        }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
+    }
+    function parseMatchArg(t) {
+      var e = !!t && (null == t ? void 0 : t.startsWith("!")),
+        a = e ? t.slice(1) : t;
+      return {
+        isInvertedMatch: e,
+        matchRegexp: toRegExp(a),
+        matchValue: a,
+      };
+    }
+    function queryShadowSelector(e) {
+      var t =
+          arguments.length > 1 && void 0 !== arguments[1]
+            ? arguments[1]
+            : document.documentElement,
+        o =
+          arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : null,
+        r = " >>> ",
+        l = e.indexOf(r);
+      if (-1 === l)
+        return o ? findElementWithText(t, e, o) : t.querySelector(e);
+      var n = e.slice(0, l).trim(),
+        i = t.querySelector(n);
+      return i && i.shadowRoot
+        ? queryShadowSelector(e.slice(l + 5).trim(), i.shadowRoot, o)
+        : null;
+    }
+    function doesElementContainText(t, e) {
+      var { textContent: n } = t;
+      return !!n && e.test(n);
+    }
+    function findElementWithText(e, n, t) {
+      for (var l = e.querySelectorAll(n), r = 0; r < l.length; r += 1)
+        if (doesElementContainText(l[r], t)) return l[r];
       return null;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
@@ -24091,7 +21979,7 @@ function _toPrimitive(t, r) {
         } catch (e) {
           logError(
             `Cannot set attribute '${attr.name}' with value '${attr.value}'`,
-            e
+            e,
           );
         }
       });
@@ -24101,7 +21989,7 @@ function _toPrimitive(t, r) {
       var findParentAndAppendEl = function findParentAndAppendEl(
         parentElSelector,
         el,
-        removeElDelayMs
+        removeElDelayMs,
       ) {
         var parentEl;
         try {
@@ -24109,14 +21997,14 @@ function _toPrimitive(t, r) {
         } catch (e) {
           logError(
             `Cannot find parent element by selector '${parentElSelector}'`,
-            e
+            e,
           );
           return false;
         }
         if (!parentEl) {
           logMessage(
             source,
-            `No parent element found by selector: '${parentElSelector}'`
+            `No parent element found by selector: '${parentElSelector}'`,
           );
           return false;
         }
@@ -24132,7 +22020,7 @@ function _toPrimitive(t, r) {
         } catch (e) {
           logError(
             `Cannot append child to parent by selector '${parentElSelector}'`,
-            e
+            e,
           );
           return false;
         }
@@ -24157,170 +22045,105 @@ function _toPrimitive(t, r) {
         });
       }
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
-    }
-    function observeDocumentWithTimeout(callback) {
-      var options =
-        arguments.length > 1 && arguments[1] !== undefined
-          ? arguments[1]
-          : {
-              subtree: true,
-              childList: true,
-            };
-      var timeout =
-        arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1e4;
-      var documentObserver = new MutationObserver(function (
-        mutations,
-        observer
-      ) {
-        observer.disconnect();
-        callback(mutations, observer);
-        observer.observe(document.documentElement, options);
-      });
-      documentObserver.observe(document.documentElement, options);
-      if (typeof timeout === "number") {
-        setTimeout(function () {
-          return documentObserver.disconnect();
-        }, timeout);
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
     }
-    function nativeIsNaN(num) {
-      var native = Number.isNaN || window.isNaN;
-      return native(num);
+    function observeDocumentWithTimeout(e) {
+      var t =
+          arguments.length > 1 && void 0 !== arguments[1]
+            ? arguments[1]
+            : {
+                subtree: true,
+                childList: true,
+              },
+        n =
+          arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : 1e4,
+        o = new MutationObserver(function (n, o) {
+          o.disconnect(), e(n, o), o.observe(document.documentElement, t);
+        });
+      o.observe(document.documentElement, t),
+        "number" == typeof n &&
+          setTimeout(function () {
+            return o.disconnect();
+          }, n);
     }
-    function parseAttributePairs(input) {
-      if (!input) {
-        return [];
-      }
-      var NAME_VALUE_SEPARATOR = "=";
-      var PAIRS_SEPARATOR = " ";
-      var SINGLE_QUOTE = "'";
-      var DOUBLE_QUOTE = '"';
-      var BACKSLASH = "\\";
-      var pairs = [];
-      for (var i = 0; i < input.length; i += 1) {
-        var name = "";
-        var value = "";
-        while (
-          i < input.length &&
-          input[i] !== NAME_VALUE_SEPARATOR &&
-          input[i] !== PAIRS_SEPARATOR
-        ) {
-          name += input[i];
-          i += 1;
-        }
-        if (i < input.length && input[i] === NAME_VALUE_SEPARATOR) {
-          i += 1;
-          var quote = null;
-          if (input[i] === SINGLE_QUOTE || input[i] === DOUBLE_QUOTE) {
-            quote = input[i];
-            i += 1;
-            for (; i < input.length; i += 1) {
-              if (input[i] === quote) {
-                if (input[i - 1] === BACKSLASH) {
-                  value = `${value.slice(0, -1)}${quote}`;
-                } else {
-                  i += 1;
-                  quote = null;
-                  break;
-                }
-              } else {
-                value += input[i];
-              }
-            }
-            if (quote !== null) {
-              throw new Error(
-                `Unbalanced quote for attribute value: '${input}'`
-              );
-            }
-          } else {
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
+    }
+    function parseAttributePairs(e) {
+      if (!e) return [];
+      for (var r = [], t = 0; t < e.length; t += 1) {
+        for (var i = "", n = ""; t < e.length && "=" !== e[t] && " " !== e[t]; )
+          (i += e[t]), (t += 1);
+        if (t < e.length && "=" === e[t]) {
+          var o = null;
+          if ("'" !== e[(t += 1)] && '"' !== e[t])
             throw new Error(
-              `Attribute value should be quoted: "${input.slice(i)}"`
+              `Attribute value should be quoted: "${e.slice(t)}"`,
             );
-          }
+          for (o = e[t], t += 1; t < e.length; t += 1)
+            if (e[t] === o) {
+              if ("\\" !== e[t - 1]) {
+                (t += 1), (o = null);
+                break;
+              }
+              n = `${n.slice(0, -1)}${o}`;
+            } else n += e[t];
+          if (null !== o)
+            throw new Error(`Unbalanced quote for attribute value: '${e}'`);
         }
-        name = name.trim();
-        value = value.trim();
-        if (!name) {
-          if (!value) {
-            continue;
-          }
+        if (((i = i.trim()), (n = n.trim()), !i)) {
+          if (!n) continue;
           throw new Error(
-            `Attribute name before '=' should be specified: '${input}'`
+            `Attribute name before '=' should be specified: '${e}'`,
           );
         }
-        pairs.push({
-          name: name,
-          value: value,
-        });
-        if (input[i] && input[i] !== PAIRS_SEPARATOR) {
-          throw new Error(`No space before attribute: '${input.slice(i)}'`);
-        }
+        if (
+          (r.push({
+            name: i,
+            value: n,
+          }),
+          e[t] && " " !== e[t])
+        )
+          throw new Error(`No space before attribute: '${e.slice(t)}'`);
       }
-      return pairs;
+      return r;
     }
-    function getErrorMessage(error) {
-      var isErrorWithMessage = function isErrorWithMessage(e) {
-        return (
-          typeof e === "object" &&
-          e !== null &&
-          "message" in e &&
-          typeof e.message === "string"
-        );
-      };
-      if (isErrorWithMessage(error)) {
-        return error.message;
-      }
+    function getErrorMessage(e) {
+      var r;
+      if (
+        "object" == typeof (r = e) &&
+        null !== r &&
+        "message" in r &&
+        "string" == typeof r.message
+      )
+        return e.message;
       try {
-        return new Error(JSON.stringify(error)).message;
-      } catch (_unused) {
-        return new Error(String(error)).message;
+        return new Error(JSON.stringify(e)).message;
+      } catch (r) {
+        return new Error(String(e)).message;
       }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
@@ -24387,35 +22210,23 @@ function _toPrimitive(t, r) {
       };
       EventTarget.prototype.addEventListener = new Proxy(
         EventTarget.prototype.addEventListener,
-        handler
+        handler,
       );
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
@@ -24449,7 +22260,7 @@ function _toPrimitive(t, r) {
       source,
       functionName,
       propsToRemove,
-      requiredInitialProps
+      requiredInitialProps,
     ) {
       var stack =
         arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : "";
@@ -24476,7 +22287,7 @@ function _toPrimitive(t, r) {
             prunePaths,
             requiredPaths,
             stack,
-            nativeObjects
+            nativeObjects,
           );
           args[0] = data;
         }
@@ -24487,496 +22298,1100 @@ function _toPrimitive(t, r) {
       };
       base[prop] = new Proxy(base[prop], objectHandler);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
-      }
-    }
-    function matchStackTrace(stackMatch, stackTrace) {
-      if (!stackMatch || stackMatch === "") {
-        return true;
-      }
-      var regExpValues = backupRegExpValues();
-      if (shouldAbortInlineOrInjectedScript(stackMatch, stackTrace)) {
-        if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-          restoreRegExpValues(regExpValues);
-        }
-        return true;
-      }
-      var stackRegexp = toRegExp(stackMatch);
-      var refinedStackTrace = stackTrace
-        .split("\n")
-        .slice(2)
-        .map(function (line) {
-          return line.trim();
-        })
-        .join("\n");
-      if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-        restoreRegExpValues(regExpValues);
-      }
-      return getNativeRegexpTest().call(stackRegexp, refinedStackTrace);
-    }
-    function getPropertyInChain(base, chain) {
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
-        return {
-          base: base,
-          prop: chain,
-        };
-      }
-      var prop = chain.slice(0, pos);
-      if (base === null) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (
-        (base instanceof Object || typeof base === "object") &&
-        isEmptyObject(base)
-      ) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase === null) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase !== undefined) {
-        return getPropertyInChain(nextBase, chain);
-      }
-      Object.defineProperty(base, prop, {
-        configurable: true,
-      });
-      return {
-        base: base,
-        prop: prop,
-        chain: chain,
-      };
-    }
-    function getWildcardPropertyInChain(base, chain) {
-      var lookThrough =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var output =
-        arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
-        if (chain === "*" || chain === "[]") {
-          for (var key in base) {
-            if (Object.prototype.hasOwnProperty.call(base, key)) {
-              output.push({
-                base: base,
-                prop: key,
-              });
-            }
-          }
-        } else {
-          output.push({
-            base: base,
-            prop: chain,
-          });
-        }
-        return output;
-      }
-      var prop = chain.slice(0, pos);
-      var shouldLookThrough =
-        (prop === "[]" && Array.isArray(base)) ||
-        (prop === "*" && base instanceof Object);
-      if (shouldLookThrough) {
-        var nextProp = chain.slice(pos + 1);
-        var baseKeys = Object.keys(base);
-        baseKeys.forEach(function (key) {
-          var item = base[key];
-          getWildcardPropertyInChain(item, nextProp, lookThrough, output);
-        });
-      }
-      if (Array.isArray(base)) {
-        base.forEach(function (key) {
-          var nextBase = key;
-          if (nextBase !== undefined) {
-            getWildcardPropertyInChain(nextBase, chain, lookThrough, output);
-          }
-        });
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (nextBase !== undefined) {
-        getWildcardPropertyInChain(nextBase, chain, lookThrough, output);
-      }
-      return output;
-    }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
-    }
-    function isPruningNeeded(
-      source,
-      root,
-      prunePaths,
-      requiredPaths,
-      stack,
-      nativeObjects
-    ) {
-      if (!root) {
-        return false;
-      }
-      var { nativeStringify: nativeStringify } = nativeObjects;
-      var shouldProcess;
-      if (prunePaths.length === 0 && requiredPaths.length > 0) {
-        var rootString = nativeStringify(root);
-        var matchRegex = toRegExp(requiredPaths.join(""));
-        var shouldLog = matchRegex.test(rootString);
-        if (shouldLog) {
-          logMessage(
-            source,
-            `${window.location.hostname}\n${nativeStringify(root, null, 2)}\nStack trace:\n${new Error().stack}`,
-            true
-          );
-          if (root && typeof root === "object") {
-            logMessage(source, root, true, false);
-          }
-          shouldProcess = false;
-          return shouldProcess;
-        }
-      }
-      if (stack && !matchStackTrace(stack, new Error().stack || "")) {
-        shouldProcess = false;
-        return shouldProcess;
-      }
-      var wildcardSymbols = [".*.", "*.", ".*", ".[].", "[].", ".[]"];
-      var _loop = function _loop() {
-          var requiredPath = requiredPaths[i];
-          var lastNestedPropName = requiredPath.split(".").pop();
-          var hasWildcard = wildcardSymbols.some(function (symbol) {
-            return requiredPath.includes(symbol);
-          });
-          var details = getWildcardPropertyInChain(
-            root,
-            requiredPath,
-            hasWildcard
-          );
-          if (!details.length) {
-            shouldProcess = false;
-            return {
-              v: shouldProcess,
-            };
-          }
-          shouldProcess = !hasWildcard;
-          for (var j = 0; j < details.length; j += 1) {
-            var hasRequiredProp =
-              typeof lastNestedPropName === "string" &&
-              details[j].base[lastNestedPropName] !== undefined;
-            if (hasWildcard) {
-              shouldProcess = hasRequiredProp || shouldProcess;
-            } else {
-              shouldProcess = hasRequiredProp && shouldProcess;
-            }
-          }
-        },
-        _ret;
-      for (var i = 0; i < requiredPaths.length; i += 1) {
-        _ret = _loop();
-        if (_ret) return _ret.v;
-      }
-      return shouldProcess;
-    }
-    function jsonPruner(
-      source,
-      root,
-      prunePaths,
-      requiredPaths,
-      stack,
-      nativeObjects
-    ) {
-      var { nativeStringify: nativeStringify } = nativeObjects;
-      if (prunePaths.length === 0 && requiredPaths.length === 0) {
-        logMessage(
-          source,
-          `${window.location.hostname}\n${nativeStringify(root, null, 2)}\nStack trace:\n${new Error().stack}`,
-          true
-        );
-        if (root && typeof root === "object") {
-          logMessage(source, root, true, false);
-        }
-        return root;
-      }
-      try {
-        if (
-          isPruningNeeded(
-            source,
-            root,
-            prunePaths,
-            requiredPaths,
-            stack,
-            nativeObjects
-          ) === false
-        ) {
-          return root;
-        }
-        prunePaths.forEach(function (path) {
-          var ownerObjArr = getWildcardPropertyInChain(root, path, true);
-          ownerObjArr.forEach(function (ownerObj) {
-            if (ownerObj !== undefined && ownerObj.base) {
-              delete ownerObj.base[ownerObj.prop];
-              hit(source);
-            }
-          });
-        });
-      } catch (e) {
-        logMessage(source, e);
-      }
-      return root;
-    }
-    function getPrunePath(props) {
-      var validPropsString =
-        typeof props === "string" && props !== undefined && props !== "";
-      return validPropsString ? props.split(/ +/) : [];
-    }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
+    function hit(e) {
+      if (e.verbose) {
         try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
-      var escaped = input
+    }
+    function matchStackTrace(e, t) {
+      if (!e || "" === e) return true;
+      var r = backupRegExpValues();
+      if (shouldAbortInlineOrInjectedScript(e, t))
+        return r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r), true;
+      var n = toRegExp(e),
+        a = t
+          .split("\n")
+          .slice(2)
+          .map(function (e) {
+            return e.trim();
+          })
+          .join("\n");
+      return (
+        r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r),
+        getNativeRegexpTest().call(n, a)
+      );
+    }
+    function getPropertyInChain(e, r) {
+      var n = r.indexOf(".");
+      if (-1 === n)
+        return {
+          base: e,
+          prop: r,
+        };
+      var i = r.slice(0, n);
+      if (null === e)
+        return {
+          base: e,
+          prop: i,
+          chain: r,
+        };
+      var t = e[i];
+      return (
+        (r = r.slice(n + 1)),
+        ((e instanceof Object || "object" == typeof e) && isEmptyObject(e)) ||
+        null === t
+          ? {
+              base: e,
+              prop: i,
+              chain: r,
+            }
+          : void 0 !== t
+            ? getPropertyInChain(t, r)
+            : (Object.defineProperty(e, i, {
+                configurable: true,
+              }),
+              {
+                base: e,
+                prop: i,
+                chain: r,
+              })
+      );
+    }
+    function getWildcardPropertyInChain(r, e) {
+      var a = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        i = arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : [],
+        t = arguments.length > 4 ? arguments[4] : void 0,
+        o = e.indexOf(".");
+      if (-1 === o) {
+        if ("*" === e || "[]" === e) {
+          for (var n in r)
+            if (Object.prototype.hasOwnProperty.call(r, n))
+              if (void 0 !== t) {
+                var s = r[n];
+                "string" == typeof s && t instanceof RegExp
+                  ? t.test(s) &&
+                    i.push({
+                      base: r,
+                      prop: n,
+                    })
+                  : s === t &&
+                    i.push({
+                      base: r,
+                      prop: n,
+                    });
+              } else
+                i.push({
+                  base: r,
+                  prop: n,
+                });
+        } else if (void 0 !== t) {
+          var p = r[e];
+          "string" == typeof p && t instanceof RegExp
+            ? t.test(p) &&
+              i.push({
+                base: r,
+                prop: e,
+              })
+            : r[e] === t &&
+              i.push({
+                base: r,
+                prop: e,
+              });
+        } else
+          i.push({
+            base: r,
+            prop: e,
+          });
+        return i;
+      }
+      var c = e.slice(0, o);
+      if (
+        ("[]" === c && Array.isArray(r)) ||
+        ("*" === c && r instanceof Object) ||
+        ("[-]" === c && Array.isArray(r)) ||
+        ("{-}" === c && r instanceof Object)
+      ) {
+        var f = e.slice(o + 1),
+          y = Object.keys(r);
+        if ("{-}" === c || "[-]" === c) {
+          var h = Array.isArray(r) ? "array" : "object";
+          return (
+            (("{-}" !== c || "object" !== h) &&
+              ("[-]" !== c || "array" !== h)) ||
+              y.forEach(function (e) {
+                var a = r[e];
+                isKeyInObject(a, f, t) &&
+                  i.push({
+                    base: r,
+                    prop: e,
+                  });
+              }),
+            i
+          );
+        }
+        y.forEach(function (e) {
+          getWildcardPropertyInChain(r[e], f, a, i, t);
+        });
+      }
+      Array.isArray(r) &&
+        r.forEach(function (r) {
+          void 0 !== r && getWildcardPropertyInChain(r, e, a, i, t);
+        });
+      var d = r[c];
+      return (
+        (e = e.slice(o + 1)),
+        void 0 !== d && getWildcardPropertyInChain(d, e, a, i, t),
+        i
+      );
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
+      }
+    }
+    function isPruningNeeded(n, t, r, e, a, i) {
+      if (!t) return false;
+      var o,
+        { nativeStringify: u } = i,
+        c = r.map(function (n) {
+          return n.path;
+        }),
+        f = e.map(function (n) {
+          return n.path;
+        });
+      if (0 === c.length && f.length > 0) {
+        var g = u(t);
+        if (toRegExp(f.join("")).test(g))
+          return (
+            logMessage(
+              n,
+              `${window.location.hostname}\n${u(t, null, 2)}\nStack trace:\n${new Error().stack}`,
+              true,
+            ),
+            t && "object" == typeof t && logMessage(n, t, true, false),
+            (o = false)
+          );
+      }
+      if (a && !matchStackTrace(a, new Error().stack || "")) return (o = false);
+      for (
+        var s,
+          l = [".*.", "*.", ".*", ".[].", "[].", ".[]"],
+          _loop = function _loop() {
+            var n = f[p],
+              r = n.split(".").pop(),
+              e = l.some(function (t) {
+                return n.includes(t);
+              }),
+              a = getWildcardPropertyInChain(t, n, e);
+            if (!a.length)
+              return {
+                v: (o = false),
+              };
+            o = !e;
+            for (var i = 0; i < a.length; i += 1) {
+              var u = "string" == typeof r && void 0 !== a[i].base[r];
+              o = e ? u || o : u && o;
+            }
+          },
+          p = 0;
+        p < f.length;
+        p += 1
+      )
+        if ((s = _loop())) return s.v;
+      return o;
+    }
+    function jsonPruner(e, r, n, a, t, i) {
+      var { nativeStringify: o } = i;
+      if (0 === n.length && 0 === a.length)
+        return (
+          logMessage(
+            e,
+            `${window.location.hostname}\n${o(r, null, 2)}\nStack trace:\n${new Error().stack}`,
+            true,
+          ),
+          r && "object" == typeof r && logMessage(e, r, true, false),
+          r
+        );
+      try {
+        if (!1 === isPruningNeeded(e, r, n, a, t, i)) return r;
+        n.forEach(function (n) {
+          for (
+            var a = n.path,
+              t = n.value,
+              i = getWildcardPropertyInChain(r, a, !0, [], t),
+              o = i.length - 1;
+            o >= 0;
+            o -= 1
+          ) {
+            var s = i[o];
+            if (void 0 !== s && s.base)
+              if ((hit(e), Array.isArray(s.base)))
+                try {
+                  var l = Number(s.prop);
+                  if (Number.isNaN(l)) continue;
+                  s.base.splice(l, 1);
+                } catch (e) {
+                  console.error("Error while deleting array element", e);
+                }
+              else delete s.base[s.prop];
+          }
+        });
+      } catch (r) {
+        logMessage(e, r);
+      }
+      return r;
+    }
+    function getPrunePath(t) {
+      var r = ".[=].";
+      if ("string" == typeof t && void 0 !== t && "" !== t) {
+        var e = (function (t) {
+          for (
+            var e = [], n = "", i = 0, a = false, s = false;
+            i < t.length;
+
+          ) {
+            var u = t[i];
+            if (a)
+              (n += u),
+                "\\" === u
+                  ? (s = !s)
+                  : ("/" !== u || s || (a = false), (s = false)),
+                (i += 1);
+            else {
+              if (
+                " " === u ||
+                "\n" === u ||
+                "\t" === u ||
+                "\r" === u ||
+                "\f" === u ||
+                "\v" === u
+              ) {
+                for (; i < t.length && /\s/.test(t[i]); ) i += 1;
+                "" !== n && (e.push(n), (n = ""));
+                continue;
+              }
+              if (t.startsWith(r, i)) {
+                if (((n += r), "/" === t[(i += 5)])) {
+                  (a = true), (s = false), (n += "/"), (i += 1);
+                  continue;
+                }
+                continue;
+              }
+              (n += u), (i += 1);
+            }
+          }
+          return "" !== n && e.push(n), e;
+        })(t);
+        return e.map(function (t) {
+          var e = t.split(r),
+            n = e[0],
+            i = e[1];
+          return void 0 !== i
+            ? ("true" === i
+                ? (i = true)
+                : "false" === i
+                  ? (i = false)
+                  : i.startsWith("/")
+                    ? (i = toRegExp(i))
+                    : "string" == typeof i &&
+                      /^\d+$/.test(i) &&
+                      (i = parseFloat(i)),
+              {
+                path: n,
+                value: i,
+              })
+            : {
+                path: n,
+              };
+        });
+      }
+      return [];
+    }
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
     function getNativeRegexpTest() {
-      var descriptor = Object.getOwnPropertyDescriptor(
-        RegExp.prototype,
-        "test"
-      );
-      var nativeRegexTest =
-        descriptor === null || descriptor === void 0
-          ? void 0
-          : descriptor.value;
-      if (descriptor && typeof descriptor.value === "function") {
-        return nativeRegexTest;
-      }
+      var t = Object.getOwnPropertyDescriptor(RegExp.prototype, "test"),
+        e = null == t ? void 0 : t.value;
+      if (t && "function" == typeof t.value) return e;
       throw new Error("RegExp.prototype.test is not a function");
     }
-    function shouldAbortInlineOrInjectedScript(stackMatch, stackTrace) {
-      var INLINE_SCRIPT_STRING = "inlineScript";
-      var INJECTED_SCRIPT_STRING = "injectedScript";
-      var INJECTED_SCRIPT_MARKER = "<anonymous>";
-      var isInlineScript = function isInlineScript(match) {
-        return match.includes(INLINE_SCRIPT_STRING);
-      };
-      var isInjectedScript = function isInjectedScript(match) {
-        return match.includes(INJECTED_SCRIPT_STRING);
-      };
-      if (!(isInlineScript(stackMatch) || isInjectedScript(stackMatch))) {
-        return false;
-      }
-      var documentURL = window.location.href;
-      var pos = documentURL.indexOf("#");
-      if (pos !== -1) {
-        documentURL = documentURL.slice(0, pos);
-      }
-      var stackSteps = stackTrace
+    function shouldAbortInlineOrInjectedScript(t, i) {
+      var r = "inlineScript",
+        n = "injectedScript",
+        isInlineScript = function isInlineScript(t) {
+          return t.includes(r);
+        },
+        isInjectedScript = function isInjectedScript(t) {
+          return t.includes(n);
+        };
+      if (!isInlineScript(t) && !isInjectedScript(t)) return false;
+      var e = window.location.href,
+        s = e.indexOf("#");
+      -1 !== s && (e = e.slice(0, s));
+      var c = i
         .split("\n")
         .slice(2)
-        .map(function (line) {
-          return line.trim();
-        });
-      var stackLines = stackSteps.map(function (line) {
-        var stack;
-        var getStackTraceValues = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(line);
-        if (getStackTraceValues) {
-          var _stackURL, _stackURL2;
-          var stackURL = getStackTraceValues[2];
-          var stackLine = getStackTraceValues[3];
-          var stackCol = getStackTraceValues[4];
-          if (
-            (_stackURL = stackURL) !== null &&
-            _stackURL !== void 0 &&
-            _stackURL.startsWith("(")
-          ) {
-            stackURL = stackURL.slice(1);
-          }
-          if (
-            (_stackURL2 = stackURL) !== null &&
-            _stackURL2 !== void 0 &&
-            _stackURL2.startsWith(INJECTED_SCRIPT_MARKER)
-          ) {
-            var _stackFunction;
-            stackURL = INJECTED_SCRIPT_STRING;
-            var stackFunction =
-              getStackTraceValues[1] !== undefined
-                ? getStackTraceValues[1].slice(0, -1)
-                : line.slice(0, getStackTraceValues.index).trim();
+        .map(function (t) {
+          return t.trim();
+        })
+        .map(function (t) {
+          var i,
+            s = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(t);
+          if (s) {
+            var c,
+              l,
+              a = s[2],
+              u = s[3],
+              o = s[4];
             if (
-              (_stackFunction = stackFunction) !== null &&
-              _stackFunction !== void 0 &&
-              _stackFunction.startsWith("at")
+              (null !== (c = a) &&
+                void 0 !== c &&
+                c.startsWith("(") &&
+                (a = a.slice(1)),
+              null !== (l = a) && void 0 !== l && l.startsWith("<anonymous>"))
             ) {
-              stackFunction = stackFunction.slice(2).trim();
-            }
-            stack =
-              `${stackFunction} ${stackURL}${stackLine}${stackCol}`.trim();
-          } else if (stackURL === documentURL) {
-            stack = `${INLINE_SCRIPT_STRING}${stackLine}${stackCol}`.trim();
-          } else {
-            stack = `${stackURL}${stackLine}${stackCol}`.trim();
-          }
-        } else {
-          stack = line;
-        }
-        return stack;
-      });
-      if (stackLines) {
-        for (var index = 0; index < stackLines.length; index += 1) {
+              var d;
+              a = n;
+              var f =
+                void 0 !== s[1]
+                  ? s[1].slice(0, -1)
+                  : t.slice(0, s.index).trim();
+              null !== (d = f) &&
+                void 0 !== d &&
+                d.startsWith("at") &&
+                (f = f.slice(2).trim()),
+                (i = `${f} ${a}${u}${o}`.trim());
+            } else i = a === e ? `${r}${u}${o}`.trim() : `${a}${u}${o}`.trim();
+          } else i = t;
+          return i;
+        });
+      if (c)
+        for (var l = 0; l < c.length; l += 1) {
           if (
-            isInlineScript(stackMatch) &&
-            stackLines[index].startsWith(INLINE_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
+            isInlineScript(t) &&
+            c[l].startsWith(r) &&
+            c[l].match(toRegExp(t))
+          )
             return true;
-          }
           if (
-            isInjectedScript(stackMatch) &&
-            stackLines[index].startsWith(INJECTED_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
+            isInjectedScript(t) &&
+            c[l].startsWith(n) &&
+            c[l].match(toRegExp(t))
+          )
             return true;
-          }
         }
-      }
       return false;
     }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
     }
     function backupRegExpValues() {
       try {
-        var arrayOfRegexpValues = [];
-        for (var index = 1; index < 10; index += 1) {
-          var value = `$${index}`;
-          if (!RegExp[value]) {
-            break;
-          }
-          arrayOfRegexpValues.push(RegExp[value]);
+        for (var r = [], e = 1; e < 10; e += 1) {
+          var a = `$${e}`;
+          if (!RegExp[a]) break;
+          r.push(RegExp[a]);
         }
-        return arrayOfRegexpValues;
-      } catch (error) {
+        return r;
+      } catch (r) {
         return [];
       }
     }
-    function restoreRegExpValues(array) {
-      if (!array.length) {
-        return;
-      }
-      try {
-        var stringPattern = "";
-        if (array.length === 1) {
-          stringPattern = `(${array[0]})`;
-        } else {
-          stringPattern = array.reduce(
-            function (accumulator, currentValue, currentIndex) {
-              if (currentIndex === 1) {
-                return `(${accumulator}),(${currentValue})`;
-              }
-              return `${accumulator},(${currentValue})`;
-            }
-          );
+    function restoreRegExpValues(e) {
+      if (e.length)
+        try {
+          var r = "";
+          r =
+            1 === e.length
+              ? `(${e[0]})`
+              : e.reduce(function (e, r, t) {
+                  return 1 === t ? `(${e}),(${r})` : `${e},(${r})`;
+                });
+          var t = new RegExp(r);
+          e.toString().replace(t, "");
+        } catch (e) {
+          var n = `Failed to restore RegExp values: ${e}`;
+          console.log(n);
         }
-        var regExpGroup = new RegExp(stringPattern);
-        array.toString().replace(regExpGroup, "");
-      } catch (error) {
-        var message = `Failed to restore RegExp values: ${error}`;
-        console.log(message);
-      }
+    }
+    function isKeyInObject(t, r, e) {
+      var n = r.split("."),
+        _check6 = function _check(t, r) {
+          if (null == t) return false;
+          if (0 === r.length)
+            return (
+              void 0 === e ||
+              ("string" == typeof t && e instanceof RegExp
+                ? e.test(t)
+                : t === e)
+            );
+          var n = r[0],
+            i = r.slice(1);
+          if ("*" === n || "[]" === n) {
+            if (Array.isArray(t))
+              return t.some(function (t) {
+                return _check6(t, i);
+              });
+            if ("object" == typeof t && null !== t)
+              return Object.keys(t).some(function (r) {
+                return _check6(t[r], i);
+              });
+          }
+          return (
+            !!Object.prototype.hasOwnProperty.call(t, n) && _check6(t[n], i)
+          );
+        };
+      return _check6(t, n);
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
       trustedPruneInboundObject.apply(this, updatedArgs);
+      if (source.uniqueId) {
+        Object.defineProperty(Window.prototype.toString, uniqueIdentifier, {
+          value: flag,
+          enumerable: false,
+          writable: false,
+          configurable: false,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  function trustedReplaceArgument(source, args) {
+    var flag = "done";
+    var uniqueIdentifier =
+      source.uniqueId +
+      source.name +
+      "_" +
+      (Array.isArray(args) ? args.join("_") : "");
+    if (source.uniqueId) {
+      if (Window.prototype.toString[uniqueIdentifier] === flag) {
+        return;
+      }
+    }
+    function trustedReplaceArgument(
+      source,
+      methodPath,
+      argumentIndex,
+      argumentValue,
+      pattern,
+    ) {
+      var stack =
+        arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "";
+      var verbose =
+        arguments.length > 6 && arguments[6] !== undefined
+          ? arguments[6]
+          : "false";
+      if (
+        ((!methodPath || !argumentIndex || !argumentValue) &&
+          verbose === "false") ||
+        (!methodPath && verbose === "true")
+      ) {
+        return;
+      }
+      var SHOULD_LOG_ONLY =
+        verbose === "true" &&
+        !argumentIndex &&
+        !argumentValue &&
+        !pattern &&
+        !stack;
+      var MARKERS = {
+        JSON: "json:",
+        REPLACE: "replace:",
+      };
+      var constantValue;
+      var replaceRegexValue = "";
+      var shouldReplaceArgument = false;
+      if (argumentValue.startsWith(MARKERS.REPLACE)) {
+        var replacementRegexPair = extractRegexAndReplacement(argumentValue);
+        if (!replacementRegexPair) {
+          logMessage(source, `Invalid argument value format: ${argumentValue}`);
+          return;
+        }
+        replaceRegexValue = replacementRegexPair.regexPart;
+        constantValue = replacementRegexPair.replacementPart;
+        shouldReplaceArgument = true;
+      } else if (argumentValue.startsWith(MARKERS.JSON)) {
+        try {
+          constantValue = JSON.parse(argumentValue.slice(MARKERS.JSON.length));
+        } catch (error) {
+          logMessage(source, `Invalid JSON argument value: ${argumentValue}`);
+          return;
+        }
+      } else {
+        var emptyArr = noopArray();
+        var emptyObj = noopObject();
+        if (argumentValue === "undefined") {
+          constantValue = undefined;
+        } else if (argumentValue === "false") {
+          constantValue = false;
+        } else if (argumentValue === "true") {
+          constantValue = true;
+        } else if (argumentValue === "null") {
+          constantValue = null;
+        } else if (argumentValue === "emptyArr") {
+          constantValue = emptyArr;
+        } else if (argumentValue === "emptyObj") {
+          constantValue = emptyObj;
+        } else if (argumentValue === "noopFunc") {
+          constantValue = noopFunc;
+        } else if (argumentValue === "noopCallbackFunc") {
+          constantValue = noopCallbackFunc;
+        } else if (argumentValue === "trueFunc") {
+          constantValue = trueFunc;
+        } else if (argumentValue === "falseFunc") {
+          constantValue = falseFunc;
+        } else if (argumentValue === "throwFunc") {
+          constantValue = throwFunc;
+        } else if (argumentValue === "noopPromiseResolve") {
+          constantValue = noopPromiseResolve;
+        } else if (argumentValue === "noopPromiseReject") {
+          constantValue = noopPromiseReject;
+        } else if (/^-?\d+$/.test(argumentValue)) {
+          constantValue = parseFloat(argumentValue);
+          if (nativeIsNaN(constantValue)) {
+            return;
+          }
+        } else {
+          constantValue = argumentValue;
+        }
+      }
+      var getPathParts = getPropertyInChain;
+      var {
+        base: base,
+        chain: chain,
+        prop: prop,
+      } = getPathParts(window, methodPath);
+      if (typeof chain !== "undefined") {
+        logMessage(
+          source,
+          `Could not reach the end of the prop chain: ${methodPath}`,
+        );
+        return;
+      }
+      var nativeMethod = base[prop];
+      if (!nativeMethod || typeof nativeMethod !== "function") {
+        logMessage(source, `Could not retrieve the method: ${methodPath}`);
+        return;
+      }
+      var stringifyObject = function stringifyObject(obj) {
+        return JSON.stringify(obj, function (key, value) {
+          return typeof value === "function" ? value.toString() : value;
+        });
+      };
+      var createFormattedMessage = function createFormattedMessage(args) {
+        var when =
+          arguments.length > 1 && arguments[1] !== undefined
+            ? arguments[1]
+            : "original";
+        var formattedArgs = args.map(function (arg, index) {
+          if (typeof arg === "object" && arg !== null) {
+            try {
+              return `${index}: ${stringifyObject(arg)} // Object converted to string`;
+            } catch (e) {
+              return `${index}: ${String(arg)} // Object conversion failed`;
+            }
+          }
+          return `${index}: ${String(arg)}`;
+        });
+        var modifiedOrOriginal = when === "modified" ? "modified" : when;
+        var message = `${methodPath} ${modifiedOrOriginal} arguments:\n${formattedArgs.join(",\n")}`;
+        return message;
+      };
+      var checkArgument = function checkArgument(arg) {
+        if (stack && !matchStackTrace(stack, new Error().stack || "")) {
+          return false;
+        }
+        if (pattern) {
+          if (typeof arg === "object" && arg !== null) {
+            try {
+              var argString = stringifyObject(arg);
+              return !!argString && toRegExp(pattern).test(argString);
+            } catch (error) {
+              logMessage(
+                source,
+                `Failed to stringify argument: ${arg}\nError: ${error}`,
+              );
+            }
+          }
+          var argumentContent = String(arg);
+          return !!argumentContent && toRegExp(pattern).test(argumentContent);
+        }
+        return true;
+      };
+      var isMatchingSuspended = false;
+      var applyWrapper = function applyWrapper(target, thisArg, argumentsList) {
+        if (isMatchingSuspended) {
+          isMatchingSuspended = false;
+          return Reflect.apply(target, thisArg, argumentsList);
+        }
+        isMatchingSuspended = true;
+        if (verbose === "true") {
+          var formattedMessage = createFormattedMessage(argumentsList);
+          logMessage(source, formattedMessage);
+        }
+        if (SHOULD_LOG_ONLY) {
+          isMatchingSuspended = false;
+          return Reflect.apply(target, thisArg, argumentsList);
+        }
+        var argumentToReplace = argumentsList[Number(argumentIndex)];
+        var shouldSetArgument = checkArgument(argumentToReplace);
+        if (!shouldSetArgument) {
+          isMatchingSuspended = false;
+          return Reflect.apply(target, thisArg, argumentsList);
+        }
+        if (typeof argumentToReplace === "string" && shouldReplaceArgument) {
+          argumentsList[Number(argumentIndex)] = argumentToReplace.replace(
+            replaceRegexValue,
+            constantValue,
+          );
+        } else {
+          argumentsList[Number(argumentIndex)] = constantValue;
+        }
+        if (verbose === "true") {
+          var _formattedMessage = createFormattedMessage(
+            argumentsList,
+            "modified",
+          );
+          logMessage(source, _formattedMessage);
+        }
+        hit(source);
+        isMatchingSuspended = false;
+        return Reflect.apply(target, thisArg, argumentsList);
+      };
+      var constructWrapper = function constructWrapper(
+        target,
+        argumentsList,
+        newTarget,
+      ) {
+        if (isMatchingSuspended) {
+          isMatchingSuspended = false;
+          return Reflect.construct(target, argumentsList, newTarget);
+        }
+        isMatchingSuspended = true;
+        if (verbose === "true") {
+          var formattedMessage = createFormattedMessage(argumentsList);
+          logMessage(source, formattedMessage);
+        }
+        if (SHOULD_LOG_ONLY) {
+          isMatchingSuspended = false;
+          return Reflect.construct(target, argumentsList, newTarget);
+        }
+        var argumentToReplace = argumentsList[Number(argumentIndex)];
+        var shouldSetArgument = checkArgument(argumentToReplace);
+        if (!shouldSetArgument) {
+          isMatchingSuspended = false;
+          return Reflect.construct(target, argumentsList, newTarget);
+        }
+        if (typeof argumentToReplace === "string" && shouldReplaceArgument) {
+          argumentsList[Number(argumentIndex)] = argumentToReplace.replace(
+            replaceRegexValue,
+            constantValue,
+          );
+        } else {
+          argumentsList[Number(argumentIndex)] = constantValue;
+        }
+        if (verbose === "true") {
+          var _formattedMessage2 = createFormattedMessage(
+            argumentsList,
+            "modified",
+          );
+          logMessage(source, _formattedMessage2);
+        }
+        hit(source);
+        isMatchingSuspended = false;
+        return Reflect.construct(target, argumentsList, newTarget);
+      };
+      var getWrapper = function getWrapper(target, propName, receiver) {
+        if (propName === "toString") {
+          return target.toString.bind(target);
+        }
+        return Reflect.get(target, propName, receiver);
+      };
+      var objectHandler = {
+        apply: applyWrapper,
+        construct: constructWrapper,
+        get: getWrapper,
+      };
+      base[prop] = new Proxy(nativeMethod, objectHandler);
+    }
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
+      }
+    }
+    function noopArray() {
+      return [];
+    }
+    function noopObject() {
+      return {};
+    }
+    function noopCallbackFunc() {
+      return noopFunc;
+    }
+    function noopFunc() {}
+    function trueFunc() {
+      return true;
+    }
+    function falseFunc() {
+      return false;
+    }
+    function throwFunc() {
+      throw new Error();
+    }
+    function noopPromiseReject() {
+      return Promise.reject();
+    }
+    function noopPromiseResolve() {
+      var e =
+          arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : "{}",
+        t = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : "",
+        s =
+          arguments.length > 2 && void 0 !== arguments[2]
+            ? arguments[2]
+            : "basic";
+      if ("undefined" != typeof Response) {
+        var n = new Response(e, {
+          headers: {
+            "Content-Length": `${e.length}`,
+          },
+          status: 200,
+          statusText: "OK",
+        });
+        return (
+          "opaque" === s
+            ? Object.defineProperties(n, {
+                body: {
+                  value: null,
+                },
+                status: {
+                  value: 0,
+                },
+                ok: {
+                  value: false,
+                },
+                statusText: {
+                  value: "",
+                },
+                url: {
+                  value: "",
+                },
+                type: {
+                  value: s,
+                },
+              })
+            : Object.defineProperties(n, {
+                url: {
+                  value: t,
+                },
+                type: {
+                  value: s,
+                },
+              }),
+          Promise.resolve(n)
+        );
+      }
+    }
+    function matchStackTrace(e, t) {
+      if (!e || "" === e) return true;
+      var r = backupRegExpValues();
+      if (shouldAbortInlineOrInjectedScript(e, t))
+        return r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r), true;
+      var n = toRegExp(e),
+        a = t
+          .split("\n")
+          .slice(2)
+          .map(function (e) {
+            return e.trim();
+          })
+          .join("\n");
+      return (
+        r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r),
+        getNativeRegexpTest().call(n, a)
+      );
+    }
+    function getPropertyInChain(e, r) {
+      var n = r.indexOf(".");
+      if (-1 === n)
+        return {
+          base: e,
+          prop: r,
+        };
+      var i = r.slice(0, n);
+      if (null === e)
+        return {
+          base: e,
+          prop: i,
+          chain: r,
+        };
+      var t = e[i];
+      return (
+        (r = r.slice(n + 1)),
+        ((e instanceof Object || "object" == typeof e) && isEmptyObject(e)) ||
+        null === t
+          ? {
+              base: e,
+              prop: i,
+              chain: r,
+            }
+          : void 0 !== t
+            ? getPropertyInChain(t, r)
+            : (Object.defineProperty(e, i, {
+                configurable: true,
+              }),
+              {
+                base: e,
+                prop: i,
+                chain: r,
+              })
+      );
+    }
+    function extractRegexAndReplacement(e) {
+      if (e) {
+        var r = e.slice(8),
+          t = "";
+        if (
+          (r.endsWith("/g") && ((r = r.slice(0, -1)), (t = "g")),
+          r.startsWith("/") && r.endsWith("/"))
+        ) {
+          for (var i = r.slice(1, -1), a = -1, c = 0; c < i.length; c += 1)
+            if ("/" === i[c]) {
+              for (var f = false, n = c - 1; n >= 0 && "\\" === i[n]; )
+                (f = !f), (n -= 1);
+              if (!f) {
+                a = c;
+                break;
+              }
+            }
+          if (-1 !== a) {
+            var s = `/${i.slice(0, a)}/${t}`,
+              l = i.slice(a + 1);
+            if (s && "//" !== s) {
+              var g;
+              try {
+                g = toRegExp(s);
+              } catch (e) {
+                return;
+              }
+              if (g)
+                return {
+                  regexPart: g,
+                  replacementPart: l,
+                };
+            }
+          }
+        }
+      }
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
+      }
+    }
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
+        .replace(/\\'/g, "'")
+        .replace(/\\"/g, '"')
+        .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return new RegExp(c);
+    }
+    function getNativeRegexpTest() {
+      var t = Object.getOwnPropertyDescriptor(RegExp.prototype, "test"),
+        e = null == t ? void 0 : t.value;
+      if (t && "function" == typeof t.value) return e;
+      throw new Error("RegExp.prototype.test is not a function");
+    }
+    function shouldAbortInlineOrInjectedScript(t, i) {
+      var r = "inlineScript",
+        n = "injectedScript",
+        isInlineScript = function isInlineScript(t) {
+          return t.includes(r);
+        },
+        isInjectedScript = function isInjectedScript(t) {
+          return t.includes(n);
+        };
+      if (!isInlineScript(t) && !isInjectedScript(t)) return false;
+      var e = window.location.href,
+        s = e.indexOf("#");
+      -1 !== s && (e = e.slice(0, s));
+      var c = i
+        .split("\n")
+        .slice(2)
+        .map(function (t) {
+          return t.trim();
+        })
+        .map(function (t) {
+          var i,
+            s = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(t);
+          if (s) {
+            var c,
+              l,
+              a = s[2],
+              u = s[3],
+              o = s[4];
+            if (
+              (null !== (c = a) &&
+                void 0 !== c &&
+                c.startsWith("(") &&
+                (a = a.slice(1)),
+              null !== (l = a) && void 0 !== l && l.startsWith("<anonymous>"))
+            ) {
+              var d;
+              a = n;
+              var f =
+                void 0 !== s[1]
+                  ? s[1].slice(0, -1)
+                  : t.slice(0, s.index).trim();
+              null !== (d = f) &&
+                void 0 !== d &&
+                d.startsWith("at") &&
+                (f = f.slice(2).trim()),
+                (i = `${f} ${a}${u}${o}`.trim());
+            } else i = a === e ? `${r}${u}${o}`.trim() : `${a}${u}${o}`.trim();
+          } else i = t;
+          return i;
+        });
+      if (c)
+        for (var l = 0; l < c.length; l += 1) {
+          if (
+            isInlineScript(t) &&
+            c[l].startsWith(r) &&
+            c[l].match(toRegExp(t))
+          )
+            return true;
+          if (
+            isInjectedScript(t) &&
+            c[l].startsWith(n) &&
+            c[l].match(toRegExp(t))
+          )
+            return true;
+        }
+      return false;
+    }
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
+    }
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
+    }
+    function backupRegExpValues() {
+      try {
+        for (var r = [], e = 1; e < 10; e += 1) {
+          var a = `$${e}`;
+          if (!RegExp[a]) break;
+          r.push(RegExp[a]);
+        }
+        return r;
+      } catch (r) {
+        return [];
+      }
+    }
+    function restoreRegExpValues(e) {
+      if (e.length)
+        try {
+          var r = "";
+          r =
+            1 === e.length
+              ? `(${e[0]})`
+              : e.reduce(function (e, r, t) {
+                  return 1 === t ? `(${e}),(${r})` : `${e},(${r})`;
+                });
+          var t = new RegExp(r);
+          e.toString().replace(t, "");
+        } catch (e) {
+          var n = `Failed to restore RegExp values: ${e}`;
+          console.log(n);
+        }
+    }
+    var updatedArgs = args ? [].concat(source).concat(args) : [source];
+    try {
+      trustedReplaceArgument.apply(this, updatedArgs);
       if (source.uniqueId) {
         Object.defineProperty(Window.prototype.toString, uniqueIdentifier, {
           value: flag,
@@ -25053,17 +23468,17 @@ function _toPrimitive(t, r) {
                 }
                 var modifiedTextContent = bodyText.replace(
                   patternRegexp,
-                  replacement
+                  replacement,
                 );
                 if (shouldLogContent) {
                   logMessage(
                     source,
-                    `Modified text content: ${modifiedTextContent}`
+                    `Modified text content: ${modifiedTextContent}`,
                   );
                 }
                 var forgedResponse = forgeResponse(
                   response,
-                  modifiedTextContent
+                  modifiedTextContent,
                 );
                 hit(source);
                 return forgedResponse;
@@ -25084,234 +23499,173 @@ function _toPrimitive(t, r) {
       };
       fetch = new Proxy(fetch, fetchHandler);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function getFetchData(args, nativeRequestClone) {
-      var fetchPropsObj = {};
-      var resource = args[0];
-      var fetchUrl;
-      var fetchInit;
-      if (resource instanceof Request) {
-        var realData = nativeRequestClone.call(resource);
-        var requestData = getRequestData(realData);
-        fetchUrl = requestData.url;
-        fetchInit = requestData;
-      } else {
-        fetchUrl = resource;
-        fetchInit = args[1];
-      }
-      fetchPropsObj.url = fetchUrl;
-      if (fetchInit instanceof Object) {
-        var props = Object.keys(fetchInit);
-        props.forEach(function (prop) {
-          fetchPropsObj[prop] = fetchInit[prop];
+    function getFetchData(e, t) {
+      var a,
+        c,
+        n = {},
+        r = e[0];
+      if (r instanceof Request) {
+        var u = t.call(r),
+          f = getRequestData(u);
+        (a = f.url), (c = f);
+      } else (a = r), (c = e[1]);
+      ((n.url = a), c instanceof Object) &&
+        Object.keys(c).forEach(function (e) {
+          n[e] = c[e];
         });
-      }
-      return fetchPropsObj;
+      return n;
     }
-    function objectToString(obj) {
-      if (!obj || typeof obj !== "object") {
-        return String(obj);
-      }
-      if (isEmptyObject(obj)) {
-        return "{}";
-      }
-      return Object.entries(obj)
-        .map(function (pair) {
-          var key = pair[0];
-          var value = pair[1];
-          var recordValueStr = value;
-          if (value instanceof Object) {
-            recordValueStr = `{ ${objectToString(value)} }`;
-          }
-          return `${key}:"${recordValueStr}"`;
-        })
-        .join(" ");
+    function objectToString(t) {
+      return t && "object" == typeof t
+        ? isEmptyObject(t)
+          ? "{}"
+          : Object.entries(t)
+              .map(function (t) {
+                var n = t[0],
+                  e = t[1],
+                  o = e;
+                return (
+                  e instanceof Object && (o = `{ ${objectToString(e)} }`),
+                  `${n}:"${o}"`
+                );
+              })
+              .join(" ")
+        : String(t);
     }
-    function matchRequestProps(source, propsToMatch, requestData) {
-      if (propsToMatch === "" || propsToMatch === "*") {
-        return true;
-      }
-      var isMatched;
-      var parsedData = parseMatchProps(propsToMatch);
-      if (!isValidParsedData(parsedData)) {
-        logMessage(source, `Invalid parameter: ${propsToMatch}`);
-        isMatched = false;
-      } else {
-        var matchData = getMatchPropsData(parsedData);
-        var matchKeys = Object.keys(matchData);
-        isMatched = matchKeys.every(function (matchKey) {
-          var matchValue = matchData[matchKey];
-          var dataValue = requestData[matchKey];
+    function matchRequestProps(e, t, r) {
+      if ("" === t || "*" === t) return true;
+      var a,
+        s = parseMatchProps(t);
+      if (isValidParsedData(s)) {
+        var n = getMatchPropsData(s);
+        a = Object.keys(n).every(function (e) {
+          var t = n[e],
+            a = r[e];
           return (
-            Object.prototype.hasOwnProperty.call(requestData, matchKey) &&
-            typeof dataValue === "string" &&
-            (matchValue === null || matchValue === void 0
-              ? void 0
-              : matchValue.test(dataValue))
+            Object.prototype.hasOwnProperty.call(r, e) &&
+            "string" == typeof a &&
+            (null == t ? void 0 : t.test(a))
           );
         });
-      }
-      return isMatched;
+      } else logMessage(e, `Invalid parameter: ${t}`), (a = false);
+      return a;
     }
-    function forgeResponse(response, textContent) {
+    function forgeResponse(e, t) {
       var {
-        bodyUsed: bodyUsed,
-        headers: headers,
-        ok: ok,
-        redirected: redirected,
-        status: status,
-        statusText: statusText,
-        type: type,
-        url: url,
-      } = response;
-      var forgedResponse = new Response(textContent, {
-        status: status,
-        statusText: statusText,
-        headers: headers,
-      });
-      Object.defineProperties(forgedResponse, {
-        url: {
-          value: url,
-        },
-        type: {
-          value: type,
-        },
-        ok: {
-          value: ok,
-        },
-        bodyUsed: {
-          value: bodyUsed,
-        },
-        redirected: {
-          value: redirected,
-        },
-      });
-      return forgedResponse;
+          bodyUsed: s,
+          headers: r,
+          ok: u,
+          redirected: a,
+          status: d,
+          statusText: o,
+          type: l,
+          url: n,
+        } = e,
+        v = new Response(t, {
+          status: d,
+          statusText: o,
+          headers: r,
+        });
+      return (
+        Object.defineProperties(v, {
+          url: {
+            value: n,
+          },
+          type: {
+            value: l,
+          },
+          ok: {
+            value: u,
+          },
+          bodyUsed: {
+            value: s,
+          },
+          redirected: {
+            value: a,
+          },
+        }),
+        v
+      );
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function isValidStrPattern(input) {
-      var FORWARD_SLASH = "/";
-      var str = escapeRegExp(input);
-      if (
-        input[0] === FORWARD_SLASH &&
-        input[input.length - 1] === FORWARD_SLASH
-      ) {
-        str = input.slice(1, -1);
-      }
-      var isValid;
+    function isValidStrPattern(e) {
+      var t,
+        n = escapeRegExp(e);
+      "/" === e[0] && "/" === e[e.length - 1] && (n = e.slice(1, -1));
       try {
-        isValid = new RegExp(str);
-        isValid = true;
+        (t = new RegExp(n)), (t = !0);
       } catch (e) {
-        isValid = false;
+        t = false;
       }
-      return isValid;
+      return t;
     }
-    function escapeRegExp(str) {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    function escapeRegExp(e) {
+      return e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
     }
-    function getRequestData(request) {
-      var requestInitOptions = getRequestProps();
-      var entries = requestInitOptions.map(function (key) {
-        var value = request[key];
-        return [key, value];
+    function getRequestData(t) {
+      var e = getRequestProps().map(function (e) {
+        return [e, t[e]];
       });
-      return Object.fromEntries(entries);
+      return Object.fromEntries(e);
     }
     function getRequestProps() {
       return [
@@ -25330,38 +23684,37 @@ function _toPrimitive(t, r) {
         "mode",
       ];
     }
-    function parseMatchProps(propsToMatchStr) {
-      var PROPS_DIVIDER = " ";
-      var PAIRS_MARKER = ":";
-      var isRequestProp = function isRequestProp(prop) {
-        return getRequestProps().includes(prop);
-      };
-      var propsObj = {};
-      var props = propsToMatchStr.split(PROPS_DIVIDER);
-      props.forEach(function (prop) {
-        var dividerInd = prop.indexOf(PAIRS_MARKER);
-        var key = prop.slice(0, dividerInd);
-        if (isRequestProp(key)) {
-          var value = prop.slice(dividerInd + 1);
-          propsObj[key] = value;
-        } else {
-          propsObj.url = prop;
-        }
-      });
-      return propsObj;
+    function parseMatchProps(e) {
+      var r = {};
+      return (
+        e.split(" ").forEach(function (e) {
+          var n = e.indexOf(":"),
+            i = e.slice(0, n);
+          if (
+            (function (e) {
+              return getRequestProps().includes(e);
+            })(i)
+          ) {
+            var s = e.slice(n + 1);
+            r[i] = s;
+          } else r.url = e;
+        }),
+        r
+      );
     }
-    function isValidParsedData(data) {
-      return Object.values(data).every(function (value) {
-        return isValidStrPattern(value);
+    function isValidParsedData(t) {
+      return Object.values(t).every(function (t) {
+        return isValidStrPattern(t);
       });
     }
-    function getMatchPropsData(data) {
-      var matchData = {};
-      var dataKeys = Object.keys(data);
-      dataKeys.forEach(function (key) {
-        matchData[key] = toRegExp(data[key]);
-      });
-      return matchData;
+    function getMatchPropsData(t) {
+      var a = {};
+      return (
+        Object.keys(t).forEach(function (c) {
+          a[c] = toRegExp(t[c]);
+        }),
+        a
+      );
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -25395,14 +23748,22 @@ function _toPrimitive(t, r) {
       nodeName,
       textMatch,
       pattern,
-      replacement
+      replacement,
     ) {
+      var fixQuotes = function fixQuotes(str) {
+        if (typeof str !== "string") {
+          return str;
+        }
+        return str.replace(/\\'/g, "'").replace(/\\"/g, '"');
+      };
+      var fixedPattern = fixQuotes(pattern);
+      var fixedReplacement = fixQuotes(replacement);
       var {
         selector: selector,
         nodeNameMatch: nodeNameMatch,
         textContentMatch: textContentMatch,
         patternMatch: patternMatch,
-      } = parseNodeTextParams(nodeName, textMatch, pattern);
+      } = parseNodeTextParams(nodeName, textMatch, fixedPattern);
       for (
         var _len = arguments.length,
           extraArgs = new Array(_len > 5 ? _len - 5 : 0),
@@ -25418,7 +23779,7 @@ function _toPrimitive(t, r) {
           var shouldReplace = isTargetNode(
             node,
             nodeNameMatch,
-            textContentMatch
+            textContentMatch,
           );
           if (shouldReplace) {
             if (shouldLog) {
@@ -25427,7 +23788,7 @@ function _toPrimitive(t, r) {
                 logMessage(source, `Original text content: ${originalText}`);
               }
             }
-            replaceNodeText(source, node, patternMatch, replacement);
+            replaceNodeText(source, node, patternMatch, fixedReplacement);
             if (shouldLog) {
               var modifiedText = node.textContent;
               if (modifiedText) {
@@ -25444,230 +23805,274 @@ function _toPrimitive(t, r) {
         return handleMutations(mutations, handleNodes);
       });
     }
-    function observeDocumentWithTimeout(callback) {
-      var options =
-        arguments.length > 1 && arguments[1] !== undefined
-          ? arguments[1]
-          : {
-              subtree: true,
-              childList: true,
-            };
-      var timeout =
-        arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1e4;
-      var documentObserver = new MutationObserver(function (
-        mutations,
-        observer
-      ) {
-        observer.disconnect();
-        callback(mutations, observer);
-        observer.observe(document.documentElement, options);
-      });
-      documentObserver.observe(document.documentElement, options);
-      if (typeof timeout === "number") {
-        setTimeout(function () {
-          return documentObserver.disconnect();
-        }, timeout);
-      }
+    function observeDocumentWithTimeout(e) {
+      var t =
+          arguments.length > 1 && void 0 !== arguments[1]
+            ? arguments[1]
+            : {
+                subtree: true,
+                childList: true,
+              },
+        n =
+          arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : 1e4,
+        o = new MutationObserver(function (n, o) {
+          o.disconnect(), e(n, o), o.observe(document.documentElement, t);
+        });
+      o.observe(document.documentElement, t),
+        "number" == typeof n &&
+          setTimeout(function () {
+            return o.disconnect();
+          }, n);
     }
-    function handleExistingNodes(selector, handler, parentSelector) {
-      var processNodes = function processNodes(parent) {
-        if (selector === "#text") {
-          var textNodes = nodeListToArray(parent.childNodes).filter(
-            function (node) {
-              return node.nodeType === Node.TEXT_NODE;
-            }
-          );
-          handler(textNodes);
-        } else {
-          var _nodes = nodeListToArray(parent.querySelectorAll(selector));
-          handler(_nodes);
-        }
-      };
-      var parents = [document];
-      parents.forEach(function (parent) {
-        return processNodes(parent);
-      });
-    }
-    function handleMutations(mutations, handler, selector, parentSelector) {
-      var addedNodes = getAddedNodes(mutations);
-      {
-        handler(addedNodes);
-      }
-    }
-    function replaceNodeText(source, node, pattern, replacement) {
-      var { textContent: textContent } = node;
-      if (textContent) {
-        if (
-          node.nodeName === "SCRIPT" &&
-          window.trustedTypes &&
-          window.trustedTypes.createPolicy
-        ) {
-          var policy = window.trustedTypes.createPolicy("AGPolicy", {
-            createScript: function createScript(string) {
-              return string;
-            },
-          });
-          var modifiedText = textContent.replace(pattern, replacement);
-          var trustedReplacement = policy.createScript(modifiedText);
-          node.textContent = trustedReplacement;
-        } else {
-          node.textContent = textContent.replace(pattern, replacement);
-        }
-        hit(source);
-      }
-    }
-    function isTargetNode(node, nodeNameMatch, textContentMatch) {
-      var { nodeName: nodeName, textContent: textContent } = node;
-      var nodeNameLowerCase = nodeName.toLowerCase();
-      return (
-        textContent !== null &&
-        textContent !== "" &&
-        (nodeNameMatch instanceof RegExp
-          ? nodeNameMatch.test(nodeNameLowerCase)
-          : nodeNameMatch === nodeNameLowerCase) &&
-        (textContentMatch instanceof RegExp
-          ? textContentMatch.test(textContent)
-          : textContent.includes(textContentMatch))
-      );
-    }
-    function parseNodeTextParams(nodeName, textMatch) {
-      var pattern =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : null;
-      var REGEXP_START_MARKER = "/";
-      var isStringNameMatch = !(
-        nodeName.startsWith(REGEXP_START_MARKER) &&
-        nodeName.endsWith(REGEXP_START_MARKER)
-      );
-      var selector = isStringNameMatch ? nodeName : "*";
-      var nodeNameMatch = isStringNameMatch ? nodeName : toRegExp(nodeName);
-      var textContentMatch = !textMatch.startsWith(REGEXP_START_MARKER)
-        ? textMatch
-        : toRegExp(textMatch);
-      var patternMatch;
-      if (pattern) {
-        patternMatch = !pattern.startsWith(REGEXP_START_MARKER)
-          ? pattern
-          : toRegExp(pattern);
-      }
-      return {
-        selector: selector,
-        nodeNameMatch: nodeNameMatch,
-        textContentMatch: textContentMatch,
-        patternMatch: patternMatch,
-      };
-    }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
-    }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
+    function handleExistingNodes(e, n, o) {
+      [document].forEach(function (o) {
+        return (function (o) {
+          if ("#text" === e) {
+            var r = nodeListToArray(o.childNodes).filter(function (e) {
+              return e.nodeType === Node.TEXT_NODE;
+            });
+            n(r);
           } else {
-            label += `#%#//scriptlet('${source.name}')`;
+            var t = nodeListToArray(o.querySelectorAll(e));
+            n(t);
           }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+        })(o);
+      });
+    }
+    function handleMutations(n, d, e, o) {
+      var t = getAddedNodes(n);
+      d(t);
+    }
+    function replaceNodeText(e, t, n, r) {
+      var { textContent: a } = t;
+      if (a) {
+        var i = a.replace(n, r);
+        if ("SCRIPT" === t.nodeName) i = getTrustedTypesApi(e).createScript(i);
+        (t.textContent = i), hit(e);
       }
     }
-    function nodeListToArray(nodeList) {
-      var nodes = [];
-      for (var i = 0; i < nodeList.length; i += 1) {
-        nodes.push(nodeList[i]);
-      }
-      return nodes;
+    function isTargetNode(e, t, n) {
+      var { nodeName: o, textContent: s } = e,
+        a = o.toLowerCase();
+      return (
+        null !== s &&
+        "" !== s &&
+        (t instanceof RegExp ? t.test(a) : t === a) &&
+        (n instanceof RegExp ? n.test(s) : s.includes(n))
+      );
     }
-    function getAddedNodes(mutations) {
-      var nodes = [];
-      for (var i = 0; i < mutations.length; i += 1) {
-        var { addedNodes: addedNodes } = mutations[i];
-        for (var j = 0; j < addedNodes.length; j += 1) {
-          nodes.push(addedNodes[j]);
+    function parseNodeTextParams(t, e) {
+      var a,
+        n =
+          arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : null,
+        r = "/",
+        s = !(t.startsWith(r) && t.endsWith(r)),
+        o = s ? t : "*",
+        h = s ? t : toRegExp(t),
+        i = e.startsWith(r) ? toRegExp(e) : e;
+      return (
+        n && (a = n.startsWith(r) ? toRegExp(n) : n),
+        {
+          selector: o,
+          nodeNameMatch: h,
+          textContentMatch: i,
+          patternMatch: a,
         }
-      }
-      return nodes;
+      );
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
+    }
+    function hit(e) {
+      if (e.verbose) {
         try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
-      var escaped = input
+    }
+    function nodeListToArray(r) {
+      for (var n = [], o = 0; o < r.length; o += 1) n.push(r[o]);
+      return n;
+    }
+    function getAddedNodes(d) {
+      for (var e = [], r = 0; r < d.length; r += 1)
+        for (var { addedNodes: n } = d[r], o = 0; o < n.length; o += 1)
+          e.push(n[o]);
+      return e;
+    }
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
+    }
+    function getTrustedTypesApi(t) {
+      var r,
+        e =
+          null == t || null === (r = t.api) || void 0 === r ? void 0 : r.policy;
+      if (e) return e;
+      var n = "AGPolicy",
+        i = window.trustedTypes,
+        u = !!i,
+        c = {
+          HTML: "TrustedHTML",
+          Script: "TrustedScript",
+          ScriptURL: "TrustedScriptURL",
+        };
+      if (!u)
+        return {
+          name: n,
+          isSupported: u,
+          TrustedType: c,
+          createHTML: function createHTML(t) {
+            return t;
+          },
+          createScript: function createScript(t) {
+            return t;
+          },
+          createScriptURL: function createScriptURL(t) {
+            return t;
+          },
+          create: function create(t, r) {
+            return r;
+          },
+          getAttributeType: function getAttributeType() {
+            return null;
+          },
+          convertAttributeToTrusted: function convertAttributeToTrusted(
+            t,
+            r,
+            e,
+          ) {
+            return e;
+          },
+          getPropertyType: function getPropertyType() {
+            return null;
+          },
+          convertPropertyToTrusted: function convertPropertyToTrusted(t, r, e) {
+            return e;
+          },
+          isHTML: function isHTML() {
+            return false;
+          },
+          isScript: function isScript() {
+            return false;
+          },
+          isScriptURL: function isScriptURL() {
+            return false;
+          },
+        };
+      var o = i.createPolicy(n, {
+          createHTML: function createHTML(t) {
+            return t;
+          },
+          createScript: function createScript(t) {
+            return t;
+          },
+          createScriptURL: function createScriptURL(t) {
+            return t;
+          },
+        }),
+        createHTML = function createHTML(t) {
+          return o.createHTML(t);
+        },
+        createScript = function createScript(t) {
+          return o.createScript(t);
+        },
+        createScriptURL = function createScriptURL(t) {
+          return o.createScriptURL(t);
+        },
+        create = function create(t, r) {
+          switch (t) {
+            case c.HTML:
+              return createHTML(r);
+            case c.Script:
+              return createScript(r);
+            case c.ScriptURL:
+              return createScriptURL(r);
+            default:
+              return r;
+          }
+        },
+        p = i.getAttributeType.bind(i),
+        T = i.getPropertyType.bind(i),
+        s = i.isHTML.bind(i),
+        a = i.isScript.bind(i),
+        f = i.isScriptURL.bind(i);
+      return {
+        name: n,
+        isSupported: u,
+        TrustedType: c,
+        createHTML: createHTML,
+        createScript: createScript,
+        createScriptURL: createScriptURL,
+        create: create,
+        getAttributeType: p,
+        convertAttributeToTrusted: function convertAttributeToTrusted(
+          t,
+          r,
+          e,
+          n,
+          i,
+        ) {
+          var u = p(t, r, n, i);
+          return u ? create(u, e) : e;
+        },
+        getPropertyType: T,
+        convertPropertyToTrusted: function convertPropertyToTrusted(
+          t,
+          r,
+          e,
+          n,
+        ) {
+          var i = T(t, r, n);
+          return i ? create(i, e) : e;
+        },
+        isHTML: s,
+        isScript: a,
+        isScriptURL: f,
+      };
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -25719,7 +24124,7 @@ function _toPrimitive(t, r) {
       if (typeof chain !== "undefined") {
         logMessage(
           source,
-          `Could not reach the end of the prop chain: ${methodPath}`
+          `Could not reach the end of the prop chain: ${methodPath}`,
         );
         return;
       }
@@ -25747,7 +24152,7 @@ function _toPrimitive(t, r) {
         pattern,
         textReplacement,
         decode,
-        log
+        log,
       ) {
         switch (decode) {
           case "base64":
@@ -25755,7 +24160,7 @@ function _toPrimitive(t, r) {
               if (!isValidBase64(content)) {
                 logMessage(
                   source,
-                  `Text content is not a valid base64 encoded string: ${content}`
+                  `Text content is not a valid base64 encoded string: ${content}`,
                 );
                 return content;
               }
@@ -25789,7 +24194,7 @@ function _toPrimitive(t, r) {
       var objectWrapper = function objectWrapper(
         target,
         thisArg,
-        argumentsList
+        argumentsList,
       ) {
         if (isMatchingSuspended) {
           return Reflect.apply(target, thisArg, argumentsList);
@@ -25812,7 +24217,7 @@ function _toPrimitive(t, r) {
                   patternRegexp,
                   replacement,
                   decodeMethod,
-                  logContent
+                  logContent,
                 )
               : result;
           if (logModifiedContent) {
@@ -25834,316 +24239,221 @@ function _toPrimitive(t, r) {
       };
       base[prop] = new Proxy(nativeMethod, objectHandler);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function matchStackTrace(stackMatch, stackTrace) {
-      if (!stackMatch || stackMatch === "") {
-        return true;
-      }
-      var regExpValues = backupRegExpValues();
-      if (shouldAbortInlineOrInjectedScript(stackMatch, stackTrace)) {
-        if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-          restoreRegExpValues(regExpValues);
-        }
-        return true;
-      }
-      var stackRegexp = toRegExp(stackMatch);
-      var refinedStackTrace = stackTrace
-        .split("\n")
-        .slice(2)
-        .map(function (line) {
-          return line.trim();
-        })
-        .join("\n");
-      if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-        restoreRegExpValues(regExpValues);
-      }
-      return getNativeRegexpTest().call(stackRegexp, refinedStackTrace);
+    function matchStackTrace(e, t) {
+      if (!e || "" === e) return true;
+      var r = backupRegExpValues();
+      if (shouldAbortInlineOrInjectedScript(e, t))
+        return r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r), true;
+      var n = toRegExp(e),
+        a = t
+          .split("\n")
+          .slice(2)
+          .map(function (e) {
+            return e.trim();
+          })
+          .join("\n");
+      return (
+        r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r),
+        getNativeRegexpTest().call(n, a)
+      );
     }
-    function getPropertyInChain(base, chain) {
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
+    function getPropertyInChain(e, r) {
+      var n = r.indexOf(".");
+      if (-1 === n)
         return {
-          base: base,
-          prop: chain,
+          base: e,
+          prop: r,
         };
-      }
-      var prop = chain.slice(0, pos);
-      if (base === null) {
+      var i = r.slice(0, n);
+      if (null === e)
         return {
-          base: base,
-          prop: prop,
-          chain: chain,
+          base: e,
+          prop: i,
+          chain: r,
         };
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (
-        (base instanceof Object || typeof base === "object") &&
-        isEmptyObject(base)
-      ) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase === null) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase !== undefined) {
-        return getPropertyInChain(nextBase, chain);
-      }
-      Object.defineProperty(base, prop, {
-        configurable: true,
-      });
-      return {
-        base: base,
-        prop: prop,
-        chain: chain,
-      };
-    }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
-    }
-    function shouldAbortInlineOrInjectedScript(stackMatch, stackTrace) {
-      var INLINE_SCRIPT_STRING = "inlineScript";
-      var INJECTED_SCRIPT_STRING = "injectedScript";
-      var INJECTED_SCRIPT_MARKER = "<anonymous>";
-      var isInlineScript = function isInlineScript(match) {
-        return match.includes(INLINE_SCRIPT_STRING);
-      };
-      var isInjectedScript = function isInjectedScript(match) {
-        return match.includes(INJECTED_SCRIPT_STRING);
-      };
-      if (!(isInlineScript(stackMatch) || isInjectedScript(stackMatch))) {
-        return false;
-      }
-      var documentURL = window.location.href;
-      var pos = documentURL.indexOf("#");
-      if (pos !== -1) {
-        documentURL = documentURL.slice(0, pos);
-      }
-      var stackSteps = stackTrace
-        .split("\n")
-        .slice(2)
-        .map(function (line) {
-          return line.trim();
-        });
-      var stackLines = stackSteps.map(function (line) {
-        var stack;
-        var getStackTraceValues = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(line);
-        if (getStackTraceValues) {
-          var _stackURL, _stackURL2;
-          var stackURL = getStackTraceValues[2];
-          var stackLine = getStackTraceValues[3];
-          var stackCol = getStackTraceValues[4];
-          if (
-            (_stackURL = stackURL) !== null &&
-            _stackURL !== void 0 &&
-            _stackURL.startsWith("(")
-          ) {
-            stackURL = stackURL.slice(1);
-          }
-          if (
-            (_stackURL2 = stackURL) !== null &&
-            _stackURL2 !== void 0 &&
-            _stackURL2.startsWith(INJECTED_SCRIPT_MARKER)
-          ) {
-            var _stackFunction;
-            stackURL = INJECTED_SCRIPT_STRING;
-            var stackFunction =
-              getStackTraceValues[1] !== undefined
-                ? getStackTraceValues[1].slice(0, -1)
-                : line.slice(0, getStackTraceValues.index).trim();
-            if (
-              (_stackFunction = stackFunction) !== null &&
-              _stackFunction !== void 0 &&
-              _stackFunction.startsWith("at")
-            ) {
-              stackFunction = stackFunction.slice(2).trim();
+      var t = e[i];
+      return (
+        (r = r.slice(n + 1)),
+        ((e instanceof Object || "object" == typeof e) && isEmptyObject(e)) ||
+        null === t
+          ? {
+              base: e,
+              prop: i,
+              chain: r,
             }
-            stack =
-              `${stackFunction} ${stackURL}${stackLine}${stackCol}`.trim();
-          } else if (stackURL === documentURL) {
-            stack = `${INLINE_SCRIPT_STRING}${stackLine}${stackCol}`.trim();
-          } else {
-            stack = `${stackURL}${stackLine}${stackCol}`.trim();
-          }
-        } else {
-          stack = line;
-        }
-        return stack;
-      });
-      if (stackLines) {
-        for (var index = 0; index < stackLines.length; index += 1) {
-          if (
-            isInlineScript(stackMatch) &&
-            stackLines[index].startsWith(INLINE_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
-            return true;
-          }
-          if (
-            isInjectedScript(stackMatch) &&
-            stackLines[index].startsWith(INJECTED_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
-            return true;
-          }
-        }
+          : void 0 !== t
+            ? getPropertyInChain(t, r)
+            : (Object.defineProperty(e, i, {
+                configurable: true,
+              }),
+              {
+                base: e,
+                prop: i,
+                chain: r,
+              })
+      );
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
+    }
+    function shouldAbortInlineOrInjectedScript(t, i) {
+      var r = "inlineScript",
+        n = "injectedScript",
+        isInlineScript = function isInlineScript(t) {
+          return t.includes(r);
+        },
+        isInjectedScript = function isInjectedScript(t) {
+          return t.includes(n);
+        };
+      if (!isInlineScript(t) && !isInjectedScript(t)) return false;
+      var e = window.location.href,
+        s = e.indexOf("#");
+      -1 !== s && (e = e.slice(0, s));
+      var c = i
+        .split("\n")
+        .slice(2)
+        .map(function (t) {
+          return t.trim();
+        })
+        .map(function (t) {
+          var i,
+            s = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(t);
+          if (s) {
+            var c,
+              l,
+              a = s[2],
+              u = s[3],
+              o = s[4];
+            if (
+              (null !== (c = a) &&
+                void 0 !== c &&
+                c.startsWith("(") &&
+                (a = a.slice(1)),
+              null !== (l = a) && void 0 !== l && l.startsWith("<anonymous>"))
+            ) {
+              var d;
+              a = n;
+              var f =
+                void 0 !== s[1]
+                  ? s[1].slice(0, -1)
+                  : t.slice(0, s.index).trim();
+              null !== (d = f) &&
+                void 0 !== d &&
+                d.startsWith("at") &&
+                (f = f.slice(2).trim()),
+                (i = `${f} ${a}${u}${o}`.trim());
+            } else i = a === e ? `${r}${u}${o}`.trim() : `${a}${u}${o}`.trim();
+          } else i = t;
+          return i;
+        });
+      if (c)
+        for (var l = 0; l < c.length; l += 1) {
+          if (
+            isInlineScript(t) &&
+            c[l].startsWith(r) &&
+            c[l].match(toRegExp(t))
+          )
+            return true;
+          if (
+            isInjectedScript(t) &&
+            c[l].startsWith(n) &&
+            c[l].match(toRegExp(t))
+          )
+            return true;
+        }
       return false;
     }
     function getNativeRegexpTest() {
-      var descriptor = Object.getOwnPropertyDescriptor(
-        RegExp.prototype,
-        "test"
-      );
-      var nativeRegexTest =
-        descriptor === null || descriptor === void 0
-          ? void 0
-          : descriptor.value;
-      if (descriptor && typeof descriptor.value === "function") {
-        return nativeRegexTest;
-      }
+      var t = Object.getOwnPropertyDescriptor(RegExp.prototype, "test"),
+        e = null == t ? void 0 : t.value;
+      if (t && "function" == typeof t.value) return e;
       throw new Error("RegExp.prototype.test is not a function");
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
     }
     function backupRegExpValues() {
       try {
-        var arrayOfRegexpValues = [];
-        for (var index = 1; index < 10; index += 1) {
-          var value = `$${index}`;
-          if (!RegExp[value]) {
-            break;
-          }
-          arrayOfRegexpValues.push(RegExp[value]);
+        for (var r = [], e = 1; e < 10; e += 1) {
+          var a = `$${e}`;
+          if (!RegExp[a]) break;
+          r.push(RegExp[a]);
         }
-        return arrayOfRegexpValues;
-      } catch (error) {
+        return r;
+      } catch (r) {
         return [];
       }
     }
-    function restoreRegExpValues(array) {
-      if (!array.length) {
-        return;
-      }
-      try {
-        var stringPattern = "";
-        if (array.length === 1) {
-          stringPattern = `(${array[0]})`;
-        } else {
-          stringPattern = array.reduce(
-            function (accumulator, currentValue, currentIndex) {
-              if (currentIndex === 1) {
-                return `(${accumulator}),(${currentValue})`;
-              }
-              return `${accumulator},(${currentValue})`;
-            }
-          );
+    function restoreRegExpValues(e) {
+      if (e.length)
+        try {
+          var r = "";
+          r =
+            1 === e.length
+              ? `(${e[0]})`
+              : e.reduce(function (e, r, t) {
+                  return 1 === t ? `(${e}),(${r})` : `${e},(${r})`;
+                });
+          var t = new RegExp(r);
+          e.toString().replace(t, "");
+        } catch (e) {
+          var n = `Failed to restore RegExp values: ${e}`;
+          console.log(n);
         }
-        var regExpGroup = new RegExp(stringPattern);
-        array.toString().replace(regExpGroup, "");
-      } catch (error) {
-        var message = `Failed to restore RegExp values: ${error}`;
-        console.log(message);
-      }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -26214,7 +24524,7 @@ function _toPrimitive(t, r) {
           var setRequestHeaderWrapper = function setRequestHeaderWrapper(
             target,
             thisArg,
-            args
+            args,
           ) {
             thisArg.collectedHeaders.push(args);
             return Reflect.apply(target, thisArg, args);
@@ -26224,7 +24534,7 @@ function _toPrimitive(t, r) {
           };
           thisArg.setRequestHeader = new Proxy(
             thisArg.setRequestHeader,
-            setRequestHeaderHandler
+            setRequestHeaderHandler,
           );
         }
         return Reflect.apply(target, thisArg, args);
@@ -26321,168 +24631,122 @@ function _toPrimitive(t, r) {
       };
       XMLHttpRequest.prototype.open = new Proxy(
         XMLHttpRequest.prototype.open,
-        openHandler
+        openHandler,
       );
       XMLHttpRequest.prototype.send = new Proxy(
         XMLHttpRequest.prototype.send,
-        sendHandler
+        sendHandler,
       );
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
-      }
-    }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
-    }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
+    function hit(e) {
+      if (e.verbose) {
         try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
-      var escaped = input
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
+      }
+    }
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function objectToString(obj) {
-      if (!obj || typeof obj !== "object") {
-        return String(obj);
-      }
-      if (isEmptyObject(obj)) {
-        return "{}";
-      }
-      return Object.entries(obj)
-        .map(function (pair) {
-          var key = pair[0];
-          var value = pair[1];
-          var recordValueStr = value;
-          if (value instanceof Object) {
-            recordValueStr = `{ ${objectToString(value)} }`;
-          }
-          return `${key}:"${recordValueStr}"`;
-        })
-        .join(" ");
+    function objectToString(t) {
+      return t && "object" == typeof t
+        ? isEmptyObject(t)
+          ? "{}"
+          : Object.entries(t)
+              .map(function (t) {
+                var n = t[0],
+                  e = t[1],
+                  o = e;
+                return (
+                  e instanceof Object && (o = `{ ${objectToString(e)} }`),
+                  `${n}:"${o}"`
+                );
+              })
+              .join(" ")
+        : String(t);
     }
-    function matchRequestProps(source, propsToMatch, requestData) {
-      if (propsToMatch === "" || propsToMatch === "*") {
-        return true;
-      }
-      var isMatched;
-      var parsedData = parseMatchProps(propsToMatch);
-      if (!isValidParsedData(parsedData)) {
-        logMessage(source, `Invalid parameter: ${propsToMatch}`);
-        isMatched = false;
-      } else {
-        var matchData = getMatchPropsData(parsedData);
-        var matchKeys = Object.keys(matchData);
-        isMatched = matchKeys.every(function (matchKey) {
-          var matchValue = matchData[matchKey];
-          var dataValue = requestData[matchKey];
+    function matchRequestProps(e, t, r) {
+      if ("" === t || "*" === t) return true;
+      var a,
+        s = parseMatchProps(t);
+      if (isValidParsedData(s)) {
+        var n = getMatchPropsData(s);
+        a = Object.keys(n).every(function (e) {
+          var t = n[e],
+            a = r[e];
           return (
-            Object.prototype.hasOwnProperty.call(requestData, matchKey) &&
-            typeof dataValue === "string" &&
-            (matchValue === null || matchValue === void 0
-              ? void 0
-              : matchValue.test(dataValue))
+            Object.prototype.hasOwnProperty.call(r, e) &&
+            "string" == typeof a &&
+            (null == t ? void 0 : t.test(a))
           );
         });
-      }
-      return isMatched;
+      } else logMessage(e, `Invalid parameter: ${t}`), (a = false);
+      return a;
     }
-    function getXhrData(method, url, async, user, password) {
+    function getXhrData(r, t, a, e, n) {
       return {
-        method: method,
-        url: url,
-        async: async,
-        user: user,
-        password: password,
+        method: r,
+        url: t,
+        async: a,
+        user: e,
+        password: n,
       };
     }
-    function getMatchPropsData(data) {
-      var matchData = {};
-      var dataKeys = Object.keys(data);
-      dataKeys.forEach(function (key) {
-        matchData[key] = toRegExp(data[key]);
-      });
-      return matchData;
+    function getMatchPropsData(t) {
+      var a = {};
+      return (
+        Object.keys(t).forEach(function (c) {
+          a[c] = toRegExp(t[c]);
+        }),
+        a
+      );
     }
     function getRequestProps() {
       return [
@@ -26501,54 +24765,45 @@ function _toPrimitive(t, r) {
         "mode",
       ];
     }
-    function isValidParsedData(data) {
-      return Object.values(data).every(function (value) {
-        return isValidStrPattern(value);
+    function isValidParsedData(t) {
+      return Object.values(t).every(function (t) {
+        return isValidStrPattern(t);
       });
     }
-    function parseMatchProps(propsToMatchStr) {
-      var PROPS_DIVIDER = " ";
-      var PAIRS_MARKER = ":";
-      var isRequestProp = function isRequestProp(prop) {
-        return getRequestProps().includes(prop);
-      };
-      var propsObj = {};
-      var props = propsToMatchStr.split(PROPS_DIVIDER);
-      props.forEach(function (prop) {
-        var dividerInd = prop.indexOf(PAIRS_MARKER);
-        var key = prop.slice(0, dividerInd);
-        if (isRequestProp(key)) {
-          var value = prop.slice(dividerInd + 1);
-          propsObj[key] = value;
-        } else {
-          propsObj.url = prop;
-        }
-      });
-      return propsObj;
+    function parseMatchProps(e) {
+      var r = {};
+      return (
+        e.split(" ").forEach(function (e) {
+          var n = e.indexOf(":"),
+            i = e.slice(0, n);
+          if (
+            (function (e) {
+              return getRequestProps().includes(e);
+            })(i)
+          ) {
+            var s = e.slice(n + 1);
+            r[i] = s;
+          } else r.url = e;
+        }),
+        r
+      );
     }
-    function isValidStrPattern(input) {
-      var FORWARD_SLASH = "/";
-      var str = escapeRegExp(input);
-      if (
-        input[0] === FORWARD_SLASH &&
-        input[input.length - 1] === FORWARD_SLASH
-      ) {
-        str = input.slice(1, -1);
-      }
-      var isValid;
+    function isValidStrPattern(e) {
+      var t,
+        n = escapeRegExp(e);
+      "/" === e[0] && "/" === e[e.length - 1] && (n = e.slice(1, -1));
       try {
-        isValid = new RegExp(str);
-        isValid = true;
+        (t = new RegExp(n)), (t = !0);
       } catch (e) {
-        isValid = false;
+        t = false;
       }
-      return isValid;
+      return t;
     }
-    function escapeRegExp(str) {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    function escapeRegExp(e) {
+      return e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -26588,149 +24843,102 @@ function _toPrimitive(t, r) {
         return setAttributeBySelector(source, selector, attr, value);
       }, true);
     }
-    function setAttributeBySelector(source, selector, attribute, value) {
-      var attributeSetter =
-        arguments.length > 4 && arguments[4] !== undefined
-          ? arguments[4]
-          : defaultAttributeSetter;
-      var elements;
+    function setAttributeBySelector(e, t, l, o) {
+      var r,
+        c =
+          arguments.length > 4 && void 0 !== arguments[4]
+            ? arguments[4]
+            : defaultAttributeSetter;
       try {
-        elements = document.querySelectorAll(selector);
-      } catch (_unused) {
-        logMessage(
-          source,
-          `Failed to find elements matching selector "${selector}"`
-        );
-        return;
-      }
-      if (!elements || elements.length === 0) {
-        return;
-      }
-      try {
-        elements.forEach(function (elem) {
-          return attributeSetter(elem, attribute, value);
-        });
-        hit(source);
-      } catch (_unused2) {
-        logMessage(
-          source,
-          `Failed to set [${attribute}="${value}"] to each of selected elements.`
+        r = document.querySelectorAll(t);
+      } catch (l) {
+        return void logMessage(
+          e,
+          `Failed to find elements matching selector "${t}"`,
         );
       }
-    }
-    function observeDOMChanges(callback) {
-      var observeAttrs =
-        arguments.length > 1 && arguments[1] !== undefined
-          ? arguments[1]
-          : false;
-      var attrsToObserve =
-        arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-      var THROTTLE_DELAY_MS = 20;
-      var observer = new MutationObserver(
-        throttle(callbackWrapper, THROTTLE_DELAY_MS)
-      );
-      var connect = function connect() {
-        if (attrsToObserve.length > 0) {
-          observer.observe(document.documentElement, {
-            childList: true,
-            subtree: true,
-            attributes: observeAttrs,
-            attributeFilter: attrsToObserve,
-          });
-        } else {
-          observer.observe(document.documentElement, {
-            childList: true,
-            subtree: true,
-            attributes: observeAttrs,
-          });
+      if (r && 0 !== r.length)
+        try {
+          r.forEach(function (e) {
+            return c(e, l, o);
+          }),
+            hit(e);
+        } catch (t) {
+          logMessage(
+            e,
+            `Failed to set [${l}="${o}"] to each of selected elements.`,
+          );
         }
-      };
-      var disconnect = function disconnect() {
-        observer.disconnect();
-      };
-      function callbackWrapper() {
-        disconnect();
-        callback();
-        connect();
-      }
+    }
+    function observeDOMChanges(t) {
+      var e = arguments.length > 1 && void 0 !== arguments[1] && arguments[1],
+        n = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : [],
+        i = new MutationObserver(
+          throttle(function () {
+            disconnect(), t(), connect();
+          }, 20),
+        ),
+        connect = function connect() {
+          n.length > 0
+            ? i.observe(document.documentElement, {
+                childList: true,
+                subtree: true,
+                attributes: e,
+                attributeFilter: n,
+              })
+            : i.observe(document.documentElement, {
+                childList: true,
+                subtree: true,
+                attributes: e,
+              });
+        },
+        disconnect = function disconnect() {
+          i.disconnect();
+        };
       connect();
     }
-    function defaultAttributeSetter(elem, attribute, value) {
-      return elem.setAttribute(attribute, value);
+    function defaultAttributeSetter(t, e, r) {
+      return t.setAttribute(e, r);
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function throttle(cb, delay) {
-      var wait = false;
-      var savedArgs;
-      var _wrapper = function wrapper() {
-        for (
-          var _len = arguments.length, args = new Array(_len), _key = 0;
-          _key < _len;
-          _key++
-        ) {
-          args[_key] = arguments[_key];
-        }
-        if (wait) {
-          savedArgs = args;
-          return;
-        }
-        cb(...args);
-        wait = true;
-        setTimeout(function () {
-          wait = false;
-          if (savedArgs) {
-            _wrapper(...savedArgs);
-            savedArgs = null;
-          }
-        }, delay);
-      };
-      return _wrapper;
+    function throttle(n, t) {
+      var r,
+        e = false,
+        _wrapper9 = function _wrapper() {
+          for (var o = arguments.length, u = new Array(o), f = 0; f < o; f++)
+            u[f] = arguments[f];
+          e
+            ? (r = u)
+            : (n(...u),
+              (e = true),
+              setTimeout(function () {
+                (e = false), r && (_wrapper9(...r), (r = null));
+              }, t));
+        };
+      return _wrapper9;
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
@@ -26882,358 +25090,247 @@ function _toPrimitive(t, r) {
       };
       _setChainPropAccess(window, property);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
-      }
-    }
-    function inferValue(value) {
-      if (value === "undefined") {
-        return undefined;
-      }
-      if (value === "false") {
-        return false;
-      }
-      if (value === "true") {
-        return true;
-      }
-      if (value === "null") {
-        return null;
-      }
-      if (value === "NaN") {
-        return NaN;
-      }
-      if (value.startsWith("/") && value.endsWith("/")) {
-        return toRegExp(value);
-      }
-      var MAX_ALLOWED_NUM = 32767;
-      var numVal = Number(value);
-      if (!nativeIsNaN(numVal)) {
-        if (Math.abs(numVal) > MAX_ALLOWED_NUM) {
-          throw new Error("number values bigger than 32767 are not allowed");
-        }
-        return numVal;
-      }
-      var errorMessage = `'${value}' value type can't be inferred`;
-      try {
-        var parsableVal = JSON.parse(value);
-        if (parsableVal instanceof Object || typeof parsableVal === "string") {
-          return parsableVal;
-        }
-      } catch (e) {
-        errorMessage += `: ${e}`;
-      }
-      throw new TypeError(errorMessage);
-    }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
-    }
-    function getPropertyInChain(base, chain) {
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
-        return {
-          base: base,
-          prop: chain,
-        };
-      }
-      var prop = chain.slice(0, pos);
-      if (base === null) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (
-        (base instanceof Object || typeof base === "object") &&
-        isEmptyObject(base)
-      ) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase === null) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase !== undefined) {
-        return getPropertyInChain(nextBase, chain);
-      }
-      Object.defineProperty(base, prop, {
-        configurable: true,
-      });
-      return {
-        base: base,
-        prop: prop,
-        chain: chain,
-      };
-    }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
+    function hit(e) {
+      if (e.verbose) {
         try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
-      var escaped = input
+    }
+    function inferValue(r) {
+      if ("undefined" !== r) {
+        if ("false" === r) return false;
+        if ("true" === r) return true;
+        if ("null" === r) return null;
+        if ("NaN" === r) return NaN;
+        if (r.startsWith("/") && r.endsWith("/")) return toRegExp(r);
+        var e = Number(r);
+        if (!nativeIsNaN(e)) {
+          if (Math.abs(e) > 32767)
+            throw new Error("number values bigger than 32767 are not allowed");
+          return e;
+        }
+        var t = `'${r}' value type can't be inferred`;
+        try {
+          var n = JSON.parse(r);
+          if (n instanceof Object || "string" == typeof n) return n;
+        } catch (r) {
+          t += `: ${r}`;
+        }
+        throw new TypeError(t);
+      }
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
+      }
+    }
+    function getPropertyInChain(e, r) {
+      var n = r.indexOf(".");
+      if (-1 === n)
+        return {
+          base: e,
+          prop: r,
+        };
+      var i = r.slice(0, n);
+      if (null === e)
+        return {
+          base: e,
+          prop: i,
+          chain: r,
+        };
+      var t = e[i];
+      return (
+        (r = r.slice(n + 1)),
+        ((e instanceof Object || "object" == typeof e) && isEmptyObject(e)) ||
+        null === t
+          ? {
+              base: e,
+              prop: i,
+              chain: r,
+            }
+          : void 0 !== t
+            ? getPropertyInChain(t, r)
+            : (Object.defineProperty(e, i, {
+                configurable: true,
+              }),
+              {
+                base: e,
+                prop: i,
+                chain: r,
+              })
+      );
+    }
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function matchStackTrace(stackMatch, stackTrace) {
-      if (!stackMatch || stackMatch === "") {
-        return true;
-      }
-      var regExpValues = backupRegExpValues();
-      if (shouldAbortInlineOrInjectedScript(stackMatch, stackTrace)) {
-        if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-          restoreRegExpValues(regExpValues);
-        }
-        return true;
-      }
-      var stackRegexp = toRegExp(stackMatch);
-      var refinedStackTrace = stackTrace
-        .split("\n")
-        .slice(2)
-        .map(function (line) {
-          return line.trim();
-        })
-        .join("\n");
-      if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-        restoreRegExpValues(regExpValues);
-      }
-      return getNativeRegexpTest().call(stackRegexp, refinedStackTrace);
+    function matchStackTrace(e, t) {
+      if (!e || "" === e) return true;
+      var r = backupRegExpValues();
+      if (shouldAbortInlineOrInjectedScript(e, t))
+        return r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r), true;
+      var n = toRegExp(e),
+        a = t
+          .split("\n")
+          .slice(2)
+          .map(function (e) {
+            return e.trim();
+          })
+          .join("\n");
+      return (
+        r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r),
+        getNativeRegexpTest().call(n, a)
+      );
     }
-    function nativeIsNaN(num) {
-      var native = Number.isNaN || window.isNaN;
-      return native(num);
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
     }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
     }
     function getNativeRegexpTest() {
-      var descriptor = Object.getOwnPropertyDescriptor(
-        RegExp.prototype,
-        "test"
-      );
-      var nativeRegexTest =
-        descriptor === null || descriptor === void 0
-          ? void 0
-          : descriptor.value;
-      if (descriptor && typeof descriptor.value === "function") {
-        return nativeRegexTest;
-      }
+      var t = Object.getOwnPropertyDescriptor(RegExp.prototype, "test"),
+        e = null == t ? void 0 : t.value;
+      if (t && "function" == typeof t.value) return e;
       throw new Error("RegExp.prototype.test is not a function");
     }
-    function shouldAbortInlineOrInjectedScript(stackMatch, stackTrace) {
-      var INLINE_SCRIPT_STRING = "inlineScript";
-      var INJECTED_SCRIPT_STRING = "injectedScript";
-      var INJECTED_SCRIPT_MARKER = "<anonymous>";
-      var isInlineScript = function isInlineScript(match) {
-        return match.includes(INLINE_SCRIPT_STRING);
-      };
-      var isInjectedScript = function isInjectedScript(match) {
-        return match.includes(INJECTED_SCRIPT_STRING);
-      };
-      if (!(isInlineScript(stackMatch) || isInjectedScript(stackMatch))) {
-        return false;
-      }
-      var documentURL = window.location.href;
-      var pos = documentURL.indexOf("#");
-      if (pos !== -1) {
-        documentURL = documentURL.slice(0, pos);
-      }
-      var stackSteps = stackTrace
+    function shouldAbortInlineOrInjectedScript(t, i) {
+      var r = "inlineScript",
+        n = "injectedScript",
+        isInlineScript = function isInlineScript(t) {
+          return t.includes(r);
+        },
+        isInjectedScript = function isInjectedScript(t) {
+          return t.includes(n);
+        };
+      if (!isInlineScript(t) && !isInjectedScript(t)) return false;
+      var e = window.location.href,
+        s = e.indexOf("#");
+      -1 !== s && (e = e.slice(0, s));
+      var c = i
         .split("\n")
         .slice(2)
-        .map(function (line) {
-          return line.trim();
-        });
-      var stackLines = stackSteps.map(function (line) {
-        var stack;
-        var getStackTraceValues = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(line);
-        if (getStackTraceValues) {
-          var _stackURL, _stackURL2;
-          var stackURL = getStackTraceValues[2];
-          var stackLine = getStackTraceValues[3];
-          var stackCol = getStackTraceValues[4];
-          if (
-            (_stackURL = stackURL) !== null &&
-            _stackURL !== void 0 &&
-            _stackURL.startsWith("(")
-          ) {
-            stackURL = stackURL.slice(1);
-          }
-          if (
-            (_stackURL2 = stackURL) !== null &&
-            _stackURL2 !== void 0 &&
-            _stackURL2.startsWith(INJECTED_SCRIPT_MARKER)
-          ) {
-            var _stackFunction;
-            stackURL = INJECTED_SCRIPT_STRING;
-            var stackFunction =
-              getStackTraceValues[1] !== undefined
-                ? getStackTraceValues[1].slice(0, -1)
-                : line.slice(0, getStackTraceValues.index).trim();
+        .map(function (t) {
+          return t.trim();
+        })
+        .map(function (t) {
+          var i,
+            s = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(t);
+          if (s) {
+            var c,
+              l,
+              a = s[2],
+              u = s[3],
+              o = s[4];
             if (
-              (_stackFunction = stackFunction) !== null &&
-              _stackFunction !== void 0 &&
-              _stackFunction.startsWith("at")
+              (null !== (c = a) &&
+                void 0 !== c &&
+                c.startsWith("(") &&
+                (a = a.slice(1)),
+              null !== (l = a) && void 0 !== l && l.startsWith("<anonymous>"))
             ) {
-              stackFunction = stackFunction.slice(2).trim();
-            }
-            stack =
-              `${stackFunction} ${stackURL}${stackLine}${stackCol}`.trim();
-          } else if (stackURL === documentURL) {
-            stack = `${INLINE_SCRIPT_STRING}${stackLine}${stackCol}`.trim();
-          } else {
-            stack = `${stackURL}${stackLine}${stackCol}`.trim();
-          }
-        } else {
-          stack = line;
-        }
-        return stack;
-      });
-      if (stackLines) {
-        for (var index = 0; index < stackLines.length; index += 1) {
+              var d;
+              a = n;
+              var f =
+                void 0 !== s[1]
+                  ? s[1].slice(0, -1)
+                  : t.slice(0, s.index).trim();
+              null !== (d = f) &&
+                void 0 !== d &&
+                d.startsWith("at") &&
+                (f = f.slice(2).trim()),
+                (i = `${f} ${a}${u}${o}`.trim());
+            } else i = a === e ? `${r}${u}${o}`.trim() : `${a}${u}${o}`.trim();
+          } else i = t;
+          return i;
+        });
+      if (c)
+        for (var l = 0; l < c.length; l += 1) {
           if (
-            isInlineScript(stackMatch) &&
-            stackLines[index].startsWith(INLINE_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
+            isInlineScript(t) &&
+            c[l].startsWith(r) &&
+            c[l].match(toRegExp(t))
+          )
             return true;
-          }
           if (
-            isInjectedScript(stackMatch) &&
-            stackLines[index].startsWith(INJECTED_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
+            isInjectedScript(t) &&
+            c[l].startsWith(n) &&
+            c[l].match(toRegExp(t))
+          )
             return true;
-          }
         }
-      }
       return false;
     }
     function backupRegExpValues() {
       try {
-        var arrayOfRegexpValues = [];
-        for (var index = 1; index < 10; index += 1) {
-          var value = `$${index}`;
-          if (!RegExp[value]) {
-            break;
-          }
-          arrayOfRegexpValues.push(RegExp[value]);
+        for (var r = [], e = 1; e < 10; e += 1) {
+          var a = `$${e}`;
+          if (!RegExp[a]) break;
+          r.push(RegExp[a]);
         }
-        return arrayOfRegexpValues;
-      } catch (error) {
+        return r;
+      } catch (r) {
         return [];
       }
     }
-    function restoreRegExpValues(array) {
-      if (!array.length) {
-        return;
-      }
-      try {
-        var stringPattern = "";
-        if (array.length === 1) {
-          stringPattern = `(${array[0]})`;
-        } else {
-          stringPattern = array.reduce(
-            function (accumulator, currentValue, currentIndex) {
-              if (currentIndex === 1) {
-                return `(${accumulator}),(${currentValue})`;
-              }
-              return `${accumulator},(${currentValue})`;
-            }
-          );
+    function restoreRegExpValues(e) {
+      if (e.length)
+        try {
+          var r = "";
+          r =
+            1 === e.length
+              ? `(${e[0]})`
+              : e.reduce(function (e, r, t) {
+                  return 1 === t ? `(${e}),(${r})` : `${e},(${r})`;
+                });
+          var t = new RegExp(r);
+          e.toString().replace(t, "");
+        } catch (e) {
+          var n = `Failed to restore RegExp values: ${e}`;
+          console.log(n);
         }
-        var regExpGroup = new RegExp(stringPattern);
-        array.toString().replace(regExpGroup, "");
-      } catch (error) {
-        var message = `Failed to restore RegExp values: ${error}`;
-        console.log(message);
-      }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -27296,7 +25393,7 @@ function _toPrimitive(t, r) {
         if (!parsedOffsetMs) {
           logMessage(
             source,
-            `Invalid offsetExpiresSec value: ${offsetExpiresSec}`
+            `Invalid offsetExpiresSec value: ${offsetExpiresSec}`,
           );
           return;
         }
@@ -27306,134 +25403,77 @@ function _toPrimitive(t, r) {
       document.cookie = cookieToSet;
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function serializeCookie(name, rawValue, rawPath) {
-      var domainValue =
-        arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
-      var shouldEncodeValue =
-        arguments.length > 4 && arguments[4] !== undefined
-          ? arguments[4]
-          : true;
-      var HOST_PREFIX = "__Host-";
-      var SECURE_PREFIX = "__Secure-";
-      var COOKIE_BREAKER = ";";
-      if (
-        (!shouldEncodeValue && `${rawValue}`.includes(COOKIE_BREAKER)) ||
-        name.includes(COOKIE_BREAKER)
-      ) {
-        return null;
-      }
-      var value = shouldEncodeValue ? encodeURIComponent(rawValue) : rawValue;
-      var resultCookie = `${name}=${value}`;
-      if (name.startsWith(HOST_PREFIX)) {
-        resultCookie += "; path=/; secure";
-        if (domainValue) {
-          console.debug(
-            `Domain value: "${domainValue}" has been ignored, because is not allowed for __Host- prefixed cookies`
-          );
-        }
-        return resultCookie;
-      }
-      var path = getCookiePath(rawPath);
-      if (path) {
-        resultCookie += `; ${path}`;
-      }
-      if (name.startsWith(SECURE_PREFIX)) {
-        resultCookie += "; secure";
-      }
-      if (domainValue) {
-        resultCookie += `; domain=${domainValue}`;
-      }
-      return resultCookie;
+    function serializeCookie(e, o, i) {
+      var n =
+          arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : "",
+        t = !(arguments.length > 4 && void 0 !== arguments[4]) || arguments[4];
+      if ((!t && `${o}`.includes(";")) || e.includes(";")) return null;
+      var r = `${e}=${t ? encodeURIComponent(o) : o}`;
+      if (e.startsWith("__Host-"))
+        return (
+          (r += "; path=/; secure"),
+          n &&
+            console.debug(
+              `Domain value: "${n}" has been ignored, because is not allowed for __Host- prefixed cookies`,
+            ),
+          r
+        );
+      var s = getCookiePath(i);
+      return (
+        s && (r += `; ${s}`),
+        e.startsWith("__Secure-") && (r += "; secure"),
+        n && (r += `; domain=${n}`),
+        r
+      );
     }
-    function isValidCookiePath(rawPath) {
-      return rawPath === "/" || rawPath === "none";
+    function isValidCookiePath(n) {
+      return "/" === n || "none" === n;
     }
-    function getTrustedCookieOffsetMs(offsetExpiresSec) {
-      var ONE_YEAR_EXPIRATION_KEYWORD = "1year";
-      var ONE_DAY_EXPIRATION_KEYWORD = "1day";
-      var MS_IN_SEC = 1e3;
-      var SECONDS_IN_YEAR = 365 * 24 * 60 * 60;
-      var SECONDS_IN_DAY = 24 * 60 * 60;
-      var parsedSec;
-      if (offsetExpiresSec === ONE_YEAR_EXPIRATION_KEYWORD) {
-        parsedSec = SECONDS_IN_YEAR;
-      } else if (offsetExpiresSec === ONE_DAY_EXPIRATION_KEYWORD) {
-        parsedSec = SECONDS_IN_DAY;
-      } else {
-        parsedSec = Number.parseInt(offsetExpiresSec, 10);
-        if (Number.isNaN(parsedSec)) {
-          return null;
-        }
-      }
-      return parsedSec * MS_IN_SEC;
+    function getTrustedCookieOffsetMs(e) {
+      var r;
+      if ("1year" === e) r = 31536e3;
+      else if ("1day" === e) r = 86400;
+      else if (((r = Number.parseInt(e, 10)), Number.isNaN(r))) return null;
+      return 1e3 * r;
     }
-    function parseKeywordValue(rawValue) {
-      var NOW_VALUE_KEYWORD = "$now$";
-      var CURRENT_DATE_KEYWORD = "$currentDate$";
-      var CURRENT_ISO_DATE_KEYWORD = "$currentISODate$";
-      var parsedValue = rawValue;
-      if (rawValue === NOW_VALUE_KEYWORD) {
-        parsedValue = Date.now().toString();
-      } else if (rawValue === CURRENT_DATE_KEYWORD) {
-        parsedValue = Date();
-      } else if (rawValue === CURRENT_ISO_DATE_KEYWORD) {
-        parsedValue = new Date().toISOString();
-      }
-      return parsedValue;
+    function parseKeywordValue(t) {
+      var e = t;
+      return (
+        "$now$" === t
+          ? (e = Date.now().toString())
+          : "$currentDate$" === t
+            ? (e = Date())
+            : "$currentISODate$" === t && (e = new Date().toISOString()),
+        e
+      );
     }
-    function getCookiePath(rawPath) {
-      if (rawPath === "/") {
-        return "path=/";
-      }
-      return "";
+    function getCookiePath(t) {
+      return "/" === t ? "path=/" : "";
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -27499,7 +25539,7 @@ function _toPrimitive(t, r) {
         if (!parsedOffsetMs) {
           logMessage(
             source,
-            `Invalid offsetExpiresSec value: ${offsetExpiresSec}`
+            `Invalid offsetExpiresSec value: ${offsetExpiresSec}`,
           );
           return;
         }
@@ -27513,164 +25553,107 @@ function _toPrimitive(t, r) {
         window.location.reload();
       }
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function isCookieSetWithValue(cookieString, name, value) {
-      return cookieString.split(";").some(function (cookieStr) {
-        var pos = cookieStr.indexOf("=");
-        if (pos === -1) {
-          return false;
+    function isCookieSetWithValue(e, t, r) {
+      return e.split(";").some(function (e) {
+        var n = e.indexOf("=");
+        if (-1 === n) return false;
+        var i = e.slice(0, n).trim(),
+          a = e.slice(n + 1).trim();
+        if (new Set(["$now$", "$currentDate$", "$currentISODate$"]).has(r)) {
+          var u = Date.now(),
+            s = /^\d+$/.test(a) ? parseInt(a, 10) : new Date(a).getTime();
+          return t === i && s > u - 864e5;
         }
-        var cookieName = cookieStr.slice(0, pos).trim();
-        var cookieValue = cookieStr.slice(pos + 1).trim();
-        return name === cookieName && value === cookieValue;
+        return t === i && r === a;
       });
     }
-    function serializeCookie(name, rawValue, rawPath) {
-      var domainValue =
-        arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
-      var shouldEncodeValue =
-        arguments.length > 4 && arguments[4] !== undefined
-          ? arguments[4]
-          : true;
-      var HOST_PREFIX = "__Host-";
-      var SECURE_PREFIX = "__Secure-";
-      var COOKIE_BREAKER = ";";
-      if (
-        (!shouldEncodeValue && `${rawValue}`.includes(COOKIE_BREAKER)) ||
-        name.includes(COOKIE_BREAKER)
-      ) {
-        return null;
-      }
-      var value = shouldEncodeValue ? encodeURIComponent(rawValue) : rawValue;
-      var resultCookie = `${name}=${value}`;
-      if (name.startsWith(HOST_PREFIX)) {
-        resultCookie += "; path=/; secure";
-        if (domainValue) {
-          console.debug(
-            `Domain value: "${domainValue}" has been ignored, because is not allowed for __Host- prefixed cookies`
-          );
-        }
-        return resultCookie;
-      }
-      var path = getCookiePath(rawPath);
-      if (path) {
-        resultCookie += `; ${path}`;
-      }
-      if (name.startsWith(SECURE_PREFIX)) {
-        resultCookie += "; secure";
-      }
-      if (domainValue) {
-        resultCookie += `; domain=${domainValue}`;
-      }
-      return resultCookie;
+    function serializeCookie(e, o, i) {
+      var n =
+          arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : "",
+        t = !(arguments.length > 4 && void 0 !== arguments[4]) || arguments[4];
+      if ((!t && `${o}`.includes(";")) || e.includes(";")) return null;
+      var r = `${e}=${t ? encodeURIComponent(o) : o}`;
+      if (e.startsWith("__Host-"))
+        return (
+          (r += "; path=/; secure"),
+          n &&
+            console.debug(
+              `Domain value: "${n}" has been ignored, because is not allowed for __Host- prefixed cookies`,
+            ),
+          r
+        );
+      var s = getCookiePath(i);
+      return (
+        s && (r += `; ${s}`),
+        e.startsWith("__Secure-") && (r += "; secure"),
+        n && (r += `; domain=${n}`),
+        r
+      );
     }
-    function isValidCookiePath(rawPath) {
-      return rawPath === "/" || rawPath === "none";
+    function isValidCookiePath(n) {
+      return "/" === n || "none" === n;
     }
-    function getTrustedCookieOffsetMs(offsetExpiresSec) {
-      var ONE_YEAR_EXPIRATION_KEYWORD = "1year";
-      var ONE_DAY_EXPIRATION_KEYWORD = "1day";
-      var MS_IN_SEC = 1e3;
-      var SECONDS_IN_YEAR = 365 * 24 * 60 * 60;
-      var SECONDS_IN_DAY = 24 * 60 * 60;
-      var parsedSec;
-      if (offsetExpiresSec === ONE_YEAR_EXPIRATION_KEYWORD) {
-        parsedSec = SECONDS_IN_YEAR;
-      } else if (offsetExpiresSec === ONE_DAY_EXPIRATION_KEYWORD) {
-        parsedSec = SECONDS_IN_DAY;
-      } else {
-        parsedSec = Number.parseInt(offsetExpiresSec, 10);
-        if (Number.isNaN(parsedSec)) {
-          return null;
-        }
-      }
-      return parsedSec * MS_IN_SEC;
+    function getTrustedCookieOffsetMs(e) {
+      var r;
+      if ("1year" === e) r = 31536e3;
+      else if ("1day" === e) r = 86400;
+      else if (((r = Number.parseInt(e, 10)), Number.isNaN(r))) return null;
+      return 1e3 * r;
     }
-    function parseKeywordValue(rawValue) {
-      var NOW_VALUE_KEYWORD = "$now$";
-      var CURRENT_DATE_KEYWORD = "$currentDate$";
-      var CURRENT_ISO_DATE_KEYWORD = "$currentISODate$";
-      var parsedValue = rawValue;
-      if (rawValue === NOW_VALUE_KEYWORD) {
-        parsedValue = Date.now().toString();
-      } else if (rawValue === CURRENT_DATE_KEYWORD) {
-        parsedValue = Date();
-      } else if (rawValue === CURRENT_ISO_DATE_KEYWORD) {
-        parsedValue = new Date().toISOString();
-      }
-      return parsedValue;
+    function parseKeywordValue(t) {
+      var e = t;
+      return (
+        "$now$" === t
+          ? (e = Date.now().toString())
+          : "$currentDate$" === t
+            ? (e = Date())
+            : "$currentISODate$" === t && (e = new Date().toISOString()),
+        e
+      );
     }
-    function parseCookieString(cookieString) {
-      var COOKIE_DELIMITER = "=";
-      var COOKIE_PAIRS_DELIMITER = ";";
-      var cookieChunks = cookieString.split(COOKIE_PAIRS_DELIMITER);
-      var cookieData = {};
-      cookieChunks.forEach(function (singleCookie) {
-        var cookieKey;
-        var cookieValue = "";
-        var delimiterIndex = singleCookie.indexOf(COOKIE_DELIMITER);
-        if (delimiterIndex === -1) {
-          cookieKey = singleCookie.trim();
-        } else {
-          cookieKey = singleCookie.slice(0, delimiterIndex).trim();
-          cookieValue = singleCookie.slice(delimiterIndex + 1);
-        }
-        cookieData[cookieKey] = cookieValue || null;
-      });
-      return cookieData;
+    function parseCookieString(i) {
+      var r = i.split(";"),
+        n = {};
+      return (
+        r.forEach(function (i) {
+          var r,
+            t = "",
+            e = i.indexOf("=");
+          -1 === e
+            ? (r = i.trim())
+            : ((r = i.slice(0, e).trim()), (t = i.slice(e + 1))),
+            (n[r] = t || null);
+        }),
+        n
+      );
     }
-    function getCookiePath(rawPath) {
-      if (rawPath === "/") {
-        return "path=/";
-      }
-      return "";
+    function getCookiePath(t) {
+      return "/" === t ? "path=/" : "";
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -27713,75 +25696,49 @@ function _toPrimitive(t, r) {
       setStorageItem(source, localStorage, key, parsedValue);
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
+      }
+    }
+    function setStorageItem(e, t, s, a) {
       try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+        t.setItem(s, a);
+      } catch (t) {
+        var o = `Unable to set storage item due to: ${t.message}`;
+        logMessage(e, o);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
-    }
-    function setStorageItem(source, storage, key, value) {
-      try {
-        storage.setItem(key, value);
-      } catch (e) {
-        var message = `Unable to set storage item due to: ${e.message}`;
-        logMessage(source, message);
-      }
-    }
-    function parseKeywordValue(rawValue) {
-      var NOW_VALUE_KEYWORD = "$now$";
-      var CURRENT_DATE_KEYWORD = "$currentDate$";
-      var CURRENT_ISO_DATE_KEYWORD = "$currentISODate$";
-      var parsedValue = rawValue;
-      if (rawValue === NOW_VALUE_KEYWORD) {
-        parsedValue = Date.now().toString();
-      } else if (rawValue === CURRENT_DATE_KEYWORD) {
-        parsedValue = Date();
-      } else if (rawValue === CURRENT_ISO_DATE_KEYWORD) {
-        parsedValue = new Date().toISOString();
-      }
-      return parsedValue;
+    function parseKeywordValue(t) {
+      var e = t;
+      return (
+        "$now$" === t
+          ? (e = Date.now().toString())
+          : "$currentDate$" === t
+            ? (e = Date())
+            : "$currentISODate$" === t && (e = new Date().toISOString()),
+        e
+      );
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -27824,75 +25781,49 @@ function _toPrimitive(t, r) {
       setStorageItem(source, sessionStorage, key, parsedValue);
       hit(source);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
+      }
+    }
+    function setStorageItem(e, t, s, a) {
       try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+        t.setItem(s, a);
+      } catch (t) {
+        var o = `Unable to set storage item due to: ${t.message}`;
+        logMessage(e, o);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
-    }
-    function setStorageItem(source, storage, key, value) {
-      try {
-        storage.setItem(key, value);
-      } catch (e) {
-        var message = `Unable to set storage item due to: ${e.message}`;
-        logMessage(source, message);
-      }
-    }
-    function parseKeywordValue(rawValue) {
-      var NOW_VALUE_KEYWORD = "$now$";
-      var CURRENT_DATE_KEYWORD = "$currentDate$";
-      var CURRENT_ISO_DATE_KEYWORD = "$currentISODate$";
-      var parsedValue = rawValue;
-      if (rawValue === NOW_VALUE_KEYWORD) {
-        parsedValue = Date.now().toString();
-      } else if (rawValue === CURRENT_DATE_KEYWORD) {
-        parsedValue = Date();
-      } else if (rawValue === CURRENT_ISO_DATE_KEYWORD) {
-        parsedValue = new Date().toISOString();
-      }
-      return parsedValue;
+    function parseKeywordValue(t) {
+      var e = t;
+      return (
+        "$now$" === t
+          ? (e = Date.now().toString())
+          : "$currentDate$" === t
+            ? (e = Date())
+            : "$currentISODate$" === t && (e = new Date().toISOString()),
+        e
+      );
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -27941,7 +25872,7 @@ function _toPrimitive(t, r) {
       } catch (e) {
         logMessage(
           source,
-          `Could not parse the signature matcher: ${getErrorMessage(e)}`
+          `Could not parse the signature matcher: ${getErrorMessage(e)}`,
         );
         return;
       }
@@ -27954,7 +25885,7 @@ function _toPrimitive(t, r) {
       if (typeof chain !== "undefined") {
         logMessage(
           source,
-          `Could not reach the end of the prop chain: ${methodPath}`
+          `Could not reach the end of the prop chain: ${methodPath}`,
         );
         return;
       }
@@ -27979,6 +25910,7 @@ function _toPrimitive(t, r) {
         }
         isMatchingSuspended = true;
         if (stack && !matchStackTrace(stack, new Error().stack || "")) {
+          isMatchingSuspended = false;
           return Reflect.apply(target, thisArg, argumentsList);
         }
         var isMatching = matchMethodCall(argumentsList, signatureMatcher);
@@ -27993,499 +25925,352 @@ function _toPrimitive(t, r) {
         apply: apply,
       });
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
+    function hit(e) {
+      if (e.verbose) {
+        try {
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
     }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
       }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
     }
-    function getPropertyInChain(base, chain) {
-      var pos = chain.indexOf(".");
-      if (pos === -1) {
+    function getPropertyInChain(e, r) {
+      var n = r.indexOf(".");
+      if (-1 === n)
         return {
-          base: base,
-          prop: chain,
+          base: e,
+          prop: r,
         };
-      }
-      var prop = chain.slice(0, pos);
-      if (base === null) {
+      var i = r.slice(0, n);
+      if (null === e)
         return {
-          base: base,
-          prop: prop,
-          chain: chain,
+          base: e,
+          prop: i,
+          chain: r,
         };
-      }
-      var nextBase = base[prop];
-      chain = chain.slice(pos + 1);
-      if (
-        (base instanceof Object || typeof base === "object") &&
-        isEmptyObject(base)
-      ) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase === null) {
-        return {
-          base: base,
-          prop: prop,
-          chain: chain,
-        };
-      }
-      if (nextBase !== undefined) {
-        return getPropertyInChain(nextBase, chain);
-      }
-      Object.defineProperty(base, prop, {
-        configurable: true,
-      });
-      return {
-        base: base,
-        prop: prop,
-        chain: chain,
-      };
+      var t = e[i];
+      return (
+        (r = r.slice(n + 1)),
+        ((e instanceof Object || "object" == typeof e) && isEmptyObject(e)) ||
+        null === t
+          ? {
+              base: e,
+              prop: i,
+              chain: r,
+            }
+          : void 0 !== t
+            ? getPropertyInChain(t, r)
+            : (Object.defineProperty(e, i, {
+                configurable: true,
+              }),
+              {
+                base: e,
+                prop: i,
+                chain: r,
+              })
+      );
     }
-    function inferValue(value) {
-      if (value === "undefined") {
-        return undefined;
-      }
-      if (value === "false") {
-        return false;
-      }
-      if (value === "true") {
-        return true;
-      }
-      if (value === "null") {
-        return null;
-      }
-      if (value === "NaN") {
-        return NaN;
-      }
-      if (value.startsWith("/") && value.endsWith("/")) {
-        return toRegExp(value);
-      }
-      var MAX_ALLOWED_NUM = 32767;
-      var numVal = Number(value);
-      if (!nativeIsNaN(numVal)) {
-        if (Math.abs(numVal) > MAX_ALLOWED_NUM) {
-          throw new Error("number values bigger than 32767 are not allowed");
+    function inferValue(r) {
+      if ("undefined" !== r) {
+        if ("false" === r) return false;
+        if ("true" === r) return true;
+        if ("null" === r) return null;
+        if ("NaN" === r) return NaN;
+        if (r.startsWith("/") && r.endsWith("/")) return toRegExp(r);
+        var e = Number(r);
+        if (!nativeIsNaN(e)) {
+          if (Math.abs(e) > 32767)
+            throw new Error("number values bigger than 32767 are not allowed");
+          return e;
         }
-        return numVal;
-      }
-      var errorMessage = `'${value}' value type can't be inferred`;
-      try {
-        var parsableVal = JSON.parse(value);
-        if (parsableVal instanceof Object || typeof parsableVal === "string") {
-          return parsableVal;
+        var t = `'${r}' value type can't be inferred`;
+        try {
+          var n = JSON.parse(r);
+          if (n instanceof Object || "string" == typeof n) return n;
+        } catch (r) {
+          t += `: ${r}`;
         }
-      } catch (e) {
-        errorMessage += `: ${e}`;
+        throw new TypeError(t);
       }
-      throw new TypeError(errorMessage);
     }
-    function isValueMatched(value, matcher) {
-      if (typeof value === "function") {
-        return false;
-      }
-      if (nativeIsNaN(value)) {
-        return nativeIsNaN(matcher);
-      }
-      if (
-        value === null ||
-        typeof value === "undefined" ||
-        typeof value === "number" ||
-        typeof value === "boolean"
-      ) {
-        return value === matcher;
-      }
-      if (typeof value === "string") {
-        if (typeof matcher === "string" || matcher instanceof RegExp) {
-          return isStringMatched(value, matcher);
-        }
-        return false;
-      }
-      if (Array.isArray(value) && Array.isArray(matcher)) {
-        return isArrayMatched(value, matcher);
-      }
-      if (isArbitraryObject(value) && isArbitraryObject(matcher)) {
-        return isObjectMatched(value, matcher);
-      }
-      return false;
+    function isValueMatched(t, r) {
+      return (
+        "function" != typeof t &&
+        (nativeIsNaN(t)
+          ? nativeIsNaN(r)
+          : null == t || "number" == typeof t || "boolean" == typeof t
+            ? t === r
+            : "string" == typeof t
+              ? ("string" == typeof r || r instanceof RegExp) &&
+                isStringMatched(t, r)
+              : Array.isArray(t) && Array.isArray(r)
+                ? isArrayMatched(t, r)
+                : !(!isArbitraryObject(t) || !isArbitraryObject(r)) &&
+                  isObjectMatched(t, r))
+      );
     }
     function getAbortFunc() {
-      var rid = randomId();
-      var isErrorHandlerSet = false;
-      return function abort() {
-        if (!isErrorHandlerSet) {
-          window.onerror = createOnErrorHandler(rid);
-          isErrorHandlerSet = true;
-        }
-        throw new ReferenceError(rid);
-      };
-    }
-    function matchStackTrace(stackMatch, stackTrace) {
-      if (!stackMatch || stackMatch === "") {
-        return true;
-      }
-      var regExpValues = backupRegExpValues();
-      if (shouldAbortInlineOrInjectedScript(stackMatch, stackTrace)) {
-        if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-          restoreRegExpValues(regExpValues);
-        }
-        return true;
-      }
-      var stackRegexp = toRegExp(stackMatch);
-      var refinedStackTrace = stackTrace
-        .split("\n")
-        .slice(2)
-        .map(function (line) {
-          return line.trim();
-        })
-        .join("\n");
-      if (regExpValues.length && regExpValues[0] !== RegExp.$1) {
-        restoreRegExpValues(regExpValues);
-      }
-      return getNativeRegexpTest().call(stackRegexp, refinedStackTrace);
-    }
-    function getErrorMessage(error) {
-      var isErrorWithMessage = function isErrorWithMessage(e) {
-        return (
-          typeof e === "object" &&
-          e !== null &&
-          "message" in e &&
-          typeof e.message === "string"
+      var r = randomId(),
+        n = false;
+      return function () {
+        throw (
+          (n || ((window.onerror = createOnErrorHandler(r)), (n = true)),
+          new ReferenceError(r))
         );
       };
-      if (isErrorWithMessage(error)) {
-        return error.message;
-      }
+    }
+    function matchStackTrace(e, t) {
+      if (!e || "" === e) return true;
+      var r = backupRegExpValues();
+      if (shouldAbortInlineOrInjectedScript(e, t))
+        return r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r), true;
+      var n = toRegExp(e),
+        a = t
+          .split("\n")
+          .slice(2)
+          .map(function (e) {
+            return e.trim();
+          })
+          .join("\n");
+      return (
+        r.length && r[0] !== RegExp.$1 && restoreRegExpValues(r),
+        getNativeRegexpTest().call(n, a)
+      );
+    }
+    function getErrorMessage(e) {
+      var r;
+      if (
+        "object" == typeof (r = e) &&
+        null !== r &&
+        "message" in r &&
+        "string" == typeof r.message
+      )
+        return e.message;
       try {
-        return new Error(JSON.stringify(error)).message;
-      } catch (_unused) {
-        return new Error(String(error)).message;
+        return new Error(JSON.stringify(e)).message;
+      } catch (r) {
+        return new Error(String(e)).message;
       }
     }
-    function shouldAbortInlineOrInjectedScript(stackMatch, stackTrace) {
-      var INLINE_SCRIPT_STRING = "inlineScript";
-      var INJECTED_SCRIPT_STRING = "injectedScript";
-      var INJECTED_SCRIPT_MARKER = "<anonymous>";
-      var isInlineScript = function isInlineScript(match) {
-        return match.includes(INLINE_SCRIPT_STRING);
-      };
-      var isInjectedScript = function isInjectedScript(match) {
-        return match.includes(INJECTED_SCRIPT_STRING);
-      };
-      if (!(isInlineScript(stackMatch) || isInjectedScript(stackMatch))) {
-        return false;
-      }
-      var documentURL = window.location.href;
-      var pos = documentURL.indexOf("#");
-      if (pos !== -1) {
-        documentURL = documentURL.slice(0, pos);
-      }
-      var stackSteps = stackTrace
+    function shouldAbortInlineOrInjectedScript(t, i) {
+      var r = "inlineScript",
+        n = "injectedScript",
+        isInlineScript = function isInlineScript(t) {
+          return t.includes(r);
+        },
+        isInjectedScript = function isInjectedScript(t) {
+          return t.includes(n);
+        };
+      if (!isInlineScript(t) && !isInjectedScript(t)) return false;
+      var e = window.location.href,
+        s = e.indexOf("#");
+      -1 !== s && (e = e.slice(0, s));
+      var c = i
         .split("\n")
         .slice(2)
-        .map(function (line) {
-          return line.trim();
-        });
-      var stackLines = stackSteps.map(function (line) {
-        var stack;
-        var getStackTraceValues = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(line);
-        if (getStackTraceValues) {
-          var _stackURL, _stackURL2;
-          var stackURL = getStackTraceValues[2];
-          var stackLine = getStackTraceValues[3];
-          var stackCol = getStackTraceValues[4];
-          if (
-            (_stackURL = stackURL) !== null &&
-            _stackURL !== void 0 &&
-            _stackURL.startsWith("(")
-          ) {
-            stackURL = stackURL.slice(1);
-          }
-          if (
-            (_stackURL2 = stackURL) !== null &&
-            _stackURL2 !== void 0 &&
-            _stackURL2.startsWith(INJECTED_SCRIPT_MARKER)
-          ) {
-            var _stackFunction;
-            stackURL = INJECTED_SCRIPT_STRING;
-            var stackFunction =
-              getStackTraceValues[1] !== undefined
-                ? getStackTraceValues[1].slice(0, -1)
-                : line.slice(0, getStackTraceValues.index).trim();
+        .map(function (t) {
+          return t.trim();
+        })
+        .map(function (t) {
+          var i,
+            s = /(.*?@)?(\S+)(:\d+)(:\d+)\)?$/.exec(t);
+          if (s) {
+            var c,
+              l,
+              a = s[2],
+              u = s[3],
+              o = s[4];
             if (
-              (_stackFunction = stackFunction) !== null &&
-              _stackFunction !== void 0 &&
-              _stackFunction.startsWith("at")
+              (null !== (c = a) &&
+                void 0 !== c &&
+                c.startsWith("(") &&
+                (a = a.slice(1)),
+              null !== (l = a) && void 0 !== l && l.startsWith("<anonymous>"))
             ) {
-              stackFunction = stackFunction.slice(2).trim();
-            }
-            stack =
-              `${stackFunction} ${stackURL}${stackLine}${stackCol}`.trim();
-          } else if (stackURL === documentURL) {
-            stack = `${INLINE_SCRIPT_STRING}${stackLine}${stackCol}`.trim();
-          } else {
-            stack = `${stackURL}${stackLine}${stackCol}`.trim();
-          }
-        } else {
-          stack = line;
-        }
-        return stack;
-      });
-      if (stackLines) {
-        for (var index = 0; index < stackLines.length; index += 1) {
+              var d;
+              a = n;
+              var f =
+                void 0 !== s[1]
+                  ? s[1].slice(0, -1)
+                  : t.slice(0, s.index).trim();
+              null !== (d = f) &&
+                void 0 !== d &&
+                d.startsWith("at") &&
+                (f = f.slice(2).trim()),
+                (i = `${f} ${a}${u}${o}`.trim());
+            } else i = a === e ? `${r}${u}${o}`.trim() : `${a}${u}${o}`.trim();
+          } else i = t;
+          return i;
+        });
+      if (c)
+        for (var l = 0; l < c.length; l += 1) {
           if (
-            isInlineScript(stackMatch) &&
-            stackLines[index].startsWith(INLINE_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
+            isInlineScript(t) &&
+            c[l].startsWith(r) &&
+            c[l].match(toRegExp(t))
+          )
             return true;
-          }
           if (
-            isInjectedScript(stackMatch) &&
-            stackLines[index].startsWith(INJECTED_SCRIPT_STRING) &&
-            stackLines[index].match(toRegExp(stackMatch))
-          ) {
+            isInjectedScript(t) &&
+            c[l].startsWith(n) &&
+            c[l].match(toRegExp(t))
+          )
             return true;
-          }
         }
-      }
       return false;
     }
     function getNativeRegexpTest() {
-      var descriptor = Object.getOwnPropertyDescriptor(
-        RegExp.prototype,
-        "test"
-      );
-      var nativeRegexTest =
-        descriptor === null || descriptor === void 0
-          ? void 0
-          : descriptor.value;
-      if (descriptor && typeof descriptor.value === "function") {
-        return nativeRegexTest;
-      }
+      var t = Object.getOwnPropertyDescriptor(RegExp.prototype, "test"),
+        e = null == t ? void 0 : t.value;
+      if (t && "function" == typeof t.value) return e;
       throw new Error("RegExp.prototype.test is not a function");
     }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
-        try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
-      }
-      var escaped = input
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function nativeIsNaN(num) {
-      var native = Number.isNaN || window.isNaN;
-      return native(num);
+    function nativeIsNaN(N) {
+      return (Number.isNaN || window.isNaN)(N);
     }
     function randomId() {
       return Math.random().toString(36).slice(2, 9);
     }
-    function createOnErrorHandler(rid) {
-      var nativeOnError = window.onerror;
-      return function onError(error) {
-        if (typeof error === "string" && error.includes(rid)) {
-          return true;
-        }
-        if (nativeOnError instanceof Function) {
+    function createOnErrorHandler(r) {
+      var n = window.onerror;
+      return function (e) {
+        if ("string" == typeof e && e.includes(r)) return true;
+        if (n instanceof Function) {
           for (
-            var _len = arguments.length,
-              args = new Array(_len > 1 ? _len - 1 : 0),
-              _key = 1;
-            _key < _len;
-            _key++
-          ) {
-            args[_key - 1] = arguments[_key];
-          }
-          return nativeOnError.apply(window, [error, ...args]);
+            var t = arguments.length, o = new Array(t > 1 ? t - 1 : 0), i = 1;
+            i < t;
+            i++
+          )
+            o[i - 1] = arguments[i];
+          return n.apply(window, [e, ...o]);
         }
         return false;
       };
     }
-    function isEmptyObject(obj) {
-      return Object.keys(obj).length === 0 && !obj.prototype;
+    function isEmptyObject(t) {
+      return 0 === Object.keys(t).length && !t.prototype;
     }
-    function isArbitraryObject(value) {
-      return (
-        value !== null &&
-        typeof value === "object" &&
-        !Array.isArray(value) &&
-        !(value instanceof RegExp)
+    function isArbitraryObject(r) {
+      return !(
+        null === r ||
+        "object" != typeof r ||
+        Array.isArray(r) ||
+        r instanceof RegExp
       );
     }
-    function isStringMatched(str, matcher) {
-      if (typeof matcher === "string") {
-        if (matcher === "") {
-          return str === matcher;
-        }
-        return str.includes(matcher);
-      }
-      if (matcher instanceof RegExp) {
-        return matcher.test(str);
-      }
-      return false;
+    function isStringMatched(t, n) {
+      return "string" == typeof n
+        ? "" === n
+          ? t === n
+          : t.includes(n)
+        : n instanceof RegExp && n.test(t);
     }
-    function isArrayMatched(array, matcher) {
-      if (array.length === 0) {
-        return matcher.length === 0;
-      }
-      if (matcher.length === 0) {
-        return false;
-      }
-      var _loop = function _loop() {
-          var matcherValue = matcher[i];
-          var isMatching = array.some(function (arrItem) {
-            return isValueMatched(arrItem, matcherValue);
-          });
-          if (!isMatching) {
-            return {
-              v: false,
-            };
-          }
-          return 0;
-        },
-        _ret;
-      for (var i = 0; i < matcher.length; i += 1) {
-        _ret = _loop();
-        if (_ret === 0) continue;
-        if (_ret) return _ret.v;
-      }
+    function isArrayMatched(r, n) {
+      if (0 === r.length) return 0 === n.length;
+      if (0 === n.length) return false;
+      for (
+        var t,
+          _loop = function _loop() {
+            var t = n[e];
+            return r.some(function (r) {
+              return isValueMatched(r, t);
+            })
+              ? 0
+              : {
+                  v: false,
+                };
+          },
+          e = 0;
+        e < n.length;
+        e += 1
+      )
+        if (0 !== (t = _loop()) && t) return t.v;
       return true;
     }
-    function isObjectMatched(obj, matcher) {
-      var matcherKeys = Object.keys(matcher);
-      for (var i = 0; i < matcherKeys.length; i += 1) {
-        var key = matcherKeys[i];
-        var value = obj[key];
-        if (!isValueMatched(value, matcher[key])) {
-          return false;
-        }
-        continue;
+    function isObjectMatched(e, t) {
+      for (var r = Object.keys(t), a = 0; a < r.length; a += 1) {
+        var c = r[a],
+          n = e[c];
+        if (!isValueMatched(n, t[c])) return false;
       }
       return true;
     }
     function backupRegExpValues() {
       try {
-        var arrayOfRegexpValues = [];
-        for (var index = 1; index < 10; index += 1) {
-          var value = `$${index}`;
-          if (!RegExp[value]) {
-            break;
-          }
-          arrayOfRegexpValues.push(RegExp[value]);
+        for (var r = [], e = 1; e < 10; e += 1) {
+          var a = `$${e}`;
+          if (!RegExp[a]) break;
+          r.push(RegExp[a]);
         }
-        return arrayOfRegexpValues;
-      } catch (error) {
+        return r;
+      } catch (r) {
         return [];
       }
     }
-    function restoreRegExpValues(array) {
-      if (!array.length) {
-        return;
-      }
-      try {
-        var stringPattern = "";
-        if (array.length === 1) {
-          stringPattern = `(${array[0]})`;
-        } else {
-          stringPattern = array.reduce(
-            function (accumulator, currentValue, currentIndex) {
-              if (currentIndex === 1) {
-                return `(${accumulator}),(${currentValue})`;
-              }
-              return `${accumulator},(${currentValue})`;
-            }
-          );
+    function restoreRegExpValues(e) {
+      if (e.length)
+        try {
+          var r = "";
+          r =
+            1 === e.length
+              ? `(${e[0]})`
+              : e.reduce(function (e, r, t) {
+                  return 1 === t ? `(${e}),(${r})` : `${e},(${r})`;
+                });
+          var t = new RegExp(r);
+          e.toString().replace(t, "");
+        } catch (e) {
+          var n = `Failed to restore RegExp values: ${e}`;
+          console.log(n);
         }
-        var regExpGroup = new RegExp(stringPattern);
-        array.toString().replace(regExpGroup, "");
-      } catch (error) {
-        var message = `Failed to restore RegExp values: ${error}`;
-        console.log(message);
-      }
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -28545,7 +26330,7 @@ function _toPrimitive(t, r) {
             contextNode,
             null,
             XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
-            null
+            null,
           );
           for (var i = 0; i < xpathResult.snapshotLength; i += 1) {
             matchedElements.push(xpathResult.snapshotItem(i));
@@ -28645,7 +26430,7 @@ function _toPrimitive(t, r) {
           var setRequestHeaderWrapper = function setRequestHeaderWrapper(
             target,
             thisArg,
-            args
+            args,
           ) {
             thisArg.collectedHeaders.push(args);
             return Reflect.apply(target, thisArg, args);
@@ -28655,7 +26440,7 @@ function _toPrimitive(t, r) {
           };
           thisArg.setRequestHeader = new Proxy(
             thisArg.setRequestHeader,
-            setRequestHeaderHandler
+            setRequestHeaderHandler,
           );
         }
         return Reflect.apply(target, thisArg, args);
@@ -28760,11 +26545,11 @@ function _toPrimitive(t, r) {
       };
       XMLHttpRequest.prototype.open = new Proxy(
         XMLHttpRequest.prototype.open,
-        openHandler
+        openHandler,
       );
       XMLHttpRequest.prototype.send = new Proxy(
         XMLHttpRequest.prototype.send,
-        sendHandler
+        sendHandler,
       );
       var nativeFetch = window.fetch;
       var fetchWrapper = async function fetchWrapper(target, thisArg, args) {
@@ -28801,142 +26586,98 @@ function _toPrimitive(t, r) {
       };
       window.fetch = new Proxy(window.fetch, fetchHandler);
     }
-    function hit(source) {
-      var ADGUARD_PREFIX = "[WebShield]";
-      if (!source.verbose) {
-        return;
-      }
-      try {
-        var trace = console.trace.bind(console);
-        var label = `${ADGUARD_PREFIX} `;
-        if (source.engine === "corelibs") {
-          label += source.ruleText;
-        } else {
-          if (source.domainName) {
-            label += `${source.domainName}`;
-          }
-          if (source.args) {
-            label += `#%#//scriptlet('${source.name}', '${source.args.join("', '")}')`;
-          } else {
-            label += `#%#//scriptlet('${source.name}')`;
-          }
-        }
-        if (trace) {
-          trace(label);
-        }
-      } catch (e) {}
-      if (typeof window.__debug === "function") {
-        window.__debug(source);
-      }
-    }
-    function logMessage(source, message) {
-      var forced =
-        arguments.length > 2 && arguments[2] !== undefined
-          ? arguments[2]
-          : false;
-      var convertMessageToString =
-        arguments.length > 3 && arguments[3] !== undefined
-          ? arguments[3]
-          : true;
-      var { name: name, verbose: verbose } = source;
-      if (!forced && !verbose) {
-        return;
-      }
-      var nativeConsole = console.log;
-      if (!convertMessageToString) {
-        nativeConsole(`${name}:`, message);
-        return;
-      }
-      nativeConsole(`${name}: ${message}`);
-    }
-    function toRegExp(rawInput) {
-      var input = rawInput || "";
-      var DEFAULT_VALUE = ".?";
-      var FORWARD_SLASH = "/";
-      if (input === "") {
-        return new RegExp(DEFAULT_VALUE);
-      }
-      var delimiterIndex = input.lastIndexOf(FORWARD_SLASH);
-      var flagsPart = input.substring(delimiterIndex + 1);
-      var regExpPart = input.substring(0, delimiterIndex + 1);
-      var isValidRegExpFlag = function isValidRegExpFlag(flag) {
-        if (!flag) {
-          return false;
-        }
+    function hit(e) {
+      if (e.verbose) {
         try {
-          new RegExp("", flag);
-          return true;
-        } catch (ex) {
-          return false;
-        }
-      };
-      var getRegExpFlags = function getRegExpFlags(regExpStr, flagsStr) {
-        if (
-          regExpStr.startsWith(FORWARD_SLASH) &&
-          regExpStr.endsWith(FORWARD_SLASH) &&
-          !regExpStr.endsWith("\\/") &&
-          isValidRegExpFlag(flagsStr)
-        ) {
-          return flagsStr;
-        }
-        return "";
-      };
-      var flags = getRegExpFlags(regExpPart, flagsPart);
-      if (
-        (input.startsWith(FORWARD_SLASH) && input.endsWith(FORWARD_SLASH)) ||
-        flags
-      ) {
-        var regExpInput = flags ? regExpPart : input;
-        return new RegExp(regExpInput.slice(1, -1), flags);
+          var n = console.trace.bind(console),
+            i = "[AdGuard] ";
+          "corelibs" === e.engine
+            ? (i += e.ruleText)
+            : (e.domainName && (i += `${e.domainName}`),
+              e.args
+                ? (i += `#%#//scriptlet('${e.name}', '${e.args.join("', '")}')`)
+                : (i += `#%#//scriptlet('${e.name}')`)),
+            n && n(i);
+        } catch (e) {}
+        "function" == typeof window.__debug && window.__debug(e);
       }
-      var escaped = input
+    }
+    function logMessage(e, o) {
+      var n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
+        g = !(arguments.length > 3 && void 0 !== arguments[3]) || arguments[3],
+        { name: l, verbose: v } = e;
+      if (n || v) {
+        var a = console.log;
+        g ? a(`${l}: ${o}`) : a(`${l}:`, o);
+      }
+    }
+    function toRegExp(e) {
+      var r = e || "",
+        t = "/";
+      if ("" === r) return new RegExp(".?");
+      var n,
+        i,
+        s = r.lastIndexOf(t),
+        a = r.substring(s + 1),
+        g = r.substring(0, s + 1),
+        u =
+          ((i = a),
+          (n = g).startsWith(t) &&
+          n.endsWith(t) &&
+          !n.endsWith("\\/") &&
+          (function (e) {
+            if (!e) return false;
+            try {
+              return new RegExp("", e), !0;
+            } catch (e) {
+              return false;
+            }
+          })(i)
+            ? i
+            : "");
+      if ((r.startsWith(t) && r.endsWith(t)) || u)
+        return new RegExp((u ? g : r).slice(1, -1), u);
+      var c = r
         .replace(/\\'/g, "'")
         .replace(/\\"/g, '"')
         .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return new RegExp(escaped);
+      return new RegExp(c);
     }
-    function getXhrData(method, url, async, user, password) {
+    function getXhrData(r, t, a, e, n) {
       return {
-        method: method,
-        url: url,
-        async: async,
-        user: user,
-        password: password,
+        method: r,
+        url: t,
+        async: a,
+        user: e,
+        password: n,
       };
     }
-    function matchRequestProps(source, propsToMatch, requestData) {
-      if (propsToMatch === "" || propsToMatch === "*") {
-        return true;
-      }
-      var isMatched;
-      var parsedData = parseMatchProps(propsToMatch);
-      if (!isValidParsedData(parsedData)) {
-        logMessage(source, `Invalid parameter: ${propsToMatch}`);
-        isMatched = false;
-      } else {
-        var matchData = getMatchPropsData(parsedData);
-        var matchKeys = Object.keys(matchData);
-        isMatched = matchKeys.every(function (matchKey) {
-          var matchValue = matchData[matchKey];
-          var dataValue = requestData[matchKey];
+    function matchRequestProps(e, t, r) {
+      if ("" === t || "*" === t) return true;
+      var a,
+        s = parseMatchProps(t);
+      if (isValidParsedData(s)) {
+        var n = getMatchPropsData(s);
+        a = Object.keys(n).every(function (e) {
+          var t = n[e],
+            a = r[e];
           return (
-            Object.prototype.hasOwnProperty.call(requestData, matchKey) &&
-            typeof dataValue === "string" &&
-            (matchValue === null || matchValue === void 0
-              ? void 0
-              : matchValue.test(dataValue))
+            Object.prototype.hasOwnProperty.call(r, e) &&
+            "string" == typeof a &&
+            (null == t ? void 0 : t.test(a))
           );
         });
-      }
-      return isMatched;
+      } else logMessage(e, `Invalid parameter: ${t}`), (a = false);
+      return a;
     }
-    function getMatchPropsData(data) {
-      var matchData = {};
-      var dataKeys = Object.keys(data);
-      dataKeys.forEach(function (key) {
-        matchData[key] = toRegExp(data[key]);
-      });
-      return matchData;
+    function getMatchPropsData(t) {
+      var a = {};
+      return (
+        Object.keys(t).forEach(function (c) {
+          a[c] = toRegExp(t[c]);
+        }),
+        a
+      );
     }
     function getRequestProps() {
       return [
@@ -28955,51 +26696,42 @@ function _toPrimitive(t, r) {
         "mode",
       ];
     }
-    function isValidParsedData(data) {
-      return Object.values(data).every(function (value) {
-        return isValidStrPattern(value);
+    function isValidParsedData(t) {
+      return Object.values(t).every(function (t) {
+        return isValidStrPattern(t);
       });
     }
-    function parseMatchProps(propsToMatchStr) {
-      var PROPS_DIVIDER = " ";
-      var PAIRS_MARKER = ":";
-      var isRequestProp = function isRequestProp(prop) {
-        return getRequestProps().includes(prop);
-      };
-      var propsObj = {};
-      var props = propsToMatchStr.split(PROPS_DIVIDER);
-      props.forEach(function (prop) {
-        var dividerInd = prop.indexOf(PAIRS_MARKER);
-        var key = prop.slice(0, dividerInd);
-        if (isRequestProp(key)) {
-          var value = prop.slice(dividerInd + 1);
-          propsObj[key] = value;
-        } else {
-          propsObj.url = prop;
-        }
-      });
-      return propsObj;
+    function parseMatchProps(e) {
+      var r = {};
+      return (
+        e.split(" ").forEach(function (e) {
+          var n = e.indexOf(":"),
+            i = e.slice(0, n);
+          if (
+            (function (e) {
+              return getRequestProps().includes(e);
+            })(i)
+          ) {
+            var s = e.slice(n + 1);
+            r[i] = s;
+          } else r.url = e;
+        }),
+        r
+      );
     }
-    function isValidStrPattern(input) {
-      var FORWARD_SLASH = "/";
-      var str = escapeRegExp(input);
-      if (
-        input[0] === FORWARD_SLASH &&
-        input[input.length - 1] === FORWARD_SLASH
-      ) {
-        str = input.slice(1, -1);
-      }
-      var isValid;
+    function isValidStrPattern(e) {
+      var t,
+        n = escapeRegExp(e);
+      "/" === e[0] && "/" === e[e.length - 1] && (n = e.slice(1, -1));
       try {
-        isValid = new RegExp(str);
-        isValid = true;
+        (t = new RegExp(n)), (t = !0);
       } catch (e) {
-        isValid = false;
+        t = false;
       }
-      return isValid;
+      return t;
     }
-    function escapeRegExp(str) {
-      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    function escapeRegExp(e) {
+      return e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
     var updatedArgs = args ? [].concat(source).concat(args) : [source];
     try {
@@ -29161,8 +26893,8 @@ function _toPrimitive(t, r) {
     "ubo-addEventListener-logger": logAddEventListener,
     "ubo-aell": logAddEventListener,
     "log-eval": logEval,
-    log: log$1,
-    "abp-log": log$1,
+    log: log$2,
+    "abp-log": log$2,
     "log-on-stack-trace": logOnStackTrace,
     "m3u-prune": m3uPrune,
     "m3u-prune.js": m3uPrune,
@@ -29193,6 +26925,12 @@ function _toPrimitive(t, r) {
     "abp-prevent-listener": preventAddEventListener,
     "prevent-adfly": preventAdfly,
     "prevent-bab": preventBab,
+    "ubo-nobab": preventBab,
+    nobab: preventBab,
+    "bab-defuser": preventBab,
+    "nobab.js": preventBab,
+    "ubo-nobab.js": preventBab,
+    "bab-defuser.js": preventBab,
     "prevent-canvas": preventCanvas,
     "prevent-canvas.js": preventCanvas,
     "ubo-prevent-canvas.js": preventCanvas,
@@ -29344,6 +27082,7 @@ function _toPrimitive(t, r) {
     "trusted-create-element": trustedCreateElement,
     "trusted-dispatch-event": trustedDispatchEvent,
     "trusted-prune-inbound-object": trustedPruneInboundObject,
+    "trusted-replace-argument": trustedReplaceArgument,
     "trusted-replace-fetch-response": trustedReplaceFetchResponse,
     "trusted-replace-node-text": trustedReplaceNodeText,
     "trusted-replace-outbound-text": trustedReplaceOutboundText,
@@ -29385,7 +27124,7 @@ function _toPrimitive(t, r) {
     var scriptletFunction = getScriptletFunction(source.name);
     if (typeof scriptletFunction !== "function") {
       throw new Error(
-        `Error: cannot invoke scriptlet with name: '${source.name}'`
+        `Error: cannot invoke scriptlet with name: '${source.name}'`,
       );
     }
     var scriptletFunctionString = scriptletFunction.toString();
@@ -29400,82 +27139,168 @@ function _toPrimitive(t, r) {
     getScriptletFunction: getScriptletFunction,
   };
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  // currentLevel holds the active logging level.
-  // It remains null until the logger is explicitly initialized.
-  let currentLevel$1 = null;
-  // logPrefix holds the configurable prefix for all log messages.
-  let logPrefix$1 = "";
-  // pendingLogs stores log messages that are buffered until the logger is
-  // initialized. Each pending log is stored as an array so that it can be
-  // re-spread into `console.log`.
-  let pendingLogs$1 = [];
-  /**
-   * Logs messages with an ISO 8601 timestamp and a configurable prefix.
-   *
-   * This function accepts a variable number of parameters to mirror the interface
-   * of `console.log`.
-   *
-   * Behavior:
-   * - If the logger is not yet initialized (currentLevel is null), the log entry
-   *   is buffered.
-   * - If the logger is initialized with the 'log' level, the message is
-   *   immediately output to the console with the configured prefix.
-   * - If the logger is initialized with the 'discard' level, the log entry is
-   *   ignored.
-   *
-   * @param args - The log message and additional parameters.
+  /*
+   * SafariExtension v4.1.0 (build date: Tue, 23 Dec 2025 11:36:32 GMT)
+   * (c) 2025 Adguard Software Ltd.
+   * Released under the GPL-3.0 license
+   * https://github.com/AdguardTeam/SafariConverterLib/tree/master/Extension
    */
-  function log$2() {
-    const timestamp = `[${new Date().toISOString()}]`;
-    for (
-      var _len3 = arguments.length, args = new Array(_len3), _key3 = 0;
-      _key3 < _len3;
-      _key3++
-    ) {
-      args[_key3] = arguments[_key3];
+
+  /* eslint-disable no-console */
+  /* eslint-disable class-methods-use-this */
+  /* eslint-disable max-classes-per-file */
+  /**
+   * @file Defines the logger interface and its default implementation.
+   */
+  /**
+   * Logging level.
+   */
+  var LoggingLevel;
+  (function (LoggingLevel) {
+    LoggingLevel[(LoggingLevel["Debug"] = 2)] = "Debug";
+    LoggingLevel[(LoggingLevel["Info"] = 1)] = "Info";
+    LoggingLevel[(LoggingLevel["Error"] = 0)] = "Error";
+  })(LoggingLevel || (LoggingLevel = {}));
+  const getTimestamp = () => `[${new Date().toISOString()}]`;
+  /**
+   * Console logger implementation.
+   */
+  class ConsoleLogger {
+    /**
+     * Creates a new console logger.
+     *
+     * @param prefix Prefix to add to the log messages.
+     * @param level Logging level.
+     */
+    constructor(prefix, level) {
+      _defineProperty2(this, "prefix", "[Safari Extension]");
+      _defineProperty2(this, "loggingLevel", LoggingLevel.Info);
+      this.prefix = prefix;
+      this.loggingLevel = level;
     }
-    if (currentLevel$1 === null) {
-      // Buffer the message until the logger is initialized.
-      pendingLogs$1.push([timestamp, ...args]);
-    } else if (currentLevel$1 === "log") {
-      // Output the timestamp, prefix, and the log message.
-      // eslint-disable-next-line no-console
-      console.log(timestamp, logPrefix$1, ...args);
+    get level() {
+      return this.loggingLevel;
     }
-    // If currentLevel is 'discard', the log entry is ignored.
+    set level(level) {
+      this.loggingLevel = level;
+    }
+    debug() {
+      if (this.loggingLevel >= LoggingLevel.Debug) {
+        for (
+          var _len3 = arguments.length, args = new Array(_len3), _key3 = 0;
+          _key3 < _len3;
+          _key3++
+        ) {
+          args[_key3] = arguments[_key3];
+        }
+        console.debug(getTimestamp(), this.prefix, ...args);
+      }
+    }
+    info() {
+      if (this.loggingLevel >= LoggingLevel.Info) {
+        for (
+          var _len4 = arguments.length, args = new Array(_len4), _key4 = 0;
+          _key4 < _len4;
+          _key4++
+        ) {
+          args[_key4] = arguments[_key4];
+        }
+        console.info(getTimestamp(), this.prefix, ...args);
+      }
+    }
+    error() {
+      if (this.loggingLevel >= LoggingLevel.Error) {
+        for (
+          var _len5 = arguments.length, args = new Array(_len5), _key5 = 0;
+          _key5 < _len5;
+          _key5++
+        ) {
+          args[_key5] = arguments[_key5];
+        }
+        console.error(getTimestamp(), this.prefix, ...args);
+      }
+    }
   }
   /**
-   * Initializes the logger by setting the logging behavior and the message
-   * prefix.
-   *
-   * After initialization, future log messages behave according to the specified
-   * logging level:
-   *
-   * - 'log': Future messages are immediately output to the console with the
-   *          configured prefix, and any buffered messages are flushed.
-   * - 'discard': Both buffered and future log messages are dropped.
-   *
-   * @param level - The logging level to set:
-   *   - 'log' to output log messages.
-   *   - 'discard' to ignore log messages.
-   * @param prefix - The configurable prefix to be added to every log message.
+   * Logger that does not print anything.
    */
-  function initLogger$1(level, prefix) {
-    logPrefix$1 = prefix;
-    currentLevel$1 = level;
-    if (currentLevel$1 === "log") {
-      // Flush all buffered log messages to the console using the configured
-      // prefix.
-      pendingLogs$1.forEach((entry) => {
-        // eslint-disable-next-line no-console
-        console.log(entry[0], logPrefix$1, ...entry.slice(1));
+  class NullLogger {
+    constructor() {
+      _defineProperty2(this, "level", LoggingLevel.Debug);
+    }
+    debug() {
+      // Do nothing.
+    }
+    info() {
+      // Do nothing.
+    }
+    error() {
+      // Do nothing.
+    }
+  }
+  /**
+   * Default logger. Can be redefined by the library user.
+   */
+  let internalLogger = new NullLogger();
+  /**
+   * Proxy logger that delegates all calls to the internal logger.
+   * This internal logger can be redefined by the library user
+   * via `setLogger`.
+   */
+  class ProxyLogger {
+    get level() {
+      return internalLogger.level;
+    }
+    set level(level) {
+      internalLogger.level = level;
+    }
+    debug() {
+      internalLogger.debug(...arguments);
+    }
+    info() {
+      internalLogger.info(...arguments);
+    }
+    error() {
+      internalLogger.error(...arguments);
+    }
+  }
+  /**
+   * Sets the logger to use.
+   *
+   * @param logger to use.
+   */
+  const setLogger = (logger) => {
+    internalLogger = logger;
+  };
+  /**
+   * Logger instance that will be used inside the library (and can be actually
+   * used outside the library too). It delegates all calls to the internal logger
+   * that can be redefined via `setLogger`.
+   */
+  const log$1 = new ProxyLogger();
+  const version = "4.1.0";
+
+  /**
+   * @file Contains common constants and helper functions.
+   */
+  /**
+   * Name of the engine used to run scriptlets.
+   */
+  const SCRIPTLET_ENGINE_NAME = "safari-extension";
+  /**
+   * Makes sure that we're dealing with CSS rules (selector + style)
+   *
+   * @param css Array of CSS selectors (for hiding elements) or full CSS rules.
+   * @returns Array of CSS rules.
+   */
+  const toCSSRules = (css) => {
+    return css
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0)
+      .map((s) => {
+        return s.at(-1) !== "}" ? `${s} {display:none!important;}` : s;
       });
-    }
-    // Clear the buffer regardless of the logging level.
-    pendingLogs$1 = [];
-  }
-  const version = "3.0.1";
+  };
 
   /**
    * @file Contains the implementation of the content script.
@@ -29535,25 +27360,14 @@ function _toPrimitive(t, r) {
     // if the script tag was removed, then it means that code was applied, otherwise no
     scripts.push(";document.currentScript.remove();");
     scripts.push(
-      "} catch (ex) { console.error('Error executing AG js: ' + ex); } })();"
+      "} catch (ex) { console.error('Error executing AG js: ' + ex); } })();",
     );
     const code = scripts.join("\r\n");
     if (!executeScriptsViaTextContent(code)) {
       if (!executeScriptsViaBlob(code)) {
-        log$2("Failed to execute scripts");
+        log$1.error("Failed to execute scripts");
       }
     }
-  };
-  /**
-   * Applies JS injections.
-   *
-   * @param {string[]} scripts Array with JS scripts.
-   */
-  const applyScripts = (scripts) => {
-    if (!scripts || scripts.length === 0) {
-      return;
-    }
-    executeScripts(scripts);
   };
   /**
    * Protects specified style element from changes to the current document
@@ -29607,63 +27421,6 @@ function _toPrimitive(t, r) {
     });
   };
   /**
-   * Makes sure that we're dealing with CSS rules (selector + style)
-   *
-   * @param {string[]} css Array of CSS selectors (for hiding elemets) or full CSS rules.
-   * @returns {string[]} Array of CSS rules.
-   */
-  const toCSSRules = (css) => {
-    return css
-      .filter((s) => s.length > 0)
-      .map((s) => s.trim())
-      .map((s) => {
-        return s[s.length - 1] !== "}" ? `${s} {display:none!important;}` : s;
-      });
-  };
-  /**
-   * Applies css stylesheet.
-   *
-   * @param {string[]} css Array of CSS rules to apply.
-   */
-  const applyCss = (css) => {
-    if (!css || !css.length) {
-      return;
-    }
-    try {
-      const styleElement = document.createElement("style");
-      styleElement.setAttribute("type", "text/css");
-      (document.head || document.documentElement).appendChild(styleElement);
-      if (styleElement.sheet) {
-        const cssRules = toCSSRules(css);
-        for (const style of cssRules) {
-          styleElement.sheet.insertRule(style);
-        }
-      }
-      protectStyleElementContent(styleElement);
-    } catch (e) {
-      log$2("Failed to apply CSS", e);
-    }
-  };
-  /**
-   * Applies Extended Css stylesheet.
-   *
-   * @param {string[]} extendedCss Array with ExtendedCss rules.
-   */
-  const applyExtendedCss = (extendedCss) => {
-    if (!extendedCss || !extendedCss.length) {
-      return;
-    }
-    try {
-      const cssRules = toCSSRules(extendedCss);
-      const extCss = new ExtendedCss({
-        cssRules,
-      });
-      extCss.apply();
-    } catch (e) {
-      log$2("Failed to apply extended CSS", e);
-    }
-  };
-  /**
    * Converts scriptlet to the code that can be executed.
    *
    * @param {Scriptlet} scriptlet Scriptlet data (name and arguments)
@@ -29673,7 +27430,7 @@ function _toPrimitive(t, r) {
   const getScriptletCode = (scriptlet, verbose) => {
     try {
       const scriptletSource = {
-        engine: "safari-extension",
+        engine: SCRIPTLET_ENGINE_NAME,
         name: scriptlet.name,
         args: scriptlet.args,
         version: version,
@@ -29681,135 +27438,122 @@ function _toPrimitive(t, r) {
       };
       return scriptlets.invoke(scriptletSource);
     } catch (e) {
-      log$2(`Failed to get scriptlet code ${scriptlet.name}`, e);
+      log$1.error("Failed to get scriptlet code", scriptlet.name, e);
     }
     return "";
   };
+  // Disable class-methods-use-this rule for the following code since it needs
+  // to implement particular interface.
+  /* eslint-disable class-methods-use-this  */
   /**
-   * Applies scriptlets.
+   * Content script object. The way this object is used is different and
+   * depends on whether this code is used from Safari App Extension or from
+   * Safari Web Extension.
    *
-   * @param {Scriptlet[]} scriptlets Array with scriptlets data.
-   * @param {boolean} verbose Whether to log verbose output.
-   */
-  const applyScriptlets = (scriptlets, verbose) => {
-    if (!scriptlets || !scriptlets.length) {
-      return;
-    }
-    const getCode = (scriptlet) => getScriptletCode(scriptlet, verbose);
-    const scripts = scriptlets.map(getCode);
-    executeScripts(scripts);
-  };
-  /**
-   * Content script that applies all the rules from the configuration.
+   * In the case of Safari App Extension, this object is used from within
+   * the content script, i.e. it is used to apply the configuration to the web
+   * page.
+   *
+   * In the case of Safari Web Extension, `BackgroundScript` relies on the
+   * functions of this object to run scripts and insert extended CSS into the
+   * web page, i.e. it expects that there will be a global `adguard.contentScript`
+   * object in the `ISOLATED` world that implements this interface.
    */
   class ContentScript {
-    constructor(configuration) {
-      _defineProperty2(this, "configuration", void 0);
-      this.configuration = configuration;
-    }
     /**
-     * Runs the content script on the page.
+     * Applies the configuration to the web page. This method is supposed to be
+     * run from the extension's content script (ISOLATED world) and it is only
+     * supposed to be used by Safari App Extension.
      *
+     * @param configuration Configuration to apply.
      * @param verbose Whether to log verbose output.
-     * @param prefix Prefix for log messages.
      */
-    run() {
+    applyConfiguration(configuration) {
       let verbose =
-        arguments.length > 0 && arguments[0] !== undefined
-          ? arguments[0]
-          : false;
-      let prefix =
         arguments.length > 1 && arguments[1] !== undefined
           ? arguments[1]
-          : "[AdGuard Extension]";
-      if (verbose) {
-        initLogger$1("log", prefix);
-      } else {
-        initLogger$1("discard", "");
+          : false;
+      this.insertCss(configuration.css);
+      this.insertExtendedCss(configuration.extendedCss);
+      this.runScriptlets(configuration.scriptlets, verbose);
+      this.runScripts(configuration.js);
+    }
+    /**
+     * Inserts specified CSS rules to the page.
+     *
+     * @param css Array of CSS rules to apply. Can be a selector
+     */
+    insertCss(css) {
+      if (!css || !css.length) {
+        return;
       }
-      log$2("Starting content script execution...");
-      applyCss(this.configuration.css);
-      applyExtendedCss(this.configuration.extendedCss);
-      applyScriptlets(this.configuration.scriptlets, true);
-      applyScripts(this.configuration.js);
-      log$2("Finished content script execution");
+      try {
+        const styleElement = document.createElement("style");
+        styleElement.setAttribute("type", "text/css");
+        (document.head || document.documentElement).appendChild(styleElement);
+        if (styleElement.sheet) {
+          const cssRules = toCSSRules(css);
+          for (const style of cssRules) {
+            styleElement.sheet.insertRule(style);
+          }
+        }
+        protectStyleElementContent(styleElement);
+      } catch (e) {
+        log$1.error("Failed to insert CSS", e);
+      }
     }
-  }
-
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  // currentLevel holds the active logging level.
-  // It remains null until the logger is explicitly initialized.
-  let currentLevel = null;
-  // logPrefix holds the configurable prefix for all log messages.
-  let logPrefix = "";
-  // pendingLogs stores log messages that are buffered until the logger is
-  // initialized. Each pending log is stored as an array so that it can be
-  // re-spread into `console.log`.
-  let pendingLogs = [];
-  /**
-   * Logs messages with an ISO 8601 timestamp and a configurable prefix.
-   *
-   * This function accepts a variable number of parameters to mirror the interface
-   * of `console.log`.
-   *
-   * Behavior:
-   * - If the logger is not yet initialized (currentLevel is null), the log entry
-   *   is buffered.
-   * - If the logger is initialized with the 'log' level, the message is
-   *   immediately output to the console with the configured prefix.
-   * - If the logger is initialized with the 'discard' level, the log entry is
-   *   ignored.
-   *
-   * @param args - The log message and additional parameters.
-   */
-  function log() {
-    const timestamp = `[${new Date().toISOString()}]`;
-    for (
-      var _len4 = arguments.length, args = new Array(_len4), _key4 = 0;
-      _key4 < _len4;
-      _key4++
-    ) {
-      args[_key4] = arguments[_key4];
+    /**
+     * Applies Extended Css stylesheet.
+     *
+     * @param {string[]} extendedCss Array with ExtendedCss rules.
+     */
+    insertExtendedCss(extendedCss) {
+      if (!extendedCss || !extendedCss.length) {
+        return;
+      }
+      try {
+        const cssRules = toCSSRules(extendedCss);
+        const extCss = new ExtendedCss({
+          cssRules,
+        });
+        extCss.apply();
+      } catch (e) {
+        log$1.error("Failed to insert extended CSS", e);
+      }
     }
-    if (currentLevel === null) {
-      // Buffer the message until the logger is initialized.
-      pendingLogs.push([timestamp, ...args]);
-    } else if (currentLevel === "log") {
-      // Output the timestamp, prefix, and the log message.
-      // eslint-disable-next-line no-console
-      console.log(timestamp, logPrefix, ...args);
+    /**
+     * Runs scripts in the web page. This method is supposed to be run from the
+     * extension's content script (ISOLATED world).
+     *
+     * In the case of Safari Web Extension this method is exposed via
+     * `adguard.contentScript` global object in `ISOLATED` world.
+     *
+     * @param scripts Array of scripts to run.
+     */
+    runScripts(scripts) {
+      if (!scripts || scripts.length === 0) {
+        return;
+      }
+      executeScripts(scripts);
     }
-    // If currentLevel is 'discard', the log entry is ignored.
-  }
-  /**
-   * Initializes the logger by setting the logging behavior and the message
-   * prefix.
-   *
-   * After initialization, future log messages behave according to the specified
-   * logging level:
-   *
-   * - 'log': Future messages are immediately output to the console with the
-   *          configured prefix, and any buffered messages are flushed.
-   * - 'discard': Both buffered and future log messages are dropped.
-   *
-   * @param level - The logging level to set:
-   *   - 'log' to output log messages.
-   *   - 'discard' to ignore log messages.
-   * @param prefix - The configurable prefix to be added to every log message.
-   */
-  function initLogger(level, prefix) {
-    logPrefix = prefix;
-    currentLevel = level;
-    if (currentLevel === "log") {
-      // Flush all buffered log messages to the console using the configured
-      // prefix.
-      pendingLogs.forEach((entry) => {
-        // eslint-disable-next-line no-console
-        console.log(entry[0], logPrefix, ...entry.slice(1));
-      });
+    /**
+     * Runs scriptlets in the web page. This method is supposed to be run from
+     * the extension's content script (ISOLATED world).
+     *
+     * In the case of Safari Web Extension this method is exposed via
+     * `adguard.contentScript` global object in `ISOLATED` world.
+     *
+     * @param scriptlets Array of scriptlets to run.
+     * @param verbose Whether to log verbose output.
+     */
+    runScriptlets(scriptlets, verbose) {
+      if (!scriptlets || !scriptlets.length) {
+        return;
+      }
+      const getCode = (scriptlet) => getScriptletCode(scriptlet, verbose);
+      const scripts = scriptlets.map(getCode);
+      executeScripts(scripts);
     }
-    // Clear the buffer regardless of the logging level.
-    pendingLogs = [];
   }
 
   /**
@@ -29819,14 +27563,19 @@ function _toPrimitive(t, r) {
    * The interceptors delay the events until either a response is received or the
    * timeout expires. If the events have already fired, no interceptors are added.
    *
-   * @param timeout - Timeout in milliseconds after which the events are forced
-   *                  (if not already handled).
+   * In Safari extensions running scripts and scriptlets has a slight delay and
+   * the page scripts may already do their work. By delaying DOMContentLoaded and
+   * load we try to delay the execution of page scripts so that the extension's
+   * scriptlets work as expected.
+   *
+   * @param timeoutMs - Timeout in milliseconds after which the events are forced
+   *                  (if not already handled). Default is 1000ms.
    * @returns A function which, when invoked, cancels the timeout and dispatches
    *         (or removes) the interceptors.
    */
   function setupDelayedEventDispatcher() {
-    let timeout =
-      arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 100;
+    let timeoutMs =
+      arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1000;
     const interceptors = [];
     const events = [
       {
@@ -29856,7 +27605,7 @@ function _toPrimitive(t, r) {
           // Prevent immediate propagation.
           event.stopImmediatePropagation();
           interceptor.intercepted = true;
-          log(`${ev.name} event has been intercepted.`);
+          log$1.debug("Event has been intercepted:", ev.name);
         },
       };
       interceptors.push(interceptor);
@@ -29866,7 +27615,10 @@ function _toPrimitive(t, r) {
     });
     let dispatched = false;
     const dispatchEvents = (trigger) => {
-      if (dispatched) return;
+      if (dispatched) {
+        // The events were already dispatched, do nothing.
+        return;
+      }
       dispatched = true;
       interceptors.forEach((interceptor) => {
         // Remove the interceptor listener.
@@ -29875,7 +27627,7 @@ function _toPrimitive(t, r) {
           interceptor.listener,
           {
             capture: true,
-          }
+          },
         );
         if (interceptor.intercepted) {
           // If intercepted, dispatch the event manually so downstream listeners eventually receive it.
@@ -29883,18 +27635,20 @@ function _toPrimitive(t, r) {
           interceptor.target.dispatchEvent(newEvent);
           const targetName =
             interceptor.target === document ? "document" : "window";
-          log(
-            `${interceptor.name} event re-dispatched due to ${trigger} on ${targetName}.`
+          log$1.debug(
+            `${interceptor.name} event re-dispatched due to ${trigger} on ${targetName}.`,
           );
         } else {
-          log(`Interceptor for ${interceptor.name} removed due to ${trigger}.`);
+          log$1.debug(
+            `Interceptor for ${interceptor.name} removed due to ${trigger}.`,
+          );
         }
       });
     };
     // Set a timer to automatically dispatch the events after the timeout.
     const timer = setTimeout(() => {
       dispatchEvents("timeout");
-    }, timeout);
+    }, timeoutMs);
     // Return a function to cancel the timer and dispatch events immediately.
     return () => {
       clearTimeout(timer);
@@ -29910,133 +27664,56 @@ function _toPrimitive(t, r) {
    */
   var MessageType;
   (function (MessageType) {
-    MessageType["RequestRules"] = "requestRules";
+    MessageType["InitContentScript"] = "InitContentScript";
   })(MessageType || (MessageType = {}));
 
   /**
    * @file Content script for the WebExtension.
    *
-   * This script runs in the context of a web page, and it's responsible for:
-   * - Requesting necessary configuration (rules) from the background script.
-   * - Initializing the content script by applying those configurations.
-   * - Managing event dispatching with a slight delay to capture important page
-   * events.
+   * This script runs in the context of a frame, and it's responsible for:
+   * - Notifying the background script that the frame is available.
+   * - Exposing content script to other scripts in the ISOLATED world, so that
+   *   they were used by scripts injected by `browser.scripting.executeScript`.
+   * - Delaying page load events to give time to injected scripts to initialize.
    */
-  // Log that the content script process has started.
-  log("Content script is starting...");
+  // Initialize the logger to be used by the `@adguard/safari-extension`.
+  // Change logging level to Debug if you need to see more details.
+  const log = new ConsoleLogger(
+    "[AdGuard Sample Web Extension]",
+    LoggingLevel.Info,
+  );
+  setLogger(log);
   // Initialize the delayed event dispatcher. This may intercept DOMContentLoaded
-  // and load events. The delay of 100ms is used as a buffer to capture critical
+  // and load events. The delay of 1000ms is used as a buffer to capture critical
   // initial events while waiting for the rules response.
-  const cancelDelayedDispatchAndDispatch = setupDelayedEventDispatcher(100);
-  /**
-   * Creates a trace object with the current time.
-   *
-   * The trace object is used to record timestamps at various stages of the
-   * messaging process:
-   * - contentStart: When the content script starts.
-   * - contentEnd: When the content script finishes processing the message response.
-   * - backgroundStart: When the background script starts processing.
-   * - backgroundEnd: When the background script completes processing.
-   * - nativeStart: When a native process (if any) starts.
-   * - nativeEnd: When the native process completes processing.
-   *
-   * @returns The trace object used for logging message processing timings.
-   */
-  const createTrace = () => {
-    return {
-      contentStart: new Date().getTime(),
-      contentEnd: 0,
-      backgroundStart: 0,
-      backgroundEnd: 0,
-      nativeStart: 0,
-      nativeEnd: 0,
-    };
-  };
-  /**
-   * Prints trace information to the console.
-   *
-   * @param {Record<TraceStage, number>} trace - The trace object.
-   */
-  const printTrace = (trace) => {
-    const elapsed = trace.contentEnd - trace.contentStart;
-    const elapsedContentToBackground =
-      trace.backgroundStart - trace.contentStart;
-    const elapsedBackgroundToNative = trace.nativeStart - trace.backgroundStart;
-    const elapsedNative = trace.nativeEnd - trace.nativeStart;
-    const elapsedNativeToBackground = trace.nativeEnd - trace.backgroundEnd;
-    const elapsedBackgroundToContent = trace.contentEnd - trace.backgroundEnd;
-    // Log the elapsed timings in a structured format.
-    log("Elapsed on messaging: ", {
-      "Total elapsed": elapsed,
-      "Content->Background": elapsedContentToBackground,
-      "Background->Native": elapsedBackgroundToNative,
-      "Native inside": elapsedNative,
-      "Native->Background": elapsedNativeToBackground,
-      "Background->Content": elapsedBackgroundToContent,
-    });
-  };
-  /**
-   * Sends a message to request configuration/rules from the background script.
-   *
-   * This function creates a messaging request including:
-   * - A type indicating that rules are requested.
-   * - A trace object containing the start time.
-   * - The current page URL as part of the payload.
-   *
-   * After sending the message, the function waits for a response and updates the
-   * trace information. It then configures the logger based on the verbosity
-   * setting provided in the response.
-   *
-   * @returns The response message containing the configuration and updated trace.
-   */
-  const requestRules = async () => {
-    // Create a message with the type RequestRules and attach the current URL
-    // and trace info.
-    const message = {
-      type: MessageType.RequestRules,
-      trace: createTrace(),
-      payload: {},
-    };
-    // Send the message to the background script and await the response.
-    const response = await browser.runtime.sendMessage(message);
-    // Cast the response to a ResponseMessage to access its specific properties.
-    const responseMessage = response;
-    // Update the trace to mark the end of the content script processing.
-    responseMessage.trace.contentEnd = new Date().getTime();
-    // Initialize the logger:
-    // - If verbose logging is enabled, use console logging.
-    // - Otherwise, discard the logs to reduce console noise.
-    if (responseMessage.verbose) {
-      initLogger("log", "[WebShield Advanced]");
-    } else {
-      initLogger("log", "[WebShield Advanced]");
-      // initLogger("discard", "");
-    }
-    // Print trace timing details to the console.
-    printTrace(responseMessage.trace);
-    return responseMessage;
-  };
+  const cancelDelayedDispatchAndDispatch = setupDelayedEventDispatcher(1000);
   /**
    * Main entry point function for the content script.
    *
    * This function:
-   * 1. Requests configuration (rules) from the background script.
-   * 2. Checks and applies the configuration if available.
-   * 3. Instantiates and runs the ContentScript to apply filtering or modifications.
-   * 4. Cancels any delayed events and flushes captured events.
+   * 1. Exposes `adguard.contentScript` to other scripts in the ISOLATED world.
+   * 2. Notifies the background page of the page that is loading. Background page
+   *    will handle this event and insert necessary CSS and JS to this frame.
+   * 3. When the background page responds, cancels any delayed events and flushes
+   *    captured events.
    */
   const main = async () => {
-    // Request rules/configuration from background
-    const responseMessage = await requestRules();
-    if (responseMessage) {
-      // Extract the payload from the response, which contains the configuration.
-      const { payload, verbose } = responseMessage;
-      const configuration = payload;
-      if (configuration) {
-        // Instantiate and run the content script with the provided configuration.
-        new ContentScript(configuration).run(true, "[WebShield Advanced]");
-        log("ContentScript applied");
-      }
+    // First of all, make sure that the content script is exposed to the
+    // scripts that will be called by background script.
+    window.adguard = {
+      contentScript: new ContentScript(),
+    };
+    const message = {
+      type: MessageType.InitContentScript,
+    };
+    // Send the message to the background script and await the response.
+    const response = await browser.runtime.sendMessage(message);
+    // If the background page returned payload with configuration, it means
+    // that it cannot apply it on its own and commands the content script
+    // to do that.
+    if (response !== null && response !== void 0 && response.payload) {
+      const configuration = response.payload;
+      window.adguard.contentScript.applyConfiguration(configuration);
     }
     // After processing, cancel any pending delayed event dispatch and process
     // any queued events immediately.
@@ -30044,6 +27721,6 @@ function _toPrimitive(t, r) {
   };
   // Execute the main function and catch any runtime errors.
   main().catch((error) => {
-    log("Error in content script: ", error);
+    log.error("Error in content script: ", error);
   });
 })(browser);

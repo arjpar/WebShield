@@ -3,8 +3,20 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 90;
 	objects = {
+
+/* Begin PBXAggregateTarget section */
+		00E7C8202F3AB5A2009DA58F /* BumpBuildNumber */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 00E7C8212F3AB5A2009DA58F /* Build configuration list for PBXAggregateTarget "BumpBuildNumber" */;
+			buildPhases = (
+				00E7C8242F3AB5AC009DA58F /* Run Script */,
+			);
+			name = BumpBuildNumber;
+			productName = BumpBuildNumber;
+		};
+/* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
 		001CDB832D5B62AF00F0F5C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008A43C72D3A270F003F8B46 /* UIKit.framework */; platformFilters = (ios, xros, ); };
@@ -13,54 +25,49 @@
 		001CDB862D5B62CF00F0F5C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008A43C72D3A270F003F8B46 /* UIKit.framework */; platformFilters = (ios, xros, ); };
 		001CDB872D5B62D600F0F5C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008A43C72D3A270F003F8B46 /* UIKit.framework */; platformFilters = (ios, xros, ); };
 		001CDB882D5B62DA00F0F5C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008A43C72D3A270F003F8B46 /* UIKit.framework */; platformFilters = (ios, xros, ); };
-		001CDB892D5B62E100F0F5C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008A43C72D3A270F003F8B46 /* UIKit.framework */; platformFilters = (ios, xros, ); };
 		001CDB8A2D5B62E600F0F5C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008A43C72D3A270F003F8B46 /* UIKit.framework */; platformFilters = (ios, xros, ); };
 		001CDB8B2D5B62EB00F0F5C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008A43C72D3A270F003F8B46 /* UIKit.framework */; platformFilters = (ios, xros, ); };
-		001CDB8C2D5B62EF00F0F5C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008A43C72D3A270F003F8B46 /* UIKit.framework */; platformFilters = (ios, xros, ); };
-		001CDB8D2D5B62F400F0F5C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008A43C72D3A270F003F8B46 /* UIKit.framework */; platformFilters = (ios, xros, ); };
 		001CDB8E2D5B62F700F0F5C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008A43C72D3A270F003F8B46 /* UIKit.framework */; platformFilters = (ios, xros, ); };
 		0050E8CC2D5B1174004DDAEA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
-		006FC3E42D30A07B0091056F /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = 006FC3E32D30A07B0091056F /* ContentBlockerConverter */; };
+		0060E56A2ECE92C8001478E5 /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = 0060E5692ECE92C8001478E5 /* ContentBlockerConverter */; };
+		0060E56C2ECE92CB001478E5 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 0060E56B2ECE92CB001478E5 /* ZIPFoundation */; };
+		009B442A2F394B850050A782 /* WebShieldBlocker9.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 009B44212F394B850050A782 /* WebShieldBlocker9.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		009B44412F395FB50050A782 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
+		009B44432F395FBB0050A782 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009B44422F395FBB0050A782 /* UIKit.framework */; platformFilters = (ios, xros, ); };
+		009B44442F395FC30050A782 /* WebShieldService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */; };
+		009B44492F3960330050A782 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009B44422F395FBB0050A782 /* UIKit.framework */; platformFilters = (ios, xros, ); };
 		009E80F82D5B33A7003FDAB0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
 		009E80F92D5B33AD003FDAB0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
 		009E80FA2D5B33B1003FDAB0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
 		009E80FB2D5B33B5003FDAB0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
 		009E80FC2D5B33B9003FDAB0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
-		009E80FD2D5B33BD003FDAB0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
 		009E80FE2D5B33C1003FDAB0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
 		009E80FF2D5B33C5003FDAB0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
 		009E81002D5B33C8003FDAB0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
-		009E81012D5B33CD003FDAB0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
 		009E81022D5B33D2003FDAB0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
-		00A76C112D2E835700CE43C4 /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = 00A76C102D2E835700CE43C4 /* ContentBlockerConverter */; };
 		00CCC1902D30D126002D98A1 /* WebShieldAdvanced.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00C4EAB82D30C4610008D09D /* WebShieldAdvanced.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		00CCC1942D30D128002D98A1 /* WebShieldAds.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00C4EAB72D30C4610008D09D /* WebShieldAds.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		00E7186C2D3452ED00FD22A7 /* WebShieldPrivacy.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718612D3452EC00FD22A7 /* WebShieldPrivacy.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		00E718802D3453A700FD22A7 /* WebShieldSecurity.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718752D3453A700FD22A7 /* WebShieldSecurity.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		00E718942D3453BC00FD22A7 /* WebShieldMultipurpose.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718892D3453BC00FD22A7 /* WebShieldMultipurpose.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		00E718A82D3453CF00FD22A7 /* WebShieldCookies.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E7189D2D3453CF00FD22A7 /* WebShieldCookies.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		00E718BC2D3453E600FD22A7 /* WebShieldSocial.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718B12D3453E600FD22A7 /* WebShieldSocial.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		00E718D02D3453FF00FD22A7 /* WebShieldAnnoyances.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718C52D3453FF00FD22A7 /* WebShieldAnnoyances.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		00E718E42D34542600FD22A7 /* WebShieldRegional.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718D92D34542600FD22A7 /* WebShieldRegional.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		00E718F82D34543F00FD22A7 /* WebShieldExperimental.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718ED2D34543F00FD22A7 /* WebShieldExperimental.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		00E7190C2D34545D00FD22A7 /* WebShieldCustom.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E719012D34545D00FD22A7 /* WebShieldCustom.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00CCC1942D30D128002D98A1 /* WebShieldBlocker1.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00C4EAB72D30C4610008D09D /* WebShieldBlocker1.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00D6909C2ECEA38800B03E1F /* WebShieldService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */; };
+		00D6909D2ECEA38900B03E1F /* WebShieldService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		00D690A12ECEA41A00B03E1F /* WebShieldService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */; };
+		00D690A62ECEA41C00B03E1F /* WebShieldService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */; };
+		00D690AB2ECEA41F00B03E1F /* WebShieldService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */; };
+		00D690B02ECEA42100B03E1F /* WebShieldService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */; };
+		00D690B52ECEA42500B03E1F /* WebShieldService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */; };
+		00D690BF2ECEA42A00B03E1F /* WebShieldService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */; };
+		00D690C42ECEA42D00B03E1F /* WebShieldService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */; };
+		00D690C92ECEA42F00B03E1F /* WebShieldService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */; };
+		00D690D32ECEA43600B03E1F /* WebShieldService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */; };
+		00E7186C2D3452ED00FD22A7 /* WebShieldBlocker2.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718612D3452EC00FD22A7 /* WebShieldBlocker2.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00E718802D3453A700FD22A7 /* WebShieldBlocker3.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718752D3453A700FD22A7 /* WebShieldBlocker3.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00E718942D3453BC00FD22A7 /* WebShieldBlocker4.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718892D3453BC00FD22A7 /* WebShieldBlocker4.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00E718A82D3453CF00FD22A7 /* WebShieldBlocker5.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E7189D2D3453CF00FD22A7 /* WebShieldBlocker5.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00E718D02D3453FF00FD22A7 /* WebShieldBlocker6.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718C52D3453FF00FD22A7 /* WebShieldBlocker6.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00E718E42D34542600FD22A7 /* WebShieldBlocker7.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718D92D34542600FD22A7 /* WebShieldBlocker7.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		00E718F82D34543F00FD22A7 /* WebShieldBlocker8.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00E718ED2D34543F00FD22A7 /* WebShieldBlocker8.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		000F2CB22D2E533500871D5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 000F2C9F2D2E533400871D5E;
-			remoteInfo = a;
-		};
-		000F2CBC2D2E533500871D5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 000F2C9F2D2E533400871D5E;
-			remoteInfo = a;
-		};
 		00681F792D30D49D00F9E3F1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
@@ -74,6 +81,90 @@
 			proxyType = 1;
 			remoteGlobalIDString = 006FC39B2D3095DD0091056F;
 			remoteInfo = "WebShield Advanced";
+		};
+		009B44282F394B850050A782 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 009B44202F394B850050A782;
+			remoteInfo = WebShieldBlocker9;
+		};
+		009B44462F395FC40050A782 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0060E4BC2ECE90FF001478E5;
+			remoteInfo = WebShieldService;
+		};
+		00D6909E2ECEA38900B03E1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0060E4BC2ECE90FF001478E5;
+			remoteInfo = WebShieldService;
+		};
+		00D690A32ECEA41A00B03E1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0060E4BC2ECE90FF001478E5;
+			remoteInfo = WebShieldService;
+		};
+		00D690A82ECEA41C00B03E1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0060E4BC2ECE90FF001478E5;
+			remoteInfo = WebShieldService;
+		};
+		00D690AD2ECEA41F00B03E1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0060E4BC2ECE90FF001478E5;
+			remoteInfo = WebShieldService;
+		};
+		00D690B22ECEA42100B03E1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0060E4BC2ECE90FF001478E5;
+			remoteInfo = WebShieldService;
+		};
+		00D690B72ECEA42500B03E1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0060E4BC2ECE90FF001478E5;
+			remoteInfo = WebShieldService;
+		};
+		00D690C12ECEA42A00B03E1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0060E4BC2ECE90FF001478E5;
+			remoteInfo = WebShieldService;
+		};
+		00D690C62ECEA42D00B03E1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0060E4BC2ECE90FF001478E5;
+			remoteInfo = WebShieldService;
+		};
+		00D690CB2ECEA42F00B03E1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0060E4BC2ECE90FF001478E5;
+			remoteInfo = WebShieldService;
+		};
+		00D690D52ECEA43600B03E1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0060E4BC2ECE90FF001478E5;
+			remoteInfo = WebShieldService;
 		};
 		00E7186A2D3452ED00FD22A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -103,13 +194,6 @@
 			remoteGlobalIDString = 00E7189C2D3453CF00FD22A7;
 			remoteInfo = "DeclarativeBlockList-Cookies";
 		};
-		00E718BA2D3453E600FD22A7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 00E718B02D3453E600FD22A7;
-			remoteInfo = "DeclarativeBlockList-Social";
-		};
 		00E718CE2D3453FF00FD22A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
@@ -131,94 +215,85 @@
 			remoteGlobalIDString = 00E718EC2D34543F00FD22A7;
 			remoteInfo = "DeclarativeBlockList-Experimental";
 		};
-		00E7190A2D34545D00FD22A7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 00E719002D34545D00FD22A7;
-			remoteInfo = "DeclarativeBlockList-Custom";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		00406D332E15C4A60054E001 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		00CCC1932D30D126002D98A1 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
 			dstPath = "";
-			dstSubfolderSpec = 13;
+			dstSubfolder = PlugIns;
 			files = (
-				00E718D02D3453FF00FD22A7 /* WebShieldAnnoyances.appex in Embed Foundation Extensions */,
+				00E718D02D3453FF00FD22A7 /* WebShieldBlocker6.appex in Embed Foundation Extensions */,
 				00CCC1902D30D126002D98A1 /* WebShieldAdvanced.appex in Embed Foundation Extensions */,
-				00E718E42D34542600FD22A7 /* WebShieldRegional.appex in Embed Foundation Extensions */,
-				00E718F82D34543F00FD22A7 /* WebShieldExperimental.appex in Embed Foundation Extensions */,
-				00CCC1942D30D128002D98A1 /* WebShieldAds.appex in Embed Foundation Extensions */,
-				00E718BC2D3453E600FD22A7 /* WebShieldSocial.appex in Embed Foundation Extensions */,
-				00E7186C2D3452ED00FD22A7 /* WebShieldPrivacy.appex in Embed Foundation Extensions */,
-				00E718A82D3453CF00FD22A7 /* WebShieldCookies.appex in Embed Foundation Extensions */,
-				00E7190C2D34545D00FD22A7 /* WebShieldCustom.appex in Embed Foundation Extensions */,
-				00E718942D3453BC00FD22A7 /* WebShieldMultipurpose.appex in Embed Foundation Extensions */,
-				00E718802D3453A700FD22A7 /* WebShieldSecurity.appex in Embed Foundation Extensions */,
+				00E718E42D34542600FD22A7 /* WebShieldBlocker7.appex in Embed Foundation Extensions */,
+				009B442A2F394B850050A782 /* WebShieldBlocker9.appex in Embed Foundation Extensions */,
+				00E718F82D34543F00FD22A7 /* WebShieldBlocker8.appex in Embed Foundation Extensions */,
+				00CCC1942D30D128002D98A1 /* WebShieldBlocker1.appex in Embed Foundation Extensions */,
+				00E7186C2D3452ED00FD22A7 /* WebShieldBlocker2.appex in Embed Foundation Extensions */,
+				00E718A82D3453CF00FD22A7 /* WebShieldBlocker5.appex in Embed Foundation Extensions */,
+				00E718942D3453BC00FD22A7 /* WebShieldBlocker4.appex in Embed Foundation Extensions */,
+				00E718802D3453A700FD22A7 /* WebShieldBlocker3.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
 		};
-		00DC53B12E22C12000F06E2A /* Embed Frameworks */ = {
+		00D690A02ECEA38900B03E1F /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 10;
+			dstSubfolder = Frameworks;
 			files = (
+				00D6909D2ECEA38900B03E1F /* WebShieldService.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		000F2CB12D2E533500871D5E /* AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		000F2CBB2D2E533500871D5E /* AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WebShieldService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		008A43C72D3A270F003F8B46 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		009B44212F394B850050A782 /* WebShieldBlocker9.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldBlocker9.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		009B44422F395FBB0050A782 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		00C2BE322D2E327F000B431F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		00C356372D2EF54100BACCE7 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/System/Library/Frameworks/SafariServices.framework; sourceTree = DEVELOPER_DIR; };
 		00C4EAB62D30C4610008D09D /* WebShield.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebShield.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		00C4EAB72D30C4610008D09D /* WebShieldAds.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldAds.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		00C4EAB72D30C4610008D09D /* WebShieldBlocker1.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldBlocker1.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		00C4EAB82D30C4610008D09D /* WebShieldAdvanced.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldAdvanced.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E718612D3452EC00FD22A7 /* WebShieldPrivacy.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldPrivacy.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E718752D3453A700FD22A7 /* WebShieldSecurity.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldSecurity.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E718892D3453BC00FD22A7 /* WebShieldMultipurpose.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldMultipurpose.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E7189D2D3453CF00FD22A7 /* WebShieldCookies.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldCookies.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E718B12D3453E600FD22A7 /* WebShieldSocial.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldSocial.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E718C52D3453FF00FD22A7 /* WebShieldAnnoyances.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldAnnoyances.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E718D92D34542600FD22A7 /* WebShieldRegional.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldRegional.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E718ED2D34543F00FD22A7 /* WebShieldExperimental.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldExperimental.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		00E719012D34545D00FD22A7 /* WebShieldCustom.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldCustom.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E718612D3452EC00FD22A7 /* WebShieldBlocker2.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldBlocker2.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E718752D3453A700FD22A7 /* WebShieldBlocker3.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldBlocker3.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E718892D3453BC00FD22A7 /* WebShieldBlocker4.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldBlocker4.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E7189D2D3453CF00FD22A7 /* WebShieldBlocker5.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldBlocker5.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E718C52D3453FF00FD22A7 /* WebShieldBlocker6.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldBlocker6.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E718D92D34542600FD22A7 /* WebShieldBlocker7.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldBlocker7.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E718ED2D34543F00FD22A7 /* WebShieldBlocker8.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldBlocker8.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		008F181D2D2E7251004E312A /* Exceptions for "Tests" folder in "AppTests" target */ = {
+		0070C2EB2ED4104B0088E968 /* Exceptions for "WebShieldService" folder in "WebShieldService" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				WebShieldAppTests/AppTests.swift,
+			publicHeaders = (
+				WebShieldService.h,
 			);
-			target = 000F2CB02D2E533500871D5E /* AppTests */;
+			target = 0060E4BC2ECE90FF001478E5 /* WebShieldService */;
 		};
-		008F181F2D2E7256004E312A /* Exceptions for "Tests" folder in "AppUITests" target */ = {
+		009B443C2F394EAD0050A782 /* Exceptions for "WebShieldBlocker6" folder in "WebShieldBlocker6" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				WebShieldAppUITests/AppUITests.swift,
-				WebShieldAppUITests/AppUITestsLaunchTests.swift,
+				Info.plist,
 			);
-			target = 000F2CBA2D2E533500871D5E /* AppUITests */;
+			target = 00E718C42D3453FF00FD22A7 /* WebShieldBlocker6 */;
+		};
+		009B443D2F394EB00050A782 /* Exceptions for "WebShieldBlocker7" folder in "WebShieldBlocker7" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 00E718D82D34542600FD22A7 /* WebShieldBlocker7 */;
+		};
+		009B443E2F394EB30050A782 /* Exceptions for "WebShieldBlocker8" folder in "WebShieldBlocker8" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 00E718EC2D34543F00FD22A7 /* WebShieldBlocker8 */;
 		};
 		00C356162D2EA48100BACCE7 /* Exceptions for "WebShieldApp" folder in "WebShield" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -254,68 +329,40 @@
 			};
 			target = 000F2C9F2D2E533400871D5E /* WebShield */;
 		};
-		00E718702D3452ED00FD22A7 /* Exceptions for "WebShieldPrivacy" folder in "WebShieldPrivacy" target */ = {
+		00E718702D3452ED00FD22A7 /* Exceptions for "WebShieldBlocker2" folder in "WebShieldBlocker2" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 00E718602D3452EC00FD22A7 /* WebShieldPrivacy */;
+			target = 00E718602D3452EC00FD22A7 /* WebShieldBlocker2 */;
 		};
-		00E718842D3453A700FD22A7 /* Exceptions for "WebShieldSecurity" folder in "WebShieldSecurity" target */ = {
+		00E718842D3453A700FD22A7 /* Exceptions for "WebShieldBlocker3" folder in "WebShieldBlocker3" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 00E718742D3453A700FD22A7 /* WebShieldSecurity */;
+			target = 00E718742D3453A700FD22A7 /* WebShieldBlocker3 */;
 		};
-		00E718982D3453BC00FD22A7 /* Exceptions for "WebShieldMultipurpose" folder in "WebShieldMultipurpose" target */ = {
+		00E718982D3453BC00FD22A7 /* Exceptions for "WebShieldBlocker4" folder in "WebShieldBlocker4" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 00E718882D3453BC00FD22A7 /* WebShieldMultipurpose */;
+			target = 00E718882D3453BC00FD22A7 /* WebShieldBlocker4 */;
 		};
-		00E718AC2D3453CF00FD22A7 /* Exceptions for "WebShieldCookies" folder in "WebShieldCookies" target */ = {
+		00E718AC2D3453CF00FD22A7 /* Exceptions for "WebShieldBlocker5" folder in "WebShieldBlocker5" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 00E7189C2D3453CF00FD22A7 /* WebShieldCookies */;
+			target = 00E7189C2D3453CF00FD22A7 /* WebShieldBlocker5 */;
 		};
-		00E718C02D3453E600FD22A7 /* Exceptions for "WebShieldSocial" folder in "WebShieldSocial" target */ = {
+		00E7C81F2F3AB358009DA58F /* Exceptions for "WebShieldBlocker9" folder in "WebShieldBlocker9" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 00E718B02D3453E600FD22A7 /* WebShieldSocial */;
-		};
-		00E718D42D3453FF00FD22A7 /* Exceptions for "WebShieldAnnoyances" folder in "WebShieldAnnoyances" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 00E718C42D3453FF00FD22A7 /* WebShieldAnnoyances */;
-		};
-		00E718E82D34542600FD22A7 /* Exceptions for "WebShieldRegional" folder in "WebShieldRegional" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 00E718D82D34542600FD22A7 /* WebShieldRegional */;
-		};
-		00E718FC2D34543F00FD22A7 /* Exceptions for "WebShieldExperimental" folder in "WebShieldExperimental" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 00E718EC2D34543F00FD22A7 /* WebShieldExperimental */;
-		};
-		00E719102D34545D00FD22A7 /* Exceptions for "WebShieldCustom" folder in "WebShieldCustom" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 00E719002D34545D00FD22A7 /* WebShieldCustom */;
+			target = 009B44202F394B850050A782 /* WebShieldBlocker9 */;
 		};
 		00FC14002E22CBFF00F73CFD /* Exceptions for "WebShieldAdvanced" folder in "WebShieldAdvanced" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -324,12 +371,12 @@
 			);
 			target = 006FC39B2D3095DD0091056F /* WebShieldAdvanced */;
 		};
-		00FC14012E22CBFF00F73CFD /* Exceptions for "WebShieldAds" folder in "WebShieldAds" target */ = {
+		00FC14012E22CBFF00F73CFD /* Exceptions for "WebShieldBlocker1" folder in "WebShieldBlocker1" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 00C356262D2EEFE000BACCE7 /* WebShieldAds */;
+			target = 00C356262D2EEFE000BACCE7 /* WebShieldBlocker1 */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -340,6 +387,14 @@
 				00C356162D2EA48100BACCE7 /* Exceptions for "WebShieldApp" folder in "WebShield" target */,
 			);
 			path = WebShieldApp;
+			sourceTree = "<group>";
+		};
+		0060E4BE2ECE90FF001478E5 /* WebShieldService */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0070C2EB2ED4104B0088E968 /* Exceptions for "WebShieldService" folder in "WebShieldService" target */,
+			);
+			path = WebShieldService;
 			sourceTree = "<group>";
 		};
 		006FC3702D3095DD0091056F /* WebShieldAdvanced */ = {
@@ -355,93 +410,81 @@
 			path = WebShieldAdvanced;
 			sourceTree = "<group>";
 		};
-		006FC3F92D30AA590091056F /* WebShieldAds */ = {
+		006FC3F92D30AA590091056F /* WebShieldBlocker1 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				00FC14012E22CBFF00F73CFD /* Exceptions for "WebShieldAds" folder in "WebShieldAds" target */,
+				00FC14012E22CBFF00F73CFD /* Exceptions for "WebShieldBlocker1" folder in "WebShieldBlocker1" target */,
 			);
-			path = WebShieldAds;
+			path = WebShieldBlocker1;
 			sourceTree = "<group>";
 		};
 		008F181A2D2E7228004E312A /* Tests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				008F181D2D2E7251004E312A /* Exceptions for "Tests" folder in "AppTests" target */,
-				008F181F2D2E7256004E312A /* Exceptions for "Tests" folder in "AppUITests" target */,
-			);
 			path = Tests;
 			sourceTree = "<group>";
 		};
-		00E718632D3452ED00FD22A7 /* WebShieldPrivacy */ = {
+		00E718632D3452ED00FD22A7 /* WebShieldBlocker2 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				00E718702D3452ED00FD22A7 /* Exceptions for "WebShieldPrivacy" folder in "WebShieldPrivacy" target */,
+				00E718702D3452ED00FD22A7 /* Exceptions for "WebShieldBlocker2" folder in "WebShieldBlocker2" target */,
 			);
-			path = WebShieldPrivacy;
+			path = WebShieldBlocker2;
 			sourceTree = "<group>";
 		};
-		00E718772D3453A700FD22A7 /* WebShieldSecurity */ = {
+		00E718772D3453A700FD22A7 /* WebShieldBlocker3 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				00E718842D3453A700FD22A7 /* Exceptions for "WebShieldSecurity" folder in "WebShieldSecurity" target */,
+				00E718842D3453A700FD22A7 /* Exceptions for "WebShieldBlocker3" folder in "WebShieldBlocker3" target */,
 			);
-			path = WebShieldSecurity;
+			path = WebShieldBlocker3;
 			sourceTree = "<group>";
 		};
-		00E7188B2D3453BC00FD22A7 /* WebShieldMultipurpose */ = {
+		00E7188B2D3453BC00FD22A7 /* WebShieldBlocker4 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				00E718982D3453BC00FD22A7 /* Exceptions for "WebShieldMultipurpose" folder in "WebShieldMultipurpose" target */,
+				00E718982D3453BC00FD22A7 /* Exceptions for "WebShieldBlocker4" folder in "WebShieldBlocker4" target */,
 			);
-			path = WebShieldMultipurpose;
+			path = WebShieldBlocker4;
 			sourceTree = "<group>";
 		};
-		00E7189F2D3453CF00FD22A7 /* WebShieldCookies */ = {
+		00E7189F2D3453CF00FD22A7 /* WebShieldBlocker5 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				00E718AC2D3453CF00FD22A7 /* Exceptions for "WebShieldCookies" folder in "WebShieldCookies" target */,
+				00E718AC2D3453CF00FD22A7 /* Exceptions for "WebShieldBlocker5" folder in "WebShieldBlocker5" target */,
 			);
-			path = WebShieldCookies;
+			path = WebShieldBlocker5;
 			sourceTree = "<group>";
 		};
-		00E718B32D3453E600FD22A7 /* WebShieldSocial */ = {
+		00E718B32D3453E600FD22A7 /* WebShieldBlocker6 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				00E718C02D3453E600FD22A7 /* Exceptions for "WebShieldSocial" folder in "WebShieldSocial" target */,
+				009B443C2F394EAD0050A782 /* Exceptions for "WebShieldBlocker6" folder in "WebShieldBlocker6" target */,
 			);
-			path = WebShieldSocial;
+			path = WebShieldBlocker6;
 			sourceTree = "<group>";
 		};
-		00E718C72D3453FF00FD22A7 /* WebShieldAnnoyances */ = {
+		00E718C72D3453FF00FD22A7 /* WebShieldBlocker7 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				00E718D42D3453FF00FD22A7 /* Exceptions for "WebShieldAnnoyances" folder in "WebShieldAnnoyances" target */,
+				009B443D2F394EB00050A782 /* Exceptions for "WebShieldBlocker7" folder in "WebShieldBlocker7" target */,
 			);
-			path = WebShieldAnnoyances;
+			path = WebShieldBlocker7;
 			sourceTree = "<group>";
 		};
-		00E718DB2D34542600FD22A7 /* WebShieldRegional */ = {
+		00E718DB2D34542600FD22A7 /* WebShieldBlocker8 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				00E718E82D34542600FD22A7 /* Exceptions for "WebShieldRegional" folder in "WebShieldRegional" target */,
+				009B443E2F394EB30050A782 /* Exceptions for "WebShieldBlocker8" folder in "WebShieldBlocker8" target */,
 			);
-			path = WebShieldRegional;
+			path = WebShieldBlocker8;
 			sourceTree = "<group>";
 		};
-		00E718EF2D34543F00FD22A7 /* WebShieldExperimental */ = {
+		00E7C8142F3AB234009DA58F /* WebShieldBlocker9 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				00E718FC2D34543F00FD22A7 /* Exceptions for "WebShieldExperimental" folder in "WebShieldExperimental" target */,
+				00E7C81F2F3AB358009DA58F /* Exceptions for "WebShieldBlocker9" folder in "WebShieldBlocker9" target */,
 			);
-			path = WebShieldExperimental;
-			sourceTree = "<group>";
-		};
-		00E719032D34545D00FD22A7 /* WebShieldCustom */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				00E719102D34545D00FD22A7 /* Exceptions for "WebShieldCustom" folder in "WebShieldCustom" target */,
-			);
-			path = WebShieldCustom;
+			path = WebShieldBlocker9;
 			sourceTree = "<group>";
 		};
 		00FEFADF2D5AE27A001192BC /* Shared */ = {
@@ -454,127 +497,98 @@
 /* Begin PBXFrameworksBuildPhase section */
 		000F2C9D2D2E533400871D5E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				0050E8CC2D5B1174004DDAEA /* Cocoa.framework in Frameworks */,
 				001CDB832D5B62AF00F0F5C6 /* UIKit.framework in Frameworks */,
-				00A76C112D2E835700CE43C4 /* ContentBlockerConverter in Frameworks */,
+				00D6909C2ECEA38800B03E1F /* WebShieldService.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
-		000F2CAE2D2E533500871D5E /* Frameworks */ = {
+		0060E4BA2ECE90FF001478E5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
+				0060E56A2ECE92C8001478E5 /* ContentBlockerConverter in Frameworks */,
+				0060E56C2ECE92CB001478E5 /* ZIPFoundation in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		000F2CB82D2E533500871D5E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		006FC3992D3095DD0091056F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				009E81022D5B33D2003FDAB0 /* Cocoa.framework in Frameworks */,
 				001CDB8E2D5B62F700F0F5C6 /* UIKit.framework in Frameworks */,
-				006FC3E42D30A07B0091056F /* ContentBlockerConverter in Frameworks */,
+				00D690D32ECEA43600B03E1F /* WebShieldService.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+		};
+		009B441E2F394B850050A782 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				009B44412F395FB50050A782 /* Cocoa.framework in Frameworks */,
+				009B44442F395FC30050A782 /* WebShieldService.framework in Frameworks */,
+				009B44432F395FBB0050A782 /* UIKit.framework in Frameworks */,
+			);
 		};
 		00C356242D2EEFE000BACCE7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				009E80F82D5B33A7003FDAB0 /* Cocoa.framework in Frameworks */,
+				00D690A12ECEA41A00B03E1F /* WebShieldService.framework in Frameworks */,
 				001CDB842D5B62BB00F0F5C6 /* UIKit.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E7185E2D3452EC00FD22A7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				009E80F92D5B33AD003FDAB0 /* Cocoa.framework in Frameworks */,
+				00D690A62ECEA41C00B03E1F /* WebShieldService.framework in Frameworks */,
 				001CDB852D5B62C700F0F5C6 /* UIKit.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E718722D3453A700FD22A7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				009E80FA2D5B33B1003FDAB0 /* Cocoa.framework in Frameworks */,
+				00D690AB2ECEA41F00B03E1F /* WebShieldService.framework in Frameworks */,
 				001CDB862D5B62CF00F0F5C6 /* UIKit.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E718862D3453BC00FD22A7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				009E80FB2D5B33B5003FDAB0 /* Cocoa.framework in Frameworks */,
+				00D690B02ECEA42100B03E1F /* WebShieldService.framework in Frameworks */,
 				001CDB872D5B62D600F0F5C6 /* UIKit.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E7189A2D3453CF00FD22A7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				009E80FC2D5B33B9003FDAB0 /* Cocoa.framework in Frameworks */,
+				00D690B52ECEA42500B03E1F /* WebShieldService.framework in Frameworks */,
 				001CDB882D5B62DA00F0F5C6 /* UIKit.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		00E718AE2D3453E600FD22A7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				009E80FD2D5B33BD003FDAB0 /* Cocoa.framework in Frameworks */,
-				001CDB892D5B62E100F0F5C6 /* UIKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E718C22D3453FF00FD22A7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				009E80FE2D5B33C1003FDAB0 /* Cocoa.framework in Frameworks */,
+				00D690BF2ECEA42A00B03E1F /* WebShieldService.framework in Frameworks */,
 				001CDB8A2D5B62E600F0F5C6 /* UIKit.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E718D62D34542600FD22A7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				009E80FF2D5B33C5003FDAB0 /* Cocoa.framework in Frameworks */,
+				00D690C42ECEA42D00B03E1F /* WebShieldService.framework in Frameworks */,
 				001CDB8B2D5B62EB00F0F5C6 /* UIKit.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E718EA2D34543F00FD22A7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				009E81002D5B33C8003FDAB0 /* Cocoa.framework in Frameworks */,
-				001CDB8C2D5B62EF00F0F5C6 /* UIKit.framework in Frameworks */,
+				009B44492F3960330050A782 /* UIKit.framework in Frameworks */,
+				00D690C92ECEA42F00B03E1F /* WebShieldService.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		00E718FE2D34545D00FD22A7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				009E81012D5B33CD003FDAB0 /* Cocoa.framework in Frameworks */,
-				001CDB8D2D5B62F400F0F5C6 /* UIKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -584,33 +598,31 @@
 			children = (
 				00FEFADF2D5AE27A001192BC /* Shared */,
 				000F2CA12D2E533400871D5E /* WebShieldApp */,
-				006FC3F92D30AA590091056F /* WebShieldAds */,
-				00E718632D3452ED00FD22A7 /* WebShieldPrivacy */,
-				00E718772D3453A700FD22A7 /* WebShieldSecurity */,
-				00E7188B2D3453BC00FD22A7 /* WebShieldMultipurpose */,
-				00E7189F2D3453CF00FD22A7 /* WebShieldCookies */,
-				00E718B32D3453E600FD22A7 /* WebShieldSocial */,
-				00E718C72D3453FF00FD22A7 /* WebShieldAnnoyances */,
-				00E718DB2D34542600FD22A7 /* WebShieldRegional */,
-				00E718EF2D34543F00FD22A7 /* WebShieldExperimental */,
-				00E719032D34545D00FD22A7 /* WebShieldCustom */,
+				006FC3F92D30AA590091056F /* WebShieldBlocker1 */,
+				00E718632D3452ED00FD22A7 /* WebShieldBlocker2 */,
+				00E718772D3453A700FD22A7 /* WebShieldBlocker3 */,
+				00E7188B2D3453BC00FD22A7 /* WebShieldBlocker4 */,
+				00E7189F2D3453CF00FD22A7 /* WebShieldBlocker5 */,
+				00E718B32D3453E600FD22A7 /* WebShieldBlocker6 */,
+				00E718C72D3453FF00FD22A7 /* WebShieldBlocker7 */,
+				00E718DB2D34542600FD22A7 /* WebShieldBlocker8 */,
+				00E7C8142F3AB234009DA58F /* WebShieldBlocker9 */,
 				006FC3702D3095DD0091056F /* WebShieldAdvanced */,
 				008F181A2D2E7228004E312A /* Tests */,
+				0060E4BE2ECE90FF001478E5 /* WebShieldService */,
 				00333FBB2C3CC6D20031AEC6 /* Frameworks */,
-				000F2CB12D2E533500871D5E /* AppTests.xctest */,
-				000F2CBB2D2E533500871D5E /* AppUITests.xctest */,
 				00C4EAB62D30C4610008D09D /* WebShield.app */,
-				00C4EAB72D30C4610008D09D /* WebShieldAds.appex */,
+				00C4EAB72D30C4610008D09D /* WebShieldBlocker1.appex */,
 				00C4EAB82D30C4610008D09D /* WebShieldAdvanced.appex */,
-				00E718612D3452EC00FD22A7 /* WebShieldPrivacy.appex */,
-				00E718752D3453A700FD22A7 /* WebShieldSecurity.appex */,
-				00E718892D3453BC00FD22A7 /* WebShieldMultipurpose.appex */,
-				00E7189D2D3453CF00FD22A7 /* WebShieldCookies.appex */,
-				00E718B12D3453E600FD22A7 /* WebShieldSocial.appex */,
-				00E718C52D3453FF00FD22A7 /* WebShieldAnnoyances.appex */,
-				00E718D92D34542600FD22A7 /* WebShieldRegional.appex */,
-				00E718ED2D34543F00FD22A7 /* WebShieldExperimental.appex */,
-				00E719012D34545D00FD22A7 /* WebShieldCustom.appex */,
+				00E718612D3452EC00FD22A7 /* WebShieldBlocker2.appex */,
+				00E718752D3453A700FD22A7 /* WebShieldBlocker3.appex */,
+				00E718892D3453BC00FD22A7 /* WebShieldBlocker4.appex */,
+				00E7189D2D3453CF00FD22A7 /* WebShieldBlocker5.appex */,
+				00E718C52D3453FF00FD22A7 /* WebShieldBlocker6.appex */,
+				00E718D92D34542600FD22A7 /* WebShieldBlocker7.appex */,
+				00E718ED2D34543F00FD22A7 /* WebShieldBlocker8.appex */,
+				0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */,
+				009B44212F394B850050A782 /* WebShieldBlocker9.appex */,
 			);
 			sourceTree = "<group>";
 		};
@@ -618,6 +630,7 @@
 			isa = PBXGroup;
 			children = (
 				008A43C72D3A270F003F8B46 /* UIKit.framework */,
+				009B44422F395FBB0050A782 /* UIKit.framework */,
 				00C356372D2EF54100BACCE7 /* SafariServices.framework */,
 				00C2BE322D2E327F000B431F /* Cocoa.framework */,
 			);
@@ -625,6 +638,14 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		0060E4B82ECE90FF001478E5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			files = (
+			);
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		000F2C9F2D2E533400871D5E /* WebShield */ = {
@@ -635,7 +656,7 @@
 				000F2C9D2D2E533400871D5E /* Frameworks */,
 				000F2C9E2D2E533400871D5E /* Resources */,
 				00CCC1932D30D126002D98A1 /* Embed Foundation Extensions */,
-				00406D332E15C4A60054E001 /* Embed Frameworks */,
+				00D690A02ECEA38900B03E1F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -646,306 +667,252 @@
 				00E7187F2D3453A700FD22A7 /* PBXTargetDependency */,
 				00E718932D3453BC00FD22A7 /* PBXTargetDependency */,
 				00E718A72D3453CF00FD22A7 /* PBXTargetDependency */,
-				00E718BB2D3453E600FD22A7 /* PBXTargetDependency */,
 				00E718CF2D3453FF00FD22A7 /* PBXTargetDependency */,
 				00E718E32D34542600FD22A7 /* PBXTargetDependency */,
 				00E718F72D34543F00FD22A7 /* PBXTargetDependency */,
-				00E7190B2D34545D00FD22A7 /* PBXTargetDependency */,
+				00D6909F2ECEA38900B03E1F /* PBXTargetDependency */,
+				009B44292F394B850050A782 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				000F2CA12D2E533400871D5E /* WebShieldApp */,
 				00FEFADF2D5AE27A001192BC /* Shared */,
 			);
 			name = WebShield;
-			packageProductDependencies = (
-				00A76C102D2E835700CE43C4 /* ContentBlockerConverter */,
-			);
 			productName = a;
 			productReference = 00C4EAB62D30C4610008D09D /* WebShield.app */;
 			productType = "com.apple.product-type.application";
 		};
-		000F2CB02D2E533500871D5E /* AppTests */ = {
+		0060E4BC2ECE90FF001478E5 /* WebShieldService */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 000F2CC62D2E533500871D5E /* Build configuration list for PBXNativeTarget "AppTests" */;
+			buildConfigurationList = 0060E4C72ECE90FF001478E5 /* Build configuration list for PBXNativeTarget "WebShieldService" */;
 			buildPhases = (
-				000F2CAD2D2E533500871D5E /* Sources */,
-				000F2CAE2D2E533500871D5E /* Frameworks */,
-				000F2CAF2D2E533500871D5E /* Resources */,
+				0060E4B82ECE90FF001478E5 /* Headers */,
+				0060E4B92ECE90FF001478E5 /* Sources */,
+				0060E4BA2ECE90FF001478E5 /* Frameworks */,
+				0060E4BB2ECE90FF001478E5 /* Resources */,
 			);
 			buildRules = (
 			);
-			dependencies = (
-				000F2CB32D2E533500871D5E /* PBXTargetDependency */,
+			fileSystemSynchronizedGroups = (
+				0060E4BE2ECE90FF001478E5 /* WebShieldService */,
 			);
-			name = AppTests;
+			name = WebShieldService;
 			packageProductDependencies = (
+				0060E5692ECE92C8001478E5 /* ContentBlockerConverter */,
+				0060E56B2ECE92CB001478E5 /* ZIPFoundation */,
 			);
-			productName = aTests;
-			productReference = 000F2CB12D2E533500871D5E /* AppTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		000F2CBA2D2E533500871D5E /* AppUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 000F2CC92D2E533500871D5E /* Build configuration list for PBXNativeTarget "AppUITests" */;
-			buildPhases = (
-				000F2CB72D2E533500871D5E /* Sources */,
-				000F2CB82D2E533500871D5E /* Frameworks */,
-				000F2CB92D2E533500871D5E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				000F2CBD2D2E533500871D5E /* PBXTargetDependency */,
-			);
-			name = AppUITests;
-			packageProductDependencies = (
-			);
-			productName = aUITests;
-			productReference = 000F2CBB2D2E533500871D5E /* AppUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
+			productName = "webshiled-service";
+			productReference = 0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 		006FC39B2D3095DD0091056F /* WebShieldAdvanced */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 006FC3CC2D3095DD0091056F /* Build configuration list for PBXNativeTarget "WebShieldAdvanced" */;
-			buildPhases = (
-				006FC3982D3095DD0091056F /* Sources */,
-				006FC3992D3095DD0091056F /* Frameworks */,
-				006FC39A2D3095DD0091056F /* Resources */,
-				00DC53B12E22C12000F06E2A /* Embed Frameworks */,
-			);
+				buildPhases = (
+					006FC3982D3095DD0091056F /* Sources */,
+					006FC3992D3095DD0091056F /* Frameworks */,
+					006FC39A2D3095DD0091056F /* Resources */,
+				);
 			buildRules = (
 			);
 			dependencies = (
+				00D690D62ECEA43600B03E1F /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				006FC3702D3095DD0091056F /* WebShieldAdvanced */,
 			);
 			name = WebShieldAdvanced;
-			packageProductDependencies = (
-				006FC3E32D30A07B0091056F /* ContentBlockerConverter */,
-			);
 			productName = "Extra Extension (iOS)";
 			productReference = 00C4EAB82D30C4610008D09D /* WebShieldAdvanced.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		00C356262D2EEFE000BACCE7 /* WebShieldAds */ = {
+		009B44202F394B850050A782 /* WebShieldBlocker9 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00C356332D2EEFE100BACCE7 /* Build configuration list for PBXNativeTarget "WebShieldAds" */;
-			buildPhases = (
-				00C356232D2EEFE000BACCE7 /* Sources */,
-				00C356242D2EEFE000BACCE7 /* Frameworks */,
-				00C356252D2EEFE000BACCE7 /* Resources */,
-			);
+			buildConfigurationList = 009B442B2F394B850050A782 /* Build configuration list for PBXNativeTarget "WebShieldBlocker9" */;
+				buildPhases = (
+					009B441D2F394B850050A782 /* Sources */,
+					009B441E2F394B850050A782 /* Frameworks */,
+					009B441F2F394B850050A782 /* Resources */,
+				);
 			buildRules = (
 			);
 			dependencies = (
+				009B44472F395FC40050A782 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				006FC3F92D30AA590091056F /* WebShieldAds */,
+				00E7C8142F3AB234009DA58F /* WebShieldBlocker9 */,
 			);
-			name = WebShieldAds;
-			packageProductDependencies = (
+			name = WebShieldBlocker9;
+			productName = WebShieldBlocker9;
+			productReference = 009B44212F394B850050A782 /* WebShieldBlocker9.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		00C356262D2EEFE000BACCE7 /* WebShieldBlocker1 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00C356332D2EEFE100BACCE7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker1" */;
+				buildPhases = (
+					00C356232D2EEFE000BACCE7 /* Sources */,
+					00C356242D2EEFE000BACCE7 /* Frameworks */,
+					00C356252D2EEFE000BACCE7 /* Resources */,
+				);
+			buildRules = (
 			);
+			dependencies = (
+				00D690A42ECEA41A00B03E1F /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				006FC3F92D30AA590091056F /* WebShieldBlocker1 */,
+			);
+			name = WebShieldBlocker1;
 			productName = Extra;
-			productReference = 00C4EAB72D30C4610008D09D /* WebShieldAds.appex */;
+			productReference = 00C4EAB72D30C4610008D09D /* WebShieldBlocker1.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		00E718602D3452EC00FD22A7 /* WebShieldPrivacy */ = {
+		00E718602D3452EC00FD22A7 /* WebShieldBlocker2 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E7186D2D3452ED00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldPrivacy" */;
-			buildPhases = (
-				00E7185D2D3452EC00FD22A7 /* Sources */,
-				00E7185E2D3452EC00FD22A7 /* Frameworks */,
-				00E7185F2D3452EC00FD22A7 /* Resources */,
-			);
+			buildConfigurationList = 00E7186D2D3452ED00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker2" */;
+				buildPhases = (
+					00E7185D2D3452EC00FD22A7 /* Sources */,
+					00E7185E2D3452EC00FD22A7 /* Frameworks */,
+					00E7185F2D3452EC00FD22A7 /* Resources */,
+				);
 			buildRules = (
 			);
 			dependencies = (
+				00D690A92ECEA41C00B03E1F /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				00E718632D3452ED00FD22A7 /* WebShieldPrivacy */,
+				00E718632D3452ED00FD22A7 /* WebShieldBlocker2 */,
 			);
-			name = WebShieldPrivacy;
-			packageProductDependencies = (
-			);
+			name = WebShieldBlocker2;
 			productName = "DeclarativeBlockList-Privacy";
-			productReference = 00E718612D3452EC00FD22A7 /* WebShieldPrivacy.appex */;
+			productReference = 00E718612D3452EC00FD22A7 /* WebShieldBlocker2.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		00E718742D3453A700FD22A7 /* WebShieldSecurity */ = {
+		00E718742D3453A700FD22A7 /* WebShieldBlocker3 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E718812D3453A700FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldSecurity" */;
-			buildPhases = (
-				00E718712D3453A700FD22A7 /* Sources */,
-				00E718722D3453A700FD22A7 /* Frameworks */,
-				00E718732D3453A700FD22A7 /* Resources */,
-			);
+			buildConfigurationList = 00E718812D3453A700FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker3" */;
+				buildPhases = (
+					00E718712D3453A700FD22A7 /* Sources */,
+					00E718722D3453A700FD22A7 /* Frameworks */,
+					00E718732D3453A700FD22A7 /* Resources */,
+				);
 			buildRules = (
 			);
 			dependencies = (
+				00D690AE2ECEA41F00B03E1F /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				00E718772D3453A700FD22A7 /* WebShieldSecurity */,
+				00E718772D3453A700FD22A7 /* WebShieldBlocker3 */,
 			);
-			name = WebShieldSecurity;
-			packageProductDependencies = (
-			);
+			name = WebShieldBlocker3;
 			productName = "DeclarativeBlockList-Security";
-			productReference = 00E718752D3453A700FD22A7 /* WebShieldSecurity.appex */;
+			productReference = 00E718752D3453A700FD22A7 /* WebShieldBlocker3.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		00E718882D3453BC00FD22A7 /* WebShieldMultipurpose */ = {
+		00E718882D3453BC00FD22A7 /* WebShieldBlocker4 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E718952D3453BC00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldMultipurpose" */;
-			buildPhases = (
-				00E718852D3453BC00FD22A7 /* Sources */,
-				00E718862D3453BC00FD22A7 /* Frameworks */,
-				00E718872D3453BC00FD22A7 /* Resources */,
-			);
+			buildConfigurationList = 00E718952D3453BC00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker4" */;
+				buildPhases = (
+					00E718852D3453BC00FD22A7 /* Sources */,
+					00E718862D3453BC00FD22A7 /* Frameworks */,
+					00E718872D3453BC00FD22A7 /* Resources */,
+				);
 			buildRules = (
 			);
 			dependencies = (
+				00D690B32ECEA42100B03E1F /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				00E7188B2D3453BC00FD22A7 /* WebShieldMultipurpose */,
+				00E7188B2D3453BC00FD22A7 /* WebShieldBlocker4 */,
 			);
-			name = WebShieldMultipurpose;
-			packageProductDependencies = (
-			);
+			name = WebShieldBlocker4;
 			productName = "DeclarativeBlockList-Multipurpose";
-			productReference = 00E718892D3453BC00FD22A7 /* WebShieldMultipurpose.appex */;
+			productReference = 00E718892D3453BC00FD22A7 /* WebShieldBlocker4.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		00E7189C2D3453CF00FD22A7 /* WebShieldCookies */ = {
+		00E7189C2D3453CF00FD22A7 /* WebShieldBlocker5 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E718A92D3453CF00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldCookies" */;
-			buildPhases = (
-				00E718992D3453CF00FD22A7 /* Sources */,
-				00E7189A2D3453CF00FD22A7 /* Frameworks */,
-				00E7189B2D3453CF00FD22A7 /* Resources */,
-			);
+			buildConfigurationList = 00E718A92D3453CF00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker5" */;
+				buildPhases = (
+					00E718992D3453CF00FD22A7 /* Sources */,
+					00E7189A2D3453CF00FD22A7 /* Frameworks */,
+					00E7189B2D3453CF00FD22A7 /* Resources */,
+				);
 			buildRules = (
 			);
 			dependencies = (
+				00D690B82ECEA42500B03E1F /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				00E7189F2D3453CF00FD22A7 /* WebShieldCookies */,
+				00E7189F2D3453CF00FD22A7 /* WebShieldBlocker5 */,
 			);
-			name = WebShieldCookies;
-			packageProductDependencies = (
-			);
+			name = WebShieldBlocker5;
 			productName = "DeclarativeBlockList-Cookies";
-			productReference = 00E7189D2D3453CF00FD22A7 /* WebShieldCookies.appex */;
+			productReference = 00E7189D2D3453CF00FD22A7 /* WebShieldBlocker5.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		00E718B02D3453E600FD22A7 /* WebShieldSocial */ = {
+		00E718C42D3453FF00FD22A7 /* WebShieldBlocker6 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E718BD2D3453E600FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldSocial" */;
-			buildPhases = (
-				00E718AD2D3453E600FD22A7 /* Sources */,
-				00E718AE2D3453E600FD22A7 /* Frameworks */,
-				00E718AF2D3453E600FD22A7 /* Resources */,
-			);
+			buildConfigurationList = 00E718D12D3453FF00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker6" */;
+				buildPhases = (
+					00E718C12D3453FF00FD22A7 /* Sources */,
+					00E718C22D3453FF00FD22A7 /* Frameworks */,
+					00E718C32D3453FF00FD22A7 /* Resources */,
+				);
 			buildRules = (
 			);
 			dependencies = (
+				00D690C22ECEA42A00B03E1F /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				00E718B32D3453E600FD22A7 /* WebShieldSocial */,
+				00E718B32D3453E600FD22A7 /* WebShieldBlocker6 */,
 			);
-			name = WebShieldSocial;
-			packageProductDependencies = (
-			);
-			productName = "DeclarativeBlockList-Social";
-			productReference = 00E718B12D3453E600FD22A7 /* WebShieldSocial.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
-		00E718C42D3453FF00FD22A7 /* WebShieldAnnoyances */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 00E718D12D3453FF00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldAnnoyances" */;
-			buildPhases = (
-				00E718C12D3453FF00FD22A7 /* Sources */,
-				00E718C22D3453FF00FD22A7 /* Frameworks */,
-				00E718C32D3453FF00FD22A7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				00E718C72D3453FF00FD22A7 /* WebShieldAnnoyances */,
-			);
-			name = WebShieldAnnoyances;
-			packageProductDependencies = (
-			);
+			name = WebShieldBlocker6;
 			productName = "DeclarativeBlockList-Annoyances";
-			productReference = 00E718C52D3453FF00FD22A7 /* WebShieldAnnoyances.appex */;
+			productReference = 00E718C52D3453FF00FD22A7 /* WebShieldBlocker6.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		00E718D82D34542600FD22A7 /* WebShieldRegional */ = {
+		00E718D82D34542600FD22A7 /* WebShieldBlocker7 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E718E52D34542600FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldRegional" */;
-			buildPhases = (
-				00E718D52D34542600FD22A7 /* Sources */,
-				00E718D62D34542600FD22A7 /* Frameworks */,
-				00E718D72D34542600FD22A7 /* Resources */,
-			);
+			buildConfigurationList = 00E718E52D34542600FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker7" */;
+				buildPhases = (
+					00E718D52D34542600FD22A7 /* Sources */,
+					00E718D62D34542600FD22A7 /* Frameworks */,
+					00E718D72D34542600FD22A7 /* Resources */,
+				);
 			buildRules = (
 			);
 			dependencies = (
+				00D690C72ECEA42D00B03E1F /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				00E718DB2D34542600FD22A7 /* WebShieldRegional */,
+				00E718C72D3453FF00FD22A7 /* WebShieldBlocker7 */,
 			);
-			name = WebShieldRegional;
-			packageProductDependencies = (
-			);
+			name = WebShieldBlocker7;
 			productName = "DeclarativeBlockList-Regional";
-			productReference = 00E718D92D34542600FD22A7 /* WebShieldRegional.appex */;
+			productReference = 00E718D92D34542600FD22A7 /* WebShieldBlocker7.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		00E718EC2D34543F00FD22A7 /* WebShieldExperimental */ = {
+		00E718EC2D34543F00FD22A7 /* WebShieldBlocker8 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E718F92D34543F00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldExperimental" */;
-			buildPhases = (
-				00E718E92D34543F00FD22A7 /* Sources */,
-				00E718EA2D34543F00FD22A7 /* Frameworks */,
-				00E718EB2D34543F00FD22A7 /* Resources */,
-			);
+			buildConfigurationList = 00E718F92D34543F00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker8" */;
+				buildPhases = (
+					00E718E92D34543F00FD22A7 /* Sources */,
+					00E718EA2D34543F00FD22A7 /* Frameworks */,
+					00E718EB2D34543F00FD22A7 /* Resources */,
+				);
 			buildRules = (
 			);
 			dependencies = (
+				00D690CC2ECEA42F00B03E1F /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				00E718EF2D34543F00FD22A7 /* WebShieldExperimental */,
+				00E718DB2D34542600FD22A7 /* WebShieldBlocker8 */,
 			);
-			name = WebShieldExperimental;
-			packageProductDependencies = (
-			);
+			name = WebShieldBlocker8;
 			productName = "DeclarativeBlockList-Experimental";
-			productReference = 00E718ED2D34543F00FD22A7 /* WebShieldExperimental.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
-		00E719002D34545D00FD22A7 /* WebShieldCustom */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 00E7190D2D34545D00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldCustom" */;
-			buildPhases = (
-				00E718FD2D34545D00FD22A7 /* Sources */,
-				00E718FE2D34545D00FD22A7 /* Frameworks */,
-				00E718FF2D34545D00FD22A7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				00E719032D34545D00FD22A7 /* WebShieldCustom */,
-			);
-			name = WebShieldCustom;
-			packageProductDependencies = (
-			);
-			productName = "DeclarativeBlockList-Custom";
-			productReference = 00E719012D34545D00FD22A7 /* WebShieldCustom.appex */;
+			productReference = 00E718ED2D34543F00FD22A7 /* WebShieldBlocker8.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -955,22 +922,22 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2600;
-				LastUpgradeCheck = 2600;
+				LastSwiftUpdateCheck = 2620;
+				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					000F2C9F2D2E533400871D5E = {
 						CreatedOnToolsVersion = 16.2;
+						LastSwiftMigration = 2610;
 					};
-					000F2CB02D2E533500871D5E = {
-						CreatedOnToolsVersion = 16.2;
-						TestTargetID = 000F2C9F2D2E533400871D5E;
-					};
-					000F2CBA2D2E533500871D5E = {
-						CreatedOnToolsVersion = 16.2;
-						TestTargetID = 000F2C9F2D2E533400871D5E;
+					0060E4BC2ECE90FF001478E5 = {
+						CreatedOnToolsVersion = 26.1.1;
+						LastSwiftMigration = 2610;
 					};
 					006FC39B2D3095DD0091056F = {
 						CreatedOnToolsVersion = 16.2;
+					};
+					009B44202F394B850050A782 = {
+						CreatedOnToolsVersion = 26.2;
 					};
 					00C356262D2EEFE000BACCE7 = {
 						CreatedOnToolsVersion = 16.2;
@@ -987,9 +954,6 @@
 					00E7189C2D3453CF00FD22A7 = {
 						CreatedOnToolsVersion = 16.2;
 					};
-					00E718B02D3453E600FD22A7 = {
-						CreatedOnToolsVersion = 16.2;
-					};
 					00E718C42D3453FF00FD22A7 = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -999,8 +963,8 @@
 					00E718EC2D34543F00FD22A7 = {
 						CreatedOnToolsVersion = 16.2;
 					};
-					00E719002D34545D00FD22A7 = {
-						CreatedOnToolsVersion = 16.2;
+					00E7C8202F3AB5A2009DA58F = {
+						CreatedOnToolsVersion = 26.2;
 					};
 				};
 			};
@@ -1016,25 +980,24 @@
 				00A76C0F2D2E835700CE43C4 /* XCRemoteSwiftPackageReference "SafariConverterLib" */,
 				0024C4D02E15C2D5009CBC07 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 			);
-			preferredProjectObjectVersion = 77;
+			preferredProjectObjectVersion = 90;
 			productRefGroup = 001848592C2956AC00EE2E7A;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				0060E4BC2ECE90FF001478E5 /* WebShieldService */,
 				000F2C9F2D2E533400871D5E /* WebShield */,
-				00C356262D2EEFE000BACCE7 /* WebShieldAds */,
-				00E718602D3452EC00FD22A7 /* WebShieldPrivacy */,
-				00E718742D3453A700FD22A7 /* WebShieldSecurity */,
-				00E718882D3453BC00FD22A7 /* WebShieldMultipurpose */,
-				00E7189C2D3453CF00FD22A7 /* WebShieldCookies */,
-				00E718B02D3453E600FD22A7 /* WebShieldSocial */,
-				00E718C42D3453FF00FD22A7 /* WebShieldAnnoyances */,
-				00E718D82D34542600FD22A7 /* WebShieldRegional */,
-				00E718EC2D34543F00FD22A7 /* WebShieldExperimental */,
-				00E719002D34545D00FD22A7 /* WebShieldCustom */,
+				00C356262D2EEFE000BACCE7 /* WebShieldBlocker1 */,
+				00E718602D3452EC00FD22A7 /* WebShieldBlocker2 */,
+				00E718742D3453A700FD22A7 /* WebShieldBlocker3 */,
+				00E718882D3453BC00FD22A7 /* WebShieldBlocker4 */,
+				00E7189C2D3453CF00FD22A7 /* WebShieldBlocker5 */,
+				00E718C42D3453FF00FD22A7 /* WebShieldBlocker6 */,
+				00E718D82D34542600FD22A7 /* WebShieldBlocker7 */,
+				00E718EC2D34543F00FD22A7 /* WebShieldBlocker8 */,
+				009B44202F394B850050A782 /* WebShieldBlocker9 */,
 				006FC39B2D3095DD0091056F /* WebShieldAdvanced */,
-				000F2CB02D2E533500871D5E /* AppTests */,
-				000F2CBA2D2E533500871D5E /* AppUITests */,
+				00E7C8202F3AB5A2009DA58F /* BumpBuildNumber */,
 			);
 		};
 /* End PBXProject section */
@@ -1042,219 +1005,156 @@
 /* Begin PBXResourcesBuildPhase section */
 		000F2C9E2D2E533400871D5E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
-		000F2CAF2D2E533500871D5E /* Resources */ = {
+		0060E4BB2ECE90FF001478E5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		000F2CB92D2E533500871D5E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		006FC39A2D3095DD0091056F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+		};
+		009B441F2F394B850050A782 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
 		};
 		00C356252D2EEFE000BACCE7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E7185F2D3452EC00FD22A7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E718732D3453A700FD22A7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E718872D3453BC00FD22A7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E7189B2D3453CF00FD22A7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		00E718AF2D3453E600FD22A7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E718C32D3453FF00FD22A7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E718D72D34542600FD22A7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E718EB2D34543F00FD22A7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		00E718FF2D34545D00FD22A7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		00E7C8242F3AB5AC009DA58F /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			name = "Run Script";
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = (
+				"# Type a script or drag a script file from your workspace to insert its path.",
+				"#!/bin/bash",
+				"",
+				"if [ \"${CONFIGURATION}\" != \"Release\" ]; then",
+				"    echo \"Skipping: not a Release build\"",
+				"    exit 0",
+				"fi",
+				"",
+				"cd \"${PROJECT_DIR}\"",
+				"agvtool next-version -all",
+				"",
+			);
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		000F2C9C2D2E533400871D5E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
-		000F2CAD2D2E533500871D5E /* Sources */ = {
+		0060E4B92ECE90FF001478E5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		000F2CB72D2E533500871D5E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		006FC3982D3095DD0091056F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+		};
+		009B441D2F394B850050A782 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
 		};
 		00C356232D2EEFE000BACCE7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E7185D2D3452EC00FD22A7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E718712D3453A700FD22A7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E718852D3453BC00FD22A7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E718992D3453CF00FD22A7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		00E718AD2D3453E600FD22A7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E718C12D3453FF00FD22A7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E718D52D34542600FD22A7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		00E718E92D34543F00FD22A7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		00E718FD2D34545D00FD22A7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		000F2CB32D2E533500871D5E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 000F2C9F2D2E533400871D5E /* WebShield */;
-			targetProxy = 000F2CB22D2E533500871D5E /* PBXContainerItemProxy */;
-		};
-		000F2CBD2D2E533500871D5E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 000F2C9F2D2E533400871D5E /* WebShield */;
-			targetProxy = 000F2CBC2D2E533500871D5E /* PBXContainerItemProxy */;
-		};
 		00681F7A2D30D49D00F9E3F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00C356262D2EEFE000BACCE7 /* WebShieldAds */;
+			target = 00C356262D2EEFE000BACCE7 /* WebShieldBlocker1 */;
 			targetProxy = 00681F792D30D49D00F9E3F1 /* PBXContainerItemProxy */;
 		};
 		00681F7C2D30D4A000F9E3F1 /* PBXTargetDependency */ = {
@@ -1262,62 +1162,114 @@
 			target = 006FC39B2D3095DD0091056F /* WebShieldAdvanced */;
 			targetProxy = 00681F7B2D30D4A000F9E3F1 /* PBXContainerItemProxy */;
 		};
+		009B44292F394B850050A782 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 009B44202F394B850050A782 /* WebShieldBlocker9 */;
+			targetProxy = 009B44282F394B850050A782 /* PBXContainerItemProxy */;
+		};
+		009B44472F395FC40050A782 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0060E4BC2ECE90FF001478E5 /* WebShieldService */;
+			targetProxy = 009B44462F395FC40050A782 /* PBXContainerItemProxy */;
+		};
+		00D6909F2ECEA38900B03E1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0060E4BC2ECE90FF001478E5 /* WebShieldService */;
+			targetProxy = 00D6909E2ECEA38900B03E1F /* PBXContainerItemProxy */;
+		};
+		00D690A42ECEA41A00B03E1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0060E4BC2ECE90FF001478E5 /* WebShieldService */;
+			targetProxy = 00D690A32ECEA41A00B03E1F /* PBXContainerItemProxy */;
+		};
+		00D690A92ECEA41C00B03E1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0060E4BC2ECE90FF001478E5 /* WebShieldService */;
+			targetProxy = 00D690A82ECEA41C00B03E1F /* PBXContainerItemProxy */;
+		};
+		00D690AE2ECEA41F00B03E1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0060E4BC2ECE90FF001478E5 /* WebShieldService */;
+			targetProxy = 00D690AD2ECEA41F00B03E1F /* PBXContainerItemProxy */;
+		};
+		00D690B32ECEA42100B03E1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0060E4BC2ECE90FF001478E5 /* WebShieldService */;
+			targetProxy = 00D690B22ECEA42100B03E1F /* PBXContainerItemProxy */;
+		};
+		00D690B82ECEA42500B03E1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0060E4BC2ECE90FF001478E5 /* WebShieldService */;
+			targetProxy = 00D690B72ECEA42500B03E1F /* PBXContainerItemProxy */;
+		};
+		00D690C22ECEA42A00B03E1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0060E4BC2ECE90FF001478E5 /* WebShieldService */;
+			targetProxy = 00D690C12ECEA42A00B03E1F /* PBXContainerItemProxy */;
+		};
+		00D690C72ECEA42D00B03E1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0060E4BC2ECE90FF001478E5 /* WebShieldService */;
+			targetProxy = 00D690C62ECEA42D00B03E1F /* PBXContainerItemProxy */;
+		};
+		00D690CC2ECEA42F00B03E1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0060E4BC2ECE90FF001478E5 /* WebShieldService */;
+			targetProxy = 00D690CB2ECEA42F00B03E1F /* PBXContainerItemProxy */;
+		};
+		00D690D62ECEA43600B03E1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0060E4BC2ECE90FF001478E5 /* WebShieldService */;
+			targetProxy = 00D690D52ECEA43600B03E1F /* PBXContainerItemProxy */;
+		};
 		00E7186B2D3452ED00FD22A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00E718602D3452EC00FD22A7 /* WebShieldPrivacy */;
+			target = 00E718602D3452EC00FD22A7 /* WebShieldBlocker2 */;
 			targetProxy = 00E7186A2D3452ED00FD22A7 /* PBXContainerItemProxy */;
 		};
 		00E7187F2D3453A700FD22A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00E718742D3453A700FD22A7 /* WebShieldSecurity */;
+			target = 00E718742D3453A700FD22A7 /* WebShieldBlocker3 */;
 			targetProxy = 00E7187E2D3453A700FD22A7 /* PBXContainerItemProxy */;
 		};
 		00E718932D3453BC00FD22A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00E718882D3453BC00FD22A7 /* WebShieldMultipurpose */;
+			target = 00E718882D3453BC00FD22A7 /* WebShieldBlocker4 */;
 			targetProxy = 00E718922D3453BC00FD22A7 /* PBXContainerItemProxy */;
 		};
 		00E718A72D3453CF00FD22A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00E7189C2D3453CF00FD22A7 /* WebShieldCookies */;
+			target = 00E7189C2D3453CF00FD22A7 /* WebShieldBlocker5 */;
 			targetProxy = 00E718A62D3453CF00FD22A7 /* PBXContainerItemProxy */;
-		};
-		00E718BB2D3453E600FD22A7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 00E718B02D3453E600FD22A7 /* WebShieldSocial */;
-			targetProxy = 00E718BA2D3453E600FD22A7 /* PBXContainerItemProxy */;
 		};
 		00E718CF2D3453FF00FD22A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00E718C42D3453FF00FD22A7 /* WebShieldAnnoyances */;
+			target = 00E718C42D3453FF00FD22A7 /* WebShieldBlocker6 */;
 			targetProxy = 00E718CE2D3453FF00FD22A7 /* PBXContainerItemProxy */;
 		};
 		00E718E32D34542600FD22A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00E718D82D34542600FD22A7 /* WebShieldRegional */;
+			target = 00E718D82D34542600FD22A7 /* WebShieldBlocker7 */;
 			targetProxy = 00E718E22D34542600FD22A7 /* PBXContainerItemProxy */;
 		};
 		00E718F72D34543F00FD22A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 00E718EC2D34543F00FD22A7 /* WebShieldExperimental */;
+			target = 00E718EC2D34543F00FD22A7 /* WebShieldBlocker8 */;
 			targetProxy = 00E718F62D34543F00FD22A7 /* PBXContainerItemProxy */;
-		};
-		00E7190B2D34545D00FD22A7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 00E719002D34545D00FD22A7 /* WebShieldCustom */;
-			targetProxy = 00E7190A2D34545D00FD22A7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		000F2CC42D2E533500871D5E /* Debug */ = {
+		000F2CC42D2E533500871D5E /* Debug configuration for PBXNativeTarget "WebShield" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "\"WebShieldApp/Preview Content\"";
@@ -1327,34 +1279,47 @@
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				INFOPLIST_FILE = WebShieldApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WebShield;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Arjun P";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield;
+				PRODUCT_BUNDLE_IDENTIFIER = arjun.webshield;
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
-		000F2CC52D2E533500871D5E /* Release */ = {
+		000F2CC52D2E533500871D5E /* Release configuration for PBXNativeTarget "WebShield" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"WebShieldApp/Preview Content\"";
@@ -1364,142 +1329,42 @@
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				INFOPLIST_FILE = WebShieldApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WebShield;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Arjun P";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield;
+				PRODUCT_BUNDLE_IDENTIFIER = arjun.webshield;
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
-		000F2CC72D2E533500871D5E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
-				MACOSX_DEPLOYMENT_TARGET = 14;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield.aTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = macosx;
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/a.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/a";
-			};
-			name = Debug;
-		};
-		000F2CC82D2E533500871D5E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
-				MACOSX_DEPLOYMENT_TARGET = 14;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield.aTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = macosx;
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/a.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/a";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		000F2CCA2D2E533500871D5E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
-				MACOSX_DEPLOYMENT_TARGET = 14;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield.aUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = macosx;
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = a;
-			};
-			name = Debug;
-		};
-		000F2CCB2D2E533500871D5E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
-				MACOSX_DEPLOYMENT_TARGET = 14;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield.aUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = macosx;
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = a;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		0018486F2C2956AD00EE2E7A /* Debug */ = {
+		0018486F2C2956AD00EE2E7A /* Debug configuration for PBXProject "WebShield" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -1547,10 +1412,11 @@
 			};
 			name = Debug;
 		};
-		001848702C2956AD00EE2E7A /* Release */ = {
+		001848702C2956AD00EE2E7A /* Release configuration for PBXProject "WebShield" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -1597,14 +1463,172 @@
 			};
 			name = Release;
 		};
-		006FC3CD2D3095DD0091056F /* Debug */ = {
+		0060E4C52ECE90FF001478E5 /* Debug configuration for PBXNativeTarget "WebShieldService" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 37;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 37;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = WebShield;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MARKETING_VERSION = 2.0.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = arjun.webshield.service;
+				PRODUCT_MODULE_NAME = WebShieldService;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		0060E4C62ECE90FF001478E5 /* Release configuration for PBXNativeTarget "WebShieldService" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 37;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 37;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = WebShield;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MARKETING_VERSION = 2.0.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = arjun.webshield.service;
+				PRODUCT_MODULE_NAME = WebShieldService;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		006FC3CD2D3095DD0091056F /* Debug configuration for PBXNativeTarget "WebShieldAdvanced" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
@@ -1622,13 +1646,22 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = WebShieldAdvanced/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Advanced;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Advanced";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield.Advanced;
+				PRODUCT_BUNDLE_IDENTIFIER = arjun.webshield.advanced;
 				PRODUCT_MODULE_NAME = WebShieldAdvanced;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1636,18 +1669,21 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
-		006FC3CE2D3095DD0091056F /* Release */ = {
+		006FC3CE2D3095DD0091056F /* Release configuration for PBXNativeTarget "WebShieldAdvanced" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
@@ -1665,13 +1701,22 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = WebShieldAdvanced/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Advanced;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Advanced";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.arjuna.WebShield.Advanced;
+				PRODUCT_BUNDLE_IDENTIFIER = arjun.webshield.advanced;
 				PRODUCT_MODULE_NAME = WebShieldAdvanced;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1679,32 +1724,194 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
-		00C356342D2EEFE100BACCE7 /* Debug */ = {
+		009B442C2F394B850050A782 /* Debug configuration for PBXNativeTarget "WebShieldBlocker9" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 37;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = FP48FZ5499;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = NO;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = WebShieldBlocker9/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Blocker 9";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MARKETING_VERSION = 2.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "arjun.webshield.contentblocker-9";
+				PRODUCT_MODULE_NAME = WebShield;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		009B442D2F394B850050A782 /* Release configuration for PBXNativeTarget "WebShieldBlocker9" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 37;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = FP48FZ5499;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = NO;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = WebShieldBlocker9/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Blocker 9";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MARKETING_VERSION = 2.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "arjun.webshield.contentblocker-9";
+				PRODUCT_MODULE_NAME = WebShield;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		00C356342D2EEFE100BACCE7 /* Debug configuration for PBXNativeTarget "WebShieldBlocker1" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldAds/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Ads;
+				INFOPLIST_FILE = WebShieldBlocker1/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Blocker 1";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Ads";
+				PRODUCT_BUNDLE_IDENTIFIER = "arjun.webshield.contentblocker-1";
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
@@ -1712,32 +1919,45 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
-		00C356352D2EEFE100BACCE7 /* Release */ = {
+		00C356352D2EEFE100BACCE7 /* Release configuration for PBXNativeTarget "WebShieldBlocker1" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldAds/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Ads;
+				INFOPLIST_FILE = WebShieldBlocker1/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Blocker 1";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Ads";
+				PRODUCT_BUNDLE_IDENTIFIER = "arjun.webshield.contentblocker-1";
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
@@ -1745,565 +1965,649 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
-		00E7186E2D3452ED00FD22A7 /* Debug */ = {
+		00E7186E2D3452ED00FD22A7 /* Debug configuration for PBXNativeTarget "WebShieldBlocker2" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldPrivacy/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Privacy;
+				INFOPLIST_FILE = WebShieldBlocker2/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Blocker 2";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Privacy";
+				PRODUCT_BUNDLE_IDENTIFIER = "arjun.webshield.contentblocker-2";
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
-		00E7186F2D3452ED00FD22A7 /* Release */ = {
+		00E7186F2D3452ED00FD22A7 /* Release configuration for PBXNativeTarget "WebShieldBlocker2" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldPrivacy/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Privacy;
+				INFOPLIST_FILE = WebShieldBlocker2/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Blocker 2";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Privacy";
+				PRODUCT_BUNDLE_IDENTIFIER = "arjun.webshield.contentblocker-2";
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
-		00E718822D3453A700FD22A7 /* Debug */ = {
+		00E718822D3453A700FD22A7 /* Debug configuration for PBXNativeTarget "WebShieldBlocker3" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldSecurity/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Security;
+				INFOPLIST_FILE = WebShieldBlocker3/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Blocker 3";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Security";
+				PRODUCT_BUNDLE_IDENTIFIER = "arjun.webshield.contentblocker-3";
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
-		00E718832D3453A700FD22A7 /* Release */ = {
+		00E718832D3453A700FD22A7 /* Release configuration for PBXNativeTarget "WebShieldBlocker3" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldSecurity/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Security;
+				INFOPLIST_FILE = WebShieldBlocker3/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Blocker 3";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Security";
+				PRODUCT_BUNDLE_IDENTIFIER = "arjun.webshield.contentblocker-3";
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
-		00E718962D3453BC00FD22A7 /* Debug */ = {
+		00E718962D3453BC00FD22A7 /* Debug configuration for PBXNativeTarget "WebShieldBlocker4" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldMultipurpose/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Multipurpose;
+				INFOPLIST_FILE = WebShieldBlocker4/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Blocker 4";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Multipurpose";
+				PRODUCT_BUNDLE_IDENTIFIER = "arjun.webshield.contentblocker-4";
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
-		00E718972D3453BC00FD22A7 /* Release */ = {
+		00E718972D3453BC00FD22A7 /* Release configuration for PBXNativeTarget "WebShieldBlocker4" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldMultipurpose/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Multipurpose;
+				INFOPLIST_FILE = WebShieldBlocker4/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Blocker 4";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Multipurpose";
+				PRODUCT_BUNDLE_IDENTIFIER = "arjun.webshield.contentblocker-4";
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
-		00E718AA2D3453CF00FD22A7 /* Debug */ = {
+		00E718AA2D3453CF00FD22A7 /* Debug configuration for PBXNativeTarget "WebShieldBlocker5" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldCookies/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Cookies;
+				INFOPLIST_FILE = WebShieldBlocker5/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Blocker 5";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Cookies";
+				PRODUCT_BUNDLE_IDENTIFIER = "arjun.webshield.contentblocker-5";
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
-		00E718AB2D3453CF00FD22A7 /* Release */ = {
+		00E718AB2D3453CF00FD22A7 /* Release configuration for PBXNativeTarget "WebShieldBlocker5" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldCookies/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Cookies;
+				INFOPLIST_FILE = WebShieldBlocker5/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Blocker 5";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Cookies";
+				PRODUCT_BUNDLE_IDENTIFIER = "arjun.webshield.contentblocker-5";
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
-		00E718BE2D3453E600FD22A7 /* Debug */ = {
+		00E718D22D3453FF00FD22A7 /* Debug configuration for PBXNativeTarget "WebShieldBlocker6" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldSocial/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Social;
+				INFOPLIST_FILE = WebShieldBlocker6/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Blocker 6";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Social";
+				PRODUCT_BUNDLE_IDENTIFIER = "arjun.webshield.contentblocker-6";
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
-		00E718BF2D3453E600FD22A7 /* Release */ = {
+		00E718D32D3453FF00FD22A7 /* Release configuration for PBXNativeTarget "WebShieldBlocker6" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldSocial/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Social;
+				INFOPLIST_FILE = WebShieldBlocker6/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Blocker 6";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Social";
+				PRODUCT_BUNDLE_IDENTIFIER = "arjun.webshield.contentblocker-6";
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
-		00E718D22D3453FF00FD22A7 /* Debug */ = {
+		00E718E62D34542600FD22A7 /* Debug configuration for PBXNativeTarget "WebShieldBlocker7" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldAnnoyances/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Annoyances;
+				INFOPLIST_FILE = WebShieldBlocker7/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Blocker 7";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Annoyances";
+				PRODUCT_BUNDLE_IDENTIFIER = "arjun.webshield.contentblocker-7";
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
-		00E718D32D3453FF00FD22A7 /* Release */ = {
+		00E718E72D34542600FD22A7 /* Release configuration for PBXNativeTarget "WebShieldBlocker7" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldAnnoyances/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Annoyances;
+				INFOPLIST_FILE = WebShieldBlocker7/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Blocker 7";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Annoyances";
+				PRODUCT_BUNDLE_IDENTIFIER = "arjun.webshield.contentblocker-7";
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
-		00E718E62D34542600FD22A7 /* Debug */ = {
+		00E718FA2D34543F00FD22A7 /* Debug configuration for PBXNativeTarget "WebShieldBlocker8" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldRegional/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Regional;
+				INFOPLIST_FILE = WebShieldBlocker8/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Blocker 8";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Regional";
+				PRODUCT_BUNDLE_IDENTIFIER = "arjun.webshield.contentblocker-8";
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
-		00E718E72D34542600FD22A7 /* Release */ = {
+		00E718FB2D34543F00FD22A7 /* Release configuration for PBXNativeTarget "WebShieldBlocker8" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldRegional/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Regional;
+				INFOPLIST_FILE = WebShieldBlocker8/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "WebShield Blocker 8";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
+					"@executable_path/../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../../../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 2.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Regional";
+				PRODUCT_BUNDLE_IDENTIFIER = "arjun.webshield.contentblocker-8";
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_MODULE = NO;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
-		00E718FA2D34543F00FD22A7 /* Debug */ = {
+		00E7C8222F3AB5A2009DA58F /* Debug configuration for PBXAggregateTarget "BumpBuildNumber" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
-				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldExperimental/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Experimental;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17;
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Experimental";
+				DEVELOPMENT_TEAM = FP48FZ5499;
+				INFOPLIST_KEY_CFBundleDisplayName = WebShield;
+				PRODUCT_BUNDLE_IDENTIFIER = arjun.webshield;
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				REGISTER_APP_GROUPS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_INSTALL_MODULE = NO;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
-		00E718FB2D34543F00FD22A7 /* Release */ = {
+		00E7C8232F3AB5A2009DA58F /* Release configuration for PBXAggregateTarget "BumpBuildNumber" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
-				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldExperimental/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Experimental;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17;
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Experimental";
+				DEVELOPMENT_TEAM = FP48FZ5499;
+				INFOPLIST_KEY_CFBundleDisplayName = WebShield;
+				PRODUCT_BUNDLE_IDENTIFIER = arjun.webshield;
+				PRODUCT_MODULE_NAME = WebShield;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				REGISTER_APP_GROUPS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_INSTALL_MODULE = NO;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-			};
-			name = Release;
-		};
-		00E7190E2D34545D00FD22A7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
-				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldCustom/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Custom;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17;
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Custom";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				REGISTER_APP_GROUPS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_INSTALL_MODULE = NO;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-			};
-			name = Debug;
-		};
-		00E7190F2D34545D00FD22A7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_ENTITLEMENTS = "Shared/App+ContentBlocker+Extension.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
-				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = WebShieldCustom/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Custom;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17;
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0.0;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.arjuna.WebShield.DeclarativeBlockList-Custom";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				REGISTER_APP_GROUPS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_INSTALL_MODULE = NO;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
 		};
@@ -2313,136 +2617,113 @@
 		000F2CC32D2E533500871D5E /* Build configuration list for PBXNativeTarget "WebShield" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				000F2CC42D2E533500871D5E /* Debug */,
-				000F2CC52D2E533500871D5E /* Release */,
+				000F2CC42D2E533500871D5E /* Debug configuration for PBXNativeTarget "WebShield" */,
+				000F2CC52D2E533500871D5E /* Release configuration for PBXNativeTarget "WebShield" */,
 			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		000F2CC62D2E533500871D5E /* Build configuration list for PBXNativeTarget "AppTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				000F2CC72D2E533500871D5E /* Debug */,
-				000F2CC82D2E533500871D5E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		000F2CC92D2E533500871D5E /* Build configuration list for PBXNativeTarget "AppUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				000F2CCA2D2E533500871D5E /* Debug */,
-				000F2CCB2D2E533500871D5E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		0018485D2C2956AC00EE2E7A /* Build configuration list for PBXProject "WebShield" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0018486F2C2956AD00EE2E7A /* Debug */,
-				001848702C2956AD00EE2E7A /* Release */,
+				0018486F2C2956AD00EE2E7A /* Debug configuration for PBXProject "WebShield" */,
+				001848702C2956AD00EE2E7A /* Release configuration for PBXProject "WebShield" */,
 			);
-			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0060E4C72ECE90FF001478E5 /* Build configuration list for PBXNativeTarget "WebShieldService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0060E4C52ECE90FF001478E5 /* Debug configuration for PBXNativeTarget "WebShieldService" */,
+				0060E4C62ECE90FF001478E5 /* Release configuration for PBXNativeTarget "WebShieldService" */,
+			);
 			defaultConfigurationName = Release;
 		};
 		006FC3CC2D3095DD0091056F /* Build configuration list for PBXNativeTarget "WebShieldAdvanced" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				006FC3CD2D3095DD0091056F /* Debug */,
-				006FC3CE2D3095DD0091056F /* Release */,
+				006FC3CD2D3095DD0091056F /* Debug configuration for PBXNativeTarget "WebShieldAdvanced" */,
+				006FC3CE2D3095DD0091056F /* Release configuration for PBXNativeTarget "WebShieldAdvanced" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00C356332D2EEFE100BACCE7 /* Build configuration list for PBXNativeTarget "WebShieldAds" */ = {
+		009B442B2F394B850050A782 /* Build configuration list for PBXNativeTarget "WebShieldBlocker9" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				00C356342D2EEFE100BACCE7 /* Debug */,
-				00C356352D2EEFE100BACCE7 /* Release */,
+				009B442C2F394B850050A782 /* Debug configuration for PBXNativeTarget "WebShieldBlocker9" */,
+				009B442D2F394B850050A782 /* Release configuration for PBXNativeTarget "WebShieldBlocker9" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E7186D2D3452ED00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldPrivacy" */ = {
+		00C356332D2EEFE100BACCE7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker1" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				00E7186E2D3452ED00FD22A7 /* Debug */,
-				00E7186F2D3452ED00FD22A7 /* Release */,
+				00C356342D2EEFE100BACCE7 /* Debug configuration for PBXNativeTarget "WebShieldBlocker1" */,
+				00C356352D2EEFE100BACCE7 /* Release configuration for PBXNativeTarget "WebShieldBlocker1" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E718812D3453A700FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldSecurity" */ = {
+		00E7186D2D3452ED00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				00E718822D3453A700FD22A7 /* Debug */,
-				00E718832D3453A700FD22A7 /* Release */,
+				00E7186E2D3452ED00FD22A7 /* Debug configuration for PBXNativeTarget "WebShieldBlocker2" */,
+				00E7186F2D3452ED00FD22A7 /* Release configuration for PBXNativeTarget "WebShieldBlocker2" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E718952D3453BC00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldMultipurpose" */ = {
+		00E718812D3453A700FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker3" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				00E718962D3453BC00FD22A7 /* Debug */,
-				00E718972D3453BC00FD22A7 /* Release */,
+				00E718822D3453A700FD22A7 /* Debug configuration for PBXNativeTarget "WebShieldBlocker3" */,
+				00E718832D3453A700FD22A7 /* Release configuration for PBXNativeTarget "WebShieldBlocker3" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E718A92D3453CF00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldCookies" */ = {
+		00E718952D3453BC00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker4" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				00E718AA2D3453CF00FD22A7 /* Debug */,
-				00E718AB2D3453CF00FD22A7 /* Release */,
+				00E718962D3453BC00FD22A7 /* Debug configuration for PBXNativeTarget "WebShieldBlocker4" */,
+				00E718972D3453BC00FD22A7 /* Release configuration for PBXNativeTarget "WebShieldBlocker4" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E718BD2D3453E600FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldSocial" */ = {
+		00E718A92D3453CF00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker5" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				00E718BE2D3453E600FD22A7 /* Debug */,
-				00E718BF2D3453E600FD22A7 /* Release */,
+				00E718AA2D3453CF00FD22A7 /* Debug configuration for PBXNativeTarget "WebShieldBlocker5" */,
+				00E718AB2D3453CF00FD22A7 /* Release configuration for PBXNativeTarget "WebShieldBlocker5" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E718D12D3453FF00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldAnnoyances" */ = {
+		00E718D12D3453FF00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker6" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				00E718D22D3453FF00FD22A7 /* Debug */,
-				00E718D32D3453FF00FD22A7 /* Release */,
+				00E718D22D3453FF00FD22A7 /* Debug configuration for PBXNativeTarget "WebShieldBlocker6" */,
+				00E718D32D3453FF00FD22A7 /* Release configuration for PBXNativeTarget "WebShieldBlocker6" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E718E52D34542600FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldRegional" */ = {
+		00E718E52D34542600FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker7" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				00E718E62D34542600FD22A7 /* Debug */,
-				00E718E72D34542600FD22A7 /* Release */,
+				00E718E62D34542600FD22A7 /* Debug configuration for PBXNativeTarget "WebShieldBlocker7" */,
+				00E718E72D34542600FD22A7 /* Release configuration for PBXNativeTarget "WebShieldBlocker7" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E718F92D34543F00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldExperimental" */ = {
+		00E718F92D34543F00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker8" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				00E718FA2D34543F00FD22A7 /* Debug */,
-				00E718FB2D34543F00FD22A7 /* Release */,
+				00E718FA2D34543F00FD22A7 /* Debug configuration for PBXNativeTarget "WebShieldBlocker8" */,
+				00E718FB2D34543F00FD22A7 /* Release configuration for PBXNativeTarget "WebShieldBlocker8" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00E7190D2D34545D00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldCustom" */ = {
+		00E7C8212F3AB5A2009DA58F /* Build configuration list for PBXAggregateTarget "BumpBuildNumber" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				00E7190E2D34545D00FD22A7 /* Debug */,
-				00E7190F2D34545D00FD22A7 /* Release */,
+				00E7C8222F3AB5A2009DA58F /* Debug configuration for PBXAggregateTarget "BumpBuildNumber" */,
+				00E7C8232F3AB5A2009DA58F /* Release configuration for PBXAggregateTarget "BumpBuildNumber" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
@@ -2467,15 +2748,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		006FC3E32D30A07B0091056F /* ContentBlockerConverter */ = {
+		0060E5692ECE92C8001478E5 /* ContentBlockerConverter */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 00A76C0F2D2E835700CE43C4 /* XCRemoteSwiftPackageReference "SafariConverterLib" */;
 			productName = ContentBlockerConverter;
 		};
-		00A76C102D2E835700CE43C4 /* ContentBlockerConverter */ = {
+		0060E56B2ECE92CB001478E5 /* ZIPFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 00A76C0F2D2E835700CE43C4 /* XCRemoteSwiftPackageReference "SafariConverterLib" */;
-			productName = ContentBlockerConverter;
+			package = 0024C4D02E15C2D5009CBC07 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -91,3 +91,8 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+CLAUDE.md
+AGENTS.md
+GEMINI.md
+.claude/

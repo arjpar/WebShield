@@ -16,7 +16,7 @@
       "location" : "https://github.com/AdguardTeam/SafariConverterLib.git",
       "state" : {
         "branch" : "master",
-        "revision" : "e620daf3a764d9cc7b9c443dc208b7ba1ce97889"
+        "revision" : "8b2eab8aeec9af08bca3cf8dc14340770a0495a2"
       }
     },
     {
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ameshkov/swift-psl",
       "state" : {
-        "revision" : "251dc31badd21cc8e748059fc57caef5d9e9892e",
-        "version" : "1.1.40"
+        "revision" : "eb3b1e4f4db4cc4030b260ad2d6989381fa297a2",
+        "version" : "1.1.88"
       }
     },
     {
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/weichsel/ZIPFoundation.git",
       "state" : {
-        "revision" : "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
-        "version" : "0.9.19"
+        "revision" : "22787ffb59de99e5dc1fbfe80b19c97a904ad48d",
+        "version" : "0.9.20"
       }
     }
   ],

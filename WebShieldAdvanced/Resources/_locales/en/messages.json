@@ -1,10 +1,10 @@
 {
-  "extension_name": {
-    "message": "WebShield Advanced",
-    "description": "The display name for the extension."
-  },
-  "extension_description": {
-    "message": "Advanced wide-spectrum content blocking for WebShield. Blocks complex ads, trackers, miners, and more.",
-    "description": "Description of what the extension does."
-  }
+    "extension_name": {
+        "message": "WebShield Advanced",
+        "description": "The display name for the extension."
+    },
+    "extension_description": {
+        "message": "Blocks complex ads, trackers, miners, and more (including YouTube ads).",
+        "description": "Description of what the extension does."
+    }
 }
