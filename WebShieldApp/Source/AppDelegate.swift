@@ -108,14 +108,12 @@ enum FilterUpdateHandler {
                 await manager.appendSharedLog("Error: \(error)")
             }
 
-            // Collect downloaded filter content with rule counts
+            // Collect downloaded filter content for whole-list distribution.
             for filter in filters {
                 if let content = loadRawFilterContent(filterID: filter.id) {
-                    let sourceRules = countRules(in: content)
                     await contentCollector.add(
                         filterID: filter.id,
-                        content: content,
-                        sourceRules: sourceRules
+                        content: content
                     )
                 }
             }
@@ -124,28 +122,39 @@ enum FilterUpdateHandler {
             let downloadedFilters = await contentCollector.getAll()
 
             if !downloadedFilters.isEmpty {
-                // Distribute filters across blockers using load balancing
-                let filterAssignments = downloadedFilters.map { item in
-                    FilterAssignmentInfo(
+                let ruleInputs = downloadedFilters.map { item in
+                    FilterRuleContent(
                         filterID: item.filterID,
-                        estimatedRuleCount: item.sourceRules
+                        content: item.content,
+                        estimatedRuleCount: FilterListHeaderParser.countRules(
+                            in: item.content
+                        )
                     )
                 }
-                let distribution = await loadBalancer.distributeFilters(
-                    filterAssignments
-                )
 
-                // Build lookup for content
-                var contentByFilterID: [String: String] = [:]
-                for item in downloadedFilters {
-                    contentByFilterID[item.filterID] = item.content
+                let distribution: [ContentBlockerCategory: RuleShardAssignment]
+                do {
+                    distribution = try await ContentBlockerService
+                        .validatedRuleDistribution(
+                        ruleInputs,
+                        loadBalancer: loadBalancer,
+                        ruleLimit: LoadBalancer.ruleLimit,
+                        whitelistRuleReserve: WhitelistManager.shared
+                            .whitelistedDomains.count
+                    )
+                } catch {
+                    await manager.appendSharedLog(
+                        "Rule distribution failed: \(error.localizedDescription)"
+                    )
+                    return
                 }
 
                 // Process each blocker
                 for blocker in ContentBlockerCategory.allCases {
-                    let assignedFilters = distribution[blocker] ?? []
+                    let assignment = distribution[blocker]
+                        ?? RuleShardAssignment(blocker: blocker)
 
-                    if assignedFilters.isEmpty {
+                    if assignment.isEmpty {
                         // Check if this blocker previously had rules
                         if hasConvertedRulesFile(for: blocker) {
                             await processBlocker(blocker: blocker, content: nil)
@@ -157,37 +166,31 @@ enum FilterUpdateHandler {
                         continue
                     }
 
-                    // Combine content from assigned filters
-                    var combinedContent = ""
-                    for filterInfo in assignedFilters {
-                        if let content = contentByFilterID[filterInfo.filterID]
-                        {
-                            if !combinedContent.isEmpty {
-                                combinedContent += "\n"
-                            }
-                            combinedContent += content
-                        }
+                    let conversion = await processBlocker(
+                        blocker: blocker,
+                        content: assignment.rulesText
+                    )
+                    await loadBalancer.updateActualRuleCount(
+                        conversion.safariRulesCount,
+                        for: blocker
+                    )
+
+                    if conversion.truncated
+                        || conversion.safariRulesCount > LoadBalancer.ruleLimit
+                    {
+                        await manager.appendSharedLog(
+                            "Blocker\(blocker.rawValue) exceeds Safari limit after conversion: \(conversion.safariRulesCount)/\(LoadBalancer.ruleLimit) rules"
+                        )
                     }
 
-                    if !combinedContent.isEmpty {
-                        let ruleCount = await processBlocker(
-                            blocker: blocker,
-                            content: combinedContent
-                        )
-                        await loadBalancer.updateActualRuleCount(
-                            ruleCount,
-                            for: blocker
-                        )
-
-                        // Record applied filters
-                        let appliedIDs = Set(
-                            assignedFilters.map { $0.filterID }
-                        )
-                        await manager.setLastAppliedFilters(
-                            appliedIDs,
-                            for: blocker
-                        )
-                    }
+                    // Record applied filters
+                    let appliedIDs = Set(
+                        assignment.filters.map { $0.filterID }
+                    )
+                    await manager.setLastAppliedFilters(
+                        appliedIDs,
+                        for: blocker
+                    )
                 }
 
                 // Save load balancer state
@@ -250,7 +253,7 @@ enum FilterUpdateHandler {
                 buildAdvancedEngine: false
             )
         logger.debug(
-            "Converted \(conversionResult.rulesCount) rules for \(category)",
+            "Converted \(conversionResult.totalSourceRuleCount) rules for \(category) (\(conversionResult.safariRulesCount) Safari + \(conversionResult.totalSourceRuleCount - conversionResult.safariRulesCount) advanced)",
             category: logCategory
         )
 
@@ -272,13 +275,13 @@ enum FilterUpdateHandler {
     }
 
     /// Process a single blocker conversion on the main actor
-    /// Returns the actual rule count after conversion
+    /// Returns the conversion result after saving/reloading.
     @MainActor
     @discardableResult
     private static func processBlocker(
         blocker: ContentBlockerCategory,
         content: String?
-    ) -> Int {
+    ) -> ContentBlockerService.FilterConversionResult {
         if let content = content, !content.isEmpty {
             let conversionResult =
                 ContentBlockerService.convertFilterWithAdvancedRules(
@@ -288,7 +291,7 @@ enum FilterUpdateHandler {
                     buildAdvancedEngine: false
                 )
             logger.debug(
-                "Converted \(conversionResult.rulesCount) rules for blocker\(blocker.rawValue)",
+                "Converted \(conversionResult.totalSourceRuleCount) rules for blocker\(blocker.rawValue) (\(conversionResult.safariRulesCount) Safari + \(conversionResult.totalSourceRuleCount - conversionResult.safariRulesCount) advanced)",
                 category: logCategory
             )
 
@@ -309,7 +312,7 @@ enum FilterUpdateHandler {
                     category: logCategory
                 )
             }
-            return conversionResult.rulesCount
+            return conversionResult
         } else {
             // Clear the blocker
             let emptyBlockerJSON = """
@@ -337,7 +340,11 @@ enum FilterUpdateHandler {
                     category: logCategory
                 )
             }
-            return 0
+            return ContentBlockerService.FilterConversionResult(
+                totalSourceRuleCount: 0,
+                safariRulesCount: 0,
+                advancedRulesText: nil
+            )
         }
     }
 
@@ -468,16 +475,13 @@ enum FilterUpdateHandler {
 
 /// Actor to safely collect filter content for load balancing
 private actor FilterContentCollector {
-    private var filters:
-        [(filterID: String, content: String, sourceRules: Int)] = []
+    private var filters: [(filterID: String, content: String)] = []
 
-    func add(filterID: String, content: String, sourceRules: Int) {
-        filters.append(
-            (filterID: filterID, content: content, sourceRules: sourceRules)
-        )
+    func add(filterID: String, content: String) {
+        filters.append((filterID: filterID, content: content))
     }
 
-    func getAll() -> [(filterID: String, content: String, sourceRules: Int)] {
+    func getAll() -> [(filterID: String, content: String)] {
         return filters
     }
 }

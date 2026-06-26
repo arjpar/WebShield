@@ -3,7 +3,7 @@ import WebShieldService
 import os
 
 private let logger = Logger(
-    subsystem: "arjun.webshield.contentblocker-8",
+    subsystem: "arjun.webshield.contentblocker-9",
     category: "ContentBlockerRequestHandler"
 )
 
@@ -12,7 +12,7 @@ final class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
         ContentBlockerExtensionRequestHandler.handleRequest(
             with: context,
             groupIdentifier: GroupIdentifier.shared.value,
-            rulesFilenameInAppGroup: ContentBlockerCategory.blocker8.rulesPath
+            rulesFilenameInAppGroup: ContentBlockerCategory.blocker9.rulesPath
         )
     }
 }

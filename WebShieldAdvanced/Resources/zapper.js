@@ -1,15 +1,29 @@
 /**
- * zapper.js - Element zapper for WebShield
+ * zapper.js — WebShield element zapper.
  *
- * Enables click-to-hide element removal with persistent CSS selectors per hostname.
+ * Click-to-hide UI. User-authored hide rules are persisted per host in
+ * extension.storage.local and applied via a private adopted CSSStyleSheet
+ * (separate from the engine-driven sheet that content_cosmetic.js owns).
+ *
+ * Activated by sending {type: "activateZapper"} to the top frame. Reports
+ * each new rule to background.js as a {type: "zapperRuleAdded"} message so
+ * the badge reflects user-zapped hides.
  */
 (function () {
   const extension = globalThis.browser || globalThis.chrome;
   if (!extension) return;
   if (window.top !== window) return;
 
+  const LOG_PREFIX = "[WebShield Zapper]";
+  const LOG_DEBUG = true;
+  const log = {
+    info:  (...a) => console.log(LOG_PREFIX, ...a),
+    debug: (...a) => { if (LOG_DEBUG) console.debug(LOG_PREFIX, ...a); },
+    warn:  (...a) => console.warn(LOG_PREFIX, ...a),
+    error: (...a) => console.error(LOG_PREFIX, ...a),
+  };
+
   const RULES_PREFIX = "webshield_zapper_rules_";
-  const RULES_STYLE_ID = "webshield-zapper-rules";
   const UI_STYLE_ID = "webshield-zapper-ui-style";
   const TOOLBAR_ID = "webshield-zapper-toolbar";
   const HIGHLIGHT_CLASS = "webshield-zapper-highlight";
@@ -22,7 +36,10 @@
     toolbar: null,
     statusEl: null,
     highlighted: null,
+    sheet: null,
   };
+
+  // ---------- helpers ----------
 
   function getHostname() {
     return location.hostname || "";
@@ -67,9 +84,7 @@
     let index = 1;
     let sibling = element;
     while ((sibling = sibling.previousElementSibling)) {
-      if (sibling.tagName === element.tagName) {
-        index += 1;
-      }
+      if (sibling.tagName === element.tagName) index += 1;
     }
     return index;
   }
@@ -79,9 +94,7 @@
 
     if (element.id) {
       const idSelector = `#${cssEscape(element.id)}`;
-      if (isUniqueSelector(idSelector)) {
-        return idSelector;
-      }
+      if (isUniqueSelector(idSelector)) return idSelector;
     }
 
     const segments = [];
@@ -98,16 +111,12 @@
       let segment = `${tag}${classSelector}`;
       let candidate = [segment, ...segments].join(" > ");
 
-      if (isUniqueSelector(candidate)) {
-        return candidate;
-      }
+      if (isUniqueSelector(candidate)) return candidate;
 
       const nthSegment = `${tag}${classSelector}:nth-of-type(${nthOfType(current)})`;
       candidate = [nthSegment, ...segments].join(" > ");
 
-      if (isUniqueSelector(candidate)) {
-        return candidate;
-      }
+      if (isUniqueSelector(candidate)) return candidate;
 
       segments.unshift(nthSegment);
       current = current.parentElement;
@@ -116,27 +125,42 @@
     return segments.length > 0 ? segments.join(" > ") : null;
   }
 
-  function ensureStyleElement(id) {
-    let style = document.getElementById(id);
-    if (!style) {
-      style = document.createElement("style");
-      style.id = id;
-      style.setAttribute("data-webshield", "zapper");
-      (document.head || document.documentElement).appendChild(style);
+  // ---------- rule sheet (adopted CSSStyleSheet) ----------
+
+  function ensureSheet() {
+    if (state.sheet) return state.sheet;
+    try {
+      const sheet = new CSSStyleSheet();
+      document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+      state.sheet = sheet;
+      log.debug("rule sheet created and adopted");
+      // Re-add if the page strips it.
+      setInterval(() => {
+        if (!document.adoptedStyleSheets.includes(sheet)) {
+          document.adoptedStyleSheets = [
+            ...document.adoptedStyleSheets,
+            sheet,
+          ];
+          log.debug("rule sheet stripped by page; re-adopted");
+        }
+      }, 1000);
+    } catch (error) {
+      log.error("CSSStyleSheet unavailable:", error);
     }
-    return style;
+    return state.sheet;
   }
 
   function applyRules(rules) {
-    const style = ensureStyleElement(RULES_STYLE_ID);
+    const sheet = ensureSheet();
+    if (!sheet) return;
     if (!rules || rules.length === 0) {
-      style.remove();
+      sheet.replaceSync("");
       return;
     }
-
-    style.textContent = rules
-      .map((rule) => `${rule} { display: none !important; }`)
+    const body = rules
+      .map((rule) => `${rule}{display:none !important;}`)
       .join("\n");
+    sheet.replaceSync(body);
   }
 
   async function loadRules() {
@@ -145,10 +169,10 @@
       const key = getStorageKey();
       const result = await extension.storage.local.get(key);
       const rules = Array.isArray(result[key]) ? result[key] : [];
-      applyRules(rules);
+      log.info(`loadRules host=${getHostname()} count=${rules.length}`);
       return rules;
     } catch (error) {
-      console.error("[WebShield Zapper] Failed to load rules:", error);
+      log.error("Failed to load rules:", error);
       return [];
     }
   }
@@ -158,15 +182,25 @@
     try {
       const key = getStorageKey();
       await extension.storage.local.set({ [key]: rules });
+      log.info(`saveRules host=${getHostname()} count=${rules.length}`);
     } catch (error) {
-      console.error("[WebShield Zapper] Failed to save rules:", error);
+      log.error("Failed to save rules:", error);
     }
   }
 
-  function updateStatus(text) {
-    if (state.statusEl) {
-      state.statusEl.textContent = text;
+  function reportRuleAdded() {
+    try {
+      extension.runtime.sendMessage({ type: "zapperRuleAdded" });
+    } catch (error) {
+      /* badge stats are best-effort */
+      log.debug("reportRuleAdded send failed (non-fatal):", error);
     }
+  }
+
+  // ---------- UI ----------
+
+  function updateStatus(text) {
+    if (state.statusEl) state.statusEl.textContent = text;
   }
 
   function ensureUiStyles() {
@@ -179,12 +213,10 @@
       body.${ACTIVE_CLASS} {
         cursor: crosshair !important;
       }
-
       .${HIGHLIGHT_CLASS} {
         outline: 2px solid #ff6b6b !important;
         background: rgba(255, 107, 107, 0.08) !important;
       }
-
       #${TOOLBAR_ID} {
         position: fixed;
         bottom: 16px;
@@ -201,24 +233,20 @@
         max-width: 320px;
         width: calc(100% - 32px);
       }
-
       #${TOOLBAR_ID} .webshield-zapper-title {
         font-size: 13px;
         font-weight: 600;
         margin-bottom: 4px;
       }
-
       #${TOOLBAR_ID} .webshield-zapper-status {
         font-size: 11px;
         color: #a0a0b0;
         margin-bottom: 8px;
       }
-
       #${TOOLBAR_ID} .webshield-zapper-actions {
         display: flex;
         gap: 8px;
       }
-
       #${TOOLBAR_ID} .webshield-zapper-button {
         flex: 1;
         border: none;
@@ -228,18 +256,15 @@
         font-weight: 600;
         cursor: pointer;
       }
-
       #${TOOLBAR_ID} .webshield-zapper-button.secondary {
         background: #2d2d44;
         color: #eaeaea;
       }
-
       #${TOOLBAR_ID} .webshield-zapper-button.primary {
         background: #4a90d9;
         color: #ffffff;
       }
     `;
-
     (document.head || document.documentElement).appendChild(style);
   }
 
@@ -258,8 +283,7 @@
 
   function setHighlight(element) {
     if (!element || element === state.highlighted) return;
-    if (element === document.body || element === document.documentElement)
-      return;
+    if (element === document.body || element === document.documentElement) return;
     clearHighlight();
     if (element.classList) {
       element.classList.add(HIGHLIGHT_CLASS);
@@ -269,59 +293,54 @@
 
   async function addRule(selector) {
     if (!selector || state.rules.has(selector)) {
+      log.debug(`addRule skipped (duplicate or empty): ${selector}`);
       updateStatus("Rule already exists");
       return;
     }
-
     state.rules.add(selector);
     state.sessionRules.push(selector);
     const updatedRules = Array.from(state.rules);
     applyRules(updatedRules);
+    log.info(`addRule selector=${selector} total=${updatedRules.length}`);
     await saveRules(updatedRules);
+    reportRuleAdded();
     updateStatus("Rule added");
   }
 
   async function undoRule() {
     const lastRule = state.sessionRules.pop();
     if (!lastRule) {
+      log.debug("undoRule: nothing to undo");
       updateStatus("Nothing to undo");
       return;
     }
-
     state.rules.delete(lastRule);
     const updatedRules = Array.from(state.rules);
     applyRules(updatedRules);
+    log.info(`undoRule selector=${lastRule} total=${updatedRules.length}`);
     await saveRules(updatedRules);
     updateStatus("Rule removed");
   }
 
   function handleMouseMove(event) {
-    if (!state.active) return;
-    if (isUiElement(event.target)) return;
+    if (!state.active || isUiElement(event.target)) return;
     setHighlight(event.target);
   }
 
   function handleClick(event) {
-    if (!state.active) return;
-    if (isUiElement(event.target)) return;
-
+    if (!state.active || isUiElement(event.target)) return;
     event.preventDefault();
     event.stopPropagation();
-
     const selector = buildSelector(event.target);
     if (!selector) {
       updateStatus("Unable to build selector");
       return;
     }
-
     addRule(selector);
   }
 
   function handleKeydown(event) {
-    if (!state.active) return;
-    if (event.key === "Escape") {
-      deactivate();
-    }
+    if (state.active && event.key === "Escape") deactivate();
   }
 
   function addListeners() {
@@ -338,7 +357,6 @@
 
   function createToolbar() {
     if (state.toolbar) return;
-
     ensureUiStyles();
 
     const toolbar = document.createElement("div");
@@ -356,21 +374,16 @@
     const undoButton = toolbar.querySelector('[data-action="undo"]');
     const exitButton = toolbar.querySelector('[data-action="exit"]');
 
-    if (undoButton) {
-      undoButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        undoRule();
-      });
-    }
-
-    if (exitButton) {
-      exitButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        deactivate();
-      });
-    }
+    undoButton?.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      undoRule();
+    });
+    exitButton?.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      deactivate();
+    });
 
     state.toolbar = toolbar;
     state.statusEl = statusEl || null;
@@ -383,30 +396,22 @@
       state.toolbar = null;
       state.statusEl = null;
     }
-
-    const uiStyle = document.getElementById(UI_STYLE_ID);
-    if (uiStyle) {
-      uiStyle.remove();
-    }
+    document.getElementById(UI_STYLE_ID)?.remove();
   }
 
   function activate() {
     if (state.active) {
+      log.debug("activate: already active");
       updateStatus("Element zapper already active");
       return;
     }
-
     state.active = true;
     state.sessionRules = [];
     document.documentElement.classList.add(ACTIVE_CLASS);
     document.body?.classList.add(ACTIVE_CLASS);
     createToolbar();
     addListeners();
-
-    loadRules().then((rules) => {
-      rules.forEach((rule) => state.rules.add(rule));
-      applyRules(Array.from(state.rules));
-    });
+    log.info(`activate host=${getHostname()}`);
   }
 
   function deactivate() {
@@ -417,15 +422,20 @@
     removeToolbar();
     document.documentElement.classList.remove(ACTIVE_CLASS);
     document.body?.classList.remove(ACTIVE_CLASS);
+    log.info(`deactivate host=${getHostname()} session=${state.sessionRules.length}`);
   }
 
   extension.runtime.onMessage.addListener((message) => {
-    if (message && message.type === "activateZapper") {
+    if (message?.type === "activateZapper") {
+      log.debug("received activateZapper message");
       activate();
     }
   });
 
+  // On script load: hydrate persisted rules and apply them.
   loadRules().then((rules) => {
     state.rules = new Set(rules);
+    if (rules.length > 0) applyRules(rules);
+    log.info(`zapper ready host=${getHostname()} preloaded=${rules.length}`);
   });
 })();

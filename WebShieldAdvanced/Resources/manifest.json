@@ -13,15 +13,16 @@
     },
     "background": {
         "scripts": [
-            "background-wrapper.js"
-        ],
-        "type": "module",
-        "persistent": false
+            "stats.js",
+            "badge-manager.js",
+            "background.js"
+        ]
     },
     "content_scripts": [
         {
             "js": [
-                "content.js",
+                "procedural_filters.js",
+                "content_cosmetic.js",
                 "zapper.js"
             ],
             "matches": [
@@ -29,8 +30,7 @@
             ],
             "run_at": "document_start",
             "all_frames": true,
-            "match_about_blank": true,
-            "match_origin_as_fallback": true
+            "match_about_blank": true
         }
     ],
     "action": {
@@ -46,10 +46,12 @@
         }
     },
     "permissions": [
-        "<all_urls>",
+        "scripting",
         "nativeMessaging",
         "storage",
-        "unlimitedStorage",
-        "scripting"
+        "unlimitedStorage"
+    ],
+    "host_permissions": [
+        "<all_urls>"
     ]
 }

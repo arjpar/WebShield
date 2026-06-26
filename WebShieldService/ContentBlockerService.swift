@@ -5,9 +5,8 @@
 //  Created by Andrey Meshkov on 10/12/2024.
 //
 
-internal import ContentBlockerConverter
+internal import adblock_rust_swift
 import CryptoKit
-internal import FilterEngine
 import Foundation
 import SafariServices
 internal import ZIPFoundation
@@ -26,13 +25,52 @@ public enum ContentBlockerService {
         """
 
     public struct FilterConversionResult: Sendable {
-        public let rulesCount: Int
-        public let advancedRulesText: String?
+        /// Count of all source rules in the filter list (network + cosmetic +
+        /// scriptlet + procedural + CSP + exception). Every one of these rules
+        /// is in effect: network rules feed Safari's content blocker JSON,
+        /// while cosmetic / scriptlet / procedural / CSP rules feed the
+        /// adblock-rust engine snapshot consumed by the web extension.
+        public let totalSourceRuleCount: Int
 
-        public init(rulesCount: Int, advancedRulesText: String?) {
-            self.rulesCount = rulesCount
+        /// Subset of `totalSourceRuleCount` that landed in Safari's content
+        /// blocker JSON. Always ≤ totalSourceRuleCount because Safari's schema
+        /// can't represent cosmetic / scriptlet / CSP / etc. rules.
+        public let safariRulesCount: Int
+
+        public let advancedRulesText: String?
+        public let truncated: Bool
+
+        public init(
+            totalSourceRuleCount: Int,
+            safariRulesCount: Int,
+            advancedRulesText: String?,
+            truncated: Bool = false
+        ) {
+            self.totalSourceRuleCount = totalSourceRuleCount
+            self.safariRulesCount = safariRulesCount
             self.advancedRulesText = advancedRulesText
+            self.truncated = truncated
         }
+    }
+
+    struct AdvancedEngineMetadata: Codable, Equatable {
+        let engineFormatVersion: Int
+        let rulesHash: String
+        let engineTimestamp: Int64
+        let rulesCount: Int
+    }
+
+    struct AdvancedBlockingEngineSnapshot {
+        let engine: AdblockEngine
+        let metadata: AdvancedEngineMetadata
+    }
+
+    private struct ConversionResult {
+        let safariRulesJSON: String
+        let advancedRulesText: String?
+        let totalSourceRuleCount: Int
+        let safariRulesCount: Int
+        let truncated: Bool
     }
 
     // MARK: - Directory Structure Setup
@@ -221,7 +259,10 @@ public enum ContentBlockerService {
         groupIdentifier: String,
         rulesFilename: String
     ) -> Int {
-        logger.info("Saving content blocker rules", category: logCategory)
+        logger.info(
+            "Writing pre-converted Safari rules JSON to \(rulesFilename)",
+            category: logCategory
+        )
 
         do {
             guard let jsonData = jsonRules.data(using: .utf8) else {
@@ -260,29 +301,72 @@ public enum ContentBlockerService {
         groupIdentifier: String,
         advancedRules: String = ""
     ) {
-        let ruleCount =
-            advancedRules.isEmpty
-            ? 0 : advancedRules.components(separatedBy: "\n").count
+        let normalizedRules = normalizeFilterSetText(advancedRules)
+        let ruleCount = countFilterRules(in: normalizedRules)
         let inputSize = formatBytes(advancedRules.utf8.count)
 
         logger.debug(
-            "Building advanced engine with \(ruleCount) rules (\(inputSize))",
+            "Compiling adblock-rust engine snapshot: \(ruleCount) rules (\(inputSize))",
             category: logCategory
         )
 
-        measure(label: "Build advanced engine", category: logCategory) {
-            do {
-                let webExtension = try WebExtension.shared(
-                    groupID: groupIdentifier
+        measure(label: "Compile adblock-rust engine snapshot", category: logCategory) {
+            guard
+                let engineURL = advancedEngineFileURL(
+                    groupIdentifier: groupIdentifier
+                ),
+                let metadataURL = advancedEngineMetadataFileURL(
+                    groupIdentifier: groupIdentifier
                 )
-                _ = try webExtension.buildFilterEngine(rules: advancedRules)
+            else {
+                logger.error(
+                    "Failed to access App Group container for advanced engine",
+                    category: logCategory
+                )
+                return
+            }
+
+            let rulesHash = computeRulesHash(normalizedRules)
+            if let existingMetadata = readAdvancedEngineMetadata(
+                from: metadataURL
+            ),
+                existingMetadata.rulesHash == rulesHash,
+                FileManager.default.fileExists(atPath: engineURL.path)
+            {
                 logger.info(
-                    "Advanced engine built successfully with \(ruleCount) rules",
+                    "adblock-rust engine snapshot unchanged (hash match): \(ruleCount) rules, reusing cached serialization",
+                    category: logCategory
+                )
+                return
+            }
+
+            do {
+                let engine = AdblockEngine(filterSet: normalizedRules)
+                engine.useDefaultResources()
+
+                try FileManager.default.createDirectory(
+                    at: engineURL.deletingLastPathComponent(),
+                    withIntermediateDirectories: true
+                )
+                try engine.serializedData().write(to: engineURL, options: .atomic)
+
+                let metadata = AdvancedEngineMetadata(
+                    engineFormatVersion: 2,
+                    rulesHash: rulesHash,
+                    engineTimestamp: currentEngineTimestamp(),
+                    rulesCount: ruleCount
+                )
+                let metadataData = try JSONEncoder().encode(metadata)
+                try metadataData.write(to: metadataURL, options: .atomic)
+                advancedEngineCache.invalidate()
+
+                logger.info(
+                    "Serialized adblock-rust engine snapshot to disk: \(ruleCount) rules",
                     category: logCategory
                 )
             } catch {
                 logger.error(
-                    "Failed to build advanced engine: \(error.localizedDescription)",
+                    "adblock-rust engine snapshot failed: \(error.localizedDescription)",
                     category: logCategory
                 )
             }
@@ -296,7 +380,9 @@ public enum ContentBlockerService {
     ///   - groupIdentifier: Group ID to use for the shared container where
     ///                      the file will be saved.
     ///   - rulesFilename: The name of the file to save the rules to.
-    /// - Returns: The number of Safari content blocker rules generated from the conversion.
+    /// - Returns: The total source rule count (network + cosmetic + scriptlet
+    ///   + procedural + CSP + exception). The Safari-only subset is available
+    ///   via `convertFilterWithAdvancedRules(...).safariRulesCount`.
     public static func convertFilter(
         rules: String,
         groupIdentifier: String,
@@ -307,7 +393,7 @@ public enum ContentBlockerService {
             groupIdentifier: groupIdentifier,
             rulesFilename: rulesFilename,
             buildAdvancedEngine: true
-        ).rulesCount
+        ).totalSourceRuleCount
     }
 
     /// Extracts advanced rules text from AdGuard rules.
@@ -315,7 +401,7 @@ public enum ContentBlockerService {
     /// - Parameter rules: AdGuard rules to parse.
     /// - Returns: Advanced rules text extracted from the input rules.
     public static func extractAdvancedRules(from rules: String) -> String {
-        convertRules(rules: rules).advancedRulesText ?? ""
+        normalizeFilterSetText(rules)
     }
 
     /// Converts AdGuard rules and returns the advanced rules text for engine merging.
@@ -332,14 +418,15 @@ public enum ContentBlockerService {
         rules: String,
         groupIdentifier: String,
         rulesFilename: String,
-        buildAdvancedEngine: Bool
+        buildAdvancedEngine: Bool,
+        ruleLimit: Int = ContentBlockerRuleLimit.currentPlatformLimit
     ) -> FilterConversionResult {
         // Compute SHA256 hash of input rules for cache lookup
         let rulesHash = measure(
             label: "Compute rules hash",
             category: logCategory
         ) {
-            computeRulesHash(rules)
+            computeRulesHash("rule-limit:\(ruleLimit)\n\(rules)")
         }
 
         // Check cache for existing conversion
@@ -352,6 +439,7 @@ public enum ContentBlockerService {
         let baseJSON: String
         let baseRuleCount: Int
         let advancedRulesText: String?
+        var conversionWasTruncated = false
 
         if cacheResult.isHit, let cachedBaseJSON = cacheResult.baseJSON {
             // Cache hit - use cached base JSON
@@ -365,28 +453,39 @@ public enum ContentBlockerService {
             )
         } else {
             // Cache miss - run full conversion
-            let result = convertRules(rules: rules)
+            let result = convertRules(rules: rules, ruleLimit: ruleLimit)
             baseJSON = result.safariRulesJSON
-            baseRuleCount = countRulesInJSON(baseJSON)
+            baseRuleCount = result.safariRulesCount
             advancedRulesText = result.advancedRulesText
+            conversionWasTruncated = result.truncated
 
-            // Save to cache for future use
-            saveToCache(
-                baseJSON: baseJSON,
-                ruleCount: baseRuleCount,
-                advancedRulesText: advancedRulesText,
-                rulesHash: rulesHash,
-                groupIdentifier: groupIdentifier,
-                rulesFilename: rulesFilename
-            )
+            if result.truncated {
+                logger.error(
+                    "Not caching truncated conversion output for \(rulesFilename)",
+                    category: logCategory
+                )
+            } else {
+                // Save to cache for future use
+                saveToCache(
+                    baseJSON: baseJSON,
+                    advancedRulesText: advancedRulesText,
+                    rulesHash: rulesHash,
+                    groupIdentifier: groupIdentifier,
+                    rulesFilename: rulesFilename
+                )
+            }
         }
 
         // Inject whitelist rules for whitelisted domains
         let whitelistedDomains = WhitelistManager.shared.whitelistedDomains
-        let finalJSON = injectWhitelistRules(
+        var finalJSON = injectWhitelistRules(
             json: baseJSON,
             whitelistedDomains: whitelistedDomains
         )
+
+        if countRulesInJSON(finalJSON) == 0 {
+            finalJSON = emptyBlockerJSON
+        }
 
         measure(label: "Saving content blocking rules file") {
             saveBlockerListFile(
@@ -403,15 +502,82 @@ public enum ContentBlockerService {
             )
         }
 
-        // Count rules from final JSON for accurate reporting
+        // Count rules for accurate reporting:
+        // - safariRulesCount = rules adblock-rust converted into Safari content
+        //   blocker JSON (network-blocking subset only).
+        // - totalSourceRuleCount = every rule in the source filter set; the
+        //   non-Safari subset (cosmetic / scriptlet / procedural / CSP /
+        //   exception) is applied by the web extension's adblock-rust engine
+        //   snapshot, so all of these rules are in effect.
         let finalRuleCount = countRulesInJSON(finalJSON)
-        let advancedRulesCount =
-            advancedRulesText?.components(separatedBy: "\n").count ?? 0
+        let totalSourceRuleCount = advancedRulesText.map {
+            countFilterRules(in: $0)
+        } ?? 0
 
         return FilterConversionResult(
-            rulesCount: finalRuleCount + advancedRulesCount,
-            advancedRulesText: advancedRulesText
+            totalSourceRuleCount: totalSourceRuleCount,
+            safariRulesCount: finalRuleCount,
+            advancedRulesText: advancedRulesText,
+            truncated: conversionWasTruncated || finalRuleCount > ruleLimit
         )
+    }
+
+    /// Builds a whole-filter distribution and preflights each blocker input
+    /// against the real Safari conversion limit before callers save files.
+    public static func validatedRuleDistribution(
+        _ filters: [FilterRuleContent],
+        loadBalancer: LoadBalancer = .shared,
+        ruleLimit: Int = ContentBlockerRuleLimit.currentPlatformLimit,
+        whitelistRuleReserve: Int = WhitelistManager.shared.whitelistedDomains
+            .count,
+        conversionPreflight: ((String, Int) -> FilterConversionResult)? = nil
+    ) async throws -> [ContentBlockerCategory: RuleShardAssignment] {
+        let distribution = try await loadBalancer.distributeRuleContent(
+            filters,
+            ruleLimit: ruleLimit,
+            whitelistRuleReserve: whitelistRuleReserve
+        )
+        let preflight =
+            conversionPreflight
+            ?? { rules, ruleLimit in
+                let conversion = convertRules(
+                    rules: rules,
+                    ruleLimit: ruleLimit
+                )
+                return FilterConversionResult(
+                    totalSourceRuleCount: conversion.totalSourceRuleCount,
+                    safariRulesCount: conversion.safariRulesCount,
+                    advancedRulesText: conversion.advancedRulesText,
+                    truncated: conversion.truncated
+                )
+            }
+
+        let exceedingBlockers: [ContentBlockerCategory] =
+            distribution.values.compactMap { assignment in
+                guard !assignment.isEmpty else { return nil }
+                let conversion = preflight(assignment.rulesText, ruleLimit)
+                let exceedsLimit = conversion.truncated
+                    || conversion.safariRulesCount + whitelistRuleReserve
+                        > ruleLimit
+
+                if exceedsLimit {
+                    logger.error(
+                        "Rule distribution preflight exceeded \(ruleLimit) rules for blocker\(assignment.blocker.rawValue): \(conversion.safariRulesCount) converted rules + \(whitelistRuleReserve) whitelist rules",
+                        category: logCategory
+                    )
+                }
+
+                return exceedsLimit ? assignment.blocker : nil
+            }
+
+        guard exceedingBlockers.isEmpty else {
+            throw RuleShardingError.conversionValidationExceeded(
+                ruleLimit: ruleLimit,
+                blockers: exceedingBlockers
+            )
+        }
+
+        return distribution
     }
 
     /// Fast update for whitelist changes only - skips full filter conversion.
@@ -443,9 +609,6 @@ public enum ContentBlockerService {
         let baseURL = containerURL.appendingPathComponent(
             baseCacheFilename(for: rulesFilename)
         )
-        let countURL = containerURL.appendingPathComponent(
-            countCacheFilename(for: rulesFilename)
-        )
 
         if FileManager.default.fileExists(atPath: baseURL.path),
             let baseJSON = try? String(contentsOf: baseURL, encoding: .utf8)
@@ -472,13 +635,7 @@ public enum ContentBlockerService {
                 )
             }
 
-            // Read cached count or compute from base JSON
-            let baseCount =
-                (try? String(contentsOf: countURL, encoding: .utf8))
-                .flatMap {
-                    Int($0.trimmingCharacters(in: .whitespacesAndNewlines))
-                }
-                ?? countRulesInJSON(baseJSON)
+            let baseCount = countRulesInJSON(baseJSON)
 
             logger.info(
                 "Fast updated \(rulesFilename) with \(finalRuleCount) rules for \(whitelistedDomains.count) whitelisted domains (from cache)",
@@ -520,11 +677,6 @@ public enum ContentBlockerService {
             contents: baseJSON,
             groupIdentifier: groupIdentifier,
             filename: baseCacheFilename(for: rulesFilename)
-        )
-        saveBlockerListFile(
-            contents: String(countRulesInJSON(baseJSON)),
-            groupIdentifier: groupIdentifier,
-            filename: countCacheFilename(for: rulesFilename)
         )
 
         measure(label: "Fast updating whitelist rules in \(rulesFilename)") {
@@ -739,13 +891,6 @@ extension ContentBlockerService {
         "\(baseCacheFilename(for: rulesFilename)).sha256"
     }
 
-    /// Returns the count filename for cached rules.
-    /// Example: "ads.json" -> "ads.base.json.count"
-    private static func countCacheFilename(for rulesFilename: String) -> String
-    {
-        "\(baseCacheFilename(for: rulesFilename)).count"
-    }
-
     /// Returns the advanced rules filename for cache.
     /// Example: "ads.json" -> "ads.base.json.advanced.txt"
     private static func advancedCacheFilename(for rulesFilename: String)
@@ -797,9 +942,6 @@ extension ContentBlockerService {
         let baseURL = containerURL.appendingPathComponent(
             baseCacheFilename(for: rulesFilename)
         )
-        let countURL = containerURL.appendingPathComponent(
-            countCacheFilename(for: rulesFilename)
-        )
         let advancedURL = containerURL.appendingPathComponent(
             advancedCacheFilename(for: rulesFilename)
         )
@@ -820,11 +962,7 @@ extension ContentBlockerService {
             )
         }
 
-        // Read cached count (or compute from base JSON if missing)
-        let baseCount =
-            (try? String(contentsOf: countURL, encoding: .utf8))
-            .flatMap { Int($0.trimmingCharacters(in: .whitespacesAndNewlines)) }
-            ?? countRulesInJSON(baseJSON)
+        let baseCount = countRulesInJSON(baseJSON)
 
         // Read cached advanced rules (optional)
         let advancedText =
@@ -833,7 +971,7 @@ extension ContentBlockerService {
             .flatMap { $0.isEmpty ? nil : $0 }
 
         logger.info(
-            "Cache hit for \(rulesFilename): \(baseCount) rules",
+            "adblock-rust conversion cache hit for \(rulesFilename): \(baseCount) Safari rules (input hash match)",
             category: logCategory
         )
 
@@ -848,7 +986,6 @@ extension ContentBlockerService {
     /// Saves conversion results to cache files.
     private static func saveToCache(
         baseJSON: String,
-        ruleCount: Int,
         advancedRulesText: String?,
         rulesHash: String,
         groupIdentifier: String,
@@ -865,18 +1002,13 @@ extension ContentBlockerService {
             filename: hashCacheFilename(for: rulesFilename)
         )
         saveBlockerListFile(
-            contents: String(ruleCount),
-            groupIdentifier: groupIdentifier,
-            filename: countCacheFilename(for: rulesFilename)
-        )
-        saveBlockerListFile(
             contents: advancedRulesText ?? "",
             groupIdentifier: groupIdentifier,
             filename: advancedCacheFilename(for: rulesFilename)
         )
 
         logger.debug(
-            "Saved cache files for \(rulesFilename)",
+            "Cached adblock-rust conversion output for \(rulesFilename) (3 files: base.json + sha256 + advanced.txt)",
             category: logCategory
         )
     }
@@ -906,8 +1038,9 @@ extension ContentBlockerService {
         let filesToDelete = [
             baseCacheFilename(for: rulesFilename),
             hashCacheFilename(for: rulesFilename),
-            countCacheFilename(for: rulesFilename),
             advancedCacheFilename(for: rulesFilename),
+            // Legacy from prior schema; sweep so existing installs don't carry orphans.
+            "\(baseCacheFilename(for: rulesFilename)).count",
         ]
 
         for filename in filesToDelete {
@@ -933,6 +1066,154 @@ extension ContentBlockerService {
         }
 
         logger.info("Cleared all content blocker caches", category: logCategory)
+    }
+}
+
+// MARK: - Advanced Engine Cache
+
+extension ContentBlockerService {
+    private static let advancedEngineSubfolder = "AdvancedEngine"
+    private static let advancedEngineFilename = "adblock-engine.dat"
+    private static let advancedEngineMetadataFilename = "metadata.json"
+    private static let advancedEngineCache = AdvancedEngineCacheStore()
+
+    private final class AdvancedEngineCacheStore: @unchecked Sendable {
+        private let lock = NSLock()
+        private var cachedFileURL: URL?
+        private var cachedModificationDate: Date?
+        private var cachedSnapshot: AdvancedBlockingEngineSnapshot?
+
+        func invalidate() {
+            lock.lock()
+            cachedFileURL = nil
+            cachedModificationDate = nil
+            cachedSnapshot = nil
+            lock.unlock()
+        }
+
+        func snapshot(groupIdentifier: String) -> AdvancedBlockingEngineSnapshot? {
+            lock.lock()
+            defer { lock.unlock() }
+
+            guard
+                let engineURL = ContentBlockerService.advancedEngineFileURL(
+                    groupIdentifier: groupIdentifier
+                ),
+                let metadataURL = ContentBlockerService
+                    .advancedEngineMetadataFileURL(
+                        groupIdentifier: groupIdentifier
+                    ),
+                FileManager.default.fileExists(atPath: engineURL.path)
+            else {
+                return nil
+            }
+
+            let modificationDate = (
+                try? FileManager.default.attributesOfItem(
+                    atPath: engineURL.path
+                )[.modificationDate]
+            ) as? Date
+
+            if cachedFileURL == engineURL,
+                cachedModificationDate == modificationDate,
+                let cachedSnapshot
+            {
+                return cachedSnapshot
+            }
+
+            guard let data = try? Data(contentsOf: engineURL) else {
+                return nil
+            }
+
+            let engine = AdblockEngine(serializedData: data)
+            engine.useDefaultResources()
+
+            let metadata =
+                ContentBlockerService.readAdvancedEngineMetadata(
+                    from: metadataURL
+                )
+                ?? AdvancedEngineMetadata(
+                    engineFormatVersion: 2,
+                    rulesHash: "",
+                    engineTimestamp: ContentBlockerService
+                        .currentEngineTimestamp(),
+                    rulesCount: 0
+                )
+            let snapshot = AdvancedBlockingEngineSnapshot(
+                engine: engine,
+                metadata: metadata
+            )
+
+            cachedFileURL = engineURL
+            cachedModificationDate = modificationDate
+            cachedSnapshot = snapshot
+
+            return snapshot
+        }
+    }
+
+    static func loadAdvancedBlockingEngine(
+        groupIdentifier: String
+    ) -> AdvancedBlockingEngineSnapshot? {
+        advancedEngineCache.snapshot(groupIdentifier: groupIdentifier)
+    }
+
+    private static func advancedEngineDirectoryURL(
+        groupIdentifier: String
+    ) -> URL? {
+        FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: groupIdentifier
+        )?
+        .appendingPathComponent(advancedEngineSubfolder, isDirectory: true)
+    }
+
+    private static func advancedEngineFileURL(groupIdentifier: String) -> URL?
+    {
+        advancedEngineDirectoryURL(groupIdentifier: groupIdentifier)?
+            .appendingPathComponent(advancedEngineFilename)
+    }
+
+    private static func advancedEngineMetadataFileURL(
+        groupIdentifier: String
+    ) -> URL? {
+        advancedEngineDirectoryURL(groupIdentifier: groupIdentifier)?
+            .appendingPathComponent(advancedEngineMetadataFilename)
+    }
+
+    private static func readAdvancedEngineMetadata(
+        from url: URL
+    ) -> AdvancedEngineMetadata? {
+        guard let data = try? Data(contentsOf: url) else {
+            return nil
+        }
+
+        return try? JSONDecoder().decode(AdvancedEngineMetadata.self, from: data)
+    }
+
+    private static func currentEngineTimestamp() -> Int64 {
+        Int64(Date().timeIntervalSince1970 * 1_000)
+    }
+
+    private static func normalizeFilterSetText(_ rules: String) -> String {
+        rules
+            .split(whereSeparator: \.isNewline)
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+            .joined(separator: "\n")
+    }
+
+    /// Counts actual filter rules, skipping empty lines, comments (`!`), and
+    /// section markers (`[`). Matches `FilterListHeaderParser.countRules` so
+    /// all parts of the app report the same source rule count for a filter.
+    private static func countFilterRules(in rules: String) -> Int {
+        rules
+            .split(whereSeparator: \.isNewline)
+            .lazy
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter {
+                !$0.isEmpty && !$0.hasPrefix("!") && !$0.hasPrefix("[")
+            }
+            .count
     }
 }
 
@@ -963,7 +1244,10 @@ extension ContentBlockerService {
     ///   - rules: AdGuard rules to convert.
     /// - Returns: A ConversionResult containing the converted Safari rules in JSON format
     ///           and advanced rules in text format.
-    private static func convertRules(rules: String) -> ConversionResult {
+    private static func convertRules(
+        rules: String,
+        ruleLimit: Int = ContentBlockerRuleLimit.currentPlatformLimit
+    ) -> ConversionResult {
         var filterRules = rules
         if !filterRules.isContiguousUTF8 {
             measure(label: "Make contiguous UTF-8", category: logCategory) {
@@ -971,35 +1255,52 @@ extension ContentBlockerService {
             }
         }
 
-        let lines = filterRules.components(separatedBy: "\n")
-        let inputLineCount = lines.count
+        let normalizedRules = normalizeFilterSetText(filterRules)
+        let totalSourceRuleCount = countFilterRules(in: normalizedRules)
         let inputSize = formatBytes(rules.utf8.count)
 
         logger.debug(
-            "Converting \(inputLineCount) lines (\(inputSize)) to Safari rules",
+            "adblock-rust: compiling \(totalSourceRuleCount) rules (\(inputSize)) → Safari content blocker rules",
             category: logCategory
         )
 
         let result = measure(label: "Rule conversion", category: logCategory) {
-            ContentBlockerConverter().convertArray(
-                rules: lines,
-                safariVersion: SafariVersion(18.1),
-                advancedBlocking: true,
-                maxJsonSizeBytes: nil,
-                progress: nil
+            AdblockEngine.contentBlockerRules(
+                fromFilterSet: normalizedRules,
+                ruleLimit: ruleLimit
             )
         }
 
-        let safariRuleCount = countRulesInJSON(result.safariRulesJSON)
-        let advancedRuleCount = result.advancedRulesCount
-        let outputSize = formatBytes(result.safariRulesJSON.utf8.count)
+        let safariRuleCount = countRulesInJSON(result.json)
+        let outputSize = formatBytes(result.json.utf8.count)
+        let advancedRuleCount = max(0, totalSourceRuleCount - safariRuleCount)
 
         logger.info(
-            "Conversion complete: \(inputLineCount) input lines → \(safariRuleCount) Safari rules + \(advancedRuleCount) advanced rules (\(outputSize))",
+            "adblock-rust compiled \(totalSourceRuleCount) source rules → \(safariRuleCount) Safari content-blocker rules (\(outputSize)); the remaining \(advancedRuleCount) rules (cosmetic / scriptlet / procedural / CSP / etc.) are applied by the web extension's engine snapshot. \(result.unsupportedRulesCount) parsed rules were dropped as unsupported.",
             category: logCategory
         )
 
-        return result
+        if result.unsupportedRulesCount > 0 {
+            logger.warning(
+                "adblock-rust dropped \(result.unsupportedRulesCount) parsed filter rules during Safari conversion because they cannot be represented as content blocker rules",
+                category: logCategory
+            )
+        }
+
+        if result.truncated {
+            logger.warning(
+                "adblock-rust hit Safari's \(ruleLimit)-rule ceiling — some rules were dropped from the JSON output",
+                category: logCategory
+            )
+        }
+
+        return ConversionResult(
+            safariRulesJSON: result.json,
+            advancedRulesText: normalizedRules.isEmpty ? nil : normalizedRules,
+            totalSourceRuleCount: totalSourceRuleCount,
+            safariRulesCount: safariRuleCount,
+            truncated: result.truncated
+        )
     }
 
     /// Provides a synchronous wrapper over SFContentBlockerManager.reloadContentBlocker.

@@ -3,7 +3,21 @@
  * Shows blocked item counts on the extension icon like uBlock Origin.
  */
 
-import { getTabStats, resetTabStats, removeTabStats } from './stats.js';
+(function initWebShieldBadgeManager(global) {
+const {
+  getTabStats,
+  resetTabStats,
+  removeTabStats,
+} = global.WebShieldStats;
+
+const LOG_PREFIX = '[WebShield Badge]';
+const LOG_DEBUG = true;
+const log = {
+  info:  (...a) => console.log(LOG_PREFIX, ...a),
+  debug: (...a) => { if (LOG_DEBUG) console.debug(LOG_PREFIX, ...a); },
+  warn:  (...a) => console.warn(LOG_PREFIX, ...a),
+  error: (...a) => console.error(LOG_PREFIX, ...a),
+};
 
 // Badge colors
 const COLORS = {
@@ -30,29 +44,31 @@ function formatBadgeCount(count) {
  * @param {number} tabId - The tab ID
  * @param {number} count - The count to display
  */
-export function updateBadge(tabId, count) {
+function updateBadge(tabId, count) {
   const text = formatBadgeCount(count);
   const color = count > 0 ? COLORS.active : COLORS.inactive;
+  const action = browser.browserAction || browser.action;
 
   try {
-    browser.action.setBadgeText({
+    action.setBadgeText({
       text: text,
       tabId: tabId
     });
 
-    browser.action.setBadgeBackgroundColor({
+    action.setBadgeBackgroundColor({
       color: color,
       tabId: tabId
     });
+    log.debug(`updateBadge tab=${tabId} count=${count} text='${text}'`);
   } catch (error) {
-    console.error('[WebShield] Failed to update badge:', error);
+    log.error('Failed to update badge:', error);
   }
 }
 
 /**
  * Initialize badge manager - set up tab event listeners
  */
-export function initBadgeManager() {
+function initBadgeManager() {
   // Reset badge on navigation or reload
   browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.status === 'loading') {
@@ -61,21 +77,24 @@ export function initBadgeManager() {
       const url = changeInfo.url || tab?.url || '';
       resetTabStats(tabId, url);
       updateBadge(tabId, 0);
+      log.debug(`tabs.onUpdated loading tab=${tabId} url=${url}`);
     }
   });
 
   // Clean up when tab closes
   browser.tabs.onRemoved.addListener((tabId) => {
     removeTabStats(tabId);
+    log.debug(`tabs.onRemoved tab=${tabId}`);
   });
 
   // Update badge when switching tabs (show correct count for active tab)
   browser.tabs.onActivated.addListener(({ tabId }) => {
     const stats = getTabStats(tabId);
     updateBadge(tabId, stats.total);
+    log.debug(`tabs.onActivated tab=${tabId} total=${stats.total}`);
   });
 
-  console.log('[WebShield] Badge manager initialized');
+  log.info('badge manager initialized');
 }
 
 /**
@@ -83,6 +102,13 @@ export function initBadgeManager() {
  * @param {number} tabId - The tab ID
  * @returns {Object} Stats for the tab
  */
-export function getStatsForPopup(tabId) {
+function getStatsForPopup(tabId) {
   return getTabStats(tabId);
 }
+
+global.WebShieldBadgeManager = {
+  updateBadge,
+  initBadgeManager,
+  getStatsForPopup,
+};
+})(globalThis);

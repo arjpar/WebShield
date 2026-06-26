@@ -3,6 +3,13 @@
  * Tracks cosmetic filters, scriptlets, extended CSS, and JS scripts applied per tab.
  */
 
+(function initWebShieldStats(global) {
+const LOG_PREFIX = '[WebShield Stats]';
+const LOG_DEBUG = true;
+const log = {
+  debug: (...a) => { if (LOG_DEBUG) console.debug(LOG_PREFIX, ...a); },
+};
+
 // Storage for per-tab statistics
 const tabStats = new Map();
 
@@ -11,7 +18,7 @@ const tabStats = new Map();
  * @param {number} tabId - The tab ID
  * @returns {Object} Stats object for the tab
  */
-export function getTabStats(tabId) {
+function getTabStats(tabId) {
   if (!tabStats.has(tabId)) {
     tabStats.set(tabId, {
       cosmeticFilters: 0,
@@ -31,10 +38,11 @@ export function getTabStats(tabId) {
  * @param {string} type - Type of stat ('cosmeticFilters', 'scriptlets', 'extendedCss', 'scripts')
  * @param {number} count - Amount to increment (default 1)
  */
-export function incrementStat(tabId, type, count = 1) {
+function incrementStat(tabId, type, count = 1) {
   const stats = getTabStats(tabId);
   stats[type] = (stats[type] || 0) + count;
   stats.total += count;
+  log.debug(`incrementStat tab=${tabId} ${type}+=${count} → ${type}=${stats[type]} total=${stats.total}`);
   return stats.total;
 }
 
@@ -43,7 +51,7 @@ export function incrementStat(tabId, type, count = 1) {
  * @param {number} tabId - The tab ID
  * @param {string} url - The new URL
  */
-export function resetTabStats(tabId, url = "") {
+function resetTabStats(tabId, url = "") {
   tabStats.set(tabId, {
     cosmeticFilters: 0,
     scriptlets: 0,
@@ -58,7 +66,7 @@ export function resetTabStats(tabId, url = "") {
  * Remove stats for a closed tab
  * @param {number} tabId - The tab ID
  */
-export function removeTabStats(tabId) {
+function removeTabStats(tabId) {
   tabStats.delete(tabId);
 }
 
@@ -66,6 +74,15 @@ export function removeTabStats(tabId) {
  * Get all tab stats (for debugging)
  * @returns {Map} All tab statistics
  */
-export function getAllStats() {
+function getAllStats() {
   return tabStats;
 }
+
+global.WebShieldStats = {
+  getTabStats,
+  incrementStat,
+  resetTabStats,
+  removeTabStats,
+  getAllStats,
+};
+})(globalThis);

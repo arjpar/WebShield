@@ -5,7 +5,7 @@
 //  Created by Andrey Meshkov on 11/04/2025.
 //
 
-internal import FilterEngine
+internal import adblock_rust_swift
 import Foundation
 import SafariServices
 
@@ -39,20 +39,38 @@ public enum WebExtensionRequestHandler {
             return
         }
 
-        // Check message type for whitelist operations
+        // Dispatch on message type. Unknown types receive an empty payload —
+        // the AdGuard-era "default" branch that handled cosmetic/scriptlet
+        // requests has been replaced by explicit cosmeticSetup /
+        // cosmeticSelectors types.
         if let messageType = message?["type"] as? String {
             switch messageType {
             case "checkWhitelist":
                 handleCheckWhitelist(message: &message)
             case "toggleWhitelist":
                 handleToggleWhitelist(message: &message)
+            case "cosmeticSetup":
+                handleCosmeticSetupRequest(message: &message)
+            case "cosmeticSelectors":
+                handleCosmeticSelectorsRequest(message: &message)
             default:
-                // Handle standard content blocking request
-                handleContentBlockingRequest(message: &message)
+                let payloadKeys = (message?["payload"] as? [String: Any])?
+                    .keys
+                    .sorted()
+                    .joined(separator: ",") ?? ""
+                logger.warning(
+                    "Native bridge: unknown message type=\(messageType) (payload keys: \(payloadKeys.isEmpty ? "none" : payloadKeys))",
+                    category: logCategory
+                )
+                message?["payload"] = [:] as [String: Any]
             }
         } else {
-            // Handle standard content blocking request (legacy format)
-            handleContentBlockingRequest(message: &message)
+            let rootKeys = message?.keys.sorted().joined(separator: ",") ?? ""
+            logger.warning(
+                "Native bridge: message has no type field (root keys: \(rootKeys.isEmpty ? "none" : rootKeys))",
+                category: logCategory
+            )
+            message?["payload"] = [:] as [String: Any]
         }
 
         if let safeMessage = message {
@@ -171,88 +189,176 @@ public enum WebExtensionRequestHandler {
                 )
             }
 
-            logger.info("Content blockers updated with new whitelist", category: logCategory)
+            logger.info(
+                "Whitelist change applied: \(ContentBlockerCategory.allCases.count) Safari blockers fast-updated and reloaded",
+                category: logCategory
+            )
         }
     }
 
-    /// Handles a standard content blocking configuration request.
+    /// Handles a `cosmeticSetup` request: returns the engine's per-URL
+    /// cosmetic resources for the page that just loaded its content script.
     ///
-    /// - Parameter message: The message dictionary to update with the response.
-    private static func handleContentBlockingRequest(message: inout [String: Any?]?) {
+    /// Response payload shape (matches what `content_cosmetic.js` expects):
+    /// ```
+    /// {
+    ///   hideSelectors:     [String]
+    ///   proceduralActions: [String]   // raw JSON; JS side decodes
+    ///   exceptions:        [String]
+    ///   scriptletInjections: [[String: Any]]
+    ///   injectedScript:    String
+    ///   genericHide:       Bool
+    ///   engineTimestamp:   Int64
+    ///   whitelisted:       Bool      // optional, true when host is whitelisted
+    /// }
+    /// ```
+    private static func handleCosmeticSetupRequest(message: inout [String: Any?]?) {
         let payload = message?["payload"] as? [String: Any] ?? [:]
 
-        if let urlString = payload["url"] as? String {
-            if let url = URL(string: urlString) {
-                // Check if the host is whitelisted
-                if let host = url.host,
-                    WhitelistManager.shared.isHostWhitelisted(host)
-                {
-                    logger.info(
-                        "Host is whitelisted, skipping advanced rules: \(host)",
-                        category: logCategory
-                    )
-                    // Return empty payload for whitelisted sites
-                    message?["payload"] = [
-                        "whitelisted": true,
-                        "css": [] as [String],
-                        "extendedCss": [] as [String],
-                        "js": [] as [String],
-                        "scriptlets": [] as [[String: Any]],
-                    ]
-                } else {
-                    do {
-                        let webExtension = try WebExtension.shared(
-                            groupID: GroupIdentifier.shared.value
-                        )
-
-                        var topUrl: URL?
-                        if let topUrlString = payload["topUrl"] as? String {
-                            topUrl = URL(string: topUrlString)
-                        }
-
-                        if let configuration = webExtension.lookup(
-                            pageUrl: url,
-                            topUrl: topUrl
-                        ) {
-                            message?["payload"] = convertToPayload(configuration)
-                        }
-                    } catch {
-                        logger.error(
-                            "Failed to get WebExtension instance: \(error.localizedDescription)",
-                            category: logCategory
-                        )
-                    }
-                }
-            }
+        guard
+            let urlString = payload["url"] as? String,
+            let url = URL(string: urlString)
+        else {
+            message?["payload"] = emptyCosmeticSetupPayload(
+                engineTimestamp: 0,
+                whitelisted: false
+            )
+            return
         }
+
+        let host = url.host ?? "(no host)"
+
+        if let actualHost = url.host,
+            WhitelistManager.shared.isHostWhitelisted(actualHost)
+        {
+            logger.info(
+                "cosmeticSetup: \(actualHost) is whitelisted — returning empty cosmetic payload",
+                category: logCategory
+            )
+            message?["payload"] = emptyCosmeticSetupPayload(
+                engineTimestamp: 0,
+                whitelisted: true
+            )
+            return
+        }
+
+        guard
+            let snapshot = ContentBlockerService.loadAdvancedBlockingEngine(
+                groupIdentifier: GroupIdentifier.shared.value
+            )
+        else {
+            logger.info(
+                "cosmeticSetup: adblock-rust engine snapshot not loaded — returning empty payload for \(host)",
+                category: logCategory
+            )
+            message?["payload"] = emptyCosmeticSetupPayload(
+                engineTimestamp: 0,
+                whitelisted: false
+            )
+            return
+        }
+
+        let isTopFrame = payload["isTopFrame"] as? Bool ?? true
+        let resources = snapshot.engine.cosmeticResourceDetails(
+            for: url.absoluteString,
+            isTopFrame: isTopFrame
+        )
+
+        let scriptletSize = resources.injectedScript.utf8.count
+        let scriptletDesc = scriptletSize == 0 ? "no" : "\(scriptletSize)B"
+        let scriptletInjections = resources.scriptletInjections.map {
+            [
+                "name": $0.name,
+                "args": $0.args,
+            ] as [String: Any]
+        }
+        logger.info(
+            "cosmeticSetup ← adblock-rust for \(host): topFrame=\(isTopFrame), hide=\(resources.hideSelectors.count), procedural=\(resources.proceduralActions.count), scriptlet=\(scriptletDesc), scriptletInvocations=\(scriptletInjections.count), genericHide=\(resources.generichide), exceptions=\(resources.exceptions.count)",
+            category: logCategory
+        )
+
+        message?["payload"] = [
+            "hideSelectors": resources.hideSelectors,
+            "proceduralActions": resources.proceduralActions,
+            "exceptions": resources.exceptions,
+            "scriptletInjections": scriptletInjections,
+            "injectedScript": resources.injectedScript,
+            "genericHide": resources.generichide,
+            "engineTimestamp": snapshot.metadata.engineTimestamp,
+        ]
     }
 
-    /// Converts a WebExtension.Configuration object to a dictionary payload.
+    /// Handles a `cosmeticSelectors` request: given a batch of ids/classes
+    /// observed in the DOM, returns the class/id-targeted hide selectors the
+    /// engine wants to apply.
     ///
-    /// - Parameters:
-    ///   - configuration: The WebExtension.Configuration object to convert.
-    /// - Returns: A dictionary containing CSS, extended CSS, JS, and scriptlets
-    ///           that should be applied to the web page.
-    private static func convertToPayload(
-        _ configuration: WebExtension.Configuration
-    ) -> [String: Any] {
-        var payload: [String: Any] = [:]
-        payload["css"] = configuration.css
-        payload["extendedCss"] = configuration.extendedCss
-        payload["js"] = configuration.js
+    /// Response payload: `{ selectors: [String] }`.
+    private static func handleCosmeticSelectorsRequest(message: inout [String: Any?]?) {
+        let payload = message?["payload"] as? [String: Any] ?? [:]
 
-        var scriptlets: [[String: Any]] = []
-        for scriptlet in configuration.scriptlets {
-            var scriptletData: [String: Any] = [:]
-            scriptletData["name"] = scriptlet.name
-            scriptletData["args"] = scriptlet.args
-            scriptlets.append(scriptletData)
+        guard
+            let urlString = payload["url"] as? String,
+            let url = URL(string: urlString)
+        else {
+            message?["payload"] = ["selectors": [] as [String]]
+            return
         }
 
-        payload["scriptlets"] = scriptlets
-        payload["engineTimestamp"] = configuration.engineTimestamp
+        if let host = url.host,
+            WhitelistManager.shared.isHostWhitelisted(host)
+        {
+            message?["payload"] = ["selectors": [] as [String]]
+            return
+        }
 
-        return payload
+        guard
+            let snapshot = ContentBlockerService.loadAdvancedBlockingEngine(
+                groupIdentifier: GroupIdentifier.shared.value
+            )
+        else {
+            message?["payload"] = ["selectors": [] as [String]]
+            return
+        }
+
+        let classes = stringArray(from: payload["classes"])
+        let ids = stringArray(from: payload["ids"])
+        let exceptionsJSON = payload["exceptionsJSON"] as? String ?? "[]"
+
+        let selectors = snapshot.engine.selectorsForCosmeticRules(
+            classes: classes,
+            ids: ids,
+            exceptionsJSON: exceptionsJSON
+        )
+
+        logger.debug(
+            "cosmeticSelectors ← adblock-rust for \(url.host ?? "(no host)"): \(classes.count) classes + \(ids.count) ids → \(selectors.count) targeted hide rules",
+            category: logCategory
+        )
+
+        message?["payload"] = ["selectors": selectors]
+    }
+
+    private static func emptyCosmeticSetupPayload(
+        engineTimestamp: Int64,
+        whitelisted: Bool
+    ) -> [String: Any] {
+        [
+            "hideSelectors": [] as [String],
+            "proceduralActions": [] as [String],
+            "exceptions": [] as [String],
+            "scriptletInjections": [] as [[String: Any]],
+            "injectedScript": "",
+            "genericHide": false,
+            "engineTimestamp": engineTimestamp,
+            "whitelisted": whitelisted,
+        ]
+    }
+
+    private static func stringArray(from value: Any?) -> [String] {
+        guard let values = value as? [String] else {
+            return []
+        }
+        return Array(Set(values.filter { !$0.isEmpty })).sorted()
     }
 
     /// Creates an NSExtensionItem response with the provided JSON payload.
@@ -302,8 +408,20 @@ public enum WebExtensionRequestHandler {
             message = request?.userInfo?["message"]
         }
 
+        let dict = message as? [String: Any?]
+        let messageType = (dict?["type"] as? String) ?? "(none)"
+        let payloadKeys = (dict?["payload"] as? [String: Any])?
+            .keys
+            .sorted()
+            .joined(separator: ",") ?? ""
+        let profileShort = profile?.uuidString.prefix(8).description ?? "none"
+
         logger.info(
-            "Received message from browser.runtime.sendNativeMessage: \(String(describing: message)) (profile: \(profile?.uuidString ?? "none"))",
+            "Native bridge ← \(messageType) (payload: \(payloadKeys.isEmpty ? "none" : payloadKeys)) profile=\(profileShort)",
+            category: logCategory
+        )
+        logger.debug(
+            "Native bridge raw message: \(String(describing: message))",
             category: logCategory
         )
 

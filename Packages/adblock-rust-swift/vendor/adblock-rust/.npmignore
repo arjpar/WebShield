@@ -1,0 +1,14 @@
+data/
+target/
+js/target/
+js/index.node
+.git/
+.github/
+.DS_Store
+*.code-workspace
+*.diff
+*.tgz
+fuzz/**/*
+!fuzz/Cargo.toml
+tests/
+examples/

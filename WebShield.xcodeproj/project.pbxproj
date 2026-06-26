@@ -29,8 +29,9 @@
 		001CDB8B2D5B62EB00F0F5C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008A43C72D3A270F003F8B46 /* UIKit.framework */; platformFilters = (ios, xros, ); };
 		001CDB8E2D5B62F700F0F5C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 008A43C72D3A270F003F8B46 /* UIKit.framework */; platformFilters = (ios, xros, ); };
 		0050E8CC2D5B1174004DDAEA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
-		0060E56A2ECE92C8001478E5 /* ContentBlockerConverter in Frameworks */ = {isa = PBXBuildFile; productRef = 0060E5692ECE92C8001478E5 /* ContentBlockerConverter */; };
 		0060E56C2ECE92CB001478E5 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 0060E56B2ECE92CB001478E5 /* ZIPFoundation */; };
+		006F53732FB2802100C8275E /* adblock-rust-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 006F53722FB2802100C8275E /* adblock-rust-swift */; };
+		008F181D2D2E7228004E312A /* WebShieldService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */; };
 		009B442A2F394B850050A782 /* WebShieldBlocker9.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 009B44212F394B850050A782 /* WebShieldBlocker9.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		009B44412F395FB50050A782 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C2BE322D2E327F000B431F /* Cocoa.framework */; platformFilters = (macos, ); };
 		009B44432F395FBB0050A782 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009B44422F395FBB0050A782 /* UIKit.framework */; platformFilters = (ios, xros, ); };
@@ -81,6 +82,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 006FC39B2D3095DD0091056F;
 			remoteInfo = "WebShield Advanced";
+		};
+		008F181E2D2E7228004E312A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0018485A2C2956AC00EE2E7A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0060E4BC2ECE90FF001478E5;
+			remoteInfo = WebShieldService;
 		};
 		009B44282F394B850050A782 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -250,6 +258,7 @@
 /* Begin PBXFileReference section */
 		0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WebShieldService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		008A43C72D3A270F003F8B46 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		008F181C2D2E7228004E312A /* AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		009B44212F394B850050A782 /* WebShieldBlocker9.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WebShieldBlocker9.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		009B44422F395FBB0050A782 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		00C2BE322D2E327F000B431F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -423,6 +432,11 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		008F181B2D2E7228004E312A /* Tests/WebShieldAppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Tests/WebShieldAppTests;
+			sourceTree = "<group>";
+		};
 		00E718632D3452ED00FD22A7 /* WebShieldBlocker2 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -506,8 +520,8 @@
 		0060E4BA2ECE90FF001478E5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				0060E56A2ECE92C8001478E5 /* ContentBlockerConverter in Frameworks */,
 				0060E56C2ECE92CB001478E5 /* ZIPFoundation in Frameworks */,
+				006F53732FB2802100C8275E /* adblock-rust-swift in Frameworks */,
 			);
 		};
 		006FC3992D3095DD0091056F /* Frameworks */ = {
@@ -516,6 +530,12 @@
 				009E81022D5B33D2003FDAB0 /* Cocoa.framework in Frameworks */,
 				001CDB8E2D5B62F700F0F5C6 /* UIKit.framework in Frameworks */,
 				00D690D32ECEA43600B03E1F /* WebShieldService.framework in Frameworks */,
+			);
+		};
+		008F18202D2E7228004E312A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				008F181D2D2E7228004E312A /* WebShieldService.framework in Frameworks */,
 			);
 		};
 		009B441E2F394B850050A782 /* Frameworks */ = {
@@ -622,8 +642,18 @@
 				00E718D92D34542600FD22A7 /* WebShieldBlocker7.appex */,
 				00E718ED2D34543F00FD22A7 /* WebShieldBlocker8.appex */,
 				0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */,
+				008F181C2D2E7228004E312A /* AppTests.xctest */,
 				009B44212F394B850050A782 /* WebShieldBlocker9.appex */,
+				002B73BD2FB4CE9A000D7760 /* Recovered References */,
 			);
+			sourceTree = "<group>";
+		};
+		002B73BD2FB4CE9A000D7760 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				008F181B2D2E7228004E312A /* Tests/WebShieldAppTests */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		00333FBB2C3CC6D20031AEC6 /* Frameworks */ = {
@@ -682,6 +712,27 @@
 			productReference = 00C4EAB62D30C4610008D09D /* WebShield.app */;
 			productType = "com.apple.product-type.application";
 		};
+		000F2CB02D2E533500871D5E /* AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 008F18232D2E7228004E312A /* Build configuration list for PBXNativeTarget "AppTests" */;
+			buildPhases = (
+				008F18212D2E7228004E312A /* Sources */,
+				008F18202D2E7228004E312A /* Frameworks */,
+				008F18222D2E7228004E312A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				008F181F2D2E7228004E312A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				008F181B2D2E7228004E312A /* Tests/WebShieldAppTests */,
+			);
+			name = AppTests;
+			productName = AppTests;
+			productReference = 008F181C2D2E7228004E312A /* AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		0060E4BC2ECE90FF001478E5 /* WebShieldService */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0060E4C72ECE90FF001478E5 /* Build configuration list for PBXNativeTarget "WebShieldService" */;
@@ -698,8 +749,8 @@
 			);
 			name = WebShieldService;
 			packageProductDependencies = (
-				0060E5692ECE92C8001478E5 /* ContentBlockerConverter */,
 				0060E56B2ECE92CB001478E5 /* ZIPFoundation */,
+				006F53722FB2802100C8275E /* adblock-rust-swift */,
 			);
 			productName = "webshiled-service";
 			productReference = 0060E4BD2ECE90FF001478E5 /* WebShieldService.framework */;
@@ -708,11 +759,11 @@
 		006FC39B2D3095DD0091056F /* WebShieldAdvanced */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 006FC3CC2D3095DD0091056F /* Build configuration list for PBXNativeTarget "WebShieldAdvanced" */;
-				buildPhases = (
-					006FC3982D3095DD0091056F /* Sources */,
-					006FC3992D3095DD0091056F /* Frameworks */,
-					006FC39A2D3095DD0091056F /* Resources */,
-				);
+			buildPhases = (
+				006FC3982D3095DD0091056F /* Sources */,
+				006FC3992D3095DD0091056F /* Frameworks */,
+				006FC39A2D3095DD0091056F /* Resources */,
+			);
 			buildRules = (
 			);
 			dependencies = (
@@ -729,11 +780,11 @@
 		009B44202F394B850050A782 /* WebShieldBlocker9 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 009B442B2F394B850050A782 /* Build configuration list for PBXNativeTarget "WebShieldBlocker9" */;
-				buildPhases = (
-					009B441D2F394B850050A782 /* Sources */,
-					009B441E2F394B850050A782 /* Frameworks */,
-					009B441F2F394B850050A782 /* Resources */,
-				);
+			buildPhases = (
+				009B441D2F394B850050A782 /* Sources */,
+				009B441E2F394B850050A782 /* Frameworks */,
+				009B441F2F394B850050A782 /* Resources */,
+			);
 			buildRules = (
 			);
 			dependencies = (
@@ -750,11 +801,11 @@
 		00C356262D2EEFE000BACCE7 /* WebShieldBlocker1 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00C356332D2EEFE100BACCE7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker1" */;
-				buildPhases = (
-					00C356232D2EEFE000BACCE7 /* Sources */,
-					00C356242D2EEFE000BACCE7 /* Frameworks */,
-					00C356252D2EEFE000BACCE7 /* Resources */,
-				);
+			buildPhases = (
+				00C356232D2EEFE000BACCE7 /* Sources */,
+				00C356242D2EEFE000BACCE7 /* Frameworks */,
+				00C356252D2EEFE000BACCE7 /* Resources */,
+			);
 			buildRules = (
 			);
 			dependencies = (
@@ -771,11 +822,11 @@
 		00E718602D3452EC00FD22A7 /* WebShieldBlocker2 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E7186D2D3452ED00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker2" */;
-				buildPhases = (
-					00E7185D2D3452EC00FD22A7 /* Sources */,
-					00E7185E2D3452EC00FD22A7 /* Frameworks */,
-					00E7185F2D3452EC00FD22A7 /* Resources */,
-				);
+			buildPhases = (
+				00E7185D2D3452EC00FD22A7 /* Sources */,
+				00E7185E2D3452EC00FD22A7 /* Frameworks */,
+				00E7185F2D3452EC00FD22A7 /* Resources */,
+			);
 			buildRules = (
 			);
 			dependencies = (
@@ -792,11 +843,11 @@
 		00E718742D3453A700FD22A7 /* WebShieldBlocker3 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E718812D3453A700FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker3" */;
-				buildPhases = (
-					00E718712D3453A700FD22A7 /* Sources */,
-					00E718722D3453A700FD22A7 /* Frameworks */,
-					00E718732D3453A700FD22A7 /* Resources */,
-				);
+			buildPhases = (
+				00E718712D3453A700FD22A7 /* Sources */,
+				00E718722D3453A700FD22A7 /* Frameworks */,
+				00E718732D3453A700FD22A7 /* Resources */,
+			);
 			buildRules = (
 			);
 			dependencies = (
@@ -813,11 +864,11 @@
 		00E718882D3453BC00FD22A7 /* WebShieldBlocker4 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E718952D3453BC00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker4" */;
-				buildPhases = (
-					00E718852D3453BC00FD22A7 /* Sources */,
-					00E718862D3453BC00FD22A7 /* Frameworks */,
-					00E718872D3453BC00FD22A7 /* Resources */,
-				);
+			buildPhases = (
+				00E718852D3453BC00FD22A7 /* Sources */,
+				00E718862D3453BC00FD22A7 /* Frameworks */,
+				00E718872D3453BC00FD22A7 /* Resources */,
+			);
 			buildRules = (
 			);
 			dependencies = (
@@ -834,11 +885,11 @@
 		00E7189C2D3453CF00FD22A7 /* WebShieldBlocker5 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E718A92D3453CF00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker5" */;
-				buildPhases = (
-					00E718992D3453CF00FD22A7 /* Sources */,
-					00E7189A2D3453CF00FD22A7 /* Frameworks */,
-					00E7189B2D3453CF00FD22A7 /* Resources */,
-				);
+			buildPhases = (
+				00E718992D3453CF00FD22A7 /* Sources */,
+				00E7189A2D3453CF00FD22A7 /* Frameworks */,
+				00E7189B2D3453CF00FD22A7 /* Resources */,
+			);
 			buildRules = (
 			);
 			dependencies = (
@@ -855,11 +906,11 @@
 		00E718C42D3453FF00FD22A7 /* WebShieldBlocker6 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E718D12D3453FF00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker6" */;
-				buildPhases = (
-					00E718C12D3453FF00FD22A7 /* Sources */,
-					00E718C22D3453FF00FD22A7 /* Frameworks */,
-					00E718C32D3453FF00FD22A7 /* Resources */,
-				);
+			buildPhases = (
+				00E718C12D3453FF00FD22A7 /* Sources */,
+				00E718C22D3453FF00FD22A7 /* Frameworks */,
+				00E718C32D3453FF00FD22A7 /* Resources */,
+			);
 			buildRules = (
 			);
 			dependencies = (
@@ -876,11 +927,11 @@
 		00E718D82D34542600FD22A7 /* WebShieldBlocker7 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E718E52D34542600FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker7" */;
-				buildPhases = (
-					00E718D52D34542600FD22A7 /* Sources */,
-					00E718D62D34542600FD22A7 /* Frameworks */,
-					00E718D72D34542600FD22A7 /* Resources */,
-				);
+			buildPhases = (
+				00E718D52D34542600FD22A7 /* Sources */,
+				00E718D62D34542600FD22A7 /* Frameworks */,
+				00E718D72D34542600FD22A7 /* Resources */,
+			);
 			buildRules = (
 			);
 			dependencies = (
@@ -897,11 +948,11 @@
 		00E718EC2D34543F00FD22A7 /* WebShieldBlocker8 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E718F92D34543F00FD22A7 /* Build configuration list for PBXNativeTarget "WebShieldBlocker8" */;
-				buildPhases = (
-					00E718E92D34543F00FD22A7 /* Sources */,
-					00E718EA2D34543F00FD22A7 /* Frameworks */,
-					00E718EB2D34543F00FD22A7 /* Resources */,
-				);
+			buildPhases = (
+				00E718E92D34543F00FD22A7 /* Sources */,
+				00E718EA2D34543F00FD22A7 /* Frameworks */,
+				00E718EB2D34543F00FD22A7 /* Resources */,
+			);
 			buildRules = (
 			);
 			dependencies = (
@@ -923,11 +974,14 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2620;
-				LastUpgradeCheck = 2620;
+				LastUpgradeCheck = 2650;
 				TargetAttributes = {
 					000F2C9F2D2E533400871D5E = {
 						CreatedOnToolsVersion = 16.2;
 						LastSwiftMigration = 2610;
+					};
+					000F2CB02D2E533500871D5E = {
+						CreatedOnToolsVersion = 26.4;
 					};
 					0060E4BC2ECE90FF001478E5 = {
 						CreatedOnToolsVersion = 26.1.1;
@@ -977,8 +1031,8 @@
 			);
 			mainGroup = 001848592C2956AC00EE2E7A;
 			packageReferences = (
-				00A76C0F2D2E835700CE43C4 /* XCRemoteSwiftPackageReference "SafariConverterLib" */,
 				0024C4D02E15C2D5009CBC07 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+				006F53742FB280BF00C8275E /* XCLocalSwiftPackageReference "Packages/adblock-rust-swift" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 001848592C2956AC00EE2E7A;
@@ -986,6 +1040,7 @@
 			projectRoot = "";
 			targets = (
 				0060E4BC2ECE90FF001478E5 /* WebShieldService */,
+				000F2CB02D2E533500871D5E /* AppTests */,
 				000F2C9F2D2E533400871D5E /* WebShield */,
 				00C356262D2EEFE000BACCE7 /* WebShieldBlocker1 */,
 				00E718602D3452EC00FD22A7 /* WebShieldBlocker2 */,
@@ -1014,6 +1069,11 @@
 			);
 		};
 		006FC39A2D3095DD0091056F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		008F18222D2E7228004E312A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
 			);
@@ -1104,6 +1164,11 @@
 			files = (
 			);
 		};
+		008F18212D2E7228004E312A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
 		009B441D2F394B850050A782 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
@@ -1161,6 +1226,11 @@
 			isa = PBXTargetDependency;
 			target = 006FC39B2D3095DD0091056F /* WebShieldAdvanced */;
 			targetProxy = 00681F7B2D30D4A000F9E3F1 /* PBXContainerItemProxy */;
+		};
+		008F181F2D2E7228004E312A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0060E4BC2ECE90FF001478E5 /* WebShieldService */;
+			targetProxy = 008F181E2D2E7228004E312A /* PBXContainerItemProxy */;
 		};
 		009B44292F394B850050A782 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1269,14 +1339,23 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "\"WebShieldApp/Preview Content\"";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				INFOPLIST_FILE = WebShieldApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WebShield;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
@@ -1319,14 +1398,23 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"WebShieldApp/Preview Content\"";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				INFOPLIST_FILE = WebShieldApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WebShield;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
@@ -1484,11 +1572,11 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 40;
+				DYLIB_CURRENT_VERSION = 43;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1566,11 +1654,11 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 40;
+				DYLIB_CURRENT_VERSION = 43;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1628,7 +1716,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
@@ -1683,7 +1771,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
@@ -1730,6 +1818,62 @@
 			};
 			name = Release;
 		};
+		008F18242D2E7228004E312A /* Debug configuration for PBXNativeTarget "AppTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 43;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = arjun.webshield.AppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		008F18252D2E7228004E312A /* Release configuration for PBXNativeTarget "AppTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 43;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = arjun.webshield.AppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
 		009B442C2F394B850050A782 /* Debug configuration for PBXNativeTarget "WebShieldBlocker9" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1749,7 +1893,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = FP48FZ5499;
 				ENABLE_APP_SANDBOX = YES;
@@ -1827,7 +1971,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = FP48FZ5499;
 				ENABLE_APP_SANDBOX = YES;
@@ -1887,7 +2031,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
@@ -1933,7 +2077,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
@@ -1979,7 +2123,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
@@ -2023,7 +2167,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
@@ -2067,7 +2211,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
@@ -2111,7 +2255,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
@@ -2155,7 +2299,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
@@ -2199,7 +2343,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
@@ -2243,7 +2387,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
@@ -2287,7 +2431,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
@@ -2331,7 +2475,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
@@ -2375,7 +2519,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
@@ -2419,7 +2563,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
@@ -2463,7 +2607,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
@@ -2507,7 +2651,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_APP_SANDBOX = YES;
@@ -2551,7 +2695,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 43;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_APP_SANDBOX = YES;
@@ -2590,6 +2734,7 @@
 		00E7C8222F3AB5A2009DA58F /* Debug configuration for PBXAggregateTarget "BumpBuildNumber" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FP48FZ5499;
 				INFOPLIST_KEY_CFBundleDisplayName = WebShield;
@@ -2602,6 +2747,7 @@
 		00E7C8232F3AB5A2009DA58F /* Release configuration for PBXAggregateTarget "BumpBuildNumber" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FP48FZ5499;
 				INFOPLIST_KEY_CFBundleDisplayName = WebShield;
@@ -2643,6 +2789,14 @@
 			buildConfigurations = (
 				006FC3CD2D3095DD0091056F /* Debug configuration for PBXNativeTarget "WebShieldAdvanced" */,
 				006FC3CE2D3095DD0091056F /* Release configuration for PBXNativeTarget "WebShieldAdvanced" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		008F18232D2E7228004E312A /* Build configuration list for PBXNativeTarget "AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				008F18242D2E7228004E312A /* Debug configuration for PBXNativeTarget "AppTests" */,
+				008F18252D2E7228004E312A /* Release configuration for PBXNativeTarget "AppTests" */,
 			);
 			defaultConfigurationName = Release;
 		};
@@ -2728,6 +2882,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		006F53742FB280BF00C8275E /* XCLocalSwiftPackageReference "Packages/adblock-rust-swift" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "Packages/adblock-rust-swift";
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		0024C4D02E15C2D5009CBC07 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -2737,26 +2898,17 @@
 				minimumVersion = 0.9.19;
 			};
 		};
-		00A76C0F2D2E835700CE43C4 /* XCRemoteSwiftPackageReference "SafariConverterLib" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AdguardTeam/SafariConverterLib.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0060E5692ECE92C8001478E5 /* ContentBlockerConverter */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 00A76C0F2D2E835700CE43C4 /* XCRemoteSwiftPackageReference "SafariConverterLib" */;
-			productName = ContentBlockerConverter;
-		};
 		0060E56B2ECE92CB001478E5 /* ZIPFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0024C4D02E15C2D5009CBC07 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
 			productName = ZIPFoundation;
+		};
+		006F53722FB2802100C8275E /* adblock-rust-swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "adblock-rust-swift";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

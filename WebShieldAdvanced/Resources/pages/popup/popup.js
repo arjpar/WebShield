@@ -5,6 +5,15 @@
  * Also handles per-site whitelist (trusted sites) toggle.
  */
 
+const LOG_PREFIX = '[WebShield Popup]';
+const LOG_DEBUG = true;
+const log = {
+  info:  (...a) => console.log(LOG_PREFIX, ...a),
+  debug: (...a) => { if (LOG_DEBUG) console.debug(LOG_PREFIX, ...a); },
+  warn:  (...a) => console.warn(LOG_PREFIX, ...a),
+  error: (...a) => console.error(LOG_PREFIX, ...a),
+};
+
 // Current domain being displayed
 let currentDomain = null;
 
@@ -100,13 +109,17 @@ function updateWhitelistUI(isWhitelisted) {
  */
 async function checkWhitelistStatus(domain) {
   try {
+    const normalized = normalizeDomain(domain);
+    log.debug(`checkWhitelistStatus domain=${normalized}`);
     const response = await browser.runtime.sendMessage({
       type: 'checkWhitelist',
-      domain: normalizeDomain(domain)
+      domain: normalized
     });
-    return response && response.isWhitelisted === true;
+    const isWhitelisted = response && response.isWhitelisted === true;
+    log.info(`checkWhitelistStatus ← domain=${normalized} whitelisted=${isWhitelisted}`);
+    return isWhitelisted;
   } catch (error) {
-    console.error('[WebShield Popup] Error checking whitelist:', error);
+    log.error('Error checking whitelist:', error);
     return false;
   }
 }
@@ -119,14 +132,18 @@ async function checkWhitelistStatus(domain) {
  */
 async function toggleWhitelist(domain, shouldWhitelist) {
   try {
+    const normalized = normalizeDomain(domain);
+    log.info(`toggleWhitelist domain=${normalized} whitelist=${shouldWhitelist}`);
     const response = await browser.runtime.sendMessage({
       type: 'toggleWhitelist',
-      domain: normalizeDomain(domain),
+      domain: normalized,
       whitelist: shouldWhitelist
     });
-    return response && response.success === true;
+    const success = response && response.success === true;
+    log.info(`toggleWhitelist ← domain=${normalized} success=${success}`);
+    return success;
   } catch (error) {
-    console.error('[WebShield Popup] Error toggling whitelist:', error);
+    log.error('Error toggling whitelist:', error);
     return false;
   }
 }
@@ -139,13 +156,15 @@ async function activateZapper() {
   try {
     const tab = await getCurrentTab();
     if (!tab || !tab.id) {
+      log.warn('activateZapper: no active tab');
       return false;
     }
 
     await browser.tabs.sendMessage(tab.id, { type: 'activateZapper' });
+    log.info(`activateZapper sent → tab=${tab.id}`);
     return true;
   } catch (error) {
-    console.error('[WebShield Popup] Error activating zapper:', error);
+    log.error('Error activating zapper:', error);
     return false;
   }
 }
@@ -192,9 +211,11 @@ async function loadZapperRules(domain) {
   try {
     const key = getZapperStorageKey(domain);
     const result = await browser.storage.local.get(key);
-    return Array.isArray(result[key]) ? result[key] : [];
+    const rules = Array.isArray(result[key]) ? result[key] : [];
+    log.info(`loadZapperRules domain=${domain} count=${rules.length}`);
+    return rules;
   } catch (error) {
-    console.error('[WebShield Popup] Error loading zapper rules:', error);
+    log.error('Error loading zapper rules:', error);
     return [];
   }
 }
@@ -209,8 +230,9 @@ async function saveZapperRules(domain, rules) {
   try {
     const key = getZapperStorageKey(domain);
     await browser.storage.local.set({ [key]: rules });
+    log.info(`saveZapperRules domain=${domain} count=${rules.length}`);
   } catch (error) {
-    console.error('[WebShield Popup] Error saving zapper rules:', error);
+    log.error('Error saving zapper rules:', error);
   }
 }
 
@@ -222,6 +244,7 @@ async function saveZapperRules(domain, rules) {
 async function deleteZapperRule(rule) {
   if (!currentDomain) return;
 
+  log.info(`deleteZapperRule domain=${currentDomain} selector=${rule}`);
   zapperRules = zapperRules.filter(r => r !== rule);
   await saveZapperRules(currentDomain, zapperRules);
   renderZapperRules();
@@ -240,6 +263,7 @@ async function deleteZapperRule(rule) {
 async function deleteAllZapperRules() {
   if (!currentDomain) return;
 
+  log.info(`deleteAllZapperRules domain=${currentDomain} previous=${zapperRules.length}`);
   zapperRules = [];
   await saveZapperRules(currentDomain, zapperRules);
   renderZapperRules();
@@ -450,22 +474,27 @@ function setupWhitelistToggle() {
  * Initialize popup
  */
 async function init() {
+  log.info('init: starting');
   try {
     // Setup toggle handler
     setupWhitelistToggle();
     setupZapperButton();
     setupZapperRulesUI();
+    log.debug('init: UI handlers wired');
 
     // Get current tab
     const tab = await getCurrentTab();
 
     if (!tab) {
+      log.warn('init: no active tab');
       showError('No active tab');
       return;
     }
+    log.debug(`init: tab resolved id=${tab.id} url=${tab.url}`);
 
     // Check if URL is blockable
     if (!tab.url || (!tab.url.startsWith('http://') && !tab.url.startsWith('https://'))) {
+      log.info(`init: URL not blockable (${tab.url}) — disabling toggle`);
       updateUI({ total: 0, cosmeticFilters: 0, extendedCss: 0, scriptlets: 0, scripts: 0 }, 'N/A', false);
       showError('Protection not available on this page');
 
@@ -483,6 +512,7 @@ async function init() {
 
     const domain = extractDomain(tab.url);
     currentDomain = domain;
+    log.info(`init: domain=${domain}`);
 
     // Check whitelist status first
     const isWhitelisted = await checkWhitelistStatus(domain);
@@ -492,18 +522,22 @@ async function init() {
     renderZapperRules();
 
     // Request stats from background script
+    log.debug(`init: requesting stats for tab=${tab.id}`);
     const response = await browser.runtime.sendMessage({
       type: 'getStats',
       tabId: tab.id
     });
 
     if (response && response.stats) {
+      log.info(`init: stats received total=${response.stats.total}`);
       updateUI(response.stats, domain, isWhitelisted);
     } else {
+      log.warn('init: no stats in response, rendering zeros');
       updateUI({ total: 0, cosmeticFilters: 0, extendedCss: 0, scriptlets: 0, scripts: 0 }, domain, isWhitelisted);
     }
+    log.info('init: UI ready');
   } catch (error) {
-    console.error('[WebShield Popup] Error:', error);
+    log.error('init failed:', error);
     showError('Failed to load stats');
   }
 }

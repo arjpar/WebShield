@@ -583,50 +583,88 @@ final class FilterListViewModel {
     /// Reloads all content blockers from cached filter data
     /// This is called on app startup to ensure Safari has the latest rules
     private func reloadContentBlockersFromCache() async {
-        // Group ALL filters by category
-        var allFiltersByCategory: [FilterCategory: [FilterList]] = [:]
-        for filter in filterLists {
-            allFiltersByCategory[filter.category, default: []].append(filter)
-        }
-        let hasEnabledFilters = filterLists.contains { $0.isEnabled }
+        let enabledFilters = filterLists.filter(\.isEnabled)
+        let hasEnabledFilters = !enabledFilters.isEmpty
         var combinedAdvancedInputRules = ""
+        var cachedRuleInputs: [FilterRuleContent] = []
 
-        for (category, filtersInCategory) in allFiltersByCategory {
-            let enabledFilters = filtersInCategory.filter(\.isEnabled)
-
-            // Check if this category's JSON rules file exists
-            let hasExistingRulesFile = Self.hasConvertedRulesFile(for: category)
-
-            // Skip categories that have never had a rules file
-            guard hasExistingRulesFile else { continue }
-
-            if enabledFilters.isEmpty {
-                // No enabled filters but has existing rules file - clear the content blocker
-                Self.saveEmptyContentBlocker(for: category)
-                Self.reloadContentBlocker(for: category)
-                continue
-            }
-
-            // Collect cached content for enabled filters in this category
-            var combinedRules = ""
-            for filter in enabledFilters {
-                if let content = Self.loadRawFilterContent(filterID: filter.id)
-                {
-                    combinedRules += content + "\n"
-                    appendRules(content, to: &combinedAdvancedInputRules)
-                }
-            }
-
-            // If we have cached content, convert and reload
-            if !combinedRules.isEmpty {
-                _ = Self.convertAndSaveRules(
-                    rules: combinedRules,
-                    category: category
+        for filter in enabledFilters {
+            if let content = Self.loadRawFilterContent(filterID: filter.id) {
+                cachedRuleInputs.append(
+                    FilterRuleContent(
+                        filterID: filter.id,
+                        content: content,
+                        estimatedRuleCount: filter.ruleCount
+                    )
                 )
-                Self.reloadContentBlocker(for: category)
+                appendRules(content, to: &combinedAdvancedInputRules)
             }
-            // If no cached content for enabled filters, the rules file already exists
-            // from a previous session, so we don't need to do anything
+        }
+
+        let loadBalancer = LoadBalancer.shared
+        await loadBalancer.loadState()
+
+        if cachedRuleInputs.isEmpty {
+            for blocker in ContentBlockerCategory.allCases
+            where Self.hasConvertedRulesFile(for: blocker) {
+                Self.saveEmptyContentBlocker(for: blocker)
+                Self.reloadContentBlocker(for: blocker)
+                await loadBalancer.updateActualRuleCount(0, for: blocker)
+            }
+        } else {
+            do {
+                let distribution =
+                    try await ContentBlockerService
+                    .validatedRuleDistribution(
+                        cachedRuleInputs,
+                        loadBalancer: loadBalancer,
+                        ruleLimit: LoadBalancer.ruleLimit,
+                        whitelistRuleReserve: WhitelistManager.shared
+                            .whitelistedDomains.count
+                    )
+                for blocker in ContentBlockerCategory.allCases {
+                    let assignment =
+                        distribution[blocker]
+                        ?? RuleShardAssignment(blocker: blocker)
+                    let hasExistingRulesFile = Self.hasConvertedRulesFile(
+                        for: blocker
+                    )
+
+                    if assignment.isEmpty {
+                        if hasExistingRulesFile {
+                            Self.saveEmptyContentBlocker(for: blocker)
+                            Self.reloadContentBlocker(for: blocker)
+                            await loadBalancer.updateActualRuleCount(
+                                0,
+                                for: blocker
+                            )
+                        }
+                        continue
+                    }
+
+                    let conversion = Self.convertAndSaveRules(
+                        rules: assignment.rulesText,
+                        blocker: blocker
+                    )
+                    if conversion.truncated
+                        || conversion.safariRulesCount > LoadBalancer.ruleLimit
+                    {
+                        logger.error(
+                            "Startup cache reload produced too many rules for blocker\(blocker.rawValue): \(conversion.safariRulesCount)/\(LoadBalancer.ruleLimit)"
+                        )
+                    }
+                    Self.reloadContentBlocker(for: blocker)
+                    await loadBalancer.updateActualRuleCount(
+                        conversion.safariRulesCount,
+                        for: blocker
+                    )
+                }
+                await loadBalancer.saveState()
+            } catch {
+                logger.error(
+                    "Startup cache reload skipped because rule distribution failed: \(error.localizedDescription)"
+                )
+            }
         }
 
         if !hasEnabledFilters {
@@ -1459,6 +1497,329 @@ final class FilterListViewModel {
         filterLists = [
             // Ads
             FilterList(
+                name: "Brave Firstparty",
+                description:
+                    "TODO.",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/brave/adblock-lists/refs/heads/master/brave-lists/brave-firstparty.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://github.com/uBlockOrigin/uAssets"
+                ),
+                isEnabled: true
+            ),
+
+            FilterList(
+                name: "Brave iOS",
+                description:
+                    "TODO.",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/brave/adblock-lists/refs/heads/master/brave-lists/brave-ios-specific.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://github.com/uBlockOrigin/uAssets"
+                ),
+                isEnabled: true
+            ),
+
+            FilterList(
+                name: "Brave Specific",
+                description:
+                    "TODO.",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/brave/adblock-lists/refs/heads/master/brave-lists/brave-specific.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://github.com/uBlockOrigin/uAssets"
+                ),
+                isEnabled: true
+            ),
+
+            FilterList(
+                name: "uBlock Origin Filters",
+                description:
+                    "Filters from uBlock.",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://github.com/uBlockOrigin/uAssets"
+                ),
+                isEnabled: true
+            ),
+
+            FilterList(
+                name: "uBlock Origin 2020 Filters",
+                description:
+                    "Filters from uBlock.",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2020.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://github.com/uBlockOrigin/uAssets"
+                ),
+                isEnabled: true
+            ),
+
+            FilterList(
+                name: "uBlock Origin 2021 Filters",
+                description:
+                    "Filters from uBlock.",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2021.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://github.com/uBlockOrigin/uAssets"
+                ),
+                isEnabled: true
+            ),
+
+            FilterList(
+                name: "uBlock Origin 2022 Filters",
+                description:
+                    "Filters from uBlock.",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2022.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://github.com/uBlockOrigin/uAssets"
+                ),
+                isEnabled: true
+            ),
+
+            FilterList(
+                name: "uBlock Origin 2023 Filters",
+                description:
+                    "Filters from uBlock.",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2023.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://github.com/uBlockOrigin/uAssets"
+                ),
+                isEnabled: true
+            ),
+
+            FilterList(
+                name: "uBlock Origin 2024 Filters",
+                description:
+                    "Filters from uBlock.",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2024.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://github.com/uBlockOrigin/uAssets"
+                ),
+                isEnabled: true
+            ),
+
+            FilterList(
+                name: "uBlock Origin 2025 Filters",
+                description:
+                    "Filters from uBlock.",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2025.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://github.com/uBlockOrigin/uAssets"
+                ),
+                isEnabled: true
+            ),
+
+            FilterList(
+                name: "uBlock Origin 2026 Filters",
+                description:
+                    "Filters from uBlock.",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-2026.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://github.com/uBlockOrigin/uAssets"
+                ),
+                isEnabled: true
+            ),
+
+            FilterList(
+                name: "uBlock Origin filters - General",
+                description:
+                    "Filters from uBlock.",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters-general.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://github.com/uBlockOrigin/uAssets"
+                ),
+                isEnabled: true
+            ),
+
+            FilterList(
+                name: "uBlock filters - Badware",
+                description:
+                    "Filters from uBlock.",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://github.com/uBlockOrigin/uAssets"
+                ),
+                isEnabled: true
+            ),
+
+            FilterList(
+                name: "uBlock Origin filters - Resource abuse",
+                description:
+                    "Filters from uBlock.",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resource-abuse.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://github.com/uBlockOrigin/uAssets"
+                ),
+                isEnabled: true
+            ),
+
+            FilterList(
+                name: "uBlock filters - Privacy",
+                description:
+                    "Filters from uBlock.",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/privacy.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://github.com/uBlockOrigin/uAssets"
+                ),
+                isEnabled: true
+            ),
+
+            FilterList(
+                name: "uBlock filters - Quick Fixes",
+                description:
+                    "Filters from uBlock.",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/quick-fixes.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://github.com/uBlockOrigin/uAssets"
+                ),
+                isEnabled: true
+            ),
+
+            FilterList(
+                name: "uBlock filters - Unbreak",
+                description:
+                    "Filters from uBlock.",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/unbreak.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://github.com/uBlockOrigin/uAssets"
+                ),
+                isEnabled: true
+            ),
+
+            FilterList(
+                name: "uBO Lite filters",
+                description:
+                    "uBO Lite filters.",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/ubol-filters.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://github.com/uBlockOrigin/uAssets"
+                ),
+                isEnabled: false
+            ),
+
+            FilterList(
+                name: "EasyList",
+                description:
+                    "EasyList",
+                version: "N/A",
+                category: .ads,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/refs/heads/master/platforms/extension/ublock/filters/101_optimized.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://easylist.to/"
+                ),
+                isEnabled: true
+            ),
+
+            FilterList(
                 name: "AdGuard Base Filter",
                 description:
                     "EasyList + AdGuard English filter. This filter is necessary for quality ad blocking.",
@@ -1467,7 +1828,7 @@ final class FilterListViewModel {
                 category: .ads,
                 downloadURL: URL(
                     string:
-                        "\(baseUrl)/2_optimized.txt"
+                        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/refs/heads/master/platforms/extension/ublock/filters/2_optimized.txt"
                 ),
                 homepageURL: URL(
                     string:
@@ -1477,7 +1838,7 @@ final class FilterListViewModel {
                     string:
                         "https://adguard.com/kb/general/ad-filtering/adguard-filters/"
                 ),
-                isEnabled: true
+                isEnabled: false
             ),
             // Privacy
             FilterList(
@@ -1508,7 +1869,7 @@ final class FilterListViewModel {
                 category: .privacy,
                 downloadURL: URL(
                     string:
-                        "\(baseUrl)/118_optimized.txt"
+                        "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/refs/heads/master/platforms/extension/ublock/filters/118_optimized.txt"
                 ),
                 homepageURL: URL(
                     string: "https://easylist.to/"
@@ -1559,7 +1920,7 @@ final class FilterListViewModel {
                 category: .multipurpose,
                 downloadURL: URL(
                     string:
-                        "\(baseUrl)/204_optimized.txt"
+                        "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&showintro=1&mimetype=plaintext"
                 ),
                 isEnabled: false
             ),
@@ -2800,6 +3161,23 @@ final class FilterListViewModel {
 
             // Experimental
             FilterList(
+                name: "uBO Lite Test Filters",
+                description:
+                    "Filters used to test uBO Lite",
+                version: "N/A",
+                category: .experimental,
+                downloadURL: URL(
+                    string:
+                        "https://raw.githubusercontent.com/uBlockOrigin/uBOL-home/main/docs/tests/test-filters.txt"
+                ),
+                homepageURL: URL(
+                    string:
+                        "https://ublockorigin.github.io/uBOL-home/tests/test-filters.html"
+                ),
+                isEnabled: false
+            ),
+
+            FilterList(
                 name: "AdGuard Experimental filter",
                 description:
                     "Filter designed to test certain hazardous filtering rules before they are added to the basic filters.",
@@ -2818,6 +3196,19 @@ final class FilterListViewModel {
                         "https://adguard.com/kb/general/ad-filtering/adguard-filters/"
                 ),
                 isEnabled: false
+            ),
+            FilterList(
+                name: "ABP Testcase Subscription",
+                description: "ABP Testcase",
+                version: "N/A",
+                category: .experimental,
+                downloadURL: URL(
+                    string:
+                        "https://abptestpages.org/en/abp-testcase-subscription.txt"
+                ),
+                homepageURL: URL(string: "https://abptestpages.org"),
+                isEnabled: false,
+                developer: true
             ),
             FilterList(
                 name: "Rules for element hiding rules test",
@@ -3274,12 +3665,12 @@ final class FilterListViewModel {
         var categoriesProcessed = 0
         var filtersDownloaded = 0
         var filtersSkipped = 0
-        var categoriesSkipped = 0
+        let categoriesSkipped = 0
         var errors: [String] = []
 
         // PHASE 1: Download all enabled filters and collect their content
         logger.debug(
-            "Phase 1: Downloading \(enabledFilters.count) enabled filters"
+            "Refresh phase 1/3 — Downloading \(enabledFilters.count) enabled filter lists"
         )
 
         var downloadedFilters:
@@ -3452,7 +3843,7 @@ final class FilterListViewModel {
                 } else {
                     // Cache miss - force re-download without conditional headers
                     logger.debug(
-                        "Cache miss for \(filter.name), forcing re-download"
+                        "Local cache for \(filter.name) missing — re-downloading unconditionally"
                     )
                     let fallbackURL =
                         shouldForceFreshDownloads
@@ -3505,45 +3896,69 @@ final class FilterListViewModel {
 
         // PHASE 2: Distribute filters across blockers using load balancing
         logger.debug(
-            "Phase 2: Distributing \(downloadedFilters.count) filters across blockers"
+            "Refresh phase 2/3 — Distributing \(downloadedFilters.count) filter lists across Safari blockers (load balancer)"
         )
 
-        let filterAssignments = downloadedFilters.map { item in
-            FilterAssignmentInfo(
+        let ruleInputs = downloadedFilters.map { item in
+            FilterRuleContent(
                 filterID: item.filterID,
+                content: item.content,
                 estimatedRuleCount: item.sourceRules
             )
         }
 
-        let distribution = await loadBalancer.distributeFilters(
-            filterAssignments
-        )
-
-        // Build a lookup from filterID to downloaded content
-        var contentByFilterID: [String: (content: String, sourceRules: Int)] =
-            [:]
-        for item in downloadedFilters {
-            contentByFilterID[item.filterID] = (
-                content: item.content, sourceRules: item.sourceRules
+        let distribution: [ContentBlockerCategory: RuleShardAssignment]
+        do {
+            distribution =
+                try await ContentBlockerService
+                .validatedRuleDistribution(
+                    ruleInputs,
+                    loadBalancer: loadBalancer,
+                    ruleLimit: LoadBalancer.ruleLimit,
+                    whitelistRuleReserve: WhitelistManager.shared
+                        .whitelistedDomains.count
+                )
+        } catch {
+            let message =
+                "Rule distribution failed: \(error.localizedDescription)"
+            errors.append(message)
+            refreshStatistics = RefreshStatistics(
+                totalRulesConverted: totalRulesConverted,
+                categoriesProcessed: categoriesProcessed,
+                filtersDownloaded: filtersDownloaded,
+                filtersSkipped: filtersSkipped,
+                categoriesSkipped: categoriesSkipped,
+                conversionDuration: totalConversionTime,
+                reloadDuration: totalReloadTime,
+                totalDuration: Date().timeIntervalSince(overallStartTime),
+                errors: errors
             )
+            updateRefreshPhase(.failed(message))
+            isRefreshing = false
+            return
         }
 
         // PHASE 3: Process each blocker
-        logger.debug("Phase 3: Processing \(totalBlockersToProcess) blockers")
+        logger.debug(
+            "Refresh phase 3/3 — Compiling rules for \(totalBlockersToProcess) Safari blocker slots"
+        )
 
         for blocker in ContentBlockerCategory.allCases {
-            let assignedFilters = distribution[blocker] ?? []
+            let assignment =
+                distribution[blocker]
+                ?? RuleShardAssignment(blocker: blocker)
+            let assignedFilters = assignment.filters
             let hasExistingRulesFile = Self.hasConvertedRulesFile(for: blocker)
 
             logger.debug(
-                "Processing blocker\(blocker.rawValue): \(assignedFilters.count) assigned filters, hasExistingRulesFile=\(hasExistingRulesFile)"
+                "blocker\(blocker.rawValue): \(assignment.normalRuleCount) base rules + \(assignment.affinityRuleCount) affinity rules assigned, prior rules file: \(hasExistingRulesFile ? "yes" : "no")"
             )
 
-            if assignedFilters.isEmpty {
+            if assignment.isEmpty {
                 // No filters assigned to this blocker
                 if hasExistingRulesFile {
                     logger.debug(
-                        "Clearing blocker\(blocker.rawValue) (no assigned filters)"
+                        "blocker\(blocker.rawValue): no filter lists assigned — clearing stale rules file"
                     )
                     updateRefreshPhase(
                         .reloading(category: "blocker\(blocker.rawValue)")
@@ -3567,72 +3982,35 @@ final class FilterListViewModel {
                 continue
             }
 
-            // Combine content from all assigned filters
-            var combinedRulesParts: [String] = []
-            for filterInfo in assignedFilters {
-                if let data = contentByFilterID[filterInfo.filterID] {
-                    combinedRulesParts.append(data.content)
-                }
-            }
-
-            if combinedRulesParts.isEmpty {
-                categoriesSkipped += 1
-                categoriesProcessed += 1
-                advanceRefreshProgress(
-                    to: categoryProgressValue(
-                        categoriesProcessed: categoriesProcessed,
-                        totalCategories: totalBlockersToProcess
-                    ),
-                    duration: 0.3
-                )
-                continue
-            }
-
             // Convert and save the combined rules for this blocker
             updateRefreshPhase(
                 .converting(category: "blocker\(blocker.rawValue)")
             )
 
-            let combinedRulesSnapshot = combinedRulesParts
-            let combinedRules = await Self.runBackground {
-                combinedRulesSnapshot.joined(separator: "\n")
-            }
+            let combinedRules = assignment.rulesText
             let conversionStartTime = Date()
             let conversion = await Self.runBackground {
                 Self.convertAndSaveRules(rules: combinedRules, blocker: blocker)
             }
             totalConversionTime += Date().timeIntervalSince(conversionStartTime)
 
-            let ruleCount = conversion.rulesCount
-            totalRulesConverted += ruleCount
+            let safariRuleCount = conversion.safariRulesCount
 
-            // Update load balancer with actual rule count
-            await loadBalancer.updateActualRuleCount(ruleCount, for: blocker)
-
-            // Update rule counts for filters assigned to this blocker
-            if ruleCount > 0 {
-                let totalSourceRules = assignedFilters.reduce(0) {
-                    $0 + $1.estimatedRuleCount
-                }
-                for filterInfo in assignedFilters {
-                    if let filterIndex = filterLists.firstIndex(where: {
-                        $0.id == filterInfo.filterID
-                    }) {
-                        // Distribute actual rules proportionally based on source rules
-                        if totalSourceRules > 0 {
-                            let proportion =
-                                Double(filterInfo.estimatedRuleCount)
-                                / Double(totalSourceRules)
-                            filterLists[filterIndex].ruleCount = Int(
-                                Double(ruleCount) * proportion
-                            )
-                        } else {
-                            filterLists[filterIndex].ruleCount =
-                                ruleCount / assignedFilters.count
-                        }
-                    }
-                }
+            if conversion.truncated
+                || safariRuleCount > LoadBalancer.ruleLimit
+            {
+                errors.append(
+                    "Blocker\(blocker.rawValue) exceeds Safari limit after conversion: \(safariRuleCount)/\(LoadBalancer.ruleLimit) rules"
+                )
             }
+
+            // Update load balancer with actual Safari rule count for limit
+            // tracking. The total rule count shown in the UI comes from the
+            // per-filter source counts (set after this loop).
+            await loadBalancer.updateActualRuleCount(
+                safariRuleCount,
+                for: blocker
+            )
 
             // Reload the content blocker for this blocker
             updateRefreshPhase(
@@ -3656,6 +4034,23 @@ final class FilterListViewModel {
                 ),
                 duration: 0.3
             )
+        }
+
+        // Update each filter's displayed rule count from its source rule count
+        // (the total of network + cosmetic + scriptlet + procedural + CSP +
+        // exception rules). All of these are in effect — Safari handles the
+        // network subset, the web extension handles the rest via the
+        // adblock-rust engine snapshot. Doing this here, once per filter, also
+        // gives the right answer for filter lists whose rules span multiple
+        // blockers.
+        totalRulesConverted = 0
+        for downloaded in downloadedFilters {
+            if let filterIndex = filterLists.firstIndex(where: {
+                $0.id == downloaded.filterID
+            }) {
+                filterLists[filterIndex].ruleCount = downloaded.sourceRules
+            }
+            totalRulesConverted += downloaded.sourceRules
         }
 
         // Save load balancer state
@@ -3683,7 +4078,7 @@ final class FilterListViewModel {
 
         if enabledFilters.isEmpty {
             logger.debug(
-                "No enabled filters - clearing advanced blocking engine"
+                "No enabled filter lists — clearing adblock-rust engine snapshot"
             )
             await Self.runBackground {
                 ContentBlockerService.rebuildAdvancedBlockingEngine(
@@ -3692,7 +4087,7 @@ final class FilterListViewModel {
             }
         } else if !combinedAdvancedInputChunks.isEmpty {
             logger.debug(
-                "Building advanced blocking engine with \(combinedAdvancedInputChunks.count) input chunks"
+                "Recompiling adblock-rust engine snapshot from \(combinedAdvancedInputChunks.count) filter list contents"
             )
             let advancedInputSnapshot = combinedAdvancedInputChunks
             let combinedAdvancedInputRules = await Self.runBackground {
@@ -3704,7 +4099,7 @@ final class FilterListViewModel {
                 )
             }
             logger.debug(
-                "Extracted \(advancedRules.count) chars of advanced rules"
+                "Filter set normalized: \(advancedRules.count) chars ready for adblock-rust engine"
             )
             await Self.runBackground {
                 ContentBlockerService.rebuildAdvancedBlockingEngine(
@@ -3714,7 +4109,7 @@ final class FilterListViewModel {
             }
         } else {
             logger.debug(
-                "No advanced input rules collected - skipping engine rebuild"
+                "No filter list content available — adblock-rust engine snapshot unchanged"
             )
         }
 
@@ -3825,7 +4220,9 @@ final class FilterListViewModel {
         let emptyBlockerJSON = """
             [{"trigger": {"url-filter": ".*","if-domain": ["example.invalid"]},"action":{"type": "ignore-previous-rules"}}]
             """
-        logger.debug("Saving empty content blocker for \(category.rawValue)")
+        logger.debug(
+            "Writing empty/sentinel rules JSON for Safari blocker \(category.rawValue) (no assigned filter lists)"
+        )
         _ = ContentBlockerService.saveContentBlocker(
             jsonRules: emptyBlockerJSON,
             groupIdentifier: GroupIdentifier.shared.value,
@@ -3837,7 +4234,7 @@ final class FilterListViewModel {
     private nonisolated static func reloadContentBlocker(
         for category: FilterCategory
     ) {
-        logger.debug("Reloading content blocker for \(category.rawValue)")
+        logger.debug("Safari blocker reload: \(category.rawValue)…")
         let result = ContentBlockerService.reloadContentBlocker(
             withIdentifier: category.contentBlockerIdentifier
         )
@@ -3845,11 +4242,11 @@ final class FilterListViewModel {
         switch result {
         case .success:
             logger.debug(
-                "Successfully reloaded \(category.rawValue) content blocker"
+                "Safari blocker reload: \(category.rawValue) succeeded"
             )
         case .failure(let error):
             logger.error(
-                "Failed to reload \(category.rawValue) content blocker: \(error.localizedDescription)"
+                "Safari blocker reload: \(category.rawValue) failed: \(error.localizedDescription)"
             )
         }
     }
@@ -4975,7 +5372,7 @@ struct StatsHeaderView: View {
 
             StatItemView(
                 icon: "shield.lefthalf.filled",
-                title: "Safari Rules",
+                title: "Total Rules",
                 value: rulesCount,
                 color: .green
             )
@@ -6165,7 +6562,6 @@ final class AutoUpdateSettingsViewModel: ObservableObject {
 
         // Track downloaded content for load balancing
         var downloadedContent: [String: String] = [:]
-        var sourceRulesByFilter: [String: Int] = [:]
 
         // Download filters with progress
         await MainActor.run {
@@ -6224,12 +6620,6 @@ final class AutoUpdateSettingsViewModel: ObservableObject {
                 )
 
                 downloadedContent[result.filterID] = content
-                // Count source rules for load balancing
-                sourceRulesByFilter[result.filterID] =
-                    content.components(separatedBy: .newlines)
-                    .filter {
-                        !$0.isEmpty && !$0.hasPrefix("!") && !$0.hasPrefix("[")
-                    }.count
             }
         }
 
@@ -6241,11 +6631,6 @@ final class AutoUpdateSettingsViewModel: ObservableObject {
                 )
             {
                 downloadedContent[filter.id] = content
-                sourceRulesByFilter[filter.id] =
-                    content.components(separatedBy: .newlines)
-                    .filter {
-                        !$0.isEmpty && !$0.hasPrefix("!") && !$0.hasPrefix("[")
-                    }.count
             }
         }
 
@@ -6253,15 +6638,37 @@ final class AutoUpdateSettingsViewModel: ObservableObject {
         let loadBalancer = LoadBalancer.shared
         await loadBalancer.loadState()
 
-        let filterAssignments = downloadedContent.map { (filterID, _) in
-            FilterAssignmentInfo(
+        let ruleInputs = downloadedContent.map { filterID, content in
+            FilterRuleContent(
                 filterID: filterID,
-                estimatedRuleCount: sourceRulesByFilter[filterID] ?? 0
+                content: content,
+                estimatedRuleCount: FilterListHeaderParser.countRules(
+                    in: content
+                )
             )
         }
-        let distribution = await loadBalancer.distributeFilters(
-            filterAssignments
-        )
+        let distribution: [ContentBlockerCategory: RuleShardAssignment]
+        do {
+            distribution =
+                try await ContentBlockerService
+                .validatedRuleDistribution(
+                    ruleInputs,
+                    loadBalancer: loadBalancer,
+                    ruleLimit: LoadBalancer.ruleLimit,
+                    whitelistRuleReserve: WhitelistManager.shared
+                        .whitelistedDomains.count
+                )
+        } catch {
+            await MainActor.run {
+                withAnimation {
+                    updatePhase = .failed(
+                        "Rule distribution failed: \(error.localizedDescription)"
+                    )
+                }
+            }
+            scheduleCompletedDismissal()
+            return
+        }
 
         // Process each blocker with assigned filters
         let blockersToProcess = ContentBlockerCategory.allCases.filter {
@@ -6271,19 +6678,9 @@ final class AutoUpdateSettingsViewModel: ObservableObject {
         var processedBlockers = 0
 
         for blocker in blockersToProcess {
-            guard let assignedFilters = distribution[blocker],
-                !assignedFilters.isEmpty
+            guard let assignment = distribution[blocker],
+                !assignment.isEmpty
             else { continue }
-
-            // Combine content from assigned filters
-            var combinedContent = ""
-            for filterInfo in assignedFilters {
-                if let content = downloadedContent[filterInfo.filterID] {
-                    combinedContent += content + "\n"
-                }
-            }
-
-            guard !combinedContent.isEmpty else { continue }
 
             // Converting phase
             await MainActor.run {
@@ -6300,14 +6697,26 @@ final class AutoUpdateSettingsViewModel: ObservableObject {
 
             let conversionResult =
                 ContentBlockerService.convertFilterWithAdvancedRules(
-                    rules: combinedContent,
+                    rules: assignment.rulesText,
                     groupIdentifier: GroupIdentifier.shared.value,
                     rulesFilename: blocker.rulesFilename,
                     buildAdvancedEngine: false
                 )
-            rulesCount += conversionResult.rulesCount
+            // Headline "rules converted" = total source rules (every rule in
+            // the filter list, including cosmetic / scriptlet / procedural /
+            // CSP / exception rules applied by the web extension). Limit
+            // tracking still uses the Safari content blocker JSON count
+            // because that's what Safari's hard cap applies to.
+            rulesCount += conversionResult.totalSourceRuleCount
+            if conversionResult.truncated
+                || conversionResult.safariRulesCount > LoadBalancer.ruleLimit
+            {
+                errors.append(
+                    "Blocker\(blocker.rawValue) exceeds Safari limit after conversion: \(conversionResult.safariRulesCount)/\(LoadBalancer.ruleLimit) rules"
+                )
+            }
             await loadBalancer.updateActualRuleCount(
-                conversionResult.rulesCount,
+                conversionResult.safariRulesCount,
                 for: blocker
             )
 
